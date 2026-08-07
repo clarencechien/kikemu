@@ -38,6 +38,13 @@ ARMS_JA = {
     "Cplus": "transcript",
     "Cb": "transcript",       # Speechmatics batch, no dictionary
     "Cbplus": "transcript",   # Speechmatics batch + dictionary
+    # exp3 preprocessing arms
+    "Cbplus_pp_webrtc": "transcript",
+    "Cbplus_pp_sg": "transcript",
+    "Cbplus_pp_blend": "transcript",
+    "A_pp_webrtc": "input_transcription",
+    "A_pp_sg": "input_transcription",
+    "A_pp_blend": "input_transcription",
 }
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 
