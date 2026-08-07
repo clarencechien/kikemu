@@ -1,0 +1,379 @@
+{
+ "hig01_A1": [
+  {
+   "surface": "絵馬殿",
+   "reading": "エマデン",
+   "alternates": []
+  },
+  {
+   "surface": "石切劔箭",
+   "reading": "イシキリツルギヤ",
+   "alternates": []
+  },
+  {
+   "surface": "御神威",
+   "reading": "ゴシンイ",
+   "alternates": []
+  },
+  {
+   "surface": "記紀神話時代",
+   "reading": "キキシンワジダイ",
+   "alternates": []
+  },
+  {
+   "surface": "天照大御神",
+   "reading": "アマテラスオオミカミ",
+   "alternates": [
+    "天照大神"
+   ]
+  },
+  {
+   "surface": "十種の神宝",
+   "reading": "トクサノカンダカラ",
+   "alternates": []
+  },
+  {
+   "surface": "饒速日尊",
+   "reading": "ニギハヤヒノミコト",
+   "alternates": []
+  },
+  {
+   "surface": "長髄彦",
+   "reading": "ナガスネヒコ",
+   "alternates": []
+  },
+  {
+   "surface": "可美真手命",
+   "reading": "ウマシマデノミコト",
+   "alternates": []
+  },
+  {
+   "surface": "石切神社",
+   "reading": "イシキリジンジャ",
+   "alternates": []
+  },
+  {
+   "surface": "御祭神",
+   "reading": "ゴサイジン",
+   "alternates": []
+  },
+  {
+   "surface": "神武天皇",
+   "reading": "ジンムテンノウ",
+   "alternates": []
+  },
+  {
+   "surface": "天孫",
+   "reading": "テンソン",
+   "alternates": []
+  },
+  {
+   "surface": "天羽々矢",
+   "reading": "アマノハハヤ",
+   "alternates": []
+  },
+  {
+   "surface": "大和の国",
+   "reading": "ヤマトノクニ",
+   "alternates": [
+    "大和国"
+   ]
+  },
+  {
+   "surface": "物部氏",
+   "reading": "モノノベシ",
+   "alternates": []
+  }
+ ],
+ "hig02_B12": [
+  {
+   "surface": "枚岡神社",
+   "reading": "ヒラオカジンジャ",
+   "alternates": []
+  },
+  {
+   "surface": "拝殿",
+   "reading": "ハイデン",
+   "alternates": []
+  },
+  {
+   "surface": "参道広場",
+   "reading": "サンドウヒロバ",
+   "alternates": []
+  },
+  {
+   "surface": "二ノ鳥居",
+   "reading": "ニノトリイ",
+   "alternates": [
+    "二の鳥居"
+   ]
+  },
+  {
+   "surface": "あげまき結び",
+   "reading": "アゲマキムスビ",
+   "alternates": [
+    "総角結び"
+   ]
+  },
+  {
+   "surface": "しめ縄",
+   "reading": "シメナワ",
+   "alternates": [
+    "注連縄",
+    "七五三縄"
+   ]
+  },
+  {
+   "surface": "主祭神",
+   "reading": "シュサイジン",
+   "alternates": []
+  },
+  {
+   "surface": "アメノコヤネノミコト",
+   "reading": "アメノコヤネノミコト",
+   "alternates": [
+    "天児屋根命",
+    "天児屋命"
+   ]
+  },
+  {
+   "surface": "しめかけ神事",
+   "reading": "シメカケシンジ",
+   "alternates": [
+    "注連縄掛神事",
+    "注連掛神事"
+   ]
+  },
+  {
+   "surface": "お笑い神事",
+   "reading": "オワライシンジ",
+   "alternates": []
+  },
+  {
+   "surface": "宮司",
+   "reading": "グウジ",
+   "alternates": []
+  },
+  {
+   "surface": "岩戸",
+   "reading": "イワト",
+   "alternates": [
+    "天岩戸"
+   ]
+  },
+  {
+   "surface": "アマテラスオオミカミ",
+   "reading": "アマテラスオオミカミ",
+   "alternates": [
+    "天照大御神",
+    "天照大神"
+   ]
+  }
+ ],
+ "sakai05": [
+  {
+   "surface": "菅原神社",
+   "reading": "スガワラジンジャ",
+   "alternates": []
+  },
+  {
+   "surface": "椿の井戸",
+   "reading": "ツバキノイド",
+   "alternates": []
+  },
+  {
+   "surface": "ザビエル公園",
+   "reading": "ザビエルコウエン",
+   "alternates": []
+  },
+  {
+   "surface": "紀州街道",
+   "reading": "キシュウカイドウ",
+   "alternates": []
+  },
+  {
+   "surface": "千利休",
+   "reading": "センノリキュウ",
+   "alternates": []
+  },
+  {
+   "surface": "武野紹鴎",
+   "reading": "タケノジョウオウ",
+   "alternates": [
+    "武野紹鷗"
+   ]
+  },
+  {
+   "surface": "侘び寂び",
+   "reading": "ワビサビ",
+   "alternates": [
+    "わびさび"
+   ]
+  }
+ ],
+ "sakai06": [
+  {
+   "surface": "堺幕府",
+   "reading": "サカイバクフ",
+   "alternates": []
+  },
+  {
+   "surface": "紀州街道",
+   "reading": "キシュウカイドウ",
+   "alternates": []
+  },
+  {
+   "surface": "宿院",
+   "reading": "シュクイン",
+   "alternates": []
+  },
+  {
+   "surface": "黄金の日日",
+   "reading": "オウゴンノヒビ",
+   "alternates": [
+    "黄金の日々"
+   ]
+  },
+  {
+   "surface": "京都",
+   "reading": "キョウト",
+   "alternates": []
+  },
+  {
+   "surface": "応仁の乱",
+   "reading": "オウニンノラン",
+   "alternates": []
+  }
+ ],
+ "ikeda02": [
+  {
+   "surface": "室町住宅",
+   "reading": "ムロマチジュウタク",
+   "alternates": []
+  },
+  {
+   "surface": "池田新市街",
+   "reading": "イケダシンシガイ",
+   "alternates": []
+  },
+  {
+   "surface": "池田駅",
+   "reading": "イケダエキ",
+   "alternates": []
+  },
+  {
+   "surface": "呉服神社",
+   "reading": "クレハジンジャ",
+   "alternates": []
+  },
+  {
+   "surface": "大阪",
+   "reading": "オオサカ",
+   "alternates": []
+  },
+  {
+   "surface": "阪急電鉄",
+   "reading": "ハンキュウデンテツ",
+   "alternates": []
+  },
+  {
+   "surface": "小林一三",
+   "reading": "コバヤシイチゾウ",
+   "alternates": []
+  },
+  {
+   "surface": "明治時代",
+   "reading": "メイジジダイ",
+   "alternates": []
+  },
+  {
+   "surface": "箕面有馬電気軌道",
+   "reading": "ミノオアリマデンキキドウ",
+   "alternates": []
+  },
+  {
+   "surface": "梅田",
+   "reading": "ウメダ",
+   "alternates": []
+  },
+  {
+   "surface": "宝塚",
+   "reading": "タカラヅカ",
+   "alternates": []
+  }
+ ],
+ "ikeda03": [
+  {
+   "surface": "サカエマチ商店街",
+   "reading": "サカエマチショウテンガイ",
+   "alternates": [
+    "栄町商店街"
+   ]
+  },
+  {
+   "surface": "旧田中町商店街",
+   "reading": "キュウタナカチョウショウテンガイ",
+   "alternates": []
+  },
+  {
+   "surface": "池田駅",
+   "reading": "イケダエキ",
+   "alternates": []
+  },
+  {
+   "surface": "小林一三",
+   "reading": "コバヤシイチゾウ",
+   "alternates": []
+  },
+  {
+   "surface": "室町住宅",
+   "reading": "ムロマチジュウタク",
+   "alternates": []
+  },
+  {
+   "surface": "丹波地方",
+   "reading": "タンバチホウ",
+   "alternates": []
+  },
+  {
+   "surface": "大阪",
+   "reading": "オオサカ",
+   "alternates": []
+  },
+  {
+   "surface": "能勢街道",
+   "reading": "ノセカイドウ",
+   "alternates": []
+  },
+  {
+   "surface": "明治",
+   "reading": "メイジ",
+   "alternates": []
+  },
+  {
+   "surface": "栄町",
+   "reading": "サカエマチ",
+   "alternates": []
+  },
+  {
+   "surface": "昭和",
+   "reading": "ショウワ",
+   "alternates": []
+  },
+  {
+   "surface": "北摂",
+   "reading": "ホクセツ",
+   "alternates": []
+  },
+  {
+   "surface": "いとや百貨店",
+   "reading": "イトヤヒャッカテン",
+   "alternates": []
+  },
+  {
+   "surface": "旧池田電報電話局",
+   "reading": "キュウイケダデンポウデンワキョク",
+   "alternates": []
+  }
+ ]
+}

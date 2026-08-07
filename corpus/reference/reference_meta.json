@@ -1,0 +1,68 @@
+{
+ "hig01_A1": {
+  "chars": 382,
+  "coverage": 0.986,
+  "title_prepended": true,
+  "agreed_insertions": [
+   [
+    107,
+    "御"
+   ],
+   [
+    301,
+    "御"
+   ],
+   [
+    341,
+    "の"
+   ]
+  ],
+  "cer_ref_vs_sm": 0.1414,
+  "cer_ref_vs_gm": 0.0812
+ },
+ "hig02_B12": {
+  "chars": 397,
+  "coverage": 0.995,
+  "title_prepended": true,
+  "agreed_insertions": [
+   [
+    103,
+    "わ"
+   ]
+  ],
+  "cer_ref_vs_sm": 0.2116,
+  "cer_ref_vs_gm": 0.136
+ },
+ "sakai05": {
+  "chars": 115,
+  "coverage": 0.326,
+  "title_prepended": true,
+  "agreed_insertions": [],
+  "cer_ref_vs_sm": 0.087,
+  "cer_ref_vs_gm": 0.087
+ },
+ "sakai06": {
+  "chars": 97,
+  "coverage": 0.279,
+  "title_prepended": true,
+  "agreed_insertions": [],
+  "cer_ref_vs_sm": 0.0515,
+  "cer_ref_vs_gm": 0.0412
+ },
+ "ikeda02": {
+  "chars": 664,
+  "coverage": 1.0,
+  "title_prepended": true,
+  "agreed_insertions": [],
+  "cer_ref_vs_sm": 0.0331,
+  "cer_ref_vs_gm": 0.0557
+ },
+ "ikeda03": {
+  "chars": 374,
+  "coverage": 1.0,
+  "title_prepended": true,
+  "agreed_insertions": [],
+  "cer_ref_vs_sm": 0.1123,
+  "cer_ref_vs_gm": 0.0936
+ }
+}

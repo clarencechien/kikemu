@@ -1,0 +1,8 @@
+{
+  "hig01_A1": {"slug": "higashiosaka_01", "sections": [0], "wav": "hig01_A1.wav", "domain": "higashiosaka"},
+  "hig02_B12": {"slug": "higashiosaka_02", "sections": [0], "wav": "hig02_B12.wav", "domain": "higashiosaka"},
+  "sakai05": {"slug": "sakai_05-06", "sections": [0], "wav": "sakai05.wav", "domain": "sakai"},
+  "sakai06": {"slug": "sakai_05-06", "sections": [1], "wav": "sakai_05-06_1.wav", "domain": "sakai"},
+  "ikeda02": {"slug": "ikeda_02", "sections": [0], "wav": "ikeda02.wav", "domain": "ikeda"},
+  "ikeda03": {"slug": "ikeda_03", "sections": [0], "wav": "ikeda03.wav", "domain": "ikeda"}
+}
