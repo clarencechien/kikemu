@@ -24,10 +24,12 @@ RES = ROOT / "results"
 REF = ROOT / "corpus" / "reference"
 G_KEY = os.environ["gemini_key"]
 
+# gemini-3-pro-preview 404s and gemma-4 emits no JSON with this key/prompt;
+# final panel = three distinct served models (one vendor, documented deviation).
 JUDGES = [
     "gemini-3.6-flash",
-    "gemini-3-pro-preview",
-    "gemma-4-31b-it",
+    "gemini-pro-latest",
+    "gemini-flash-lite-latest",
 ]
 CONDS = ["N0", "N3"]
 ARMS = ["A", "C", "Cplus"]
