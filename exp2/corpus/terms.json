@@ -1,0 +1,292 @@
+{
+ "S1": [
+  {
+   "term": "label",
+   "count": 9,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "graph",
+   "count": 6,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "saw",
+   "count": 4,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "vector",
+   "count": 3,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "sentiment analysis",
+   "count": 3,
+   "variants": [
+    "sentimentanalysis"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "drug discovery",
+   "count": 2,
+   "variants": [
+    "drugdiscovery"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "one-hot vector",
+   "count": 2,
+   "variants": [
+    "one hot vector",
+    "one-hotvector"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "sequence",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "phoneme",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "social network",
+   "count": 2,
+   "variants": [
+    "socialnetwork"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "covid-19",
+   "count": 1,
+   "variants": [
+    "covid",
+    "covid 19"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "regression",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "class",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "classification",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "scalar",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "application",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "POS tagging POS tagging",
+   "count": 1,
+   "variants": [
+    "postaggingpostagging"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "POS tagging",
+   "count": 1,
+   "variants": [
+    "postagging"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "I saw a saw",
+   "count": 1,
+   "variants": [
+    "isawasaw"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "sentence",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "case",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "machine",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "model",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "sentiment analysis sentiment analysis",
+   "count": 1,
+   "variants": [
+    "sentimentanalysissentimentanalysis"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "positive",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "negative",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  }
+ ],
+ "S2": [
+  {
+   "term": "network",
+   "count": 5,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "distribution",
+   "count": 3,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "model",
+   "count": 3,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "z sample",
+   "count": 2,
+   "variants": [
+    "zsample"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "generative",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "network input",
+   "count": 1,
+   "variants": [
+    "networkinput"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "binary",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "random variable",
+   "count": 1,
+   "variants": [
+    "randomvariable"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "function",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "output",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  }
+ ],
+ "S3": [
+  {
+   "term": "ChatGPT",
+   "count": 8,
+   "variants": [
+    "chat gpt"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "AI",
+   "count": 3,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Transformer",
+   "count": 2,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Stable Diffusion",
+   "count": 1,
+   "variants": [
+    "stablediffusion"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Midjourney",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "DALL-E",
+   "count": 1,
+   "variants": [
+    "dall e"
+   ],
+   "class": "no_translate"
+  }
+ ]
+}

@@ -1,0 +1,1937 @@
+[
+ {
+  "content": "ablation"
+ },
+ {
+  "content": "A/B testing"
+ },
+ {
+  "content": "accelerator chip"
+ },
+ {
+  "content": "accuracy"
+ },
+ {
+  "content": "act"
+ },
+ {
+  "content": "action"
+ },
+ {
+  "content": "action space"
+ },
+ {
+  "content": "activation function"
+ },
+ {
+  "content": "active learning"
+ },
+ {
+  "content": "AdaGrad"
+ },
+ {
+  "content": "adaptation"
+ },
+ {
+  "content": "agent"
+ },
+ {
+  "content": "agentic"
+ },
+ {
+  "content": "agentic loop"
+ },
+ {
+  "content": "agentic workflow"
+ },
+ {
+  "content": "agent orchestration"
+ },
+ {
+  "content": "agglomerative clustering"
+ },
+ {
+  "content": "AI slop"
+ },
+ {
+  "content": "anomaly detection"
+ },
+ {
+  "content": "AR"
+ },
+ {
+  "content": "artificial general intelligence"
+ },
+ {
+  "content": "artificial intelligence"
+ },
+ {
+  "content": "attention"
+ },
+ {
+  "content": "attribute"
+ },
+ {
+  "content": "attribute sampling"
+ },
+ {
+  "content": "augmented reality"
+ },
+ {
+  "content": "autoencoder"
+ },
+ {
+  "content": "automatic evaluation"
+ },
+ {
+  "content": "automation bias"
+ },
+ {
+  "content": "AutoML"
+ },
+ {
+  "content": "autonomous agent"
+ },
+ {
+  "content": "autorater evaluation"
+ },
+ {
+  "content": "auto-regressive model"
+ },
+ {
+  "content": "auxiliary loss"
+ },
+ {
+  "content": "average precision at k"
+ },
+ {
+  "content": "axis-aligned condition"
+ },
+ {
+  "content": "backpropagation"
+ },
+ {
+  "content": "bagging"
+ },
+ {
+  "content": "bag of words"
+ },
+ {
+  "content": "baseline"
+ },
+ {
+  "content": "base model"
+ },
+ {
+  "content": "batch"
+ },
+ {
+  "content": "batch inference"
+ },
+ {
+  "content": "batch normalization"
+ },
+ {
+  "content": "batch size"
+ },
+ {
+  "content": "Bayesian neural network"
+ },
+ {
+  "content": "Bayesian optimization"
+ },
+ {
+  "content": "Bellman equation"
+ },
+ {
+  "content": "bidirectional"
+ },
+ {
+  "content": "bidirectional language model"
+ },
+ {
+  "content": "bigram"
+ },
+ {
+  "content": "binary classification"
+ },
+ {
+  "content": "binary condition"
+ },
+ {
+  "content": "binning"
+ },
+ {
+  "content": "black box model"
+ },
+ {
+  "content": "BoolQ"
+ },
+ {
+  "content": "boosting"
+ },
+ {
+  "content": "bounding box"
+ },
+ {
+  "content": "broadcasting"
+ },
+ {
+  "content": "bucketing"
+ },
+ {
+  "content": "calibration layer"
+ },
+ {
+  "content": "candidate generation"
+ },
+ {
+  "content": "candidate sampling"
+ },
+ {
+  "content": "categorical data"
+ },
+ {
+  "content": "causal language model"
+ },
+ {
+  "content": "CB"
+ },
+ {
+  "content": "centroid"
+ },
+ {
+  "content": "centroid-based clustering"
+ },
+ {
+  "content": "chain-of-thought prompting"
+ },
+ {
+  "content": "chat"
+ },
+ {
+  "content": "checkpoint"
+ },
+ {
+  "content": "citation precision"
+ },
+ {
+  "content": "citation recall"
+ },
+ {
+  "content": "class"
+ },
+ {
+  "content": "class-balanced dataset"
+ },
+ {
+  "content": "classification model"
+ },
+ {
+  "content": "classification threshold"
+ },
+ {
+  "content": "classifier"
+ },
+ {
+  "content": "class-imbalanced dataset"
+ },
+ {
+  "content": "clipping"
+ },
+ {
+  "content": "Cloud TPU"
+ },
+ {
+  "content": "clustering"
+ },
+ {
+  "content": "co-adaptation"
+ },
+ {
+  "content": "collaborative filtering"
+ },
+ {
+  "content": "compact model"
+ },
+ {
+  "content": "compute"
+ },
+ {
+  "content": "concept drift"
+ },
+ {
+  "content": "condition"
+ },
+ {
+  "content": "confabulation"
+ },
+ {
+  "content": "configuration"
+ },
+ {
+  "content": "confirmation bias"
+ },
+ {
+  "content": "confusion matrix"
+ },
+ {
+  "content": "constituency parsing"
+ },
+ {
+  "content": "contextualized language embedding"
+ },
+ {
+  "content": "context window"
+ },
+ {
+  "content": "continuous feature"
+ },
+ {
+  "content": "convenience sampling"
+ },
+ {
+  "content": "convergence"
+ },
+ {
+  "content": "conversational coding"
+ },
+ {
+  "content": "convex function"
+ },
+ {
+  "content": "convex optimization"
+ },
+ {
+  "content": "convex set"
+ },
+ {
+  "content": "convolution"
+ },
+ {
+  "content": "convolutional filter"
+ },
+ {
+  "content": "convolutional layer"
+ },
+ {
+  "content": "convolutional neural network"
+ },
+ {
+  "content": "convolutional operation"
+ },
+ {
+  "content": "COPA"
+ },
+ {
+  "content": "cost"
+ },
+ {
+  "content": "co-training"
+ },
+ {
+  "content": "counterfactual fairness"
+ },
+ {
+  "content": "coverage bias"
+ },
+ {
+  "content": "crash blossom"
+ },
+ {
+  "content": "critic"
+ },
+ {
+  "content": "cross-entropy"
+ },
+ {
+  "content": "cross-validation"
+ },
+ {
+  "content": "data analysis"
+ },
+ {
+  "content": "data augmentation"
+ },
+ {
+  "content": "DataFrame"
+ },
+ {
+  "content": "data parallelism"
+ },
+ {
+  "content": "data set or dataset"
+ },
+ {
+  "content": "decision boundary"
+ },
+ {
+  "content": "decision forest"
+ },
+ {
+  "content": "decision threshold"
+ },
+ {
+  "content": "decision tree"
+ },
+ {
+  "content": "decoder"
+ },
+ {
+  "content": "deep model"
+ },
+ {
+  "content": "deep neural network"
+ },
+ {
+  "content": "demographic parity"
+ },
+ {
+  "content": "denoising"
+ },
+ {
+  "content": "dense feature"
+ },
+ {
+  "content": "dense layer"
+ },
+ {
+  "content": "depth"
+ },
+ {
+  "content": "derived label"
+ },
+ {
+  "content": "deterministic"
+ },
+ {
+  "content": "device"
+ },
+ {
+  "content": "differential privacy"
+ },
+ {
+  "content": "dimension reduction"
+ },
+ {
+  "content": "dimensions"
+ },
+ {
+  "content": "direct prompting"
+ },
+ {
+  "content": "discrete feature"
+ },
+ {
+  "content": "discriminative model"
+ },
+ {
+  "content": "discriminator"
+ },
+ {
+  "content": "disparate impact"
+ },
+ {
+  "content": "disparate treatment"
+ },
+ {
+  "content": "distillation"
+ },
+ {
+  "content": "distribution"
+ },
+ {
+  "content": "divisive clustering"
+ },
+ {
+  "content": "downsampling"
+ },
+ {
+  "content": "DQN"
+ },
+ {
+  "content": "dropout regularization"
+ },
+ {
+  "content": "dynamic"
+ },
+ {
+  "content": "dynamic model"
+ },
+ {
+  "content": "eager execution"
+ },
+ {
+  "content": "early stopping"
+ },
+ {
+  "content": "edit distance"
+ },
+ {
+  "content": "Einsum notation"
+ },
+ {
+  "content": "embedding layer"
+ },
+ {
+  "content": "embedding space"
+ },
+ {
+  "content": "embedding vector"
+ },
+ {
+  "content": "emergent behavior"
+ },
+ {
+  "content": "encoder"
+ },
+ {
+  "content": "endpoints"
+ },
+ {
+  "content": "ensemble"
+ },
+ {
+  "content": "entropy"
+ },
+ {
+  "content": "environment"
+ },
+ {
+  "content": "environment grounding"
+ },
+ {
+  "content": "episode"
+ },
+ {
+  "content": "episodic memory"
+ },
+ {
+  "content": "epoch"
+ },
+ {
+  "content": "epsilon greedy policy"
+ },
+ {
+  "content": "equality of opportunity"
+ },
+ {
+  "content": "equalized odds"
+ },
+ {
+  "content": "Estimator"
+ },
+ {
+  "content": "evals"
+ },
+ {
+  "content": "evaluation"
+ },
+ {
+  "content": "evaluator agent"
+ },
+ {
+  "content": "exact match"
+ },
+ {
+  "content": "example"
+ },
+ {
+  "content": "experience replay"
+ },
+ {
+  "content": "exploding gradient problem"
+ },
+ {
+  "content": "F 1"
+ },
+ {
+  "content": "factuality"
+ },
+ {
+  "content": "fairness constraint"
+ },
+ {
+  "content": "fairness metric"
+ },
+ {
+  "content": "false negative rate"
+ },
+ {
+  "content": "fast decay"
+ },
+ {
+  "content": "feature"
+ },
+ {
+  "content": "feature cross"
+ },
+ {
+  "content": "feature engineering"
+ },
+ {
+  "content": "feature extraction"
+ },
+ {
+  "content": "feature importances"
+ },
+ {
+  "content": "feature set"
+ },
+ {
+  "content": "feature spec"
+ },
+ {
+  "content": "feature vector"
+ },
+ {
+  "content": "featurization"
+ },
+ {
+  "content": "federated learning"
+ },
+ {
+  "content": "feedback"
+ },
+ {
+  "content": "feedback loop"
+ },
+ {
+  "content": "few-shot learning"
+ },
+ {
+  "content": "few-shot prompting"
+ },
+ {
+  "content": "Fiddle"
+ },
+ {
+  "content": "fine-tuning"
+ },
+ {
+  "content": "Flash model"
+ },
+ {
+  "content": "Flax"
+ },
+ {
+  "content": "Flaxformer"
+ },
+ {
+  "content": "forget gate"
+ },
+ {
+  "content": "foundation model"
+ },
+ {
+  "content": "fraction of successes"
+ },
+ {
+  "content": "full softmax"
+ },
+ {
+  "content": "fully connected layer"
+ },
+ {
+  "content": "function transformation"
+ },
+ {
+  "content": "GAN"
+ },
+ {
+  "content": "Gemini"
+ },
+ {
+  "content": "Gemini models"
+ },
+ {
+  "content": "Gemma"
+ },
+ {
+  "content": "GenAI or genAI"
+ },
+ {
+  "content": "generalization"
+ },
+ {
+  "content": "generalization curve"
+ },
+ {
+  "content": "generalized linear model"
+ },
+ {
+  "content": "generated text"
+ },
+ {
+  "content": "generative AI"
+ },
+ {
+  "content": "generative model"
+ },
+ {
+  "content": "generator"
+ },
+ {
+  "content": "gini impurity"
+ },
+ {
+  "content": "golden dataset"
+ },
+ {
+  "content": "golden response"
+ },
+ {
+  "content": "Google AI Studio"
+ },
+ {
+  "content": "gradient"
+ },
+ {
+  "content": "gradient accumulation"
+ },
+ {
+  "content": "gradient boosting"
+ },
+ {
+  "content": "gradient clipping"
+ },
+ {
+  "content": "gradient descent"
+ },
+ {
+  "content": "graph"
+ },
+ {
+  "content": "graph execution"
+ },
+ {
+  "content": "greedy policy"
+ },
+ {
+  "content": "groundedness"
+ },
+ {
+  "content": "grounding"
+ },
+ {
+  "content": "ground truth"
+ },
+ {
+  "content": "group attribution bias"
+ },
+ {
+  "content": "guardrails"
+ },
+ {
+  "content": "hallucination"
+ },
+ {
+  "content": "hashing"
+ },
+ {
+  "content": "heuristic"
+ },
+ {
+  "content": "hidden layer"
+ },
+ {
+  "content": "hierarchical clustering"
+ },
+ {
+  "content": "hill climbing"
+ },
+ {
+  "content": "hinge loss"
+ },
+ {
+  "content": "historical bias"
+ },
+ {
+  "content": "holdout data"
+ },
+ {
+  "content": "host"
+ },
+ {
+  "content": "human evaluation"
+ },
+ {
+  "content": "hyperparameter"
+ },
+ {
+  "content": "hyperplane"
+ },
+ {
+  "content": "i.i.d"
+ },
+ {
+  "content": "image recognition"
+ },
+ {
+  "content": "imbalanced dataset"
+ },
+ {
+  "content": "implicit bias"
+ },
+ {
+  "content": "imputation"
+ },
+ {
+  "content": "incompatibility of fairness metrics"
+ },
+ {
+  "content": "in-context learning"
+ },
+ {
+  "content": "individual fairness"
+ },
+ {
+  "content": "inference"
+ },
+ {
+  "content": "inference path"
+ },
+ {
+  "content": "information gain"
+ },
+ {
+  "content": "in-group bias"
+ },
+ {
+  "content": "input generator"
+ },
+ {
+  "content": "input layer"
+ },
+ {
+  "content": "in-set condition"
+ },
+ {
+  "content": "instance"
+ },
+ {
+  "content": "instruction tuning"
+ },
+ {
+  "content": "interpretability"
+ },
+ {
+  "content": "inter-rater agreement"
+ },
+ {
+  "content": "IoU"
+ },
+ {
+  "content": "item matrix"
+ },
+ {
+  "content": "items"
+ },
+ {
+  "content": "iteration"
+ },
+ {
+  "content": "JAX"
+ },
+ {
+  "content": "Keras"
+ },
+ {
+  "content": "keypoints"
+ },
+ {
+  "content": "k-fold cross validation"
+ },
+ {
+  "content": "k-means"
+ },
+ {
+  "content": "k-median"
+ },
+ {
+  "content": "L 0 regularization"
+ },
+ {
+  "content": "L 1 loss"
+ },
+ {
+  "content": "L 1 regularization"
+ },
+ {
+  "content": "L 2 loss"
+ },
+ {
+  "content": "L 2 regularization"
+ },
+ {
+  "content": "label"
+ },
+ {
+  "content": "labeled example"
+ },
+ {
+  "content": "label leakage"
+ },
+ {
+  "content": "lambda"
+ },
+ {
+  "content": "landmarks"
+ },
+ {
+  "content": "language model"
+ },
+ {
+  "content": "large language model"
+ },
+ {
+  "content": "latency"
+ },
+ {
+  "content": "latent space"
+ },
+ {
+  "content": "layer"
+ },
+ {
+  "content": "leaf"
+ },
+ {
+  "content": "learning rate"
+ },
+ {
+  "content": "least squares regression"
+ },
+ {
+  "content": "least-to-most prompting"
+ },
+ {
+  "content": "Levenshtein Distance"
+ },
+ {
+  "content": "linear"
+ },
+ {
+  "content": "linear model"
+ },
+ {
+  "content": "linear regression"
+ },
+ {
+  "content": "LIT"
+ },
+ {
+  "content": "LLM"
+ },
+ {
+  "content": "logistic regression"
+ },
+ {
+  "content": "logits"
+ },
+ {
+  "content": "Log Loss"
+ },
+ {
+  "content": "log-odds"
+ },
+ {
+  "content": "LoRA"
+ },
+ {
+  "content": "loss"
+ },
+ {
+  "content": "loss aggregator"
+ },
+ {
+  "content": "loss curve"
+ },
+ {
+  "content": "loss function"
+ },
+ {
+  "content": "loss surface"
+ },
+ {
+  "content": "lost-in-the-middle effect"
+ },
+ {
+  "content": "LSTM"
+ },
+ {
+  "content": "machine learning"
+ },
+ {
+  "content": "machine translation"
+ },
+ {
+  "content": "majority class"
+ },
+ {
+  "content": "manager agent"
+ },
+ {
+  "content": "Markov property"
+ },
+ {
+  "content": "masked language model"
+ },
+ {
+  "content": "matplotlib"
+ },
+ {
+  "content": "matrix factorization"
+ },
+ {
+  "content": "MBPP"
+ },
+ {
+  "content": "mesh"
+ },
+ {
+  "content": "meta-learning"
+ },
+ {
+  "content": "metric"
+ },
+ {
+  "content": "mini-batch"
+ },
+ {
+  "content": "mini-batch stochastic gradient descent"
+ },
+ {
+  "content": "minimax loss"
+ },
+ {
+  "content": "minority class"
+ },
+ {
+  "content": "mixture of experts"
+ },
+ {
+  "content": "ML"
+ },
+ {
+  "content": "MMIT"
+ },
+ {
+  "content": "MNIST"
+ },
+ {
+  "content": "modality"
+ },
+ {
+  "content": "model"
+ },
+ {
+  "content": "model capacity"
+ },
+ {
+  "content": "model cascading"
+ },
+ {
+  "content": "model parallelism"
+ },
+ {
+  "content": "model router"
+ },
+ {
+  "content": "model training"
+ },
+ {
+  "content": "MOE"
+ },
+ {
+  "content": "Momentum"
+ },
+ {
+  "content": "MT"
+ },
+ {
+  "content": "multi-agent collaboration"
+ },
+ {
+  "content": "multi-class classification"
+ },
+ {
+  "content": "multi-class logistic regression"
+ },
+ {
+  "content": "multi-head self-attention"
+ },
+ {
+  "content": "multimodal instruction-tuned"
+ },
+ {
+  "content": "multimodal model"
+ },
+ {
+  "content": "multinomial classification"
+ },
+ {
+  "content": "multinomial regression"
+ },
+ {
+  "content": "multitask"
+ },
+ {
+  "content": "Nano"
+ },
+ {
+  "content": "NaN trap"
+ },
+ {
+  "content": "natural language processing"
+ },
+ {
+  "content": "natural language understanding"
+ },
+ {
+  "content": "negative class"
+ },
+ {
+  "content": "negative sampling"
+ },
+ {
+  "content": "neural network"
+ },
+ {
+  "content": "neuron"
+ },
+ {
+  "content": "N-gram"
+ },
+ {
+  "content": "NLP"
+ },
+ {
+  "content": "NLU"
+ },
+ {
+  "content": "noise"
+ },
+ {
+  "content": "non-binary condition"
+ },
+ {
+  "content": "nondeterministic"
+ },
+ {
+  "content": "nonlinear"
+ },
+ {
+  "content": "non-response bias"
+ },
+ {
+  "content": "nonstationarity"
+ },
+ {
+  "content": "NORA"
+ },
+ {
+  "content": "normalization"
+ },
+ {
+  "content": "Notebook LM"
+ },
+ {
+  "content": "novelty detection"
+ },
+ {
+  "content": "numerical data"
+ },
+ {
+  "content": "NumPy"
+ },
+ {
+  "content": "objective"
+ },
+ {
+  "content": "objective function"
+ },
+ {
+  "content": "oblique condition"
+ },
+ {
+  "content": "observe"
+ },
+ {
+  "content": "offline"
+ },
+ {
+  "content": "offline inference"
+ },
+ {
+  "content": "one-hot encoding"
+ },
+ {
+  "content": "one-shot learning"
+ },
+ {
+  "content": "one-shot prompting"
+ },
+ {
+  "content": "one-vs.-all"
+ },
+ {
+  "content": "online"
+ },
+ {
+  "content": "online inference"
+ },
+ {
+  "content": "Optax"
+ },
+ {
+  "content": "optimizer"
+ },
+ {
+  "content": "ORA"
+ },
+ {
+  "content": "out-group homogeneity bias"
+ },
+ {
+  "content": "outlier detection"
+ },
+ {
+  "content": "outliers"
+ },
+ {
+  "content": "output layer"
+ },
+ {
+  "content": "overfitting"
+ },
+ {
+  "content": "oversampling"
+ },
+ {
+  "content": "packed data"
+ },
+ {
+  "content": "PaLM"
+ },
+ {
+  "content": "pandas"
+ },
+ {
+  "content": "parameter"
+ },
+ {
+  "content": "parameter-efficient tuning"
+ },
+ {
+  "content": "parameter update"
+ },
+ {
+  "content": "partial derivative"
+ },
+ {
+  "content": "participation bias"
+ },
+ {
+  "content": "partitioning strategy"
+ },
+ {
+  "content": "Pax"
+ },
+ {
+  "content": "perceptron"
+ },
+ {
+  "content": "performance"
+ },
+ {
+  "content": "permutation variable importances"
+ },
+ {
+  "content": "perplexity"
+ },
+ {
+  "content": "pipeline"
+ },
+ {
+  "content": "pipelining"
+ },
+ {
+  "content": "pjit"
+ },
+ {
+  "content": "plan-and-solve"
+ },
+ {
+  "content": "PLM"
+ },
+ {
+  "content": "plugin"
+ },
+ {
+  "content": "pmap"
+ },
+ {
+  "content": "policy"
+ },
+ {
+  "content": "pooling"
+ },
+ {
+  "content": "positional encoding"
+ },
+ {
+  "content": "positive class"
+ },
+ {
+  "content": "post-processing"
+ },
+ {
+  "content": "post-trained model"
+ },
+ {
+  "content": "Praxis"
+ },
+ {
+  "content": "precision"
+ },
+ {
+  "content": "precision-recall curve"
+ },
+ {
+  "content": "prediction"
+ },
+ {
+  "content": "prediction bias"
+ },
+ {
+  "content": "predictive ML"
+ },
+ {
+  "content": "predictive parity"
+ },
+ {
+  "content": "predictive rate parity"
+ },
+ {
+  "content": "preprocessing"
+ },
+ {
+  "content": "pre-trained model"
+ },
+ {
+  "content": "pre-training"
+ },
+ {
+  "content": "prior belief"
+ },
+ {
+  "content": "Pro"
+ },
+ {
+  "content": "probabilistic"
+ },
+ {
+  "content": "probabilistic regression model"
+ },
+ {
+  "content": "probability density function"
+ },
+ {
+  "content": "procedural memory"
+ },
+ {
+  "content": "prompt"
+ },
+ {
+  "content": "prompt-based learning"
+ },
+ {
+  "content": "prompt chaining"
+ },
+ {
+  "content": "prompt design"
+ },
+ {
+  "content": "prompt engineering"
+ },
+ {
+  "content": "prompt set"
+ },
+ {
+  "content": "prompt tuning"
+ },
+ {
+  "content": "provenance"
+ },
+ {
+  "content": "proxy labels"
+ },
+ {
+  "content": "pure function"
+ },
+ {
+  "content": "Q-function"
+ },
+ {
+  "content": "Q-learning"
+ },
+ {
+  "content": "quantile"
+ },
+ {
+  "content": "quantile bucketing"
+ },
+ {
+  "content": "quantization"
+ },
+ {
+  "content": "queue"
+ },
+ {
+  "content": "RAG"
+ },
+ {
+  "content": "random forest"
+ },
+ {
+  "content": "random policy"
+ },
+ {
+  "content": "ranking"
+ },
+ {
+  "content": "rater"
+ },
+ {
+  "content": "RealToxicityPrompts"
+ },
+ {
+  "content": "reason"
+ },
+ {
+  "content": "recall"
+ },
+ {
+  "content": "recommendation system"
+ },
+ {
+  "content": "ReCoRD"
+ },
+ {
+  "content": "recurrent neural network"
+ },
+ {
+  "content": "reference text"
+ },
+ {
+  "content": "reflection"
+ },
+ {
+  "content": "regression model"
+ },
+ {
+  "content": "regularization"
+ },
+ {
+  "content": "regularization rate"
+ },
+ {
+  "content": "ReLU"
+ },
+ {
+  "content": "replay buffer"
+ },
+ {
+  "content": "replica"
+ },
+ {
+  "content": "reporting bias"
+ },
+ {
+  "content": "representation"
+ },
+ {
+  "content": "re-ranking"
+ },
+ {
+  "content": "response"
+ },
+ {
+  "content": "response set"
+ },
+ {
+  "content": "return"
+ },
+ {
+  "content": "reward"
+ },
+ {
+  "content": "ridge regularization"
+ },
+ {
+  "content": "RNN"
+ },
+ {
+  "content": "role prompting"
+ },
+ {
+  "content": "root"
+ },
+ {
+  "content": "root directory"
+ },
+ {
+  "content": "rotational invariance"
+ },
+ {
+  "content": "ROUGE-L"
+ },
+ {
+  "content": "ROUGE-N"
+ },
+ {
+  "content": "ROUGE-S"
+ },
+ {
+  "content": "router agent"
+ },
+ {
+  "content": "R-squared"
+ },
+ {
+  "content": "RTE"
+ },
+ {
+  "content": "sampling bias"
+ },
+ {
+  "content": "sampling with replacement"
+ },
+ {
+  "content": "SavedModel"
+ },
+ {
+  "content": "Saver"
+ },
+ {
+  "content": "scalar"
+ },
+ {
+  "content": "scaling"
+ },
+ {
+  "content": "scikit-learn"
+ },
+ {
+  "content": "scoring"
+ },
+ {
+  "content": "selection bias"
+ },
+ {
+  "content": "self-correction"
+ },
+ {
+  "content": "self-supervised learning"
+ },
+ {
+  "content": "self-training"
+ },
+ {
+  "content": "semantic memory"
+ },
+ {
+  "content": "semi-supervised learning"
+ },
+ {
+  "content": "sensitive attribute"
+ },
+ {
+  "content": "sentiment analysis"
+ },
+ {
+  "content": "sequence model"
+ },
+ {
+  "content": "sequence-to-sequence task"
+ },
+ {
+  "content": "serving"
+ },
+ {
+  "content": "shard"
+ },
+ {
+  "content": "shrinkage"
+ },
+ {
+  "content": "side-by-side evaluation"
+ },
+ {
+  "content": "sigmoid function"
+ },
+ {
+  "content": "similarity measure"
+ },
+ {
+  "content": "size invariance"
+ },
+ {
+  "content": "sketching"
+ },
+ {
+  "content": "skip-gram"
+ },
+ {
+  "content": "softmax"
+ },
+ {
+  "content": "soft prompt tuning"
+ },
+ {
+  "content": "sparse feature"
+ },
+ {
+  "content": "sparse representation"
+ },
+ {
+  "content": "sparse vector"
+ },
+ {
+  "content": "sparsity"
+ },
+ {
+  "content": "spatial pooling"
+ },
+ {
+  "content": "specificational coding"
+ },
+ {
+  "content": "split"
+ },
+ {
+  "content": "splitter"
+ },
+ {
+  "content": "SPMD"
+ },
+ {
+  "content": "SQuAD"
+ },
+ {
+  "content": "squared hinge loss"
+ },
+ {
+  "content": "squared loss"
+ },
+ {
+  "content": "staged training"
+ },
+ {
+  "content": "state"
+ },
+ {
+  "content": "state-action value function"
+ },
+ {
+  "content": "state machine agent"
+ },
+ {
+  "content": "static"
+ },
+ {
+  "content": "static inference"
+ },
+ {
+  "content": "stationarity"
+ },
+ {
+  "content": "step"
+ },
+ {
+  "content": "step size"
+ },
+ {
+  "content": "stride"
+ },
+ {
+  "content": "sub-agent"
+ },
+ {
+  "content": "subsampling"
+ },
+ {
+  "content": "subword token"
+ },
+ {
+  "content": "summary"
+ },
+ {
+  "content": "SuperGLUE"
+ },
+ {
+  "content": "supervised machine learning"
+ },
+ {
+  "content": "synthetic feature"
+ },
+ {
+  "content": "T5"
+ },
+ {
+  "content": "T5X"
+ },
+ {
+  "content": "tabular Q-learning"
+ },
+ {
+  "content": "target"
+ },
+ {
+  "content": "target network"
+ },
+ {
+  "content": "task"
+ },
+ {
+  "content": "task decomposition"
+ },
+ {
+  "content": "temperature"
+ },
+ {
+  "content": "temporal data"
+ },
+ {
+  "content": "Tensor"
+ },
+ {
+  "content": "TensorBoard"
+ },
+ {
+  "content": "TensorFlow"
+ },
+ {
+  "content": "TensorFlow Playground"
+ },
+ {
+  "content": "TensorFlow Serving"
+ },
+ {
+  "content": "Tensor rank"
+ },
+ {
+  "content": "Tensor shape"
+ },
+ {
+  "content": "Tensor size"
+ },
+ {
+  "content": "TensorStore"
+ },
+ {
+  "content": "termination condition"
+ },
+ {
+  "content": "test"
+ },
+ {
+  "content": "test loss"
+ },
+ {
+  "content": "test set"
+ },
+ {
+  "content": "text span"
+ },
+ {
+  "content": "tf.Example"
+ },
+ {
+  "content": "tf.keras"
+ },
+ {
+  "content": "time series analysis"
+ },
+ {
+  "content": "timestep"
+ },
+ {
+  "content": "token"
+ },
+ {
+  "content": "tokenizer"
+ },
+ {
+  "content": "top-k accuracy"
+ },
+ {
+  "content": "tower"
+ },
+ {
+  "content": "toxicity"
+ },
+ {
+  "content": "TPU"
+ },
+ {
+  "content": "TPU chip"
+ },
+ {
+  "content": "TPU device"
+ },
+ {
+  "content": "TPU node"
+ },
+ {
+  "content": "TPU Pod"
+ },
+ {
+  "content": "TPU resource"
+ },
+ {
+  "content": "TPU slice"
+ },
+ {
+  "content": "TPU type"
+ },
+ {
+  "content": "TPU worker"
+ },
+ {
+  "content": "training"
+ },
+ {
+  "content": "training loss"
+ },
+ {
+  "content": "training-serving skew"
+ },
+ {
+  "content": "training set"
+ },
+ {
+  "content": "trajectory"
+ },
+ {
+  "content": "transfer learning"
+ },
+ {
+  "content": "Transformer"
+ },
+ {
+  "content": "translational invariance"
+ },
+ {
+  "content": "trigram"
+ },
+ {
+  "content": "Trivia Question Answering"
+ },
+ {
+  "content": "TTL"
+ },
+ {
+  "content": "UCR"
+ },
+ {
+  "content": "Ultra"
+ },
+ {
+  "content": "underfitting"
+ },
+ {
+  "content": "undersampling"
+ },
+ {
+  "content": "unidirectional"
+ },
+ {
+  "content": "unidirectional language model"
+ },
+ {
+  "content": "unlabeled example"
+ },
+ {
+  "content": "unsupervised machine learning"
+ },
+ {
+  "content": "uplift modeling"
+ },
+ {
+  "content": "upweighting"
+ },
+ {
+  "content": "user matrix"
+ },
+ {
+  "content": "validation"
+ },
+ {
+  "content": "validation loss"
+ },
+ {
+  "content": "validation set"
+ },
+ {
+  "content": "value imputation"
+ },
+ {
+  "content": "vanishing gradient problem"
+ },
+ {
+  "content": "variable importances"
+ },
+ {
+  "content": "vector"
+ },
+ {
+  "content": "Vertex"
+ },
+ {
+  "content": "vibe coding"
+ },
+ {
+  "content": "Wasserstein loss"
+ },
+ {
+  "content": "weight"
+ },
+ {
+  "content": "weighted sum"
+ },
+ {
+  "content": "WiC"
+ },
+ {
+  "content": "wide model"
+ },
+ {
+  "content": "width"
+ },
+ {
+  "content": "wisdom of the crowd"
+ },
+ {
+  "content": "WMT"
+ },
+ {
+  "content": "word embedding"
+ },
+ {
+  "content": "WSC"
+ },
+ {
+  "content": "xsum"
+ },
+ {
+  "content": "zero-shot learning"
+ },
+ {
+  "content": "zero-shot prompting"
+ },
+ {
+  "content": "Z-score normalization"
+ }
+]

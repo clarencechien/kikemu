@@ -1,0 +1,84 @@
+# V2 reference review — gm35 vs gm36 disagreements
+Ruling default: gm35; explicit rulings in overrides.json
+
+## S1  (gm35=1346 toks, gm36=1360 toks)
+- [S1:1] gm35='' | gm36='對' -> gm35(default)
+- [S1:2] gm35='在covid-19' | gm36='COVID-19' -> gm35(default)
+- [S1:3] gm35='1000' | gm36='1 0 0 0' -> OVERRIDE='1 0 0 0'
+- [S1:4] gm35='0100' | gm36='0 1 0 0' -> OVERRIDE='0 1 0 0'
+- [S1:5] gm35='0010' | gm36='0 0 1 0' -> OVERRIDE='0 0 1 0'
+- [S1:6] gm35='是' | gm36='' -> gm35(default)
+- [S1:7] gm35='' | gm36='呃' -> gm35(default)
+- [S1:8] gm35='不' | gm36='' -> gm35(default)
+- [S1:9] gm35='know' | gm36='知道' -> gm35(default)
+- [S1:10] gm35='' | gm36='那' -> gm35(default)
+- [S1:11] gm35='懂得' | gm36='知道' -> gm35(default)
+- [S1:12] gm35='' | gm36='像' -> gm35(default)
+- [S1:13] gm35='' | gm36='類' -> gm35(default)
+- [S1:14] gm35='音素當作' | gm36='' -> gm35(default)
+- [S1:15] gm35='' | gm36='那' -> gm35(default)
+- [S1:16] gm35='' | gm36='呢' -> gm35(default)
+- [S1:17] gm35='' | gm36='一' -> gm35(default)
+- [S1:18] gm35='' | gm36='一' -> gm35(default)
+- [S1:19] gm35='它' | gm36='他' -> gm35(default)
+- [S1:20] gm35='' | gm36='你也' -> gm35(default)
+- [S1:21] gm35='' | gm36='像' -> gm35(default)
+- [S1:22] gm35='一個' | gm36='們' -> gm35(default)
+- [S1:23] gm35='要' | gm36='' -> gm35(default)
+- [S1:24] gm35='' | gm36='你' -> gm35(default)
+- [S1:25] gm35='好' | gm36='' -> gm35(default)
+- [S1:26] gm35='個' | gm36='的' -> gm35(default)
+- [S1:27] gm35='' | gm36='它' -> gm35(default)
+
+## S2  (gm35=1409 toks, gm36=1417 toks)
+- [S2:1] gm35='向' | gm36='像' -> gm35(default)
+- [S2:2] gm35='向' | gm36='像' -> gm35(default)
+- [S2:3] gm35='喔' | gm36='哦' -> gm35(default)
+- [S2:4] gm35='向' | gm36='像' -> gm35(default)
+- [S2:5] gm35='那' | gm36='然後' -> gm35(default)
+- [S2:6] gm35='那' | gm36='但是' -> gm35(default)
+- [S2:7] gm35='也' | gm36='' -> gm35(default)
+- [S2:8] gm35='' | gm36='是' -> gm35(default)
+- [S2:9] gm35='' | gm36='部' -> gm35(default)
+- [S2:10] gm35='就用' | gm36='結果' -> gm35(default)
+- [S2:11] gm35='是' | gm36='' -> gm35(default)
+- [S2:12] gm35='' | gm36='們' -> gm35(default)
+- [S2:13] gm35='什' | gm36='甚' -> gm35(default)
+- [S2:14] gm35='是暴' | gm36='爆' -> OVERRIDE='是爆'
+- [S2:15] gm35='她' | gm36='它' -> gm35(default)
+- [S2:16] gm35='因' | gm36='在一' -> OVERRIDE='英'
+- [S2:17] gm35='' | gm36='前' -> gm35(default)
+- [S2:18] gm35='著' | gm36='了' -> gm35(default)
+- [S2:19] gm35='' | gm36='的' -> gm35(default)
+- [S2:20] gm35='' | gm36='情' -> gm35(default)
+- [S2:21] gm35='夜' | gm36='' -> gm35(default)
+- [S2:22] gm35='' | gm36='的' -> gm35(default)
+- [S2:23] gm35='小品' | gm36='橋樑' -> gm35(default)
+- [S2:24] gm35='又' | gm36='也' -> gm35(default)
+- [S2:25] gm35='' | gm36='忍者' -> OVERRIDE='忍者'
+- [S2:26] gm35='喔' | gm36='哦' -> gm35(default)
+- [S2:27] gm35='的' | gm36='那' -> gm35(default)
+
+## S3  (gm35=832 toks, gm36=837 toks)
+- [S3:1] gm35='是' | gm36='這' -> gm35(default)
+- [S3:2] gm35='所以' | gm36='這' -> gm35(default)
+- [S3:3] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:4] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:5] gm35='覆' | gm36='復' -> gm35(default)
+- [S3:6] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:7] gm35='上' | gm36='' -> gm35(default)
+- [S3:8] gm35='詞' | gm36='字' -> gm35(default)
+- [S3:9] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:10] gm35='' | gm36='那' -> gm35(default)
+- [S3:11] gm35='' | gm36='叫' -> gm35(default)
+- [S3:12] gm35='要' | gm36='' -> gm35(default)
+- [S3:13] gm35='就要' | gm36='叫' -> gm35(default)
+- [S3:14] gm35='就要' | gm36='叫' -> gm35(default)
+- [S3:15] gm35='就要' | gm36='叫' -> gm35(default)
+- [S3:16] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:17] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:18] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:19] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:20] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:21] gm35='function' | gm36='函式' -> OVERRIDE='函式'
+- [S3:22] gm35='情' | gm36='' -> gm35(default)
