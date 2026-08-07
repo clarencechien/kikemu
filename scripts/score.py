@@ -152,6 +152,11 @@ def main():
                 else:
                     tf = RES / "raw" / f"{arm}_translate" / f"{seg}__{cond}.json"
                     zh = json.loads(tf.read_text())["translation"] if tf.exists() else ""
+                # cross-check: kanji proper nouns surviving into the zh text
+                zh_folded = fold(zh)
+                row["recall_in_zh"] = round(
+                    sum(noun_hit(n, zh_folded)[1] for n in ns) / len(ns), 4
+                )
                 row["tw_bad_hits"] = sum(zh.count(w) for w in TW_BAD)
                 row["simplified_chars"] = len(SIMPLIFIED_RE.findall(zh))
                 row["zh_len"] = len(zh)

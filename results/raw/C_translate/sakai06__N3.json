@@ -1,0 +1,1 @@
+{"arm": "C", "file": "sakai06__N3.wav", "model": "gemini-3.5-flash", "translation": "虛幻的堺幕府。沿著舊街道一路向南。在宿院路口停下腳步。請環顧四周。據說這一帶曾有過虛幻的堺幕府。讓我們稍微回顧一下歷史。在黃金時代開始前不久，京都的應仁之亂……", "usage": {"promptTokenCount": 232, "candidatesTokenCount": 66, "totalTokenCount": 1435, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 232}], "thoughtsTokenCount": 1137, "serviceTier": "standard"}}
