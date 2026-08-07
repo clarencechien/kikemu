@@ -116,8 +116,14 @@ def main():
             noise_cache[(zname, member)] = n
         return noise_cache[(zname, member)]
 
-    for wav in sorted(cfg["wav"].glob(cfg["segs_glob"])):
-        seg = wav.stem
+    # segment -> wav file mapping: exp1 uses picks.json (wav filenames can
+    # differ from segment ids, e.g. sakai06 -> sakai_05-06_1.wav)
+    if exp == "1":
+        picks = json.loads((ROOT / "corpus" / "picks.json").read_text())
+        seg_wavs = [(s, cfg["wav"] / spec["wav"]) for s, spec in picks.items()]
+    else:
+        seg_wavs = [(w.stem, w) for w in sorted(cfg["wav"].glob(cfg["segs_glob"]))]
+    for seg, wav in seg_wavs:
         x, sr = sf.read(wav, dtype="float64")
         assert sr == SR
         x = norm(x)

@@ -45,6 +45,12 @@ ARMS_JA = {
     "A_pp_webrtc": "input_transcription",
     "A_pp_sg": "input_transcription",
     "A_pp_blend": "input_transcription",
+    # exp4 directivity arms
+    "Cbplus_dir_card": "transcript",
+    "Cbplus_dir_conf": "transcript",
+    "Cbplus_dir_lav": "transcript",
+    "A_dir_conf": "input_transcription",
+    "A_dir_lav": "input_transcription",
 }
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 
