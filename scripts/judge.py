@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Adequacy judging panel: 5 vendors via OpenRouter, blind, temperature 0.
+"""Adequacy judging panel — blind, temperature 0.
+
+Intended design was manemu's 5-vendor panel via OpenRouter; the OpenRouter
+and OpenAI keys in this environment are invalid (401), so the panel is
+3 model families served by the Gemini API (documented deviation):
+gemini-3.6-flash, gemini-3-pro-preview, gemma-4-31b-it.
 
 Each judge sees the VERIFIED Japanese reference (not any ASR output) and one
 candidate zh-TW translation, without knowing which arm produced it.
@@ -17,14 +22,12 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
 REF = ROOT / "corpus" / "reference"
-OR_KEY = os.environ["or_key"]
+G_KEY = os.environ["gemini_key"]
 
 JUDGES = [
-    "anthropic/claude-sonnet-5",
-    "openai/gpt-5.6-terra",
-    "google/gemini-3.6-flash",
-    "qwen/qwen3.7-plus",
-    "mistralai/mistral-medium-3-5",
+    "gemini-3.6-flash",
+    "gemini-3-pro-preview",
+    "gemma-4-31b-it",
 ]
 CONDS = ["N0", "N3"]
 ARMS = ["A", "C", "Cplus"]
@@ -46,14 +49,15 @@ PROMPT = """你是翻譯品質評審。以下是一段日語導覽解說的正�
 
 
 def judge(model: str, ref: str, zh: str) -> dict:
+    gen = {"temperature": 0}
+    if not model.startswith("gemma"):
+        gen["responseMimeType"] = "application/json"
     r = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers={"Authorization": f"Bearer {OR_KEY}"},
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        headers={"x-goog-api-key": G_KEY, "Content-Type": "application/json"},
         json={
-            "model": model,
-            "messages": [{"role": "user", "content": PROMPT.format(ref=ref, zh=zh)}],
-            "temperature": 0,
-            "response_format": {"type": "json_object"},
+            "contents": [{"parts": [{"text": PROMPT.format(ref=ref, zh=zh)}]}],
+            "generationConfig": gen,
         },
         timeout=180,
     )
@@ -96,7 +100,7 @@ def main():
                         raw_f.write_text(json.dumps(resp, ensure_ascii=False))
                         time.sleep(0.5)
                     try:
-                        content = resp["choices"][0]["message"]["content"]
+                        content = resp["candidates"][0]["content"]["parts"][0]["text"]
                         content = content[content.index("{") : content.rindex("}") + 1]
                         j = json.loads(content)
                         scores.append(

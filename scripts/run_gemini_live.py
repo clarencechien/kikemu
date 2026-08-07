@@ -158,9 +158,13 @@ async def main():
         model = args[args.index("--model") + 1]
     if "--workers" in args:
         workers = int(args[args.index("--workers") + 1])
+    outname = "A"
+    if "--outdir" in args:
+        outname = args[args.index("--outdir") + 1]
     if "--only" in args:
-        only = set(args[args.index("--only") + 1 :])
-    outdir = ROOT / "results" / "raw" / "A"
+        i = args.index("--only") + 1
+        only = set(a for a in args[i:] if not a.startswith("--"))
+    outdir = ROOT / "results" / "raw" / outname
     outdir.mkdir(parents=True, exist_ok=True)
     jobs = []
     for wav in sorted(COND.glob("*.wav")):
