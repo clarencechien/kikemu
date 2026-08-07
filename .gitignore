@@ -8,3 +8,5 @@ __pycache__/
 exp2/corpus/raw/
 exp2/corpus/wav/
 exp2/corpus/conditions/*.wav
+corpus/conditions_dir/
+exp2/corpus/conditions_dir/
