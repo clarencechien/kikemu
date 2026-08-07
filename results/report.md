@@ -13,6 +13,9 @@
 - 詞表邊際價值(C+−C)在**所有**條件為正:+0.12 ~ +0.19,配對 McNemar 幾乎單向
   (C+ 獨對 8~14 詞/條件,C 獨對 0~1 詞)
 - 詞表**不影響**延遲與改寫率(C 與 C+ 的 partial p50 均 ~0.36s、改寫率均 ~16%)
+- 譯文 adequacy 盲評:C+ ≥ C > A(N0:4.71/4.50/3.61)—— A 的增量口譯比
+  「定稿後整段翻譯」更容易丟細節(附可比性註記,見 §2.5.1)
+- 台灣用語:三 arm 譯文的中國大陸用語與簡體字命中皆為 **0**
 - 只有在「保證 line-in 乾淨音源」的場景,A 才是可以考慮的簡化選項
 
 ---
@@ -106,8 +109,11 @@ Handoff 警告的三個陷阱**全部命中**,處理如下:
 - 召回率差值(C+−C、A−C+)附 **segment-cluster bootstrap 95% CI**
   (10,000 次重抽,以段落為重抽單位,因同段內專名結果相關;種子固定)
 - 另報 per-noun McNemar 配對計數(僅 X 對 / 僅 Y 對)
-- 譯文 adequacy:5 廠評審(Anthropic/OpenAI/Google/Qwen/Mistral 經 OpenRouter),
-  盲評(不知 arm)、temperature 0、看驗證後日文原文與候選譯文,1~5 分
+- 譯文 adequacy:原計畫沿用 manemu 五廠評審面板,但環境中的 OpenRouter 與
+  OpenAI key 均無效(401),gemini-3-pro-preview 404、gemma-4 不輸出 JSON;
+  **實際面板為 Gemini API 上三個模型**(gemini-3.6-flash、gemini-pro-latest、
+  gemini-flash-lite-latest),盲評(不知 arm)、temperature 0、
+  看驗證後日文原文與候選譯文,1~5 分。單一廠商面板的偏好風險已列入 §3
 
 ---
 
@@ -186,9 +192,21 @@ hig01 4/16、hig02 4/13、sakai05 6/7、sakai06 1/6、ikeda02 5/11、ikeda03 4/1
   簡體字元:**0 個** —— 共用的口譯 systemInstruction 有效
 - adequacy(3 模型家族盲評,N0+N3):見 2.5.1
 
-### 2.5.1 adequacy 面板
+### 2.5.1 adequacy 面板(1~5 分,101 個有效評分)
 
-(面板完成後填入)
+| 指標 | 條件 | A | C | C+ |
+|---|---|---|---|---|
+| adequacy | N0 | 3.61 | 4.50 | **4.71** |
+| adequacy | N3 | 1.08 | 2.33 | **2.44** |
+| tw_locale | N0 | 4.94 | 5.00 | 4.94 |
+| tw_locale | N3 | 3.42 | 4.44 | 4.06 |
+
+**Handoff Q4 預期「A 與 C 相同(共用 systemInstruction)」—— 實測不同,原因已查:**
+不是 prompt 差異,而是**架構差異**:A 是邊聽邊譯的語音到語音輸出,譯文較精簡、
+會漏細節;C/C+ 是對「定稿後的完整逐字稿」做整段翻譯,資訊保留較完整。
+注意這對 C/C+ 有利:真實產品中 C 的翻譯也會是增量式,adequacy 會介於兩者之間
+(此為本評測的可比性侷限,列入 §3)。N3 的 A=1.08 反映聽寫崩潰(無內容可譯)。
+tw_locale 三 arm 在 N0 全數接近滿分,與程式掃描(0 命中)一致。
 
 ### 2.6 延遲與改寫率(handoff Q5)
 
@@ -237,3 +255,8 @@ hig01 4/16、hig02 4/13、sakai05 6/7、sakai06 1/6、ikeda02 5/11、ikeda03 4/1
 5. Deepgram(arm D)未執行:無帳號
 6. 噪音為單一 RIR × 單一噪音源;不同空間/人群組成未覆蓋
 7. Gemini Live 為 preview 模型,行為可能隨版本變動;所有原始回應已落檔
+8. adequacy 面板為單一廠商(Google)三模型,非原設計的五廠;且評審與
+   翻譯模型同廠,可能偏好 Gemini 產出 —— 但 A 與 C/C+ 的翻譯**都**出自
+   Gemini,此偏差對「A vs C+」的相對比較大致抵銷
+9. C/C+ 的翻譯 hop 是對定稿逐字稿整段翻譯,A 是增量口譯 —— adequacy
+   比較對 C/C+ 有利;產品化後 C 的增量翻譯 adequacy 會低於本測數字
