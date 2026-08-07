@@ -32,7 +32,13 @@ ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
 REF = ROOT / "corpus" / "reference"
 
-ARMS_JA = {"A": "input_transcription", "C": "transcript", "Cplus": "transcript"}
+ARMS_JA = {
+    "A": "input_transcription",
+    "C": "transcript",
+    "Cplus": "transcript",
+    "Cb": "transcript",       # Speechmatics batch, no dictionary
+    "Cbplus": "transcript",   # Speechmatics batch + dictionary
+}
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 
 TW_BAD = ["视频", "視頻", "质量", "質量", "信息", "软件", "軟件", "网络", "網絡", "數據", "数据"]
@@ -120,6 +126,8 @@ def main():
     rows = []
     noun_outcomes = []  # per (arm, cond, seg, noun) binary — for paired stats
     for arm, ja_field in ARMS_JA.items():
+        if not (RES / "raw" / arm).exists():
+            continue
         for seg in picks:
             ref = (REF / f"{seg}.txt").read_text()
             for cond in CONDS:
@@ -160,11 +168,11 @@ def main():
                 row["tw_bad_hits"] = sum(zh.count(w) for w in TW_BAD)
                 row["simplified_chars"] = len(SIMPLIFIED_RE.findall(zh))
                 row["zh_len"] = len(zh)
-                # latency & rewrite
-                if arm in ("C", "Cplus"):
+                # latency & rewrite (batch arms have no realtime log)
+                if arm in ("C", "Cplus") and d.get("log"):
                     row.update(sm_latency(d["log"]))
                     row["rewrite_rate"] = sm_rewrite_rate(d["log"])
-                else:
+                elif arm == "A":
                     row.update(a_latency(d["log"], d["audio_s"]))
                 rows.append(row)
 
