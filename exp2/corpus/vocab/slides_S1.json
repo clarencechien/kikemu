@@ -1,0 +1,128 @@
+[
+ {
+  "content": "One-hot Encoding"
+ },
+ {
+  "content": "Word Embedding"
+ },
+ {
+  "content": "MFCC"
+ },
+ {
+  "content": "filter bank output"
+ },
+ {
+  "content": "POS tagging"
+ },
+ {
+  "content": "Sentiment analysis"
+ },
+ {
+  "content": "seq2seq"
+ },
+ {
+  "content": "Sequence Labeling"
+ },
+ {
+  "content": "FC"
+ },
+ {
+  "content": "Fully-connected"
+ },
+ {
+  "content": "Self-attention"
+ },
+ {
+  "content": "hidden layer"
+ },
+ {
+  "content": "Dot-product"
+ },
+ {
+  "content": "Additive"
+ },
+ {
+  "content": "tanh"
+ },
+ {
+  "content": "query"
+ },
+ {
+  "content": "key"
+ },
+ {
+  "content": "attention score"
+ },
+ {
+  "content": "Soft-max"
+ },
+ {
+  "content": "Softmax"
+ },
+ {
+  "content": "Attention Matrix"
+ },
+ {
+  "content": "Multi-head Self-attention"
+ },
+ {
+  "content": "Positional Encoding"
+ },
+ {
+  "content": "Transformer"
+ },
+ {
+  "content": "BERT"
+ },
+ {
+  "content": "NLP"
+ },
+ {
+  "content": "Natural Language Processing"
+ },
+ {
+  "content": "Truncated Self-attention"
+ },
+ {
+  "content": "Self-Attention GAN"
+ },
+ {
+  "content": "DEtection Transformer"
+ },
+ {
+  "content": "DETR"
+ },
+ {
+  "content": "CNN"
+ },
+ {
+  "content": "receptive field"
+ },
+ {
+  "content": "Convolutional Layers"
+ },
+ {
+  "content": "RNN"
+ },
+ {
+  "content": "Recurrent Neural Network"
+ },
+ {
+  "content": "Autoregressive Transformers"
+ },
+ {
+  "content": "Linear Attention"
+ },
+ {
+  "content": "Graph Neural Network"
+ },
+ {
+  "content": "GNN"
+ },
+ {
+  "content": "Efficient Transformers"
+ },
+ {
+  "content": "Long Range Arena"
+ }
+]

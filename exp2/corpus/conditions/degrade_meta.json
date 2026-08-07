@@ -1,0 +1,7 @@
+{
+ "rir": "Audio/h100_Classroom_2txts.wav",
+ "rir_t60": 0.721,
+ "seed": 20260807,
+ "M2": "OOFFICE ch01 @20dB",
+ "M3": "OMEETING ch01 @12dB"
+}

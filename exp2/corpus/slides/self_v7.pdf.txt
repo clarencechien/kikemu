@@ -1,0 +1,588 @@
+Hung-yi Lee 
+李宏毅
+1
+Sophisticated Input 
+• Input is a vector 
+• Input is a set of vectors
+Model Scalar or Class
+Model Scalars or Classes
+(may change length)
+2
+Vector Set as Input 
+this      is     a     cat 
+dog
+cat
+rabbit
+jump
+run
+flower
+tree
+apple = [ 1   0   0   0   0 …… ]
+bag    = [ 0   1   0   0   0 …… ]
+cat    = [ 0   0   1   0   0 …… ]
+dog   = [ 0   0   0   1   0 …… ]
+elephant   = [ 0   0   0   0   1 …… ]
+One-hot Encoding Word Embedding
+To learn more: https://youtu.be/X7PH3NuYW0Q (in Mandarin)
+3
+Vector Set as Input 
+10ms
+25ms
+400 sample points (16KHz)
+39-dim MFCC
+80-dim filter bank output
+frame
+1s → 100 frames
+4
+Vector Set as Input 
+• Graph is also a set of vectors (consider each node
+as a vector)
+https://medium.com/analytics-vidhya/social-
+network-analytics-f082f4e21b16
+Each profile 
+is a vector
+5
+Vector Set as Input 
+• Graph is also a set of vectors (consider each node
+as a vector)
+http://www.twword.com/wiki/%E5%8
+8%86%E5%AD%90
+One-hot vector
+H = [ 1   0   0   0   0 …… ]
+C = [ 0   1   0   0   0 …… ]
+O = [ 0   0   1   0   0 …… ]
+……
+6
+Model
+What is the output?
+• Each vector has a label. 
+N N
+I  saw  a  saw
+N V DET N a a b b
+HW2
+ buy buy
+not
+Example Applications
+POS tagging
+7
+Model
+What is the output?
+• Each vector has a label. 
+• The whole sequence has a label. 
+N N
+Model
+this is good
+positive speaker
+HW4
+hydrophilicity
+Example Applications
+8
+Sentiment 
+analysis
+Model
+What is the output?
+• Each vector has a label. 
+N N
+• Model decides the number of labels itself.
+N N’
+Model
+Translation (HW5)
+• The whole sequence has a label. 
+Model
+seq2seq
+focus of this lecture
+9
+Sequence Labeling 
+FC FC FC FC
+Is it possible to consider the context?
+I saw a saw
+FC Fully-
+connected
+FC can consider the neighbor 
+How to consider the whole sequence? 
+window
+a window covers the whole sequence?
+10
+FC FC FC FC
+Self-attention
+with 
+context
+Self-attention
+11
+FC FC FC FC
+Self-attention
+Self-attention
+FC FC FC FC
+Attention is all 
+you need.
+https://arxiv.org/abs/1706.0376212
+Self-attention
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒃𝟒𝒃𝟑𝒃𝟐𝒃𝟏
+Can be either input or a hidden layer
+13
+Self-attention
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+relevant?𝛼
+Find the relevant vectors in a sequence 
+𝒃𝟏
+14
+Self-attention
+𝑊𝑞 𝑊𝑘
+Dot-product
+𝛼
+𝒒 𝒌
+= 𝒒 ∙ 𝒌
+Additive
+𝑊𝑞 𝑊𝑘
+𝛼
++
+𝑡𝑎𝑛ℎ
+𝑊
+15
+𝒒𝟏 𝒌𝟐
+Self-attention
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒒𝟏 = 𝑊𝑞𝒂𝟏
+𝒌𝟑 𝒌𝟒
+𝒌𝟐 = 𝑊𝑘𝒂𝟐 𝒌𝟑 = 𝑊𝑘𝒂𝟑 𝒌𝟒 = 𝑊𝑘𝒂𝟒
+𝛼1,2 𝛼1,3 𝛼1,4
+𝛼1,2 = 𝒒𝟏 ∙ 𝒌𝟐
+query key
+attention score
+𝛼1,3 = 𝒒𝟏 ∙ 𝒌𝟑 𝛼1,4 = 𝒒𝟏 ∙ 𝒌𝟒
+16
+𝒒𝟏 𝒌𝟐
+Self-attention
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒒𝟏 = 𝑊𝑞𝒂𝟏
+𝒌𝟑 𝒌𝟒
+𝒌𝟐 = 𝑊𝑘𝒂𝟐 𝒌𝟑 = 𝑊𝑘𝒂𝟑 𝒌𝟒 = 𝑊𝑘𝒂𝟒
+𝛼1,2 𝛼1,3 𝛼1,4
+𝒌𝟏
+𝒌𝟏 = 𝑊𝑘𝒂𝟏
+𝛼1,1
+Soft-max
+𝛼1,1
+′ 𝛼1,2
+′ 𝛼1,3
+′ 𝛼1,4
+′
+𝛼1,𝑖
+′ = 𝑒𝑥𝑝 𝛼1,𝑖 / ෍
+𝑗
+𝑒𝑥𝑝 𝛼1,𝑗
+17
+Self-attention
+𝛼1,1
+′ 𝛼1,2
+′ 𝛼1,3
+′ 𝛼1,4
+′
+𝒌𝟏𝒒𝟏 𝒗𝟏 𝒌𝟐 𝒗𝟐 𝒌𝟑 𝒗𝟑 𝒌𝟒 𝒗𝟒
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒃𝟏
+𝒃𝟏 = ෍
+𝑖
+𝛼1,𝑖
+′ 𝒗𝒊
+Extract information based 
+on attention scores
+𝒗𝟏 = 𝑊𝑣𝒂𝟏 𝒗𝟐 = 𝑊𝑣𝒂𝟐 𝒗𝟑 = 𝑊𝑣𝒂𝟑 𝒗𝟒 = 𝑊𝑣𝒂𝟒
+18
+Self-attention
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒃𝟒𝒃𝟑𝒃𝟐𝒃𝟏
+Can be either input or a hidden layer
+parallel
+19
+𝒗𝟏𝒌𝟏𝒒𝟏 𝒗𝟐𝒌𝟐𝒒𝟐 𝒗𝟑𝒌𝟑 𝒗𝟒𝒌𝟒
+Self-attention
+𝛼2,1
+′ 𝛼2,2
+′ 𝛼2,3
+′ 𝛼2,4
+′
+𝒃𝟐
+𝒃𝟐 = ෍
+𝑖
+𝛼2,𝑖
+′ 𝒗𝒊
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒒𝟒𝒒𝟑
+20
+Self-attention
+𝒗𝟏𝒌𝟏𝒒𝟏 𝒗𝟐𝒌𝟐𝒒𝟐 𝒗𝟑𝒌𝟑𝒒𝟑 𝒗𝟒𝒌𝟒𝒒𝟒
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+𝒒𝒊 = 𝑊𝑞𝒂𝒊
+𝒌𝒊 = 𝑊𝑘𝒂𝒊
+𝒗𝒊 = 𝑊𝑣𝒂𝒊
+𝒒𝟏𝒒𝟐𝒒𝟑𝒒𝟒 = 𝑊𝑞 𝒂𝟏𝒂𝟐𝒂𝟑𝒂𝟒
+= 𝑊𝑘
+= 𝑊𝑣
+𝒂𝟏𝒂𝟐𝒂𝟑𝒂𝟒
+𝒂𝟏𝒂𝟐𝒂𝟑𝒂𝟒𝒗𝟏 𝒗𝟑𝒗𝟒𝒗𝟐
+𝒌𝟏 𝒌𝟑𝒌𝟒𝒌𝟐
+I
+I
+I
+𝑄
+𝐾
+𝑉
+21
+𝒗𝟏𝒌𝟏𝒒𝟏 𝒗𝟐𝒌𝟐𝒒𝟐 𝒗𝟑𝒌𝟑𝒒𝟑 𝒗𝟒𝒌𝟒𝒒𝟒
+Self-attention
+𝛼1,1 = 𝒒𝟏𝒌𝟏 𝛼1,2 = 𝒒𝟏𝒌𝟐
+𝛼1,3 = 𝒒𝟏𝒌𝟑 𝛼1,4 = 𝒒𝟏𝒌𝟒
+𝒒𝟏
+𝒌𝟏
+𝒌𝟐
+𝒌𝟑
+𝒌𝟒
+=
+𝛼1,1
+𝛼1,2
+𝛼1,3
+𝛼1,4
+𝛼1,1 𝛼1,2 𝛼1,3 𝛼1,4
+22
+Self-attention
+𝒗𝟏𝒌𝟏𝒒𝟏 𝒗𝟐𝒌𝟐𝒒𝟐 𝒗𝟑𝒌𝟑𝒒𝟑 𝒗𝟒𝒌𝟒𝒒𝟒
+𝒒𝟏
+𝒌𝟏
+𝒌𝟐
+𝒌𝟑
+𝒌𝟒
+=
+𝛼1,1
+𝛼1,2
+𝛼1,3
+𝛼1,4
+𝒒𝟐
+𝛼2,1
+𝛼2,2
+𝛼2,3
+𝛼2,4
+𝛼3,1
+𝛼3,2
+𝛼3,3
+𝛼3,4
+𝛼4,1
+𝛼4,2
+𝛼4,3
+𝛼4,4
+𝐾𝑇𝐴
+𝑄
+𝒒𝟑 𝒒𝟒
+𝛼1,1
+′
+𝛼1,2
+′
+𝛼1,3
+′
+𝛼1,4
+′
+𝛼2,1
+′
+𝛼2,2
+′
+𝛼2,3
+′
+𝛼2,4
+′
+𝛼3,1
+′
+𝛼3,2
+′
+𝛼3,3
+′
+𝛼3,4
+′
+𝛼4,1
+′
+𝛼4,2
+′
+𝛼4,3
+′
+𝛼4,4
+′
+𝐴′
+𝛼1,1 = 𝒒𝟏𝒌𝟏 𝛼1,2 = 𝒒𝟏𝒌𝟐
+𝛼1,3 = 𝒒𝟏𝒌𝟑 𝛼1,4 = 𝒒𝟏𝒌𝟒
+𝒒𝟏
+𝒌𝟏
+𝒌𝟐
+𝒌𝟑
+𝒌𝟒
+=
+𝛼1,1
+𝛼1,2
+𝛼1,3
+𝛼1,4
+𝛼2,1 𝛼2,2 𝛼2,3 𝛼2,4
+23softmax
+𝛼1,1
+′
+𝛼1,2
+′
+𝛼1,3
+′
+𝛼1,4
+′
+𝛼2,1
+′
+𝛼2,2
+′
+𝛼2,3
+′
+𝛼2,4
+′
+𝛼3,1
+′
+𝛼3,2
+′
+𝛼3,3
+′
+𝛼3,4
+′
+𝛼4,1
+′
+𝛼4,2
+′
+𝛼4,3
+′
+𝛼4,4
+′
+Self-attention
+𝑣1𝑘1𝑞1 𝑣2𝑘2𝑞2 𝑣3𝑘3𝑞3 𝑣4𝑘4𝑞4
+𝐴′
+𝒗𝟏 𝒗𝟑𝒗𝟒𝒗𝟐
+𝑉
+=𝒃𝟏𝒃𝟐𝒃𝟑𝒃𝟒
+O
+𝒃𝟏
+24
+𝛼1,1
+′ 𝛼1,2
+′ 𝛼1,3
+′ 𝛼1,4
+′
+Self-attention = 𝑊𝑞
+= 𝑊𝑘
+= 𝑊𝑣
+Q
+K
+V
+𝐾𝑇 QAA′
+A′V=
+I
+O
+=
+I
+I
+Attention Matrix
+Parameters 
+to be learned 
+25
+Multi-head Self-attention
+𝒌𝒊 𝒗𝒊
+𝒂𝒊
+𝒒𝒊
+(2 heads as example)
+𝒒𝒊,𝟐𝒒𝒊,𝟏 𝒌𝒊,𝟐𝒌𝒊,𝟏 𝒗𝒊,𝟐𝒗𝒊,𝟏
+𝒌𝒋 𝒗𝒋
+𝒂𝒋
+𝒒𝒋
+𝒒𝒋,𝟐𝒒𝒋,𝟏 𝒌𝒋,𝟐𝒌𝒋,𝟏 𝒗𝒋,𝟐𝒗𝒋,𝟏
+𝒃𝒊,𝟏
+𝒒𝒊 = 𝑊𝑞𝒂𝒊
+𝒒𝒊,𝟏 = 𝑊𝑞,1𝒒𝒊
+𝒒𝒊,𝟐 = 𝑊𝑞,2𝒒𝒊
+26
+Different types of relevance 
+Multi-head Self-attention
+𝒃𝒊,𝟏
+𝒃𝒊,𝟐
+𝒌𝒊 𝒗𝒊
+𝒂𝒊
+𝒒𝒊
+𝒒𝒊,𝟐𝒒𝒊,𝟏 𝒌𝒊,𝟐𝒌𝒊,𝟏 𝒗𝒊,𝟐𝒗𝒊,𝟏
+𝒌𝒋 𝒗𝒋
+𝒂𝒋
+𝒒𝒋
+𝒒𝒋,𝟐𝒒𝒋,𝟏 𝒌𝒋,𝟐𝒌𝒋,𝟏 𝒗𝒋,𝟐𝒗𝒋,𝟏
+𝒒𝒊 = 𝑊𝑞𝒂𝒊
+𝒒𝒊,𝟏 = 𝑊𝑞,1𝒒𝒊
+𝒒𝒊,𝟐 = 𝑊𝑞,2𝒒𝒊
+27(2 heads as example)
+Different types of relevance 
+Multi-head Self-attention
+𝒃𝒊,𝟏
+𝒃𝒊,𝟐
+𝒃𝒊 = 𝑊𝑂
+𝒌𝒊 𝒗𝒊
+𝒂𝒊
+𝒒𝒊
+𝒒𝒊,𝟐𝒒𝒊,𝟏 𝒌𝒊,𝟐𝒌𝒊,𝟏 𝒗𝒊,𝟐𝒗𝒊,𝟏
+𝒌𝒋 𝒗𝒋
+𝒂𝒋
+𝒒𝒋
+𝒒𝒋,𝟐𝒒𝒋,𝟏 𝒌𝒋,𝟐𝒌𝒋,𝟏 𝒗𝒋,𝟐𝒗𝒋,𝟏
+𝒒𝒊 = 𝑊𝑞𝒂𝒊
+28(2 heads as example)
+Different types of relevance 
+Positional Encoding 
+• No position information in 
+self-attention.
+• Each position has a unique 
+positional vector 𝑒𝑖
+• hand-crafted
+• learned from data
+𝒗𝒊𝒌𝒊𝒒𝒊
+𝒂𝒊𝒆𝒊 +
+Each column represents a 
+positional vector 𝑒𝑖
+-1 1
+29
+https://arxiv.org/abs/
+2003.09229
+30
+Many applications …
+Transformer BERT
+https://arxiv.org/abs/1706.03762 https://arxiv.org/abs/1810.04805
+Widely used in Natural Langue Processing (NLP)! 31
+Self-attention for Speech
+Truncated Self-attention
+𝒃𝟒𝒃𝟑𝒃𝟐𝒃𝟏
+𝒂𝟒𝒂𝟑𝒂𝟐𝒂𝟏
+Attention in a range
+Speech is a very long 
+vector sequence.
+ 10ms
+A′
+Attention 
+Matrix
+If input sequence is length L
+L
+L
+https://arxiv.org/abs/1910.12977
+32
+Self-attention for Image
+Source of image: https://www.researchgate.net/figure/Color-image-representation-and-
+RGB-matrix_fig15_282798184
+This is a vector.An image can also be 
+considered as a vector set.
+33
+https://arxiv.org/abs/1805.08318
+Self-Attention GAN
+DEtection Transformer (DETR)
+https://arxiv.org/abs/2005.1287234
+Self-attention v.s. CNN
+35
+1 0 0 0 0 1
+0 1 0 0 1 0
+0 0 1 1 0 0
+1 0 0 0 1 0
+0 1 0 0 1 0
+0 0 1 0 1 0
+1 0 0 0 0 1
+0 1 0 0 1 0
+0 0 1 1 0 0
+1 0 0 0 1 0
+0 1 0 0 1 0
+0 0 1 0 1 0
+1 0 0 0 0 1
+0 1 0 0 1 0
+0 0 1 1 0 0
+1 0 0 0 1 0
+0 1 0 0 1 0
+0 0 1 0 1 0
+CNN: self-attention that can 
+only attends in a receptive field
+Self-attention: CNN with 
+learnable receptive field
+➢ CNN is simplified self-attention. 
+➢ Self-attention is the complex 
+version of CNN.
+Self-attention v.s. CNN
+On the Relationship between Self-Attention and 
+Convolutional Layers https://arxiv.org/abs/1911.03584
+CNN
+Self-attention
+36
+Self-attention v.s. CNN
+https://arxiv.org/pdf/2010.11929.pdf
+An Image is Worth 16x16 Words: Transformers for Image 
+Recognition at Scale
+Self-attention
+CNN
+Good for less data
+Good for more data
+37
+Self-attention 
+v.s. RNN
+RNN
+FC
+RNN
+FC
+RNN
+FC
+RNN
+FC
+parallel
+nonparallel
+hard to 
+consider
+easy to 
+consider
+https://arxiv.org/abs/2006.16236
+Transformers are RNNs: Fast Autoregressive Transformers with Linear 
+Attention
+Self-attention
+memory
+38
+Recurrent Neural Network (RNN)
+To learn more about RNN ……
+39
+https://youtu.be/xCGidAeyS4M
+(in Mandarin)
+https://youtu.be/Jjy6ER0bHv8
+(in English)
+
+Self-attention for Graph
+Consider edge: only attention 
+to connected nodes
+Attention Matrix
+1
+8
+2
+3
+5
+4
+6
+7
+1
+2
+3
+4
+5
+6
+7
+8
+1 2 3 4 5 6 7 8
+This is one type of Graph Neural Network (GNN).
+40
+0
+Self-attention for Graph
+• To learn more about GNN …
+https://youtu.be/eybCCtNKwzA https://youtu.be/M9ht8vsVEw8
+(in Mandarin) (in Mandarin)
+41
+To Learn More …
+https://arxiv.org/abs/2009.06732
+Efficient Transformers: A Survey
+Long Range Arena: A 
+Benchmark for Efficient 
+Transformers
+https://arxiv.org/abs/2011.04006
+42
