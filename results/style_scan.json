@@ -1,0 +1,122 @@
+{
+ "A": {
+  "counts": {
+   "latin_gloss": 1,
+   "latin_bare": 1,
+   "kana_residue": 3,
+   "files": 30
+  },
+  "examples": [
+   {
+    "file": "hig02_B12__N0",
+    "kind": "kana_residue",
+    "text": "び",
+    "ctx": "會來到參道廣場。廣場上有著以名為「揚巻結び」的特殊形狀紮成的注連繩。平岡神社的主祭"
+   },
+   {
+    "file": "hig02_B12__N2",
+    "kind": "kana_residue",
+    "text": "お",
+    "ctx": "神事」。一開始，宮司神事」祭典。別名為「お笑い神事」。笑神事」。首先由—"
+   },
+   {
+    "file": "hig02_B12__N2",
+    "kind": "kana_residue",
+    "text": "い",
+    "ctx": "」。一開始，宮司神事」祭典。別名為「お笑い神事」。笑神事」。首先由—"
+   },
+   {
+    "file": "ikeda02__N2",
+    "kind": "latin_bare",
+    "text": "Down",
+    "ctx": "Down的開始提出建立主場這個提案的是後來成為阪"
+   },
+   {
+    "file": "sakai05__N0",
+    "kind": "latin_gloss",
+    "text": "Wabi-sabi",
+    "ctx": "的恩師武野紹鷗所喜愛的椿之井。你聽說過「Wabi-sabi」（侘寂）這個詞嗎？原本是與和歌相關的詞"
+   }
+  ]
+ },
+ "C": {
+  "counts": {
+   "latin_gloss": 1,
+   "latin_bare": 0,
+   "kana_residue": 0,
+   "files": 30
+  },
+  "examples": [
+   {
+    "file": "sakai05__N2",
+    "kind": "latin_gloss",
+    "text": "Wabi-Sabi",
+    "ctx": "竹野女王所鍾愛的椿之井戶。你聽過「侘寂（Wabi-Sabi）」這個詞嗎？這原本是與和歌相關的歌曲。"
+   }
+  ]
+ },
+ "Cplus": {
+  "counts": {
+   "latin_gloss": 2,
+   "latin_bare": 2,
+   "kana_residue": 5,
+   "files": 30
+  },
+  "examples": [
+   {
+    "file": "hig01_A1__N3",
+    "kind": "kana_residue",
+    "text": "オバレン",
+    "ctx": "石切劔箭神社繪馬殿。オバレン的門。首先試著投擲什麼吧。可以看見雄偉的"
+   },
+   {
+    "file": "hig01_A1__N3",
+    "kind": "kana_residue",
+    "text": "ニギハヤヒ",
+    "ctx": "間，從天照大御神那裡獲得並來訪的饒速日（ニギハヤヒ）之力。也被說是與在這一天建立的一族——"
+   },
+   {
+    "file": "hig01_A1__N3",
+    "kind": "kana_residue",
+    "text": "モス",
+    "ctx": "尊便加入了長髓彥的部下。在那裡被留給了拉モス（拉莫斯）的比賣神，之後彷彿櫻花之時未曾"
+   },
+   {
+    "file": "hig02_B12__N1",
+    "kind": "latin_bare",
+    "text": "investment",
+    "ctx": "便一直舉行的祭祀儀式。因此，天兒屋根命 investment 成為了日本最初舉行祭祀、並掌管祭祀的神"
+   },
+   {
+    "file": "hig02_B12__N3",
+    "kind": "kana_residue",
+    "text": "づくり",
+    "ctx": "從參道延伸到廣場。廣場上設有被稱為「揚巻づくり」（揚卷結）的雛形。\n\n繫著注連繩的枚岡"
+   },
+   {
+    "file": "hig02_B12__N4",
+    "kind": "latin_bare",
+    "text": "investment",
+    "ctx": "便流傳至今的祭祀儀式。因此，天兒屋根命 investment 成為了日本最初舉行祭祀、掌管神事的神明"
+   },
+   {
+    "file": "ikeda03__N4",
+    "kind": "kana_residue",
+    "text": "イトや",
+    "ctx": "店街。昭和初期，北攝地區的第一家百貨公司イトや百貨店誕生了，這是一棟率先採用現代洋風形"
+   },
+   {
+    "file": "sakai05__N2",
+    "kind": "latin_gloss",
+    "text": "Wabi-sabi",
+    "ctx": "紹鷗所喜愛的「椿之井戶」。你聽過「侘寂（Wabi-sabi）」這個詞嗎？原本是與和歌相關的曲子。"
+   },
+   {
+    "file": "sakai05__N3",
+    "kind": "latin_gloss",
+    "text": "Wabi-Sabi",
+    "ctx": "野紹鷗所喜愛的「椿之井」。你聽過「侘寂（Wabi-Sabi）」這個詞嗎？首先是和風的。"
+   }
+  ]
+ }
+}

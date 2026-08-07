@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
-ARMS = ["A", "C", "Cplus"]
+ARMS = ["A", "C", "Cplus", "Cb", "Cbplus"]
 BOOT = 10000
 SEED = 12345
 
@@ -87,7 +87,19 @@ def main():
             f"{arm}|{cond}": round(v, 4)
             for (arm, cond), v in recall_matrix(outcomes, key).items()
         }
+    present = {o["arm"] for o in outcomes}
     summary["deltas"] = {}
+    # realtime-vs-batch penalty and dictionary value under batch
+    if {"Cb", "Cbplus"} <= present:
+        summary["batch"] = {
+            cond: {
+                "Cb_minus_C_tolerant": bootstrap_delta(outcomes, "Cb", "C", cond, "tolerant"),
+                "Cbplus_minus_Cplus_tolerant": bootstrap_delta(outcomes, "Cbplus", "Cplus", cond, "tolerant"),
+                "Cbplus_minus_Cb_tolerant": bootstrap_delta(outcomes, "Cbplus", "Cb", cond, "tolerant"),
+                "A_minus_Cbplus_tolerant": bootstrap_delta(outcomes, "A", "Cbplus", cond, "tolerant"),
+            }
+            for cond in CONDS
+        }
     for cond in CONDS:
         summary["deltas"][cond] = {
             "Cplus_minus_C_tolerant": bootstrap_delta(outcomes, "Cplus", "C", cond, "tolerant"),
