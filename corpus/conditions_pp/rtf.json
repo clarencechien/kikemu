@@ -1,0 +1,14 @@
+{
+ "webrtc": {
+  "rtf_mean": 0.001,
+  "rtf_max": 0.002
+ },
+ "sg": {
+  "rtf_mean": 0.028,
+  "rtf_max": 0.042
+ },
+ "blend": {
+  "rtf_mean": 0.002,
+  "rtf_max": 0.002
+ }
+}
