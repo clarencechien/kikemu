@@ -42,10 +42,12 @@ def transcription_config(arm: str, seg: str) -> dict:
     lang, vocab_kind = ARMS[arm]
     cfg = {
         "language": lang,
-        "operating_point": "enhanced",
         "enable_partials": True,
-        "max_delay": 2.0,
     }
+    if lang != "multi":
+        # multi rejects operating_point and max_delay; use its defaults
+        cfg["operating_point"] = "enhanced"
+        cfg["max_delay"] = 2.0
     if vocab_kind == "domain":
         cfg["additional_vocab"] = json.loads((VOCAB / "domain.json").read_text())
     elif vocab_kind == "slides":
