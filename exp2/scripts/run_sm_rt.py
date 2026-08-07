@@ -28,13 +28,17 @@ URL = "wss://eu2.rt.speechmatics.com/v2"
 CHUNK_S = 0.5
 SR = 16000
 
+# NOTE: handoff-v2 called for language=multi; on this account the realtime
+# multi model (melia-1) returns "currently not supported". The dedicated
+# Chinese-English bilingual pack `cmn_en` IS available and matches the
+# code-switching scenario directly, so the second language mode is cmn_en.
 ARMS = {
     "X_cmn": ("cmn", None),
-    "X_multi": ("multi", None),
+    "X_bi": ("cmn_en", None),
     "Xdom_cmn": ("cmn", "domain"),
-    "Xdom_multi": ("multi", "domain"),
+    "Xdom_bi": ("cmn_en", "domain"),
     "Xsli_cmn": ("cmn", "slides"),
-    "Xsli_multi": ("multi", "slides"),
+    "Xsli_bi": ("cmn_en", "slides"),
 }
 
 
@@ -43,11 +47,9 @@ def transcription_config(arm: str, seg: str) -> dict:
     cfg = {
         "language": lang,
         "enable_partials": True,
+        "operating_point": "enhanced",
+        "max_delay": 2.0,
     }
-    if lang != "multi":
-        # multi rejects operating_point and max_delay; use its defaults
-        cfg["operating_point"] = "enhanced"
-        cfg["max_delay"] = 2.0
     if vocab_kind == "domain":
         cfg["additional_vocab"] = json.loads((VOCAB / "domain.json").read_text())
     elif vocab_kind == "slides":
