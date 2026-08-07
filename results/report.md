@@ -28,6 +28,9 @@ C+ 4.7 > C 4.5 > A 3.6,A 的邊聽邊譯會精簡丟細節)—— 三個面向 C
   「定稿後整段翻譯」更容易丟細節(附可比性註記,見 §2.5.1)
 - 台灣用語:三 arm 譯文的中國大陸用語與簡體字命中皆為 **0**
 - 只有在「保證 line-in 乾淨音源」的場景,A 才是可以考慮的簡化選項
+- 追加對照(§2.8):詞表邊際成本約 **$0.035/景點**(一次性、零延遲代價);
+  **即時串流相對 batch 幾乎沒有準確度損失**(差距 −0.03~+0.03,CI 含 0);
+  **晶晶體不是問題**(90 份譯文僅 3 處裸露英文,且無一是風格問題)
 
 ---
 
@@ -92,6 +95,7 @@ Handoff 警告的三個陷阱**全部命中**,處理如下:
 | A | Gemini Live(`gemini-3.1-flash-live-preview`,原生語音) | 同一模型一路到底 | `inputAudioTranscription` 取得日文聽寫供評分;`outputAudioTranscription` 為譯文 |
 | C | Speechmatics 即時 WS(ja, enhanced, partials) | Gemini 3.5 Flash | 不掛詞典 |
 | C+ | 同 C + `additional_vocab`(per-domain 詞典) | 同 C | 詞典見 1.5 |
+| Cb / Cb+ | Speechmatics **batch**(−/+ 詞典) | — | 追加對照組,見 §2.8.2 |
 | D | Deepgram | — | **未執行**:環境無 Deepgram 帳號 |
 
 - 兩個 arm 都以**真實速度(1×)**推流 0.5s PCM chunk —— 延遲與 partial 行為即實況
