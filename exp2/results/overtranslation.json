@@ -763,5 +763,1171 @@
    "no_translate": [],
    "may_translate": []
   }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 19,
+  "may_translate_translated_away": 4,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 6,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis",
+    "positive",
+    "negative"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "application",
+    "model",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 11,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "z sample",
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 9,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "z sample"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 19,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "machine",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 12,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "vector",
+    "one-hot vector",
+    "sequence",
+    "regression",
+    "classification",
+    "scalar",
+    "application",
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis",
+    "positive",
+    "negative"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 11,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 7,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network",
+    "z sample",
+    "network input",
+    "binary",
+    "random variable",
+    "function",
+    "output"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 8,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network",
+    "distribution",
+    "z sample",
+    "network input",
+    "binary",
+    "random variable",
+    "function",
+    "output"
+   ]
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 9,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xdom_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 18,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "machine",
+    "model"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 19,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "machine",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 2,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "sentence",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "z sample",
+    "network input"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 8,
+  "may_translate_translated_away": 4,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network",
+    "z sample",
+    "network input",
+    "output"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 18,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "application",
+    "machine",
+    "model"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 19,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "machine",
+    "model",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 20,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "machine",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 2,
+  "no_translate_translated_away": 1,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [
+    "POS tagging POS tagging"
+   ],
+   "may_translate": [
+    "sentence",
+    "sentiment analysis sentiment analysis"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 8,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "network",
+    "distribution",
+    "z sample",
+    "network input",
+    "binary",
+    "random variable",
+    "function",
+    "output"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 10,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 8,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_bi",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 1,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 13,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sentence",
+    "positive"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 15,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 14,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "application",
+    "sentence",
+    "model"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 9,
+  "may_translate_translated_away": 3,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "sequence",
+    "application",
+    "model"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 6,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "output"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 7,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "z sample"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 4,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 4,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P0",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 2,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M0",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 13,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M1",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 15,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "application",
+    "sentence"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M2",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 14,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "application"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S1",
+  "cond": "M3",
+  "no_translate_heard": 1,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 9,
+  "may_translate_translated_away": 2,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "application",
+    "model"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M0",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 6,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M1",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 7,
+  "may_translate_translated_away": 1,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": [
+    "z sample"
+   ]
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M2",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 4,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S2",
+  "cond": "M3",
+  "no_translate_heard": 0,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 4,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M0",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M1",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M2",
+  "no_translate_heard": 3,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
+ },
+ {
+  "arm": "Xsli_cmn",
+  "prompt": "P1",
+  "seg": "S3",
+  "cond": "M3",
+  "no_translate_heard": 2,
+  "no_translate_translated_away": 0,
+  "may_translate_heard": 0,
+  "may_translate_translated_away": 0,
+  "gone_terms": {
+   "no_translate": [],
+   "may_translate": []
+  }
  }
 ]
