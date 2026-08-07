@@ -1,0 +1,7 @@
+# Audio files are NOT redistributed (handoff §2 授權): keep them out of git.
+corpus/raw/
+corpus/wav/
+corpus/conditions/*.wav
+corpus/noise_src/
+corpus/pages/
+__pycache__/

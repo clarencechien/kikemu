@@ -1,0 +1,2751 @@
+{
+ "higashiosaka": [
+  {
+   "content": "東大阪市",
+   "sounds_like": [
+    "ひがしおおさかし"
+   ]
+  },
+  {
+   "content": "石切劔箭神社",
+   "sounds_like": [
+    "いしきりつるぎやじんじゃ"
+   ]
+  },
+  {
+   "content": "枚岡神社",
+   "sounds_like": [
+    "ひらおかじんじゃ"
+   ]
+  },
+  {
+   "content": "生駒山地",
+   "sounds_like": [
+    "いこまさんち"
+   ]
+  },
+  {
+   "content": "東大阪市花園ラグビー場",
+   "sounds_like": [
+    "ひがしおおさかしはなぞのらぐびーじょう"
+   ]
+  },
+  {
+   "content": "長瀬川",
+   "sounds_like": [
+    "ながせがわ"
+   ]
+  },
+  {
+   "content": "恩智川",
+   "sounds_like": [
+    "おんぢがわ"
+   ]
+  },
+  {
+   "content": "玉串川",
+   "sounds_like": [
+    "たまくしがわ"
+   ]
+  },
+  {
+   "content": "第二寝屋川",
+   "sounds_like": [
+    "だいにねやがわ"
+   ]
+  },
+  {
+   "content": "河内国",
+   "sounds_like": [
+    "かわちのくに"
+   ]
+  },
+  {
+   "content": "物部守屋",
+   "sounds_like": [
+    "もののべのもりや"
+   ]
+  },
+  {
+   "content": "衣摺",
+   "sounds_like": [
+    "きずり"
+   ]
+  },
+  {
+   "content": "難波津",
+   "sounds_like": [
+    "なにわづ"
+   ]
+  },
+  {
+   "content": "高野街道",
+   "sounds_like": [
+    "こうやかいどう"
+   ]
+  },
+  {
+   "content": "水走氏",
+   "sounds_like": [
+    "みずはやし"
+   ]
+  },
+  {
+   "content": "若江城",
+   "sounds_like": [
+    "わかえじょう"
+   ]
+  },
+  {
+   "content": "遊佐河内守長教",
+   "sounds_like": [
+    "ゆさかわちのかみながのり"
+   ]
+  },
+  {
+   "content": "三好義継",
+   "sounds_like": [
+    "みよしよしつぐ"
+   ]
+  },
+  {
+   "content": "若江三人衆",
+   "sounds_like": [
+    "わかえさんにんしゅう"
+   ]
+  },
+  {
+   "content": "木村重成",
+   "sounds_like": [
+    "きむらしげなり"
+   ]
+  },
+  {
+   "content": "中甚兵衛",
+   "sounds_like": [
+    "なかじんべえ"
+   ]
+  },
+  {
+   "content": "深野池",
+   "sounds_like": [
+    "ふかのいけ"
+   ]
+  },
+  {
+   "content": "新開池",
+   "sounds_like": [
+    "しんかいち",
+    "しんひらきいけ"
+   ]
+  },
+  {
+   "content": "布施市",
+   "sounds_like": [
+    "ふせし"
+   ]
+  },
+  {
+   "content": "河内市",
+   "sounds_like": [
+    "かわちし"
+   ]
+  },
+  {
+   "content": "枚岡市",
+   "sounds_like": [
+    "ひらおかし"
+   ]
+  },
+  {
+   "content": "トライくん",
+   "sounds_like": [
+    "とらいくん"
+   ]
+  },
+  {
+   "content": "いしキリンちゃん",
+   "sounds_like": [
+    "いしきりんちゃん"
+   ]
+  },
+  {
+   "content": "荒本駅",
+   "sounds_like": [
+    "あらもとえき"
+   ]
+  },
+  {
+   "content": "瓢簞山駅",
+   "sounds_like": [
+    "ひょうたんやまえき"
+   ]
+  },
+  {
+   "content": "長田駅",
+   "sounds_like": [
+    "ながたえき"
+   ]
+  },
+  {
+   "content": "高井田中央駅",
+   "sounds_like": [
+    "たかいだちゅうおうえき"
+   ]
+  },
+  {
+   "content": "JR河内永和駅",
+   "sounds_like": [
+    "じぇいあーるかわちえいわえき"
+   ]
+  },
+  {
+   "content": "JR俊徳道駅",
+   "sounds_like": [
+    "じぇいあーるしゅんとくみちえき"
+   ]
+  },
+  {
+   "content": "JR長瀬駅",
+   "sounds_like": [
+    "じぇいあーるながせえき"
+   ]
+  },
+  {
+   "content": "衣摺加美北駅",
+   "sounds_like": [
+    "きずりかみきたえき"
+   ]
+  },
+  {
+   "content": "徳庵駅",
+   "sounds_like": [
+    "とくあんえき"
+   ]
+  },
+  {
+   "content": "鴻池新田駅",
+   "sounds_like": [
+    "こうのいけしんでんえき"
+   ]
+  },
+  {
+   "content": "布施駅",
+   "sounds_like": [
+    "ふせえき"
+   ]
+  },
+  {
+   "content": "河内永和駅",
+   "sounds_like": [
+    "かわちえいわえき"
+   ]
+  },
+  {
+   "content": "河内小阪駅",
+   "sounds_like": [
+    "かわちこさかえき"
+   ]
+  },
+  {
+   "content": "八戸ノ里駅",
+   "sounds_like": [
+    "やえのさとえき"
+   ]
+  },
+  {
+   "content": "若江岩田駅",
+   "sounds_like": [
+    "わかえいわたえき"
+   ]
+  },
+  {
+   "content": "河内花園駅",
+   "sounds_like": [
+    "かわちはなぞのえき"
+   ]
+  },
+  {
+   "content": "東花園駅",
+   "sounds_like": [
+    "ひがしはなぞのえき"
+   ]
+  },
+  {
+   "content": "枚岡駅",
+   "sounds_like": [
+    "ひらおかえき"
+   ]
+  },
+  {
+   "content": "額田駅",
+   "sounds_like": [
+    "ぬかたえき"
+   ]
+  },
+  {
+   "content": "石切駅",
+   "sounds_like": [
+    "いしきりえき"
+   ]
+  },
+  {
+   "content": "俊徳道駅",
+   "sounds_like": [
+    "しゅんとくみちえき"
+   ]
+  },
+  {
+   "content": "弥刀駅",
+   "sounds_like": [
+    "みとえき"
+   ]
+  },
+  {
+   "content": "新石切駅",
+   "sounds_like": [
+    "しんいしきりえき"
+   ]
+  },
+  {
+   "content": "司馬遼太郎記念館",
+   "sounds_like": [
+    "しばりょうたろうきねんかん"
+   ]
+  },
+  {
+   "content": "司馬遼太郎",
+   "sounds_like": [
+    "しばりょうたろう"
+   ]
+  },
+  {
+   "content": "樟徳館",
+   "sounds_like": [
+    "しょうとくかん"
+   ]
+  },
+  {
+   "content": "田辺聖子文学館",
+   "sounds_like": [
+    "たなべせいこぶんがくかん"
+   ]
+  },
+  {
+   "content": "東大阪市文化創造館",
+   "sounds_like": [
+    "ひがしおおさかしぶんかそうぞうかん"
+   ]
+  },
+  {
+   "content": "瓢箪山稲荷神社",
+   "sounds_like": [
+    "ひょうたんやまいなりじんじゃ"
+   ]
+  },
+  {
+   "content": "往生院六萬寺",
+   "sounds_like": [
+    "おうじょういんろくまんじ"
+   ]
+  },
+  {
+   "content": "鴻池新田会所",
+   "sounds_like": [
+    "こうのいけしんでんかいしょ"
+   ]
+  },
+  {
+   "content": "河内寺廃寺跡",
+   "sounds_like": [
+    "かわちでらはいじあと"
+   ]
+  },
+  {
+   "content": "池島・福万寺遺跡",
+   "sounds_like": [
+    "いけしまふくまんじいせき"
+   ]
+  },
+  {
+   "content": "瓜生堂遺跡",
+   "sounds_like": [
+    "うりゅうどういせき"
+   ]
+  },
+  {
+   "content": "松原宿跡",
+   "sounds_like": [
+    "まつばらしゅくあと"
+   ]
+  },
+  {
+   "content": "芝山古墳",
+   "sounds_like": [
+    "しばやまこふん"
+   ]
+  },
+  {
+   "content": "山畑古墳群",
+   "sounds_like": [
+    "やまはたこふんぐん"
+   ]
+  },
+  {
+   "content": "二本松古墳",
+   "sounds_like": [
+    "ないほんまつこふん",
+    "にほんまつこふん"
+   ]
+  },
+  {
+   "content": "日下貝塚",
+   "sounds_like": [
+    "くさかかいづか"
+   ]
+  },
+  {
+   "content": "瓢箪山商店街",
+   "sounds_like": [
+    "ひょうたんやましょうてんがい"
+   ]
+  },
+  {
+   "content": "小阪城",
+   "sounds_like": [
+    "こさかじょう"
+   ]
+  },
+  {
+   "content": "蘇我理右衛門",
+   "sounds_like": [
+    "そがりえもん"
+   ]
+  },
+  {
+   "content": "水走季忠",
+   "sounds_like": [
+    "みずはやすえただ"
+   ]
+  },
+  {
+   "content": "饒速日尊",
+   "sounds_like": [
+    "にぎはやひのみこと"
+   ]
+  },
+  {
+   "content": "可美真手命",
+   "sounds_like": [
+    "うましまでのみこと"
+   ]
+  },
+  {
+   "content": "石切大明神",
+   "sounds_like": [
+    "いしきりだいみょうじん"
+   ]
+  },
+  {
+   "content": "木積家",
+   "sounds_like": [
+    "こづみけ"
+   ]
+  },
+  {
+   "content": "遺書伝来記",
+   "sounds_like": [
+    "いしょでんらいき"
+   ]
+  },
+  {
+   "content": "天台宗法通寺",
+   "sounds_like": [
+    "てんだいしゅうほうつうじ"
+   ]
+  },
+  {
+   "content": "上之社",
+   "sounds_like": [
+    "かみのしゃ"
+   ]
+  },
+  {
+   "content": "神道石切教",
+   "sounds_like": [
+    "しんとういしきりきょう"
+   ]
+  },
+  {
+   "content": "石切東京分祀",
+   "sounds_like": [
+    "いしきりとうきょうぶんし"
+   ]
+  },
+  {
+   "content": "穂積殿",
+   "sounds_like": [
+    "ほづみでん"
+   ]
+  },
+  {
+   "content": "穂積地蔵尊",
+   "sounds_like": [
+    "ほづみじぞうそん"
+   ]
+  },
+  {
+   "content": "菱水会館",
+   "sounds_like": [
+    "りょうすいかいかん"
+   ]
+  },
+  {
+   "content": "崇敬会館",
+   "sounds_like": [
+    "すうけいかいかん"
+   ]
+  },
+  {
+   "content": "絵馬殿",
+   "sounds_like": [
+    "えまでん"
+   ]
+  },
+  {
+   "content": "穂積神霊社",
+   "sounds_like": [
+    "ほづみしんれいしゃ"
+   ]
+  },
+  {
+   "content": "一願成霊尊",
+   "sounds_like": [
+    "いちがんせいれいそん"
+   ]
+  },
+  {
+   "content": "乾明神社",
+   "sounds_like": [
+    "いぬいめいじんじゃ"
+   ]
+  },
+  {
+   "content": "應壅乾幸護彦",
+   "sounds_like": [
+    "おうよういぬいこうごのみこと"
+   ]
+  },
+  {
+   "content": "神武社",
+   "sounds_like": [
+    "じんむしゃ"
+   ]
+  },
+  {
+   "content": "哮ヶ峰",
+   "sounds_like": [
+    "たけるがみね"
+   ]
+  },
+  {
+   "content": "高庭白庭の丘",
+   "sounds_like": [
+    "たかにわしらにわのおか"
+   ]
+  },
+  {
+   "content": "五社明神社",
+   "sounds_like": [
+    "ごしゃみょうじんじゃ"
+   ]
+  },
+  {
+   "content": "水神社",
+   "sounds_like": [
+    "すいじんじゃ"
+   ]
+  },
+  {
+   "content": "罔象女神",
+   "sounds_like": [
+    "みずはのめのかみ"
+   ]
+  },
+  {
+   "content": "天水分神",
+   "sounds_like": [
+    "あめのみくまりのかみ"
+   ]
+  },
+  {
+   "content": "石切登美霊社",
+   "sounds_like": [
+    "いしきりとみれいしゃ"
+   ]
+  },
+  {
+   "content": "三炊屋媛",
+   "sounds_like": [
+    "みかしきやひめ"
+   ]
+  },
+  {
+   "content": "八代龍王社",
+   "sounds_like": [
+    "はちだいりゅうおうしゃ"
+   ]
+  },
+  {
+   "content": "婦道神社",
+   "sounds_like": [
+    "ふどうじんじゃ"
+   ]
+  },
+  {
+   "content": "御炊屋媛",
+   "sounds_like": [
+    "みかしきやひめ"
+   ]
+  },
+  {
+   "content": "弟橘姫命",
+   "sounds_like": [
+    "おとたちばなひめのみこと"
+   ]
+  },
+  {
+   "content": "石切丸",
+   "sounds_like": [
+    "いしきりまる"
+   ]
+  },
+  {
+   "content": "小狐丸",
+   "sounds_like": [
+    "こぎつねまる"
+   ]
+  },
+  {
+   "content": "三条宗近",
+   "sounds_like": [
+    "さんじょうむねちか"
+   ]
+  },
+  {
+   "content": "御湯神楽",
+   "sounds_like": [
+    "おゆかぐら"
+   ]
+  },
+  {
+   "content": "年越大祓式",
+   "sounds_like": [
+    "としこしのおおはらえしき"
+   ]
+  },
+  {
+   "content": "長髄彦",
+   "sounds_like": [
+    "ながすねひこ"
+   ]
+  },
+  {
+   "content": "出雲井町",
+   "sounds_like": [
+    "いずもいちょう"
+   ]
+  },
+  {
+   "content": "神津嶽",
+   "sounds_like": [
+    "かみつだけ"
+   ]
+  },
+  {
+   "content": "天児屋根命",
+   "sounds_like": [
+    "あめのこやねのみこと"
+   ]
+  },
+  {
+   "content": "比売神",
+   "sounds_like": [
+    "ひめがみ"
+   ]
+  },
+  {
+   "content": "比売御神",
+   "sounds_like": [
+    "ひめみかみ"
+   ]
+  },
+  {
+   "content": "春日大社",
+   "sounds_like": [
+    "かすがたいしゃ"
+   ]
+  },
+  {
+   "content": "元春日",
+   "sounds_like": [
+    "もとかすが"
+   ]
+  },
+  {
+   "content": "春日四連枚岡造",
+   "sounds_like": [
+    "かすがよんれんひらおかづくり"
+   ]
+  },
+  {
+   "content": "粥占神事",
+   "sounds_like": [
+    "かゆうらしんじ"
+   ]
+  },
+  {
+   "content": "注連縄掛神事",
+   "sounds_like": [
+    "しめかけしんじ"
+   ]
+  },
+  {
+   "content": "経津主命",
+   "sounds_like": [
+    "ふつぬしのみこと"
+   ]
+  },
+  {
+   "content": "武甕槌命",
+   "sounds_like": [
+    "たけみかづちのみこと"
+   ]
+  },
+  {
+   "content": "天美豆玉照比売命",
+   "sounds_like": [
+    "あめのみづたまてるひめのみこと"
+   ]
+  },
+  {
+   "content": "弥加布都命神",
+   "sounds_like": [
+    "みかふつのみことのかみ"
+   ]
+  },
+  {
+   "content": "比古佐自布都命神",
+   "sounds_like": [
+    "ひこさじふつのみことのかみ"
+   ]
+  },
+  {
+   "content": "天種子命",
+   "sounds_like": [
+    "あめのたねこのみこと"
+   ]
+  },
+  {
+   "content": "菟狭国造",
+   "sounds_like": [
+    "うさのくにのみやつこ"
+   ]
+  },
+  {
+   "content": "菟狭津媛",
+   "sounds_like": [
+    "うさつひめ"
+   ]
+  },
+  {
+   "content": "豊浦郷",
+   "sounds_like": [
+    "とようらごう"
+   ]
+  },
+  {
+   "content": "恩智神社",
+   "sounds_like": [
+    "おんぢじんじゃ"
+   ]
+  },
+  {
+   "content": "弓削神社",
+   "sounds_like": [
+    "ゆげじんじゃ"
+   ]
+  },
+  {
+   "content": "水走有忠",
+   "sounds_like": [
+    "みずはやありただ"
+   ]
+  },
+  {
+   "content": "若宮社",
+   "sounds_like": [
+    "わかみやしゃ"
+   ]
+  },
+  {
+   "content": "天押雲根命",
+   "sounds_like": [
+    "あめのおしくもねのみこと",
+    "あめのおしくねのみこと"
+   ]
+  },
+  {
+   "content": "天神地祇社",
+   "sounds_like": [
+    "てんじんちぎしゃ"
+   ]
+  },
+  {
+   "content": "お笑い神事",
+   "sounds_like": [
+    "おわらいしんじ"
+   ]
+  },
+  {
+   "content": "弥刀",
+   "sounds_like": [
+    "みと"
+   ]
+  },
+  {
+   "content": "友井",
+   "sounds_like": [
+    "ともい"
+   ]
+  },
+  {
+   "content": "小若江",
+   "sounds_like": [
+    "こわかえ"
+   ]
+  },
+  {
+   "content": "大蓮",
+   "sounds_like": [
+    "おおはす"
+   ]
+  },
+  {
+   "content": "意岐部",
+   "sounds_like": [
+    "おきべ"
+   ]
+  },
+  {
+   "content": "盾津",
+   "sounds_like": [
+    "たてつ"
+   ]
+  },
+  {
+   "content": "三野郷",
+   "sounds_like": [
+    "さんのおごう"
+   ]
+  },
+  {
+   "content": "孔舎衙村",
+   "sounds_like": [
+    "くさかむら"
+   ]
+  }
+ ],
+ "sakai": [
+  {
+   "content": "堺市",
+   "sounds_like": [
+    "さかいし"
+   ]
+  },
+  {
+   "content": "菅原神社",
+   "sounds_like": [
+    "すがわらじんじゃ"
+   ]
+  },
+  {
+   "content": "ザビエル公園",
+   "sounds_like": [
+    "ざびえるこうえん"
+   ]
+  },
+  {
+   "content": "宿院頓宮",
+   "sounds_like": [
+    "しゅくいんとんぐう"
+   ]
+  },
+  {
+   "content": "千利休",
+   "sounds_like": [
+    "せんのりきゅう"
+   ]
+  },
+  {
+   "content": "百舌鳥・古市古墳群",
+   "sounds_like": [
+    "もずふるいちこふんぐん"
+   ]
+  },
+  {
+   "content": "大仙陵古墳",
+   "sounds_like": [
+    "だいせんりょうこふん"
+   ]
+  },
+  {
+   "content": "泉北",
+   "sounds_like": [
+    "せんぼく"
+   ]
+  },
+  {
+   "content": "堺奉行",
+   "sounds_like": [
+    "さかいぶぎょう"
+   ]
+  },
+  {
+   "content": "大小路",
+   "sounds_like": [
+    "おおしょうじ"
+   ]
+  },
+  {
+   "content": "泉北郡",
+   "sounds_like": [
+    "せんぼくぐん"
+   ]
+  },
+  {
+   "content": "南河内郡",
+   "sounds_like": [
+    "みなみかわちぐん"
+   ]
+  },
+  {
+   "content": "摂津国",
+   "sounds_like": [
+    "せっつのくに"
+   ]
+  },
+  {
+   "content": "和泉国",
+   "sounds_like": [
+    "いずみのくに"
+   ]
+  },
+  {
+   "content": "河内国",
+   "sounds_like": [
+    "かわちのくに"
+   ]
+  },
+  {
+   "content": "三国ヶ丘",
+   "sounds_like": [
+    "みくにがおか"
+   ]
+  },
+  {
+   "content": "蘇鉄山",
+   "sounds_like": [
+    "そてつやま"
+   ]
+  },
+  {
+   "content": "信太山",
+   "sounds_like": [
+    "しのだやま"
+   ]
+  },
+  {
+   "content": "陶器山",
+   "sounds_like": [
+    "とうきやま"
+   ]
+  },
+  {
+   "content": "石津川",
+   "sounds_like": [
+    "いしづがわ"
+   ]
+  },
+  {
+   "content": "西除川",
+   "sounds_like": [
+    "にしよけがわ"
+   ]
+  },
+  {
+   "content": "東除川",
+   "sounds_like": [
+    "ひがしよけがわ"
+   ]
+  },
+  {
+   "content": "土居川",
+   "sounds_like": [
+    "どいがわ"
+   ]
+  },
+  {
+   "content": "光明池",
+   "sounds_like": [
+    "こうみょういけ"
+   ]
+  },
+  {
+   "content": "家原大池",
+   "sounds_like": [
+    "えばらおおいけ"
+   ]
+  },
+  {
+   "content": "紀州街道",
+   "sounds_like": [
+    "きしゅうかいどう"
+   ]
+  },
+  {
+   "content": "熊野街道",
+   "sounds_like": [
+    "くまのかいどう"
+   ]
+  },
+  {
+   "content": "小栗街道",
+   "sounds_like": [
+    "おぐりかいどう"
+   ]
+  },
+  {
+   "content": "鳳",
+   "sounds_like": [
+    "おおとり"
+   ]
+  },
+  {
+   "content": "大鳥大社",
+   "sounds_like": [
+    "おおとりたいしゃ"
+   ]
+  },
+  {
+   "content": "長尾街道",
+   "sounds_like": [
+    "ながおかいどう"
+   ]
+  },
+  {
+   "content": "竹内街道",
+   "sounds_like": [
+    "たけのうちかいどう"
+   ]
+  },
+  {
+   "content": "西高野街道",
+   "sounds_like": [
+    "にしこうやかいどう"
+   ]
+  },
+  {
+   "content": "上野芝",
+   "sounds_like": [
+    "うえのしば"
+   ]
+  },
+  {
+   "content": "百舌鳥古墳群",
+   "sounds_like": [
+    "もずこふんぐん"
+   ]
+  },
+  {
+   "content": "浜寺公園",
+   "sounds_like": [
+    "はまでらこうえん"
+   ]
+  },
+  {
+   "content": "堺泉北臨海工業地帯",
+   "sounds_like": [
+    "さかいせんぼくりんかいこうぎょうちいたい"
+   ]
+  },
+  {
+   "content": "泉北ニュータウン",
+   "sounds_like": [
+    "せんぼくにゅーたうん"
+   ]
+  },
+  {
+   "content": "陶邑窯跡群",
+   "sounds_like": [
+    "すえむらかまあとぐん"
+   ]
+  },
+  {
+   "content": "須恵器",
+   "sounds_like": [
+    "すえき"
+   ]
+  },
+  {
+   "content": "大美野田園都市",
+   "sounds_like": [
+    "おおみのでんえんとし"
+   ]
+  },
+  {
+   "content": "中百舌鳥",
+   "sounds_like": [
+    "なかもず"
+   ]
+  },
+  {
+   "content": "河内鋳物師",
+   "sounds_like": [
+    "かわちいもじ"
+   ]
+  },
+  {
+   "content": "四ツ池遺跡",
+   "sounds_like": [
+    "よついけいせき"
+   ]
+  },
+  {
+   "content": "仁徳天皇陵",
+   "sounds_like": [
+    "にんとくてんのうりょう"
+   ]
+  },
+  {
+   "content": "田裳見宿禰",
+   "sounds_like": [
+    "たもみのすくね"
+   ]
+  },
+  {
+   "content": "住吉三神",
+   "sounds_like": [
+    "すみよしさんじん"
+   ]
+  },
+  {
+   "content": "住吉大社",
+   "sounds_like": [
+    "すみよしたいしゃ"
+   ]
+  },
+  {
+   "content": "難波大道",
+   "sounds_like": [
+    "なにわおおみち"
+   ]
+  },
+  {
+   "content": "行基",
+   "sounds_like": [
+    "ぎょうき"
+   ]
+  },
+  {
+   "content": "境王子",
+   "sounds_like": [
+    "さかいおうじ"
+   ]
+  },
+  {
+   "content": "大鳥居王子",
+   "sounds_like": [
+    "おおとりいおうじ"
+   ]
+  },
+  {
+   "content": "ガスパル・ヴィレラ",
+   "sounds_like": [
+    "がすぱるびれら"
+   ]
+  },
+  {
+   "content": "ルイス・フロイス",
+   "sounds_like": [
+    "るいすふろいす"
+   ]
+  },
+  {
+   "content": "会合衆",
+   "sounds_like": [
+    "えごうしゅう",
+    "かいごうしゅう"
+   ]
+  },
+  {
+   "content": "今井宗久",
+   "sounds_like": [
+    "いまいそうきゅう"
+   ]
+  },
+  {
+   "content": "津田宗及",
+   "sounds_like": [
+    "つだそうぎゅう"
+   ]
+  },
+  {
+   "content": "堺空襲",
+   "sounds_like": [
+    "さかいくうしゅう"
+   ]
+  },
+  {
+   "content": "家原寺",
+   "sounds_like": [
+    "えばらじ"
+   ]
+  },
+  {
+   "content": "北畠顕家",
+   "sounds_like": [
+    "きたばたけあきいえ"
+   ]
+  },
+  {
+   "content": "高師直",
+   "sounds_like": [
+    "こうのもろなお"
+   ]
+  },
+  {
+   "content": "楠木正儀",
+   "sounds_like": [
+    "くすのきまさのり"
+   ]
+  },
+  {
+   "content": "山名氏清",
+   "sounds_like": [
+    "やまなうじきよ"
+   ]
+  },
+  {
+   "content": "大内義弘",
+   "sounds_like": [
+    "おおうちよしひろ"
+   ]
+  },
+  {
+   "content": "細川政元",
+   "sounds_like": [
+    "ほそかわまさもと"
+   ]
+  },
+  {
+   "content": "細川晴元",
+   "sounds_like": [
+    "ほそかわはるもと"
+   ]
+  },
+  {
+   "content": "三好元長",
+   "sounds_like": [
+    "みよしもとなが"
+   ]
+  },
+  {
+   "content": "三好長慶",
+   "sounds_like": [
+    "みよしながよし"
+   ]
+  },
+  {
+   "content": "松井友閑",
+   "sounds_like": [
+    "まついゆうかん"
+   ]
+  },
+  {
+   "content": "堺政所",
+   "sounds_like": [
+    "さかいまんどころ"
+   ]
+  },
+  {
+   "content": "大野治胤",
+   "sounds_like": [
+    "おおのはるたね"
+   ]
+  },
+  {
+   "content": "浅香山浄水場",
+   "sounds_like": [
+    "あさかやまじょうすいじょう"
+   ]
+  },
+  {
+   "content": "宿院停留場",
+   "sounds_like": [
+    "しゅくいんていりゅうじょう"
+   ]
+  },
+  {
+   "content": "大浜潮湯",
+   "sounds_like": [
+    "おおはましおゆ"
+   ]
+  },
+  {
+   "content": "さかい利晶の杜",
+   "sounds_like": [
+    "さかいりしょうのもり"
+   ]
+  },
+  {
+   "content": "フェニーチェ堺",
+   "sounds_like": [
+    "ふぇにーちぇさかい"
+   ]
+  },
+  {
+   "content": "くら寿司スタジアム堺",
+   "sounds_like": [
+    "くらずしすたじあむさかい"
+   ]
+  },
+  {
+   "content": "永藤英機",
+   "sounds_like": [
+    "ながふじひでき"
+   ]
+  },
+  {
+   "content": "ハニワ部長",
+   "sounds_like": [
+    "はにわぶちょう"
+   ]
+  },
+  {
+   "content": "サカエル",
+   "sounds_like": [
+    "さかえる"
+   ]
+  },
+  {
+   "content": "みそさかい",
+   "sounds_like": [
+    "みそさかい"
+   ]
+  },
+  {
+   "content": "ザビエコくん",
+   "sounds_like": [
+    "ざびえこくん"
+   ]
+  },
+  {
+   "content": "ポピアン",
+   "sounds_like": [
+    "ぽぴあん"
+   ]
+  },
+  {
+   "content": "J-GREEN堺",
+   "sounds_like": [
+    "じぇーぐりーんさかい"
+   ]
+  },
+  {
+   "content": "アリオ鳳",
+   "sounds_like": [
+    "ありおおおとり"
+   ]
+  },
+  {
+   "content": "堺天神",
+   "sounds_like": [
+    "さかいてんじん"
+   ]
+  },
+  {
+   "content": "菅原道真",
+   "sounds_like": [
+    "すがわらみちざね"
+   ]
+  },
+  {
+   "content": "天穂日命",
+   "sounds_like": [
+    "あめのほひのみこと"
+   ]
+  },
+  {
+   "content": "野見宿祢",
+   "sounds_like": [
+    "のみのすくね"
+   ]
+  },
+  {
+   "content": "常楽寺",
+   "sounds_like": [
+    "じょうらくじ"
+   ]
+  },
+  {
+   "content": "薬祖神社",
+   "sounds_like": [
+    "やくそじんじゃ"
+   ]
+  },
+  {
+   "content": "事代主神社",
+   "sounds_like": [
+    "ことしろぬしじんじゃ"
+   ]
+  },
+  {
+   "content": "附島神社",
+   "sounds_like": [
+    "つくしまじんじゃ"
+   ]
+  },
+  {
+   "content": "紅梅軒",
+   "sounds_like": [
+    "こうばいけん"
+   ]
+  },
+  {
+   "content": "椿の井戸",
+   "sounds_like": [
+    "つばきのいど"
+   ]
+  },
+  {
+   "content": "武野紹鷗",
+   "sounds_like": [
+    "たけのじょうおう"
+   ]
+  },
+  {
+   "content": "堺戎神社",
+   "sounds_like": [
+    "さかいえびすじんじゃ"
+   ]
+  },
+  {
+   "content": "歳旦祭",
+   "sounds_like": [
+    "さいたんさい"
+   ]
+  },
+  {
+   "content": "とんど祭",
+   "sounds_like": [
+    "とんどまつり"
+   ]
+  },
+  {
+   "content": "八朔祭",
+   "sounds_like": [
+    "はっさくまつり"
+   ]
+  },
+  {
+   "content": "ふとん太鼓",
+   "sounds_like": [
+    "ふとんだいこ"
+   ]
+  },
+  {
+   "content": "榎並屋勘左衛門",
+   "sounds_like": [
+    "えなみやかんざえもん"
+   ]
+  },
+  {
+   "content": "開口神社",
+   "sounds_like": [
+    "あぐちじんじゃ"
+   ]
+  },
+  {
+   "content": "戎公園",
+   "sounds_like": [
+    "えびすこうえん"
+   ]
+  },
+  {
+   "content": "飯匙堀",
+   "sounds_like": [
+    "いいじぼり"
+   ]
+  },
+  {
+   "content": "荒和大祓神事",
+   "sounds_like": [
+    "あわのおおはらえしんじ"
+   ]
+  },
+  {
+   "content": "波除住吉神社",
+   "sounds_like": [
+    "なみよけすみよしじんじゃ"
+   ]
+  },
+  {
+   "content": "大鳥井瀬神社",
+   "sounds_like": [
+    "おおとりいせじんじゃ"
+   ]
+  },
+  {
+   "content": "底筒男命",
+   "sounds_like": [
+    "そこつつのおのみこと"
+   ]
+  },
+  {
+   "content": "中筒男命",
+   "sounds_like": [
+    "なかつつのおのみこと"
+   ]
+  },
+  {
+   "content": "表筒男命",
+   "sounds_like": [
+    "うわつつのおのみこと"
+   ]
+  },
+  {
+   "content": "息長足姫命",
+   "sounds_like": [
+    "おきながたらしひめのみこと"
+   ]
+  },
+  {
+   "content": "弟橘媛命",
+   "sounds_like": [
+    "おとたちばなひめのみこと"
+   ]
+  },
+  {
+   "content": "渡御祭",
+   "sounds_like": [
+    "とぎょさい"
+   ]
+  },
+  {
+   "content": "兜神社",
+   "sounds_like": [
+    "かぶとじんじゃ"
+   ]
+  },
+  {
+   "content": "大魚夜市",
+   "sounds_like": [
+    "おおうおよいち"
+   ]
+  },
+  {
+   "content": "わび茶",
+   "sounds_like": [
+    "わびちゃ"
+   ]
+  },
+  {
+   "content": "天下三宗匠",
+   "sounds_like": [
+    "てんかさんそうしょう"
+   ]
+  },
+  {
+   "content": "利休七哲",
+   "sounds_like": [
+    "りきゅうしちてつ"
+   ]
+  },
+  {
+   "content": "平野勘平衛利方",
+   "sounds_like": [
+    "ひらのかんべえとしかた"
+   ]
+  },
+  {
+   "content": "三千家",
+   "sounds_like": [
+    "さんせんけ"
+   ]
+  },
+  {
+   "content": "御茶湯御政道",
+   "sounds_like": [
+    "おちゃのゆごせいどう"
+   ]
+  },
+  {
+   "content": "千宗易",
+   "sounds_like": [
+    "せんのそうえき"
+   ]
+  },
+  {
+   "content": "抛筌斎",
+   "sounds_like": [
+    "ほうせんさい"
+   ]
+  },
+  {
+   "content": "正親町天皇",
+   "sounds_like": [
+    "おおぎまちてんのう"
+   ]
+  },
+  {
+   "content": "大林宗套",
+   "sounds_like": [
+    "だいりんそうとう"
+   ]
+  },
+  {
+   "content": "笑嶺宗訢",
+   "sounds_like": [
+    "しょうれいそうきん"
+   ]
+  },
+  {
+   "content": "古渓宗陳",
+   "sounds_like": [
+    "こけいそうちん"
+   ]
+  },
+  {
+   "content": "春屋宗園",
+   "sounds_like": [
+    "しゅんおくそうえん"
+   ]
+  },
+  {
+   "content": "南宗寺",
+   "sounds_like": [
+    "なんしゅうじ"
+   ]
+  },
+  {
+   "content": "月岑妙珎",
+   "sounds_like": [
+    "げっしんみょうちん"
+   ]
+  },
+  {
+   "content": "納屋衆",
+   "sounds_like": [
+    "なやしゅう"
+   ]
+  },
+  {
+   "content": "北向道陳",
+   "sounds_like": [
+    "きたむきどうちん"
+   ]
+  },
+  {
+   "content": "辻玄哉",
+   "sounds_like": [
+    "つじげんさい"
+   ]
+  },
+  {
+   "content": "珠光茶碗",
+   "sounds_like": [
+    "じゅこうちゃわん"
+   ]
+  },
+  {
+   "content": "三好実休",
+   "sounds_like": [
+    "みよしじっきゅう"
+   ]
+  },
+  {
+   "content": "待庵",
+   "sounds_like": [
+    "たいあん"
+   ]
+  },
+  {
+   "content": "楽茶碗",
+   "sounds_like": [
+    "らくちゃわん"
+   ]
+  },
+  {
+   "content": "聚楽第",
+   "sounds_like": [
+    "じゅらくだい"
+   ]
+  },
+  {
+   "content": "大友宗麟",
+   "sounds_like": [
+    "おおともそうりん"
+   ]
+  },
+  {
+   "content": "豊臣秀長",
+   "sounds_like": [
+    "とよとみひでなが"
+   ]
+  },
+  {
+   "content": "古田織部",
+   "sounds_like": [
+    "ふるたおりべ"
+   ]
+  },
+  {
+   "content": "細川忠興",
+   "sounds_like": [
+    "ほそかわただおき"
+   ]
+  },
+  {
+   "content": "聚光院",
+   "sounds_like": [
+    "じゅこういん"
+   ]
+  },
+  {
+   "content": "利休忌",
+   "sounds_like": [
+    "りきゅうき"
+   ]
+  },
+  {
+   "content": "金毛閣",
+   "sounds_like": [
+    "きんもうかく"
+   ]
+  },
+  {
+   "content": "千道安",
+   "sounds_like": [
+    "せんのどうあん"
+   ]
+  },
+  {
+   "content": "千少庵",
+   "sounds_like": [
+    "せんのしょうアン",
+    "せんのしょうあん"
+   ]
+  },
+  {
+   "content": "万代屋宗安",
+   "sounds_like": [
+    "もずやそうあん"
+   ]
+  },
+  {
+   "content": "千紹二",
+   "sounds_like": [
+    "せんのしょうじ"
+   ]
+  },
+  {
+   "content": "織田有楽斎",
+   "sounds_like": [
+    "おだうらくさい"
+   ]
+  },
+  {
+   "content": "千宗旦",
+   "sounds_like": [
+    "せんのそうたん"
+   ]
+  },
+  {
+   "content": "武者小路千家",
+   "sounds_like": [
+    "むしゃこうじせんけ"
+   ]
+  },
+  {
+   "content": "官休庵",
+   "sounds_like": [
+    "かんきゅうあん"
+   ]
+  },
+  {
+   "content": "表千家",
+   "sounds_like": [
+    "おもてせんけ"
+   ]
+  },
+  {
+   "content": "不審庵",
+   "sounds_like": [
+    "ふしんあん"
+   ]
+  },
+  {
+   "content": "裏千家",
+   "sounds_like": [
+    "うらせんけ"
+   ]
+  },
+  {
+   "content": "今日庵",
+   "sounds_like": [
+    "こんにちあん"
+   ]
+  },
+  {
+   "content": "躙り口",
+   "sounds_like": [
+    "にじりぐち"
+   ]
+  },
+  {
+   "content": "露地",
+   "sounds_like": [
+    "ろじ"
+   ]
+  },
+  {
+   "content": "宝心妙樹",
+   "sounds_like": [
+    "ほうしんみょうじゅ"
+   ]
+  },
+  {
+   "content": "宗恩",
+   "sounds_like": [
+    "そうおん"
+   ]
+  },
+  {
+   "content": "田中宗慶",
+   "sounds_like": [
+    "たなかそうけい"
+   ]
+  },
+  {
+   "content": "清蔵主",
+   "sounds_like": [
+    "せいぞうしゅ"
+   ]
+  },
+  {
+   "content": "石橋良叱",
+   "sounds_like": [
+    "いしばしりょうしつ"
+   ]
+  },
+  {
+   "content": "円乗坊宗円",
+   "sounds_like": [
+    "えんじょうぼうそうえん"
+   ]
+  }
+ ],
+ "ikeda": [
+  {
+   "content": "池田市",
+   "sounds_like": [
+    "いけだし"
+   ]
+  },
+  {
+   "content": "呉服神社",
+   "sounds_like": [
+    "くれはじんじゃ"
+   ]
+  },
+  {
+   "content": "池田駅",
+   "sounds_like": [
+    "いけだえき"
+   ]
+  },
+  {
+   "content": "小林一三",
+   "sounds_like": [
+    "こばやしいちぞう"
+   ]
+  },
+  {
+   "content": "豊島郡",
+   "sounds_like": [
+    "てしまぐん"
+   ]
+  },
+  {
+   "content": "豊能郡",
+   "sounds_like": [
+    "とよのぐん"
+   ]
+  },
+  {
+   "content": "五月山",
+   "sounds_like": [
+    "さつきやま"
+   ]
+  },
+  {
+   "content": "久安寺川",
+   "sounds_like": [
+    "きゅうあんじがわ"
+   ]
+  },
+  {
+   "content": "箕面有馬電気軌道",
+   "sounds_like": [
+    "みおありまでんききどう",
+    "みのおありまでんききどう"
+   ]
+  },
+  {
+   "content": "阪急電鉄",
+   "sounds_like": [
+    "はんきゅうでんてつ"
+   ]
+  },
+  {
+   "content": "阪神間モダニズム",
+   "sounds_like": [
+    "はんしんかんもだにずむ"
+   ]
+  },
+  {
+   "content": "阪急宝塚線",
+   "sounds_like": [
+    "はんきゅうたカラづかせん"
+   ]
+  },
+  {
+   "content": "阪急阪神東宝グループ",
+   "sounds_like": [
+    "はんきゅうはんしんとうほうぐるーぷ"
+   ]
+  },
+  {
+   "content": "小林一三記念館",
+   "sounds_like": [
+    "こばやしいちぞうきねんかん"
+   ]
+  },
+  {
+   "content": "阪急文化財団",
+   "sounds_like": [
+    "はんきゅうぶんかざいだん"
+   ]
+  },
+  {
+   "content": "安藤百福",
+   "sounds_like": [
+    "あんどうももふく"
+   ]
+  },
+  {
+   "content": "チキンラーメン",
+   "sounds_like": [
+    "ちきんらーめん"
+   ]
+  },
+  {
+   "content": "カップヌードルミュージアム",
+   "sounds_like": [
+    "かっぷぬーどるみゅーじあむ"
+   ]
+  },
+  {
+   "content": "安藤百福発明記念館",
+   "sounds_like": [
+    "あんどうももふくはつめいきねんかん"
+   ]
+  },
+  {
+   "content": "ダイハツ工業",
+   "sounds_like": [
+    "だいはつこうぎょう"
+   ]
+  },
+  {
+   "content": "待兼山",
+   "sounds_like": [
+    "まちかねやま"
+   ]
+  },
+  {
+   "content": "五月山公園",
+   "sounds_like": [
+    "さつきやまこうえん"
+   ]
+  },
+  {
+   "content": "細河",
+   "sounds_like": [
+    "ほそかわ"
+   ]
+  },
+  {
+   "content": "猪名川",
+   "sounds_like": [
+    "いながわ"
+   ]
+  },
+  {
+   "content": "余野川",
+   "sounds_like": [
+    "よのがわ"
+   ]
+  },
+  {
+   "content": "箕面川",
+   "sounds_like": [
+    "みおがわ",
+    "みのおがわ"
+   ]
+  },
+  {
+   "content": "石澄川",
+   "sounds_like": [
+    "いしずみがわ"
+   ]
+  },
+  {
+   "content": "神田川",
+   "sounds_like": [
+    "かんだがわ",
+    "こうだがわ"
+   ]
+  },
+  {
+   "content": "江原川",
+   "sounds_like": [
+    "えはらがわ"
+   ]
+  },
+  {
+   "content": "綾羽",
+   "sounds_like": [
+    "あやは"
+   ]
+  },
+  {
+   "content": "井口堂",
+   "sounds_like": [
+    "いぐちどう"
+   ]
+  },
+  {
+   "content": "石橋",
+   "sounds_like": [
+    "いしばし"
+   ]
+  },
+  {
+   "content": "宇保町",
+   "sounds_like": [
+    "うほちょう"
+   ]
+  },
+  {
+   "content": "木部町",
+   "sounds_like": [
+    "きべちょう"
+   ]
+  },
+  {
+   "content": "呉服町",
+   "sounds_like": [
+    "くれはちょう"
+   ]
+  },
+  {
+   "content": "神田",
+   "sounds_like": [
+    "かんだ",
+    "こうだ"
+   ]
+  },
+  {
+   "content": "栄本町",
+   "sounds_like": [
+    "さかえほんまち"
+   ]
+  },
+  {
+   "content": "栄町",
+   "sounds_like": [
+    "さかえまち"
+   ]
+  },
+  {
+   "content": "渋谷",
+   "sounds_like": [
+    "しぶたに"
+   ]
+  },
+  {
+   "content": "城山町",
+   "sounds_like": [
+    "しろやまちょう"
+   ]
+  },
+  {
+   "content": "荘園",
+   "sounds_like": [
+    "しょうえん"
+   ]
+  },
+  {
+   "content": "建石町",
+   "sounds_like": [
+    "たていしちょう"
+   ]
+  },
+  {
+   "content": "槻木町",
+   "sounds_like": [
+    "つききちょう"
+   ]
+  },
+  {
+   "content": "豊島北",
+   "sounds_like": [
+    "てしまきた"
+   ]
+  },
+  {
+   "content": "豊島南",
+   "sounds_like": [
+    "てしまみなみ"
+   ]
+  },
+  {
+   "content": "中川原町",
+   "sounds_like": [
+    "なかがわらちょう"
+   ]
+  },
+  {
+   "content": "鉢塚",
+   "sounds_like": [
+    "はちづか"
+   ]
+  },
+  {
+   "content": "姫室町",
+   "sounds_like": [
+    "ひめむろちょう"
+   ]
+  },
+  {
+   "content": "伏尾台",
+   "sounds_like": [
+    "ふしおだい"
+   ]
+  },
+  {
+   "content": "伏尾町",
+   "sounds_like": [
+    "ふしおちょう"
+   ]
+  },
+  {
+   "content": "満寿美町",
+   "sounds_like": [
+    "ますみちょう"
+   ]
+  },
+  {
+   "content": "室町",
+   "sounds_like": [
+    "むろまち"
+   ]
+  },
+  {
+   "content": "桃園",
+   "sounds_like": [
+    "ももぞの"
+   ]
+  },
+  {
+   "content": "豊能税務署",
+   "sounds_like": [
+    "とよのぜいむしょ"
+   ]
+  },
+  {
+   "content": "大阪池田簡易裁判所",
+   "sounds_like": [
+    "おおさかいけだかんいさいばんしょ"
+   ]
+  },
+  {
+   "content": "呉服の里",
+   "sounds_like": [
+    "くれはのさと"
+   ]
+  },
+  {
+   "content": "呉庭荘",
+   "sounds_like": [
+    "くれはのしょう"
+   ]
+  },
+  {
+   "content": "摂津池田氏",
+   "sounds_like": [
+    "せっついけだし"
+   ]
+  },
+  {
+   "content": "池田城",
+   "sounds_like": [
+    "いけだじょう"
+   ]
+  },
+  {
+   "content": "荒木村重",
+   "sounds_like": [
+    "あらきむらしげ"
+   ]
+  },
+  {
+   "content": "有岡城",
+   "sounds_like": [
+    "ありおかじょう"
+   ]
+  },
+  {
+   "content": "池田炭",
+   "sounds_like": [
+    "いけだずみ"
+   ]
+  },
+  {
+   "content": "池田酒",
+   "sounds_like": [
+    "いけだざけ"
+   ]
+  },
+  {
+   "content": "秦野村",
+   "sounds_like": [
+    "はたのむら"
+   ]
+  },
+  {
+   "content": "北豊島村",
+   "sounds_like": [
+    "きたてしまむら"
+   ]
+  },
+  {
+   "content": "呉春酒造",
+   "sounds_like": [
+    "ごしゅんしゅぞう"
+   ]
+  },
+  {
+   "content": "呉春",
+   "sounds_like": [
+    "ごしゅん"
+   ]
+  },
+  {
+   "content": "ほそごう学園",
+   "sounds_like": [
+    "ほそごうがくえん"
+   ]
+  },
+  {
+   "content": "妙見線",
+   "sounds_like": [
+    "みょうけんせん"
+   ]
+  },
+  {
+   "content": "鶯の森駅",
+   "sounds_like": [
+    "うぐいすのもりえき"
+   ]
+  },
+  {
+   "content": "鼓滝駅",
+   "sounds_like": [
+    "つづたきえき"
+   ]
+  },
+  {
+   "content": "柴原阪大前駅",
+   "sounds_like": [
+    "しばはらはんだいまええき"
+   ]
+  },
+  {
+   "content": "蛍池駅",
+   "sounds_like": [
+    "ほたるがいけえき"
+   ]
+  },
+  {
+   "content": "川西池田駅",
+   "sounds_like": [
+    "かわにしいけだえき"
+   ]
+  },
+  {
+   "content": "五月山ドライブウェイ",
+   "sounds_like": [
+    "さつきやまどらいぶうぇい"
+   ]
+  },
+  {
+   "content": "逸翁美術館",
+   "sounds_like": [
+    "いつおうびじゅつかん"
+   ]
+  },
+  {
+   "content": "阪急学園池田文庫",
+   "sounds_like": [
+    "はんきゅうがくえんいけだぶんこ"
+   ]
+  },
+  {
+   "content": "落語みゅーじあむ",
+   "sounds_like": [
+    "らくごみゅーじあむ"
+   ]
+  },
+  {
+   "content": "池田呉服座",
+   "sounds_like": [
+    "いけだくれはざ"
+   ]
+  },
+  {
+   "content": "ヒューモビリティワールド",
+   "sounds_like": [
+    "ひゅーもびりてぃわーるど"
+   ]
+  },
+  {
+   "content": "五月山動物園",
+   "sounds_like": [
+    "さつきやまどうぶつえん"
+   ]
+  },
+  {
+   "content": "大広寺",
+   "sounds_like": [
+    "だいこうじ"
+   ]
+  },
+  {
+   "content": "伊居太神社",
+   "sounds_like": [
+    "いけだじんじゃ",
+    "いこたじんじゃ"
+   ]
+  },
+  {
+   "content": "八坂神社",
+   "sounds_like": [
+    "やさかじんじゃ"
+   ]
+  },
+  {
+   "content": "久安寺",
+   "sounds_like": [
+    "きゅうあんじ"
+   ]
+  },
+  {
+   "content": "仏日禅寺",
+   "sounds_like": [
+    "ぶつにちぜんじ"
+   ]
+  },
+  {
+   "content": "池田城跡公園",
+   "sounds_like": [
+    "いけだじょうせきこうえん"
+   ]
+  },
+  {
+   "content": "水月公園",
+   "sounds_like": [
+    "すいげつこうえん"
+   ]
+  },
+  {
+   "content": "能勢街道",
+   "sounds_like": [
+    "のせかいどう"
+   ]
+  },
+  {
+   "content": "西国街道",
+   "sounds_like": [
+    "さいごくかいどう"
+   ]
+  },
+  {
+   "content": "呉服橋",
+   "sounds_like": [
+    "くれはばし"
+   ]
+  },
+  {
+   "content": "池田茶臼山古墳",
+   "sounds_like": [
+    "いけだちゃうすやまこふん"
+   ]
+  },
+  {
+   "content": "鉢塚古墳",
+   "sounds_like": [
+    "はちづかこふん"
+   ]
+  },
+  {
+   "content": "五月ヶ丘古墳",
+   "sounds_like": [
+    "さつきがおかこふん"
+   ]
+  },
+  {
+   "content": "古江古墳",
+   "sounds_like": [
+    "ふるえこふん"
+   ]
+  },
+  {
+   "content": "伏尾温泉",
+   "sounds_like": [
+    "ふしおおんせん"
+   ]
+  },
+  {
+   "content": "十日恵比寿",
+   "sounds_like": [
+    "とおかえびす"
+   ]
+  },
+  {
+   "content": "春団治まつり",
+   "sounds_like": [
+    "はるだんじまつり"
+   ]
+  },
+  {
+   "content": "猪名川花火大会",
+   "sounds_like": [
+    "いながわはなびたいかい"
+   ]
+  },
+  {
+   "content": "がんがら火",
+   "sounds_like": [
+    "がんがらび"
+   ]
+  },
+  {
+   "content": "阿知使主",
+   "sounds_like": [
+    "あちのおみ"
+   ]
+  },
+  {
+   "content": "都加使主",
+   "sounds_like": [
+    "つかのおみ"
+   ]
+  },
+  {
+   "content": "呉服媛",
+   "sounds_like": [
+    "くれはとりのひめ"
+   ]
+  },
+  {
+   "content": "穴織媛",
+   "sounds_like": [
+    "あやはとりのひめ"
+   ]
+  },
+  {
+   "content": "兄媛",
+   "sounds_like": [
+    "えひめ"
+   ]
+  },
+  {
+   "content": "弟媛",
+   "sounds_like": [
+    "おとひめ"
+   ]
+  },
+  {
+   "content": "唐船が淵",
+   "sounds_like": [
+    "とうせんがふち"
+   ]
+  },
+  {
+   "content": "絹延橋",
+   "sounds_like": [
+    "きぬのべばし"
+   ]
+  },
+  {
+   "content": "呉服大明神",
+   "sounds_like": [
+    "くれはだいみょうじん"
+   ]
+  },
+  {
+   "content": "恵比須神社",
+   "sounds_like": [
+    "えびすじんじゃ"
+   ]
+  },
+  {
+   "content": "稲荷社",
+   "sounds_like": [
+    "いなりしゃ"
+   ]
+  },
+  {
+   "content": "天満宮",
+   "sounds_like": [
+    "てんまんぐう"
+   ]
+  },
+  {
+   "content": "両皇大神社",
+   "sounds_like": [
+    "りょうこうたいじんじゃ"
+   ]
+  },
+  {
+   "content": "祓戸神社",
+   "sounds_like": [
+    "はらえどじんじゃ"
+   ]
+  },
+  {
+   "content": "相殿社",
+   "sounds_like": [
+    "あいどのしゃ"
+   ]
+  },
+  {
+   "content": "市杵島姫神",
+   "sounds_like": [
+    "いちきしまひめのかみ"
+   ]
+  },
+  {
+   "content": "大国主神",
+   "sounds_like": [
+    "おおくにぬしのかみ"
+   ]
+  },
+  {
+   "content": "素盞嗚命",
+   "sounds_like": [
+    "すさのおのみこと"
+   ]
+  },
+  {
+   "content": "國常立神",
+   "sounds_like": [
+    "くにとこたちのかみ"
+   ]
+  },
+  {
+   "content": "猿田彦神",
+   "sounds_like": [
+    "さるたひこのかみ"
+   ]
+  },
+  {
+   "content": "姫室",
+   "sounds_like": [
+    "ひめむろ"
+   ]
+  },
+  {
+   "content": "梅室",
+   "sounds_like": [
+    "うめむろ"
+   ]
+  },
+  {
+   "content": "桃田伊信",
+   "sounds_like": [
+    "ももたいしん"
+   ]
+  },
+  {
+   "content": "平井車庫",
+   "sounds_like": [
+    "ひらいしゃこ"
+   ]
+  },
+  {
+   "content": "池田車庫",
+   "sounds_like": [
+    "いけだしゃこ"
+   ]
+  },
+  {
+   "content": "日生エクスプレス",
+   "sounds_like": [
+    "にっせいえくすぷれす"
+   ]
+  },
+  {
+   "content": "石橋阪大前駅",
+   "sounds_like": [
+    "いしばしはんだいまええき"
+   ]
+  },
+  {
+   "content": "逸翁",
+   "sounds_like": [
+    "いつおう"
+   ]
+  },
+  {
+   "content": "雅俗山荘",
+   "sounds_like": [
+    "がぞくさんそう"
+   ]
+  },
+  {
+   "content": "宝塚歌劇団"
+  },
+  {
+   "content": "東宝",
+   "sounds_like": [
+    "とうほう"
+   ]
+  },
+  {
+   "content": "宝塚新温泉"
+  },
+  {
+   "content": "阪神急行電鉄",
+   "sounds_like": [
+    "はんしんきゅうこうでんてつ"
+   ]
+  },
+  {
+   "content": "阪急百貨店",
+   "sounds_like": [
+    "はんきゅうひゃっかてん"
+   ]
+  },
+  {
+   "content": "田園都市株式会社",
+   "sounds_like": [
+    "でんえんとしのかぶしきがいしゃ"
+   ]
+  },
+  {
+   "content": "目黒蒲田電鉄",
+   "sounds_like": [
+    "めぐろかまたでんてつ"
+   ]
+  },
+  {
+   "content": "東京横浜電鉄",
+   "sounds_like": [
+    "とうきょうよこはまでんてつ"
+   ]
+  },
+  {
+   "content": "五島慶太",
+   "sounds_like": [
+    "ごとうけいた"
+   ]
+  },
+  {
+   "content": "關一",
+   "sounds_like": [
+    "せきはじめ"
+   ]
+  },
+  {
+   "content": "東京電燈",
+   "sounds_like": [
+    "とうきょうでんとう"
+   ]
+  },
+  {
+   "content": "岸信介",
+   "sounds_like": [
+    "きしのすけ"
+   ]
+  },
+  {
+   "content": "幣原内閣",
+   "sounds_like": [
+    "しではらないかく"
+   ]
+  },
+  {
+   "content": "戦災復興院",
+   "sounds_like": [
+    "せんさいふっこういん"
+   ]
+  },
+  {
+   "content": "宝塚唱歌隊"
+  },
+  {
+   "content": "北村季晴",
+   "sounds_like": [
+    "きたむらすえはる"
+   ]
+  },
+  {
+   "content": "ドンブラコ",
+   "sounds_like": [
+    "どんぶらこ"
+   ]
+  },
+  {
+   "content": "湯木貞一",
+   "sounds_like": [
+    "ゆきていいち"
+   ]
+  },
+  {
+   "content": "吉兆",
+   "sounds_like": [
+    "きっちょう"
+   ]
+  },
+  {
+   "content": "ダイハツ町",
+   "sounds_like": [
+    "だいはつちょう"
+   ]
+  }
+ ]
+}

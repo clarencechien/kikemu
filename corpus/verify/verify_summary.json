@@ -1,0 +1,112 @@
+{
+ "hig01_A1": {
+  "page_chars": 370,
+  "spoken_range": [
+   5,
+   370
+  ],
+  "coverage": 0.986,
+  "cer_page_vs_sm": 0.1808,
+  "cer_page_vs_gm": 0.1288,
+  "cer_sm_vs_gm": 0.1701
+ },
+ "hig02_B12": {
+  "page_chars": 715,
+  "spoken_range": [
+   2,
+   386
+  ],
+  "coverage": 0.537,
+  "cer_page_vs_sm": 0.2448,
+  "cer_page_vs_gm": 0.1719,
+  "cer_sm_vs_gm": 0.1667
+ },
+ "sakai01": {
+  "page_chars": 400,
+  "spoken_range": [
+   0,
+   81
+  ],
+  "coverage": 0.203,
+  "cer_page_vs_sm": 0.1481,
+  "cer_page_vs_gm": 0.1235,
+  "cer_sm_vs_gm": 0.0455
+ },
+ "sakai02": {
+  "page_chars": 332,
+  "spoken_range": [
+   0,
+   82
+  ],
+  "coverage": 0.247,
+  "cer_page_vs_sm": 0.2073,
+  "cer_page_vs_gm": 0.1829,
+  "cer_sm_vs_gm": 0.0521
+ },
+ "sakai03": {
+  "page_chars": 360,
+  "spoken_range": [
+   0,
+   109
+  ],
+  "coverage": 0.303,
+  "cer_page_vs_sm": 0.0734,
+  "cer_page_vs_gm": 0.0734,
+  "cer_sm_vs_gm": 0.0087
+ },
+ "sakai04": {
+  "page_chars": 478,
+  "spoken_range": [
+   0,
+   112
+  ],
+  "coverage": 0.234,
+  "cer_page_vs_sm": 0.1964,
+  "cer_page_vs_gm": 0.1071,
+  "cer_sm_vs_gm": 0.1197
+ },
+ "sakai05": {
+  "page_chars": 325,
+  "spoken_range": [
+   0,
+   106
+  ],
+  "coverage": 0.326,
+  "cer_page_vs_sm": 0.1792,
+  "cer_page_vs_gm": 0.1698,
+  "cer_sm_vs_gm": 0.1207
+ },
+ "sakai06": {
+  "page_chars": 330,
+  "spoken_range": [
+   0,
+   92
+  ],
+  "coverage": 0.279,
+  "cer_page_vs_sm": 0.1087,
+  "cer_page_vs_gm": 0.0978,
+  "cer_sm_vs_gm": 0.0104
+ },
+ "ikeda02": {
+  "page_chars": 654,
+  "spoken_range": [
+   0,
+   654
+  ],
+  "coverage": 1.0,
+  "cer_page_vs_sm": 0.0474,
+  "cer_page_vs_gm": 0.0719,
+  "cer_sm_vs_gm": 0.0685
+ },
+ "ikeda03": {
+  "page_chars": 359,
+  "spoken_range": [
+   0,
+   359
+  ],
+  "coverage": 1.0,
+  "cer_page_vs_sm": 0.1365,
+  "cer_page_vs_gm": 0.117,
+  "cer_sm_vs_gm": 0.0575
+ }
+}
