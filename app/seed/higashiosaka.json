@@ -1,0 +1,487 @@
+{
+ "name": "東大阪・枚岡神社",
+ "entries": [
+  {
+   "content": "東大阪市",
+   "sounds_like": [
+    "ひがしおおさかし"
+   ]
+  },
+  {
+   "content": "石切劔箭神社",
+   "sounds_like": [
+    "いしきりつるぎやじんじゃ"
+   ]
+  },
+  {
+   "content": "枚岡神社",
+   "sounds_like": [
+    "ひらおかじんじゃ"
+   ]
+  },
+  {
+   "content": "生駒山地",
+   "sounds_like": [
+    "いこまさんち"
+   ]
+  },
+  {
+   "content": "東大阪市花園ラグビー場",
+   "sounds_like": [
+    "ひがしおおさかしはなぞのらぐびーじょう"
+   ]
+  },
+  {
+   "content": "長瀬川",
+   "sounds_like": [
+    "ながせがわ"
+   ]
+  },
+  {
+   "content": "恩智川",
+   "sounds_like": [
+    "おんぢがわ"
+   ]
+  },
+  {
+   "content": "玉串川",
+   "sounds_like": [
+    "たまくしがわ"
+   ]
+  },
+  {
+   "content": "第二寝屋川",
+   "sounds_like": [
+    "だいにねやがわ"
+   ]
+  },
+  {
+   "content": "河内国",
+   "sounds_like": [
+    "かわちのくに"
+   ]
+  },
+  {
+   "content": "物部守屋",
+   "sounds_like": [
+    "もののべのもりや"
+   ]
+  },
+  {
+   "content": "衣摺",
+   "sounds_like": [
+    "きずり"
+   ]
+  },
+  {
+   "content": "難波津",
+   "sounds_like": [
+    "なにわづ"
+   ]
+  },
+  {
+   "content": "高野街道",
+   "sounds_like": [
+    "こうやかいどう"
+   ]
+  },
+  {
+   "content": "水走氏",
+   "sounds_like": [
+    "みずはやし"
+   ]
+  },
+  {
+   "content": "若江城",
+   "sounds_like": [
+    "わかえじょう"
+   ]
+  },
+  {
+   "content": "遊佐河内守長教",
+   "sounds_like": [
+    "ゆさかわちのかみながのり"
+   ]
+  },
+  {
+   "content": "三好義継",
+   "sounds_like": [
+    "みよしよしつぐ"
+   ]
+  },
+  {
+   "content": "若江三人衆",
+   "sounds_like": [
+    "わかえさんにんしゅう"
+   ]
+  },
+  {
+   "content": "木村重成",
+   "sounds_like": [
+    "きむらしげなり"
+   ]
+  },
+  {
+   "content": "中甚兵衛",
+   "sounds_like": [
+    "なかじんべえ"
+   ]
+  },
+  {
+   "content": "深野池",
+   "sounds_like": [
+    "ふかのいけ"
+   ]
+  },
+  {
+   "content": "新開池",
+   "sounds_like": [
+    "しんかいち",
+    "しんひらきいけ"
+   ]
+  },
+  {
+   "content": "布施市",
+   "sounds_like": [
+    "ふせし"
+   ]
+  },
+  {
+   "content": "河内市",
+   "sounds_like": [
+    "かわちし"
+   ]
+  },
+  {
+   "content": "枚岡市",
+   "sounds_like": [
+    "ひらおかし"
+   ]
+  },
+  {
+   "content": "トライくん",
+   "sounds_like": [
+    "とらいくん"
+   ]
+  },
+  {
+   "content": "いしキリンちゃん",
+   "sounds_like": [
+    "いしきりんちゃん"
+   ]
+  },
+  {
+   "content": "荒本駅",
+   "sounds_like": [
+    "あらもとえき"
+   ]
+  },
+  {
+   "content": "瓢簞山駅",
+   "sounds_like": [
+    "ひょうたんやまえき"
+   ]
+  },
+  {
+   "content": "長田駅",
+   "sounds_like": [
+    "ながたえき"
+   ]
+  },
+  {
+   "content": "高井田中央駅",
+   "sounds_like": [
+    "たかいだちゅうおうえき"
+   ]
+  },
+  {
+   "content": "JR河内永和駅",
+   "sounds_like": [
+    "じぇいあーるかわちえいわえき"
+   ]
+  },
+  {
+   "content": "JR俊徳道駅",
+   "sounds_like": [
+    "じぇいあーるしゅんとくみちえき"
+   ]
+  },
+  {
+   "content": "JR長瀬駅",
+   "sounds_like": [
+    "じぇいあーるながせえき"
+   ]
+  },
+  {
+   "content": "衣摺加美北駅",
+   "sounds_like": [
+    "きずりかみきたえき"
+   ]
+  },
+  {
+   "content": "徳庵駅",
+   "sounds_like": [
+    "とくあんえき"
+   ]
+  },
+  {
+   "content": "鴻池新田駅",
+   "sounds_like": [
+    "こうのいけしんでんえき"
+   ]
+  },
+  {
+   "content": "布施駅",
+   "sounds_like": [
+    "ふせえき"
+   ]
+  },
+  {
+   "content": "河内永和駅",
+   "sounds_like": [
+    "かわちえいわえき"
+   ]
+  },
+  {
+   "content": "河内小阪駅",
+   "sounds_like": [
+    "かわちこさかえき"
+   ]
+  },
+  {
+   "content": "八戸ノ里駅",
+   "sounds_like": [
+    "やえのさとえき"
+   ]
+  },
+  {
+   "content": "若江岩田駅",
+   "sounds_like": [
+    "わかえいわたえき"
+   ]
+  },
+  {
+   "content": "河内花園駅",
+   "sounds_like": [
+    "かわちはなぞのえき"
+   ]
+  },
+  {
+   "content": "東花園駅",
+   "sounds_like": [
+    "ひがしはなぞのえき"
+   ]
+  },
+  {
+   "content": "枚岡駅",
+   "sounds_like": [
+    "ひらおかえき"
+   ]
+  },
+  {
+   "content": "額田駅",
+   "sounds_like": [
+    "ぬかたえき"
+   ]
+  },
+  {
+   "content": "石切駅",
+   "sounds_like": [
+    "いしきりえき"
+   ]
+  },
+  {
+   "content": "俊徳道駅",
+   "sounds_like": [
+    "しゅんとくみちえき"
+   ]
+  },
+  {
+   "content": "弥刀駅",
+   "sounds_like": [
+    "みとえき"
+   ]
+  },
+  {
+   "content": "新石切駅",
+   "sounds_like": [
+    "しんいしきりえき"
+   ]
+  },
+  {
+   "content": "司馬遼太郎記念館",
+   "sounds_like": [
+    "しばりょうたろうきねんかん"
+   ]
+  },
+  {
+   "content": "司馬遼太郎",
+   "sounds_like": [
+    "しばりょうたろう"
+   ]
+  },
+  {
+   "content": "樟徳館",
+   "sounds_like": [
+    "しょうとくかん"
+   ]
+  },
+  {
+   "content": "田辺聖子文学館",
+   "sounds_like": [
+    "たなべせいこぶんがくかん"
+   ]
+  },
+  {
+   "content": "東大阪市文化創造館",
+   "sounds_like": [
+    "ひがしおおさかしぶんかそうぞうかん"
+   ]
+  },
+  {
+   "content": "瓢箪山稲荷神社",
+   "sounds_like": [
+    "ひょうたんやまいなりじんじゃ"
+   ]
+  },
+  {
+   "content": "往生院六萬寺",
+   "sounds_like": [
+    "おうじょういんろくまんじ"
+   ]
+  },
+  {
+   "content": "鴻池新田会所",
+   "sounds_like": [
+    "こうのいけしんでんかいしょ"
+   ]
+  },
+  {
+   "content": "河内寺廃寺跡",
+   "sounds_like": [
+    "かわちでらはいじあと"
+   ]
+  },
+  {
+   "content": "池島・福万寺遺跡",
+   "sounds_like": [
+    "いけしまふくまんじいせき"
+   ]
+  },
+  {
+   "content": "瓜生堂遺跡",
+   "sounds_like": [
+    "うりゅうどういせき"
+   ]
+  },
+  {
+   "content": "松原宿跡",
+   "sounds_like": [
+    "まつばらしゅくあと"
+   ]
+  },
+  {
+   "content": "芝山古墳",
+   "sounds_like": [
+    "しばやまこふん"
+   ]
+  },
+  {
+   "content": "山畑古墳群",
+   "sounds_like": [
+    "やまはたこふんぐん"
+   ]
+  },
+  {
+   "content": "二本松古墳",
+   "sounds_like": [
+    "ないほんまつこふん",
+    "にほんまつこふん"
+   ]
+  },
+  {
+   "content": "日下貝塚",
+   "sounds_like": [
+    "くさかかいづか"
+   ]
+  },
+  {
+   "content": "瓢箪山商店街",
+   "sounds_like": [
+    "ひょうたんやましょうてんがい"
+   ]
+  },
+  {
+   "content": "小阪城",
+   "sounds_like": [
+    "こさかじょう"
+   ]
+  },
+  {
+   "content": "蘇我理右衛門",
+   "sounds_like": [
+    "そがりえもん"
+   ]
+  },
+  {
+   "content": "水走季忠",
+   "sounds_like": [
+    "みずはやすえただ"
+   ]
+  },
+  {
+   "content": "饒速日尊",
+   "sounds_like": [
+    "にぎはやひのみこと"
+   ]
+  },
+  {
+   "content": "可美真手命",
+   "sounds_like": [
+    "うましまでのみこと"
+   ]
+  },
+  {
+   "content": "石切大明神",
+   "sounds_like": [
+    "いしきりだいみょうじん"
+   ]
+  },
+  {
+   "content": "木積家",
+   "sounds_like": [
+    "こづみけ"
+   ]
+  },
+  {
+   "content": "遺書伝来記",
+   "sounds_like": [
+    "いしょでんらいき"
+   ]
+  },
+  {
+   "content": "天台宗法通寺",
+   "sounds_like": [
+    "てんだいしゅうほうつうじ"
+   ]
+  },
+  {
+   "content": "上之社",
+   "sounds_like": [
+    "かみのしゃ"
+   ]
+  },
+  {
+   "content": "神道石切教",
+   "sounds_like": [
+    "しんとういしきりきょう"
+   ]
+  },
+  {
+   "content": "石切東京分祀",
+   "sounds_like": [
+    "いしきりとうきょうぶんし"
+   ]
+  }
+ ]
+}

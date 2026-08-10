@@ -1,0 +1,17 @@
+{
+  "name": "kikemu きけむ",
+  "short_name": "kikemu",
+  "description": "kikemu 替你聽日文導覽,台灣正體字幕即時浮現——神社的神名、茶室的典故,一個都不漏。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F7F5F1",
+  "theme_color": "#B8860B",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

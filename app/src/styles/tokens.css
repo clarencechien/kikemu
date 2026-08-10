@@ -1,0 +1,22 @@
+/* 視覺 tokens(PRD §4,一字不改)。
+   鐵律:--brand 琥珀只出現在譯文與品牌標——不給按鈕、不給裝飾。
+   原文永遠是 --ink,一眼分得出「導覽員說的」與「kikemu 給的」。 */
+:root{
+  --paper:#F7F5F1; --ink:#22201B; --ink-2:#6B675E; --line:#E2DED6;
+  --brand:#B8860B;      /* 琥珀:品牌與「譯文專用」——不給按鈕、不給裝飾 */
+  --brand-soft:#F5EDDC;
+  --ghost:#A39E93;      /* partial 暫定字 */
+  --ok:#2E7D4F; --warn:#9A6B00; --chip:#EFECE5;
+}
+@media (prefers-color-scheme: dark){ :root{
+  --paper:#17150F; --ink:#EAE6DD; --ink-2:#98938A; --line:#2E2B23;
+  --brand:#E8B84B; --brand-soft:#332B14; --ghost:#5F5B52;
+  --ok:#63B588; --warn:#D9A93F; --chip:#242118;
+}}
+
+/* 字體(PRD §4):--doc 字幕本體、--chrome UI 標籤、--data 數字 */
+:root{
+  --doc:'Noto Sans TC','Noto Sans JP',system-ui,sans-serif;
+  --chrome:'IBM Plex Sans Condensed',system-ui,sans-serif;
+  --data:'IBM Plex Mono',ui-monospace,monospace;
+}

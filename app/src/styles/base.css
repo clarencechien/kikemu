@@ -1,0 +1,26 @@
+/* 家族版式語彙:2px 圓角、data-attribute 驅動狀態、safe-area、
+   prefers-reduced-motion 全動畫防護。 */
+* { box-sizing: border-box; margin: 0; padding: 0 }
+html, body { height: 100% }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--doc);
+  display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh; overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+.hidden { display: none !important }
+button { font-family: inherit; color: inherit }
+:is(button, select, input, [tabindex]):focus-visible { outline: 2px solid var(--ink); outline-offset: 2px }
+
+/* 畫面切換:登入前 / App */
+body[data-screen=login] .app { display: none }
+body[data-screen=app] .login { display: none }
+
+/* 已登入就不需要回登入頁的按鈕與「介面預覽」提醒 */
+body[data-auth=in] :is(#loginBtn, .previewHint) { display: none }
+
+/* 全動畫防護 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important }
+}
