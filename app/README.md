@@ -79,7 +79,7 @@ GEMINI_API_KEY=...
    npm run deploy
    ```
 
-   綁自訂網域後把 `wrangler.jsonc` 的 `CANONICAL_HOST` 填上再部署一次
+   綁自訂網域後把 `wrangler.jsonc` 的 `CANONICAL_HOST` 填上再部署一次——**只填 hostname**(`kikemu.ai-apps.work`),不要含 `https://` 或尾斜線(程式會自動剝,但別依賴它)
    (`workers_dev`/`preview_urls` 已在設定碼層級關死)。
 
 5. **名單**:首次登入的訪客自動進等候名單,`/admin` 一鍵核准(級別
