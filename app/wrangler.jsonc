@@ -37,7 +37,7 @@
     // 單場 hard cap(秒):導覽是連續旁白,60 分鐘為熔斷上限(PRD §5)
     "SESSION_HARD_CAP_S": "3600",
     // 正式網域(如 kikemu.ai-apps.work):設了之後其他 host 一律 301/403;留空 = 不檢查
-    "CANONICAL_HOST": "",
+    "CANONICAL_HOST": "kikemu.ai-apps.work",
     // Turnstile site key 是公開值(可放 vars);TURNSTILE_SECRET 走 secret。
     // **兩者都設齊才會啟用**——只設一半會讓前端渲染不出元件、後端卻要求 token,
     // 每次登入必定 403(sukemu 實測踩過,見 worker/index.ts turnstileOn)。
