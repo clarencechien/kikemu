@@ -1,0 +1,50 @@
+// kikemu — Cloudflare Workers 專案。一次性部署步驟見 app/README.md
+// (R2 bucket、secrets、種子場景包上傳、Google OAuth)。
+{
+  "name": "kikemu",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-01",
+  // 安全:workers.dev 與 preview URL 都不經 zone WAF,設定碼層級關死——
+  // 就算 dashboard 被誤開,下次部署也會關回來。程式端另有 CANONICAL_HOST 縱深。
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // 靜態檔也先進 worker:canonical-host 檢查與安全 headers 才會對靜態頁生效
+    "run_worker_first": true
+  },
+  "r2_buckets": [
+    { "binding": "CONFIG", "bucket_name": "kikemu-config" }
+  ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "QUOTA", "class_name": "QuotaCounter" },
+      { "name": "RELAY", "class_name": "SessionRelay" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["QuotaCounter", "SessionRelay"] }
+  ],
+  "vars": {
+    // 額度分級:每日「聽譯秒數」,0 = 無上限(PRD §7;trial 15 分鐘夠一場短導覽)
+    "QUOTA_TIERS": "{\"admin\":0,\"pro\":10800,\"beta\":3600,\"trial\":900}",
+    "DEFAULT_TIER": "beta",
+    // 列在這裡的帳號一律 admin 級(無上限),可開 /admin 管理頁
+    "ADMIN_EMAILS": "clarence.chien@gmail.com",
+    // 翻譯 hop 模型(exp1 定案:台灣用語 0 失誤、adequacy 4.71)
+    "TRANSLATE_MODEL": "gemini-3.5-flash",
+    // 單場 hard cap(秒):導覽是連續旁白,60 分鐘為熔斷上限(PRD §5)
+    "SESSION_HARD_CAP_S": "3600",
+    // 正式網域(如 kikemu.ai-apps.work):設了之後其他 host 一律 301/403;留空 = 不檢查
+    "CANONICAL_HOST": "",
+    // Turnstile site key 是公開值(可放 vars);TURNSTILE_SECRET 走 secret。
+    // **兩者都設齊才會啟用**——只設一半會讓前端渲染不出元件、後端卻要求 token,
+    // 每次登入必定 403(sukemu 實測踩過,見 worker/index.ts turnstileOn)。
+    "TURNSTILE_SITE_KEY": ""
+    // 秘密(SPEECHMATICS_API_KEY / GEMINI_API_KEY / GOOGLE_CLIENT_ID /
+    // GOOGLE_CLIENT_SECRET / SESSION_SECRET / TURNSTILE_SECRET)
+    // 一律 wrangler secret put,絕不進 repo。
+  },
+  "observability": { "enabled": true }
+}

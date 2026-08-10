@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>kikemu きけむ</title>
+<meta name="description" content="kikemu 替你聽日文導覽,台灣正體字幕即時浮現——神社的神名、茶室的典故,一個都不漏。">
+<meta name="theme-color" content="#B8860B">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="kikemu">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body data-screen="login" data-auth="out" data-listen="idle">
+
+<!-- ── 登入前(家族同構:wordmark+假名、命名文案、隱私三行、SSO、等候名單)── -->
+<div class="login" id="loginScreen">
+  <div class="wordmark">kikemu<span class="kana">きけむ</span></div>
+  <p class="tag">
+    <b>聞く(きく,聽)+ む。</b><br>
+    打開 kikemu,它替你聽日文導覽,<br>
+    台灣正體字幕即時浮現——<br>
+    <b>神社的神名、茶室的典故,一個都不漏。</b>
+  </p>
+  <ul class="privacy">
+    <li>原音不落地——聲音只在聽譯期間經過,不儲存</li>
+    <li>字幕只存你的裝置,伺服器零內容</li>
+    <li>不做公開分享連結,結果僅供個人參考</li>
+  </ul>
+  <div class="waitNotice hidden" id="waitNotice">
+    <b>🕓 已排上等候名單</b>
+    <span>這個 Email 還不在受邀名單內,已自動幫你登記。<br>開通後,再登入一次就能使用。</span>
+  </div>
+  <!-- 模式由 /api/config 決定:OIDC(POST /auth/login → Google)或開發用 Email 直登 -->
+  <form id="ssoForm">
+    <div id="tsWidget"></div>
+    <input class="mail" id="email" type="email" required placeholder="you@example.com" autocomplete="email" aria-label="Email">
+    <button class="sso" id="ssoBtn" type="submit">登入</button>
+  </form>
+  <p class="loginErr hidden" id="loginErr"></p>
+  <button class="install hidden" id="installBtn">📲 安裝成 App(免商店・全螢幕無網址列)</button>
+  <p class="fine hidden" id="iosHint">iPhone / iPad:用 Safari 開啟 → 分享 → 「加入主畫面」,即可全螢幕使用。</p>
+  <p class="fine">封測中:Email 需在受邀名單內才能啟用聽譯。</p>
+  <button class="demo" id="demoBtn">看看介面 →</button>
+</div>
+
+<!-- ── App(聽譯主畫面,PRD §3.2)── -->
+<div class="app" id="appScreen">
+  <div class="bar">
+    <div class="mark"><b>kikemu</b><span>v1</span></div>
+    <select id="packSel" aria-label="場景包">
+      <option value="">(場景包)</option>
+    </select>
+    <div class="spacer"></div>
+    <button class="pick" id="histBtn">🕘 歷史</button>
+    <button class="pick hidden" id="adminBtn">⚙ 管理</button>
+    <!-- 未登入(從「看看介面」進來)時的回頭路:沒有這個就只能重新整理 -->
+    <button class="pick" id="loginBtn">← 登入</button>
+  </div>
+
+  <!-- 字幕流:每句一張卡(ja 原文 ink;zh 譯文琥珀,定稿後浮現) -->
+  <div class="stream" id="stream" aria-live="polite"></div>
+
+  <div class="deck">
+    <button id="toggleBtn">● 開始聽</button>
+    <span class="chip" id="latChip" title="定稿延遲(中位數)">⚡–</span>
+    <span class="chip" id="quotaChip" title="今日剩餘">–</span>
+  </div>
+</div>
+
+<!-- 聽譯紀錄(IndexedDB,只存在裝置上) -->
+<div class="histPanel hidden" id="histPanel">
+  <div class="histCard">
+    <div class="histHead">
+      <h2>聽譯紀錄</h2><span id="histCount"></span>
+      <button class="histClose" id="histClose" aria-label="關閉">✕</button>
+    </div>
+    <div class="histList" id="histList"></div>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
