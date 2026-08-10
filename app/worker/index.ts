@@ -99,10 +99,17 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
   const url = new URL(req.url);
   const p = url.pathname;
 
-  // 縱深防禦:設了 CANONICAL_HOST 之後,workers.dev 等非正式 host 一律導回正式網域
-  if (env.CANONICAL_HOST && url.hostname !== env.CANONICAL_HOST && url.hostname !== 'localhost') {
+  // 縱深防禦:設了 CANONICAL_HOST 之後,workers.dev 等非正式 host 一律導回正式網域。
+  // 值只認 hostname;誤填成完整 URL(https://host/)時自動剝掉 scheme/路徑/尾斜線——
+  // 不剝的話轉址會組出 https://https//host// 這種壞掉的網址(實際發生過)。
+  const canonical = (env.CANONICAL_HOST || '')
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/[/?#].*$/, '')
+    .toLowerCase();
+  if (canonical && url.hostname.toLowerCase() !== canonical && url.hostname !== 'localhost') {
     if (req.method === 'GET' && !p.startsWith('/api') && p !== '/ws') {
-      return Response.redirect(`https://${env.CANONICAL_HOST}${p}${url.search}`, 301);
+      return Response.redirect(`https://${canonical}${p}${url.search}`, 301);
     }
     return new Response('use canonical host', { status: 403 });
   }
