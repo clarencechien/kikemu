@@ -17,7 +17,7 @@
  *   node scripts/probe-ws.mjs --host … --cookie "kk_session=…" --wav …
  */
 import { readFileSync } from 'node:fs';
-import { WebSocket } from 'undici';
+import WebSocket from 'ws'; // 需要自訂 header 帶 cookie,Node 全域 WebSocket 不支援
 
 const arg = (k, d) => {
   const i = process.argv.indexOf(`--${k}`);
@@ -100,6 +100,7 @@ if (!cookie) {
 const wsUrl = host.replace(/^http/, 'ws') + '/ws' + (pack ? `?pack=${encodeURIComponent(pack)}` : '');
 console.log(`連線 ${wsUrl}\n`);
 const ws = new WebSocket(wsUrl, { headers: { cookie, origin: host } });
+ws.binaryType = 'arraybuffer';
 
 const t0 = Date.now();
 const ts = () => `[${((Date.now() - t0) / 1000).toFixed(1)}s]`;
