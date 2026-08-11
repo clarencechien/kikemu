@@ -104,6 +104,8 @@ export class SessionRelay {
     let ended = false; // 收到 client {type:"end"} 之後只等 SM 收尾
     let lastFrameAt = Date.now();
     let audioSeq = 0;
+    let rmsSum = 0; // 伺服器端實收音量的滑動平均(近 30 框)
+    let rmsN = 0;
     let sentSeq = 0;
     let pending = ''; // 已定稿但還沒斷句的文字
     let pendingT = 0;
@@ -186,8 +188,11 @@ export class SessionRelay {
       } catch {}
     };
 
-    // 熔斷 watchdog:hard cap 60 分鐘、WS 靜默 30 秒收斂、額度用盡即斷
+    // 熔斷 watchdog:hard cap 60 分鐘、WS 靜默 30 秒收斂、額度用盡即斷。
+    // 順帶每秒回報伺服器端實收音訊統計:客戶端音量條會動、但這裡 rms≈0,
+    // 就代表傳輸把音訊弄壞了(而不是麥克風沒收到)——沒這個數字分不出來。
     const watchdog = setInterval(() => {
+      if (audioSeq) send({ type: 'stat', frames: audioSeq, rms: Math.round(rmsSum / Math.max(rmsN, 1)) });
       if (Date.now() - t0 > hardCapMs) return void finish('hard-cap');
       if (!ended && Date.now() - lastFrameAt > IDLE_MS) return void finish('idle');
       if (chargeStart && limit > 0 && used + (Date.now() - chargeStart) / 1000 >= limit) {
@@ -250,6 +255,17 @@ export class SessionRelay {
       if (bytes.length === 0 || bytes.length > 16000) return; // 100ms@16k PCM16 = 3200 bytes,留裕度
       lastFrameAt = Date.now();
       audioSeq++;
+      // 以伺服器實收的位元組算 RMS(每 3 框抽一次,成本可忽略)。
+      // 這是「送到雲端的到底是不是語音」唯一的伺服器端證據。
+      if (audioSeq % 3 === 0) {
+        const dv = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        let s = 0;
+        const n = bytes.byteLength >> 1;
+        for (let i = 0; i < n; i += 4) s += dv.getInt16(i * 2, true) ** 2; // 每 4 個樣本取一個
+        const r = Math.sqrt(s / Math.max(Math.ceil(n / 4), 1));
+        rmsSum = rmsN >= 30 ? rmsSum * (29 / 30) + r : rmsSum + r;
+        rmsN = Math.min(rmsN + 1, 30);
+      }
       try {
         upstream.send(bytes);
       } catch {}

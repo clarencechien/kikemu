@@ -15,6 +15,8 @@ export type RelayMsg =
   | { type: 'zh'; forSeq: number; text: string }
   | { type: 'zhError'; forSeq: number }
   | { type: 'error'; message: string }
+  /** 伺服器實收音訊統計:與客戶端音量條對照,可分辨「麥克風沒收到」與「傳輸弄壞了」 */
+  | { type: 'stat'; frames: number; rms: number }
   | {
       type: 'done';
       reason: string;
