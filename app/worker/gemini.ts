@@ -8,6 +8,7 @@
 
 import type { Env } from './index';
 import type { VocabEntry } from './vocab';
+import { resolveLang } from './langs';
 
 /** 凍結口譯 systemInstruction(scripts/prompts.py INTERPRETER_SYSTEM,逐字複製) */
 export const INTERPRETER_SYSTEM =
@@ -22,6 +23,33 @@ export const INTERPRETER_SYSTEM =
 /** scripts/prompts.py TRANSLATE_USER_TEMPLATE(逐字複製,{transcript} 置換) */
 const TRANSLATE_USER_TEMPLATE =
   '以下は音声認識による日本語の書き起こしです。上記の方針で台灣正體中文に翻訳してください。\n\n{transcript}';
+
+/* 多語言:只把來源語名稱換掉,其餘一字不動。
+   lang='ja' 時回傳的字串與 exp1 量測用的**完全相同**(下方 assert 式的寫法保證這件事),
+   所以既有的 adequacy 4.71 / 台灣用語 0 失誤仍然適用;其他語言沿用同一套
+   語域與在地化規則,但屬於未量測範圍。 */
+const interpreterSystem = (lang: string) => {
+  const { srcName } = resolveLang(lang);
+  return srcName === '日本語'
+    ? INTERPRETER_SYSTEM
+    : INTERPRETER_SYSTEM.replace('聞こえてくる日本語の解説', `聞こえてくる${srcName}の解説`);
+};
+/** 中英夾雜:來源已是中文(SM 輸出簡體),要的是繁體化+台灣在地化+英文術語保留,
+    不是「翻譯」。措辭沿用 exp2 translate_x.py 實測版本。 */
+const CODEMIX_USER =
+  '以下是語音辨識的書き起こし(中文夾雜英文術語)。請整理成通順的台灣正體中文,' +
+  '英文術語維持英文原文不要翻譯。只輸出整理後的文字。\n\n{transcript}';
+
+const translateUser = (lang: string, sentence: string) => {
+  const { srcName } = resolveLang(lang);
+  const tpl =
+    lang === 'cmn_en'
+      ? CODEMIX_USER
+      : srcName === '日本語'
+        ? TRANSLATE_USER_TEMPLATE
+        : TRANSLATE_USER_TEMPLATE.replace('音声認識による日本語の', `音声認識による${srcName}の`);
+  return tpl.replace('{transcript}', sentence);
+};
 
 const model = (env: Env) => env.TRANSLATE_MODEL || 'gemini-3.5-flash';
 
@@ -42,10 +70,10 @@ const firstText = (resp: any): string | null =>
   resp?.candidates?.[0]?.content?.parts?.map((p: any) => p.text ?? '').join('').trim() || null;
 
 /** 定稿句 → 台灣正體譯文(exp1 同款呼叫:temperature 0.2) */
-export async function translateSentence(env: Env, sentence: string): Promise<string> {
+export async function translateSentence(env: Env, sentence: string, lang = 'ja'): Promise<string> {
   const resp = await generate(env, {
-    systemInstruction: { parts: [{ text: INTERPRETER_SYSTEM }] },
-    contents: [{ parts: [{ text: TRANSLATE_USER_TEMPLATE.replace('{transcript}', sentence) }] }],
+    systemInstruction: { parts: [{ text: interpreterSystem(lang) }] },
+    contents: [{ parts: [{ text: translateUser(lang, sentence) }] }],
     generationConfig: { temperature: 0.2 },
   });
   const zh = firstText(resp);

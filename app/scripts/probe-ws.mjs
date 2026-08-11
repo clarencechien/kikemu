@@ -27,6 +27,7 @@ const arg = (k, d) => {
 const host = (arg('host') || 'http://localhost:8787').replace(/\/$/, '');
 const wavPath = arg('wav');
 const pack = arg('pack', '');
+const lang = arg('lang', 'ja');
 const email = arg('email');
 let cookie = arg('cookie', '');
 
@@ -97,7 +98,9 @@ if (!cookie) {
   process.exit(2);
 }
 
-const wsUrl = host.replace(/^http/, 'ws') + '/ws' + (pack ? `?pack=${encodeURIComponent(pack)}` : '');
+const q = new URLSearchParams({ lang });
+if (pack) q.set('pack', pack);
+const wsUrl = `${host.replace(/^http/, 'ws')}/ws?${q}`;
 console.log(`連線 ${wsUrl}\n`);
 const ws = new WebSocket(wsUrl, { headers: { cookie, origin: host } });
 ws.binaryType = 'arraybuffer';

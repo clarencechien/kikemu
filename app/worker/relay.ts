@@ -22,6 +22,7 @@
 import type { Env } from './index';
 import { translateSentence } from './gemini';
 import { readPack } from './vocab';
+import { PACK_LANG, resolveLang } from './langs';
 import type { Usage } from './quota';
 
 const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
@@ -29,6 +30,11 @@ const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 const IDLE_MS = 30_000;
 /** 句尾標點:定稿句切分依據(逐句觸發翻譯,非整場重譯) */
 const SENT_END = /(?<=[。!?!?])/;
+/* 有些語言包完全不輸出標點(實測 cmn_en 只給空格分詞),只靠標點斷句會讓
+   整場累積成一大句、到收尾才吐出來——等於沒有增量字幕。所以另加長度與時間
+   兩道保險:超過字數、或殘句擱太久,就當一句切出去。 */
+const MAX_PENDING_CHARS = 48;
+const PENDING_STALE_MS = 6_000;
 
 export class SessionRelay {
   // DO 介面要求 (state, env);本 DO 無持久狀態(配額在 QuotaCounter),state 不用
@@ -53,6 +59,7 @@ export class SessionRelay {
     const email = url.searchParams.get('email') || '';
     const limit = Number(url.searchParams.get('limit') || 0);
     const pack = url.searchParams.get('pack') || '';
+    const lang = url.searchParams.get('lang') || 'ja';
 
     // 配額保險絲:進門先擋(0 = 無上限);session 中另有 watchdog 逐秒檢查
     const used = await this.usedToday(email);
@@ -69,7 +76,7 @@ export class SessionRelay {
     // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
     // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
     server.binaryType = 'arraybuffer';
-    this.pipe(server, { email, limit, used, pack }).catch(e => {
+    this.pipe(server, { email, limit, used, pack, lang }).catch(e => {
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
         server.close();
@@ -80,14 +87,16 @@ export class SessionRelay {
 
   private async pipe(
     client: WebSocket,
-    { email, limit, used, pack }: { email: string; limit: number; used: number; pack: string },
+    { email, limit, used, pack, lang }: { email: string; limit: number; used: number; pack: string; lang: string },
   ) {
     // fail-closed:金鑰缺就明講,不連上游、不計費
     if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
     if (!this.env.GEMINI_API_KEY) throw new Error('GEMINI_API_KEY 未設定(wrangler secret put)');
 
     // 場景包隨 session config 送出(Speechmatics 限制:中途不可換,換包 = 重連)
-    const vocabPack = pack ? await readPack(this.env, pack) : null;
+    const smLang = resolveLang(lang).code;
+    // 場景包目前只做日文(詞表 sounds_like 是全形假名);其他語言一律不掛
+    const vocabPack = pack && smLang === PACK_LANG ? await readPack(this.env, pack) : null;
     const vocab = (vocabPack?.entries ?? []).slice(0, 1000);
 
     // 上游:Speechmatics RT。需要 Authorization header → 走 fetch-upgrade
@@ -113,6 +122,7 @@ export class SessionRelay {
     let sentSeq = 0;
     let pending = ''; // 已定稿但還沒斷句的文字
     let pendingT = 0;
+    let pendingSince = 0; // 殘句開始累積的時刻(無標點語言的時間保險)
     const sentences = new Map<number, string>(); // seq → 原文(retryZh 用)
     let inflight = 0; // 未完成的翻譯呼叫數(收尾要等它們落地)
 
@@ -124,7 +134,7 @@ export class SessionRelay {
 
     const translate = (seq: number, text: string) => {
       inflight++;
-      translateSentence(this.env, text)
+      translateSentence(this.env, text, smLang)
         .then(zh => send({ type: 'zh', forSeq: seq, text: zh }))
         .catch(() => send({ type: 'zhError', forSeq: seq }))
         .finally(() => inflight--);
@@ -145,13 +155,21 @@ export class SessionRelay {
         send({ type: 'final', seq, t, text: sentence });
         translate(seq, sentence);
       }
-      // 殘句仍以 partial 樣式顯示,不留白
-      send({ type: 'partial', t, text: pending });
+      // 無標點語言:字數到了就切,不然永遠等不到句號
+      if (pending.length >= MAX_PENDING_CHARS) {
+        flushPending();
+      } else {
+        if (pending && !pendingSince) pendingSince = Date.now();
+        if (!pending) pendingSince = 0;
+        // 殘句仍以 partial 樣式顯示,不留白
+        send({ type: 'partial', t, text: pending });
+      }
     };
 
     const flushPending = () => {
       const sentence = pending.trim();
       pending = '';
+      pendingSince = 0;
       if (!sentence) return;
       gotFinal = true;
       const seq = ++sentSeq;
@@ -166,7 +184,7 @@ export class SessionRelay {
       clearInterval(watchdog);
       flushPending();
       // 給未落地的譯文最多 5 秒收尾(逐句 hop 通常 1–2 秒)
-      const grace = Date.now() + 5000;
+      const grace = Date.now() + 8000; // 長句翻譯可能要 5 秒以上
       while (inflight > 0 && Date.now() < grace) await new Promise(r => setTimeout(r, 100));
       // 計費:SM 連線中的秒數;整場連一句定稿都沒有的失敗 session 不扣額度
       const seconds = chargeStart ? (Date.now() - chargeStart) / 1000 : 0;
@@ -197,6 +215,8 @@ export class SessionRelay {
     // 就代表傳輸把音訊弄壞了(而不是麥克風沒收到)——沒這個數字分不出來。
     const watchdog = setInterval(() => {
       if (audioSeq) send({ type: 'stat', frames: audioSeq, rms: Math.round(rmsSum / Math.max(rmsN, 1)) });
+      // 殘句擱太久就切(無標點語言的第二道保險)
+      if (pendingSince && Date.now() - pendingSince > PENDING_STALE_MS) flushPending();
       if (Date.now() - t0 > hardCapMs) return void finish('hard-cap');
       if (!ended && Date.now() - lastFrameAt > IDLE_MS) return void finish('idle');
       if (chargeStart && limit > 0 && used + (Date.now() - chargeStart) / 1000 >= limit) {
@@ -298,7 +318,7 @@ export class SessionRelay {
         message: 'StartRecognition',
         audio_format: { type: 'raw', encoding: 'pcm_s16le', sample_rate: 16000 },
         transcription_config: {
-          language: 'ja',
+          language: smLang,
           operating_point: 'enhanced',
           enable_partials: true,
           max_delay: 2.0,

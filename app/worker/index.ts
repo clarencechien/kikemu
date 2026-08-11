@@ -19,6 +19,7 @@ import {
 } from './auth';
 import { handleAdmin } from './admin';
 import { listPacks } from './vocab';
+import { DEFAULT_LANG, LANGS, PACK_LANG } from './langs';
 import type { Usage } from './quota';
 export { QuotaCounter } from './quota';
 export { SessionRelay } from './relay';
@@ -130,6 +131,10 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     return json({
       mode: env.GOOGLE_CLIENT_ID ? 'oidc' : 'dev',
       turnstileSiteKey: turnstileOn(env) ? env.TURNSTILE_SITE_KEY : null,
+      // 語言清單由伺服器給:加語言只改 worker/langs.ts 一處
+      langs: LANGS.map(l => ({ code: l.code, label: l.label })),
+      defaultLang: DEFAULT_LANG,
+      packLang: PACK_LANG,
     });
   }
 
@@ -274,6 +279,7 @@ async function api(req: Request, env: Env, path: string, email: string, user: Us
     const wsUrl = new URL(req.url);
     wsUrl.searchParams.set('limit', String(user.limitSeconds));
     wsUrl.searchParams.set('email', email);
+    wsUrl.searchParams.set('lang', new URL(req.url).searchParams.get('lang') || DEFAULT_LANG);
     return stub.fetch(new Request(wsUrl, req));
   }
 

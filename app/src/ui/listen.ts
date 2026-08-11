@@ -24,6 +24,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   const latChip = $('latChip');
   const quotaChip = $('quotaChip');
   const packSel = $('packSel') as HTMLSelectElement;
+  const langSel = $('langSel') as HTMLSelectElement;
 
   let state: State = 'idle';
   let ws: WebSocket | null = null;
@@ -33,6 +34,8 @@ export function initListen(onPreviewStart: () => void): Listen {
   let firstFrameAt = 0; // 第一框送出時刻:端到端延遲的原點
   let lats: number[] = [];
   let curPack: Pack | null = null;
+  let curLang = 'ja';
+  let packLang = 'ja'; // 場景包目前只做日文;選其他語言時詞表不掛(伺服器也會擋)
   let guidanceShown = false; // 拾音指引一次就好
   let endFuse: ReturnType<typeof setTimeout> | undefined;
 
@@ -88,7 +91,7 @@ export function initListen(onPreviewStart: () => void): Listen {
         'warn',
         srvFrames && srvRms < 50
           ? `伺服器收到 ${srvFrames} 框但音量近乎零——音訊在傳輸中損壞`
-          : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是日文`,
+          : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是${langSel.selectedOptions[0]?.textContent ?? '所選語言'}`,
       );
     } else if (lastFinalAt && lastFinalAt > lastPartialAt) {
       setStat('ok', '聽寫中・翻譯中');
@@ -102,7 +105,9 @@ export function initListen(onPreviewStart: () => void): Listen {
     document.body.dataset.listen = s;
     toggleBtn.textContent = s === 'idle' ? '● 開始聽' : s === 'starting' ? '連線中…' : s === 'stopping' ? '收尾中…' : '■ 停止';
     toggleBtn.disabled = s === 'starting' || s === 'stopping';
-    packSel.disabled = s !== 'idle'; // 詞表中途不換,換場景包 = 重連(Speechmatics 限制)
+    // 語言與詞表都隨 StartRecognition 送出,中途不可換(Speechmatics 限制)= 聽譯中鎖住
+    packSel.disabled = s !== 'idle' || curLang !== packLang;
+    langSel.disabled = s !== 'idle';
   };
 
   const p50 = () => {
@@ -120,6 +125,40 @@ export function initListen(onPreviewStart: () => void): Listen {
       limitSeconds > 0 ? `剩 ${Math.max(0, Math.floor((limitSeconds - usedSeconds) / 60))} 分` : '無上限';
   };
   const refreshQuota = () => api.me().then(me => showQuota(me.usedSeconds, me.limitSeconds)).catch(() => {});
+
+  /** 語言清單由 /api/config 給(加語言只改 worker/langs.ts);記住上次選擇 */
+  async function loadLangs() {
+    try {
+      const cfg = await api.config();
+      packLang = cfg.packLang;
+      curLang = localStorage.getItem('kk_lang') || cfg.defaultLang;
+      if (!cfg.langs.some(l => l.code === curLang)) curLang = cfg.defaultLang;
+      langSel.innerHTML = '';
+      for (const l of cfg.langs) {
+        const o = document.createElement('option');
+        o.value = l.code;
+        o.textContent = l.label;
+        langSel.appendChild(o);
+      }
+      langSel.value = curLang;
+      langSel.onchange = () => {
+        curLang = langSel.value;
+        localStorage.setItem('kk_lang', curLang);
+        syncPackAvailability();
+      };
+      syncPackAvailability();
+    } catch {
+      /* 拿不到就留預設日文 */
+    }
+  }
+
+  /** 場景包只做日文:選其他語言時停用並說明,不要讓人以為詞表有生效 */
+  function syncPackAvailability() {
+    const ok = curLang === packLang;
+    packSel.disabled = !ok || state !== 'idle';
+    packSel.title = ok ? '場景包(詞表)' : '場景包目前只支援日文';
+    packSel.style.opacity = ok ? '' : '.5';
+  }
 
   async function loadPacks() {
     try {
@@ -358,8 +397,9 @@ export function initListen(onPreviewStart: () => void): Listen {
     }
 
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-    const packQ = curPack ? `?pack=${encodeURIComponent(curPack.id)}` : '';
-    ws = new WebSocket(`${proto}://${location.host}/ws${packQ}`);
+    const q = new URLSearchParams({ lang: curLang });
+    if (curPack && curLang === packLang) q.set('pack', curPack.id);
+    ws = new WebSocket(`${proto}://${location.host}/ws?${q}`);
     ws.binaryType = 'arraybuffer';
     ws.onmessage = ev => {
       try {
@@ -413,7 +453,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   return {
     onAuthed(me: Me) {
       showQuota(me.usedSeconds, me.limitSeconds);
-      void loadPacks();
+      void loadLangs().then(loadPacks);
     },
     isBusy: () => state !== 'idle',
   };
