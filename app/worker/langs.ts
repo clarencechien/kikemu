@@ -15,13 +15,10 @@ export const LANGS: Lang[] = [
   { code: 'ja', label: '日本語', srcName: '日本語' },
   { code: 'ko', label: '한국어', srcName: '韓国語' },
   { code: 'en', label: 'English', srcName: '英語' },
-  { code: 'yue', label: '廣東話', srcName: '広東語' },
-  { code: 'cmn', label: '中文(普通話)', srcName: '中国語' },
-  { code: 'th', label: 'ไทย', srcName: 'タイ語' },
-  { code: 'vi', label: 'Tiếng Việt', srcName: 'ベトナム語' },
-  { code: 'de', label: 'Deutsch', srcName: 'ドイツ語' },
-  { code: 'fr', label: 'Français', srcName: 'フランス語' },
-  { code: 'it', label: 'Italiano', srcName: 'イタリア語' },
+  // 中英夾雜用雙語包,不用單語 cmn:exp2 實測術語召回 0.521 → 0.813(+0.23~0.29)。
+  // 單語包的病徵是把英文聽成別的英文(COVID-19 → CoffeeNight),詞表補不回來。
+  // cmn_en 是 Speechmatics 唯一存在的雙語包(ja_en / en_ja 皆 not supported)。
+  { code: 'cmn_en', label: '中文・English(夾雜)', srcName: '中国語' },
 ];
 
 export const DEFAULT_LANG = 'ja';

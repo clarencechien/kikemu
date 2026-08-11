@@ -30,6 +30,11 @@ const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 const IDLE_MS = 30_000;
 /** 句尾標點:定稿句切分依據(逐句觸發翻譯,非整場重譯) */
 const SENT_END = /(?<=[。!?!?])/;
+/* 有些語言包完全不輸出標點(實測 cmn_en 只給空格分詞),只靠標點斷句會讓
+   整場累積成一大句、到收尾才吐出來——等於沒有增量字幕。所以另加長度與時間
+   兩道保險:超過字數、或殘句擱太久,就當一句切出去。 */
+const MAX_PENDING_CHARS = 48;
+const PENDING_STALE_MS = 6_000;
 
 export class SessionRelay {
   // DO 介面要求 (state, env);本 DO 無持久狀態(配額在 QuotaCounter),state 不用
@@ -117,6 +122,7 @@ export class SessionRelay {
     let sentSeq = 0;
     let pending = ''; // 已定稿但還沒斷句的文字
     let pendingT = 0;
+    let pendingSince = 0; // 殘句開始累積的時刻(無標點語言的時間保險)
     const sentences = new Map<number, string>(); // seq → 原文(retryZh 用)
     let inflight = 0; // 未完成的翻譯呼叫數(收尾要等它們落地)
 
@@ -149,13 +155,21 @@ export class SessionRelay {
         send({ type: 'final', seq, t, text: sentence });
         translate(seq, sentence);
       }
-      // 殘句仍以 partial 樣式顯示,不留白
-      send({ type: 'partial', t, text: pending });
+      // 無標點語言:字數到了就切,不然永遠等不到句號
+      if (pending.length >= MAX_PENDING_CHARS) {
+        flushPending();
+      } else {
+        if (pending && !pendingSince) pendingSince = Date.now();
+        if (!pending) pendingSince = 0;
+        // 殘句仍以 partial 樣式顯示,不留白
+        send({ type: 'partial', t, text: pending });
+      }
     };
 
     const flushPending = () => {
       const sentence = pending.trim();
       pending = '';
+      pendingSince = 0;
       if (!sentence) return;
       gotFinal = true;
       const seq = ++sentSeq;
@@ -170,7 +184,7 @@ export class SessionRelay {
       clearInterval(watchdog);
       flushPending();
       // 給未落地的譯文最多 5 秒收尾(逐句 hop 通常 1–2 秒)
-      const grace = Date.now() + 5000;
+      const grace = Date.now() + 8000; // 長句翻譯可能要 5 秒以上
       while (inflight > 0 && Date.now() < grace) await new Promise(r => setTimeout(r, 100));
       // 計費:SM 連線中的秒數;整場連一句定稿都沒有的失敗 session 不扣額度
       const seconds = chargeStart ? (Date.now() - chargeStart) / 1000 : 0;
@@ -201,6 +215,8 @@ export class SessionRelay {
     // 就代表傳輸把音訊弄壞了(而不是麥克風沒收到)——沒這個數字分不出來。
     const watchdog = setInterval(() => {
       if (audioSeq) send({ type: 'stat', frames: audioSeq, rms: Math.round(rmsSum / Math.max(rmsN, 1)) });
+      // 殘句擱太久就切(無標點語言的第二道保險)
+      if (pendingSince && Date.now() - pendingSince > PENDING_STALE_MS) flushPending();
       if (Date.now() - t0 > hardCapMs) return void finish('hard-cap');
       if (!ended && Date.now() - lastFrameAt > IDLE_MS) return void finish('idle');
       if (chargeStart && limit > 0 && used + (Date.now() - chargeStart) / 1000 >= limit) {

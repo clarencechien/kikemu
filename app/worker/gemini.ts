@@ -34,12 +34,20 @@ const interpreterSystem = (lang: string) => {
     ? INTERPRETER_SYSTEM
     : INTERPRETER_SYSTEM.replace('聞こえてくる日本語の解説', `聞こえてくる${srcName}の解説`);
 };
+/** 中英夾雜:來源已是中文(SM 輸出簡體),要的是繁體化+台灣在地化+英文術語保留,
+    不是「翻譯」。措辭沿用 exp2 translate_x.py 實測版本。 */
+const CODEMIX_USER =
+  '以下是語音辨識的書き起こし(中文夾雜英文術語)。請整理成通順的台灣正體中文,' +
+  '英文術語維持英文原文不要翻譯。只輸出整理後的文字。\n\n{transcript}';
+
 const translateUser = (lang: string, sentence: string) => {
   const { srcName } = resolveLang(lang);
   const tpl =
-    srcName === '日本語'
-      ? TRANSLATE_USER_TEMPLATE
-      : TRANSLATE_USER_TEMPLATE.replace('音声認識による日本語の', `音声認識による${srcName}の`);
+    lang === 'cmn_en'
+      ? CODEMIX_USER
+      : srcName === '日本語'
+        ? TRANSLATE_USER_TEMPLATE
+        : TRANSLATE_USER_TEMPLATE.replace('音声認識による日本語の', `音声認識による${srcName}の`);
   return tpl.replace('{transcript}', sentence);
 };
 
