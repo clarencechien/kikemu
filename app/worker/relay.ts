@@ -22,6 +22,7 @@
 import type { Env } from './index';
 import { translateSentence } from './gemini';
 import { readPack } from './vocab';
+import { PACK_LANG, resolveLang } from './langs';
 import type { Usage } from './quota';
 
 const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
@@ -53,6 +54,7 @@ export class SessionRelay {
     const email = url.searchParams.get('email') || '';
     const limit = Number(url.searchParams.get('limit') || 0);
     const pack = url.searchParams.get('pack') || '';
+    const lang = url.searchParams.get('lang') || 'ja';
 
     // 配額保險絲:進門先擋(0 = 無上限);session 中另有 watchdog 逐秒檢查
     const used = await this.usedToday(email);
@@ -69,7 +71,7 @@ export class SessionRelay {
     // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
     // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
     server.binaryType = 'arraybuffer';
-    this.pipe(server, { email, limit, used, pack }).catch(e => {
+    this.pipe(server, { email, limit, used, pack, lang }).catch(e => {
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
         server.close();
@@ -80,14 +82,16 @@ export class SessionRelay {
 
   private async pipe(
     client: WebSocket,
-    { email, limit, used, pack }: { email: string; limit: number; used: number; pack: string },
+    { email, limit, used, pack, lang }: { email: string; limit: number; used: number; pack: string; lang: string },
   ) {
     // fail-closed:金鑰缺就明講,不連上游、不計費
     if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
     if (!this.env.GEMINI_API_KEY) throw new Error('GEMINI_API_KEY 未設定(wrangler secret put)');
 
     // 場景包隨 session config 送出(Speechmatics 限制:中途不可換,換包 = 重連)
-    const vocabPack = pack ? await readPack(this.env, pack) : null;
+    const smLang = resolveLang(lang).code;
+    // 場景包目前只做日文(詞表 sounds_like 是全形假名);其他語言一律不掛
+    const vocabPack = pack && smLang === PACK_LANG ? await readPack(this.env, pack) : null;
     const vocab = (vocabPack?.entries ?? []).slice(0, 1000);
 
     // 上游:Speechmatics RT。需要 Authorization header → 走 fetch-upgrade
@@ -124,7 +128,7 @@ export class SessionRelay {
 
     const translate = (seq: number, text: string) => {
       inflight++;
-      translateSentence(this.env, text)
+      translateSentence(this.env, text, smLang)
         .then(zh => send({ type: 'zh', forSeq: seq, text: zh }))
         .catch(() => send({ type: 'zhError', forSeq: seq }))
         .finally(() => inflight--);
@@ -298,7 +302,7 @@ export class SessionRelay {
         message: 'StartRecognition',
         audio_format: { type: 'raw', encoding: 'pcm_s16le', sample_rate: 16000 },
         transcription_config: {
-          language: 'ja',
+          language: smLang,
           operating_point: 'enhanced',
           enable_partials: true,
           max_delay: 2.0,

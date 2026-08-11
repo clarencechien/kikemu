@@ -27,7 +27,10 @@ const post = (path: string, body: unknown) =>
   });
 
 export const api = {
-  config: (): Promise<{ mode: 'oidc' | 'dev'; turnstileSiteKey: string | null }> => req('/api/config'),
+  config: (): Promise<{ mode: 'oidc' | 'dev'; turnstileSiteKey: string | null;
+  langs: { code: string; label: string }[];
+  defaultLang: string;
+  packLang: string }> => req('/api/config'),
   me: (): Promise<Me> => req('/api/me'),
   login: (email: string): Promise<{ email: string }> => post('/api/login', { email }),
   logout: (): Promise<void> => post('/api/logout', {}),
