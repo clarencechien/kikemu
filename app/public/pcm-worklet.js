@@ -18,6 +18,12 @@ class PcmDownsampler extends AudioWorkletProcessor {
     }
     while (this.buf.length >= 1600) { // 100ms @16k
       const frame = new Int16Array(this.buf.splice(0, 1600));
+      // 音量先算(transfer 之後 buffer 就取不到了)。這是「到底有沒有收到音」
+      // 唯一的可信來源——UI 靠它區分「沒收到音」與「收到了但引擎沒回話」。
+      let sum = 0;
+      for (let k = 0; k < frame.length; k++) sum += frame[k] * frame[k];
+      const rms = Math.sqrt(sum / frame.length); // 0..32767
+      this.port.postMessage({ rms });
       this.port.postMessage(frame.buffer, [frame.buffer]);
     }
     return true;

@@ -36,6 +36,52 @@ export function initListen(onPreviewStart: () => void): Listen {
   let guidanceShown = false; // 拾音指引一次就好
   let endFuse: ReturnType<typeof setTimeout> | undefined;
 
+  // ── 管線觀測:四段(麥克風→連線→聽寫→翻譯)各自的最後活動時刻。
+  // 沒有這些,「收不到音」與「翻不出來」在畫面上長得一模一樣。
+  const statusBar = $('statusBar');
+  const statText = $('statText');
+  const meterFill = $('meterFill');
+  const timeChip = $('timeChip');
+  const VOICE_RMS = 220; // 16-bit RMS;低於此視為靜音(冷氣房底噪約 50~150)
+  let startedAt = 0;
+  let frames = 0; // 已送出的音框數:證明音訊真的在流
+  let lastVoiceAt = 0; // 最後一次「有人在說話」的時刻
+  let lastPartialAt = 0;
+  let lastFinalAt = 0;
+  let peakRms = 0; // 本場最大音量:全程為 0 = 麥克風根本沒訊號
+  let tick: ReturnType<typeof setInterval> | undefined;
+
+  const setStat = (kind: 'idle' | 'ok' | 'warn', text: string) => {
+    statusBar.dataset.stat = kind;
+    statText.textContent = text;
+  };
+
+  const mmss = (s: number) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  /** 每秒重算一次「現在到底卡在哪一段」。順序由前段往後段判斷,先斷的先講。 */
+  function diagnose() {
+    if (state !== 'live') return;
+    const now = performance.now();
+    timeChip.textContent = mmss((now - startedAt) / 1000);
+    const sinceVoice = (now - lastVoiceAt) / 1000;
+    const sincePartial = (now - lastPartialAt) / 1000;
+
+    if (!frames) {
+      setStat('warn', '麥克風沒有送出訊號——請檢查權限或改用其他瀏覽器');
+    } else if (!peakRms) {
+      setStat('warn', '收到的音量是零——麥克風可能被靜音或被其他 App 占用');
+    } else if (!lastVoiceAt || sinceVoice > 6) {
+      setStat('warn', '目前很安靜——靠近音源,或確認導覽員正在說話');
+    } else if (!lastPartialAt || sincePartial > 8) {
+      // 有聲音進去、引擎不回話:這是「聽不出來」而不是「收不到」
+      setStat('warn', '有收到聲音,但引擎還沒認出字——可能太吵或不是日文');
+    } else if (lastFinalAt && lastFinalAt > lastPartialAt) {
+      setStat('ok', '聽寫中・翻譯中');
+    } else {
+      setStat('ok', '聽寫中');
+    }
+  }
+
   const setState = (s: State) => {
     state = s;
     document.body.dataset.listen = s;
@@ -118,6 +164,7 @@ export function initListen(onPreviewStart: () => void): Listen {
       case 'ready':
         smReady = true;
         setState('live');
+        setStat('ok', '已連上引擎・等待聲音');
         if (!guidanceShown) {
           guidanceShown = true; // exp4 結論的 UI 化
           toast('離音源越近越清楚——貼近導覽員或喇叭');
@@ -125,9 +172,11 @@ export function initListen(onPreviewStart: () => void): Listen {
         if (msg.packName) addNote('info', `場景包「${msg.packName}」已載入(${msg.vocabCount} 詞)`);
         return;
       case 'partial':
+        lastPartialAt = performance.now();
         setPartial(msg.text);
         return;
       case 'final': {
+        lastPartialAt = lastFinalAt = performance.now();
         addFinal(msg.seq, msg.text);
         // 端到端延遲:牆鐘經過 −(該句在音訊時間軸的位置)
         if (firstFrameAt && msg.t > 0) {
@@ -163,6 +212,19 @@ export function initListen(onPreviewStart: () => void): Listen {
 
   function finishLocal() {
     clearTimeout(endFuse);
+    clearInterval(tick);
+    meterFill.style.width = '0';
+    // 收尾時把本場最關鍵的一句話留在狀態列:沒出字時要看得出是哪一段沒過
+    if (startedAt) {
+      const secs = Math.round((performance.now() - startedAt) / 1000);
+      timeChip.textContent = mmss(secs);
+      if (!frames) setStat('warn', '本場沒有送出任何音訊');
+      else if (!peakRms) setStat('warn', '本場音量全程為零——麥克風沒有真的在收音');
+      else if (!lastPartialAt) setStat('warn', `有收到音(${secs} 秒),但引擎一個字都沒認出來`);
+      else setStat('idle', `已結束・${secs} 秒`);
+    } else {
+      setStat('idle', '尚未開始');
+    }
     setPartial('');
     cleanupAudio();
     try {
@@ -182,6 +244,13 @@ export function initListen(onPreviewStart: () => void): Listen {
     lats = [];
     showLat();
     firstFrameAt = 0;
+    frames = peakRms = lastVoiceAt = lastPartialAt = lastFinalAt = 0;
+    startedAt = performance.now();
+    timeChip.textContent = '00:00';
+    meterFill.style.width = '0';
+    setStat('idle', '連線中…');
+    clearInterval(tick);
+    tick = setInterval(diagnose, 1000);
 
     try {
       // exp3 實證:瀏覽器降噪鏈(EC/NS/AGC)對兩引擎都是零到負——全關。
@@ -202,10 +271,21 @@ export function initListen(onPreviewStart: () => void): Listen {
       const node = new AudioWorkletNode(audioCtx, 'pcm-downsampler');
       src.connect(node);
       node.port.onmessage = e => {
+        // worklet 送兩種:{rms} 音量(給狀態列)與 ArrayBuffer 音框(給 SM)
+        if (!(e.data instanceof ArrayBuffer)) {
+          const rms = (e.data as { rms: number }).rms;
+          if (rms > peakRms) peakRms = rms;
+          if (rms >= VOICE_RMS) lastVoiceAt = performance.now();
+          // 條長用對數:講話 (~1000) 到滿格,底噪不會撐滿
+          const pct = Math.min(100, Math.max(0, (Math.log10(Math.max(rms, 1)) / Math.log10(6000)) * 100));
+          meterFill.style.width = `${pct}%`;
+          return;
+        }
         // SM 收到 StartRecognition 確認前的框直接丟(暖機幾百毫秒,不影響內容)
         if (smReady && ws?.readyState === WebSocket.OPEN) {
           if (!firstFrameAt) firstFrameAt = performance.now();
-          ws.send(e.data as ArrayBuffer);
+          frames++;
+          ws.send(e.data);
         }
       };
     } catch {

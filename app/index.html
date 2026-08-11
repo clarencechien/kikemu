@@ -67,6 +67,14 @@
   <!-- 字幕流:每句一張卡(ja 原文 ink;zh 譯文琥珀,定稿後浮現) -->
   <div class="stream" id="stream" aria-live="polite"></div>
 
+  <!-- 管線狀態列:四段(麥克風→連線→聽寫→翻譯)任何一段卡住都要看得出來,
+       不能讓「沒收到音」與「翻不出來」長得一樣 -->
+  <div class="status" id="statusBar" aria-live="polite">
+    <span class="meter" id="meter" title="麥克風音量"><i id="meterFill"></i></span>
+    <span class="statText" id="statText">尚未開始</span>
+    <span class="chip mono" id="timeChip" title="本場已聽">00:00</span>
+  </div>
+
   <div class="deck">
     <button id="toggleBtn">● 開始聽</button>
     <span class="chip" id="latChip" title="定稿延遲(中位數)">⚡–</span>
