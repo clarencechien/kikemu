@@ -1,8 +1,64 @@
-# kikemu
+# kikemu きけむ
 
-導覽/會議即時聽譯的**引擎選型評測**。不是產品程式碼,是用數據回答架構問題的實驗。
+**聞く(きく,聽)+ む。** 打開 kikemu,它替你聽外語導覽,台灣正體字幕即時浮現——
+神社的神名、茶室的典故,一個都不漏。
 
-## 結論
+與 [manemu](https://manemu.ai-apps.work)(紅,說)、sukemu(青,看)同一命名與產品家族:
+**kikemu 是琥珀(聽)**。
+
+- 產品:https://kikemu.ai-apps.work (封測中)
+- 這個 repo 同時是**產品本體**(`app/`)與**四個引擎選型實驗**(`corpus/`、`exp2/`、`results/`)。
+  架構的每一條決策都指得出是哪一份數據決定的。
+
+---
+
+## 現況(2026-08-11)
+
+**端到端跑通,正式站可用。** 日文與中英夾雜兩條路徑都以評測語料實測驗證過。
+
+| 項目 | 狀態 |
+|---|---|
+| 聽譯管線(mic → WS → Speechmatics → Gemini 譯) | ✅ 正式站實測通過 |
+| 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證可用,預設日文 |
+| 管線狀態列(音量條、計時、逐段診斷) | ✅ |
+| 登入(開發用 Email 直登)、白名單、每日配額 | ✅ |
+| `/admin`(等候名單、級別、用量、場景包管理) | ✅ |
+| 本機歷史(IndexedDB)、PWA 安裝、登入前預覽 | ✅ |
+| **場景包(詞表)已上傳 R2** | ⬜ **尚未** —— 見下方 |
+| Google OIDC(目前是開發用 Email 直登) | ⬜ 未設定 |
+| Turnstile、CANONICAL_HOST | ⬜ 未設定 |
+| iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |
+
+### ⚠ 現在還少一步:詞表沒上傳
+
+`/api/packs` 目前回空陣列,所以線上跑的是**無詞表**狀態——等同 exp1 的 arm C,
+少掉實測 **+0.12~0.19 專名召回**的那一段。補上:
+
+```bash
+cd app && npm run seed:pack
+```
+
+上傳後探針的 `ready` 那行會從 `場景包:無 / 0 詞` 變成 `東大阪三社めぐり / 80 詞`。
+
+### 部署後怎麼複驗
+
+評測語料同時是這個產品的**迴歸測試基準**——已知這批音檔在 exp1 拿 0.836,
+所以「有沒有真的生效」是一句指令的事,不是靠感覺:
+
+```bash
+cd app
+node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
+  --email clarence.chien@gmail.com \
+  --wav ../corpus/conditions/sakai06__N0.wav --lang ja --pack higashiosaka
+```
+
+這支探針已經抓到兩個真 bug:Workers 把二進位 WS 訊息以 **Blob** 交付(每一框音訊被
+靜默丟棄),以及 `cmn_en` 語言包**完全不輸出標點**(整場累積成一句、沒有增量字幕)。
+兩個都是「畫面上看起來只是沒反應」的類型,沒有已知良品音檔會很難查。
+
+---
+
+## 實驗結論(架構的依據)
 
 **一體式模型只在直接餵訊號的通道可用;只要音訊經過空氣,就要用專用 ASR。
 而詞表值不值得做,取決於「引擎缺的是什麼」。**
@@ -15,7 +71,7 @@
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
 | 一體式崩潰點 | 人聲 8dB → 0.030(全滅) | 人聲 12dB → 0.396(半滅) |
 
-三條可以直接用的規則:
+五條可以直接用的規則:
 
 1. **一體式的門檻是「直接餵訊號」,不是「安靜」。** exp1 裡只加室內殘響、
    完全不加噪音,Gemini Live 就從 0.836 掉到 0.552,而 SM+詞表維持 0.836。
@@ -26,37 +82,35 @@
    ($0.035/景點、一次性),但路線不便宜。
 4. **外掛降噪救不了一體式,也幫不了 SM**(exp3)。快速前處理(WebRTC NS、
    譜門檻)能讓崩潰的 Gemini Live 重新開口,但召回率是 0;對 SM 零到負。
-   SM 的抗噪是訓練內建的,買不到也外掛不出來。吵雜場景的解是換引擎
-   或改拾音物理,不是 DSP。
+   吵雜場景的解是換引擎或改拾音物理,不是 DSP。
 5. **指向性拾音有效,但紅利歸 SM**(exp4,聲學模擬)。Speak2 級陣列讓
    SM+詞表在 8dB 人聲下 0.597→0.791、領夾麥 0.821;一體式即使配到領夾麥
-   也只有 0.507——**SM 裸奔都贏 Gemini Live + 領夾**。會議麥對一體式的
-   價值僅在非尖峰會議室;正向採購數字需真機驗證。
+   也只有 0.507——**SM 裸奔都贏 Gemini Live + 領夾**。正向採購數字需真機驗證。
 
-**產品建議:kikemu 走 SM + 以地點自動生成詞表 + Gemini 翻譯。
-只有能保證 line-in 級音源的通道才考慮降級為一體式,且切換須以現場 SNR 偵測把關。
-廠區/會議線改用 `cmn_en` 雙語 pack,詞表退為進階選項。**
+**這些結論在 app 裡的具體體現:**聽用 Speechmatics 不用一體式(規則 1)、
+場景包是核心功能(規則 2)、`getUserMedia` 三個降噪 constraint 全關(規則 4)、
+開始聽時提示「貼近音源」(規則 5)、中文用 `cmn_en` 雙語包不用單語 `cmn`(exp2)。
 
 ## 文件
 
 | 檔案 | 內容 |
 |---|---|
-| [`results/report.md`](results/report.md) | **完整評測報告**(兩個實驗合併),方法、數據、侷限 |
+| [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
+| [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
+| [`results/report.md`](results/report.md) | **完整評測報告**(四個實驗合併),方法、數據、15 條侷限 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
-| [`handoff.md`](handoff.md) | exp1 原始任務書(日文導覽) |
-| [`handoff-v2.md`](handoff-v2.md) | exp2 原始任務書(中英夾雜) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v4.md`](handoff-v4.md) | 四個實驗的原始任務書 |
 
 ## 實驗規模
 
-| | exp1 | exp2 |
-|---|---|---|
-| 語料 | 大阪觀光局音訊導覽 6 段 | 台大李宏毅課程 3 段 × 5 分鐘 |
-| 正解 | 67 個專有名詞 | 86 個英文術語實例 |
-| 聲學條件 | 5(原始/殘響/人群15dB/人群8dB/擴音) | 4(原始/殘響/辦公室20dB/會議12dB) |
-| arm | 6(Gemini Live、SM 即時/批次 × ±詞表) | 6(SM 單語/雙語 × 無/領域/投影片詞表、Gemini Live) |
-| API 呼叫 | 30 檔 × 6 arm + 評審面板 | 12 檔 × 6 arm + P0/P1 譯文 |
+| | exp1 日文導覽 | exp2 中英演講 | exp3 前處理 | exp4 指向性 |
+|---|---|---|---|---|
+| 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 |
+| 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 |
+| 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 |
+| arm | 6 | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile |
 
-總支出 < $7。
+總支出 < $10,主要成本是真實速度推流的 wall-clock。
 
 ## 信度控制
 
@@ -75,12 +129,13 @@
 ## 目錄
 
 ```
-scripts/            exp1 腳本(fetch, build_reference, degrade, run_*, score, judge)
-corpus/             exp1 語料 metadata、參考逐字稿、專名清單、詞典(音檔不入庫)
-results/raw/        exp1 每次呼叫的完整回應與 usage
-exp2/scripts/       exp2 腳本
-exp2/corpus/        exp2 參考逐字稿、術語清單、投影片與詞表
-exp2/results/raw/   exp2 每次呼叫的完整回應
+app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
+  worker/           OIDC、白名單、配額 DO、Speechmatics relay DO、場景包、admin
+  src/ public/      單頁 UI、AudioWorklet、PWA
+  scripts/probe-ws.mjs   端到端探針(拿評測語料當迴歸測試)
+docs/PRD.md         產品規格
+scripts/ corpus/ results/    exp1・exp3・exp4(腳本、語料 metadata、原始回應)
+exp2/               exp2(中英夾雜)
 ```
 
 音檔依授權不重新散布(`.gitignore`),但抓取與切片腳本可完整重現。
