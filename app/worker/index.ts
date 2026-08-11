@@ -60,9 +60,18 @@ const SEC_HEADERS: Record<string, string> = {
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'strict-origin-when-cross-origin',
 };
-const withSec = (res: Response) => {
+const withSec = (res: Response, req?: Request) => {
   const r = new Response(res.body, res);
   for (const [k, v] of Object.entries(SEC_HEADERS)) r.headers.set(k, v);
+  // connect-src 的 'self' 對 wss:// 的涵蓋範圍各家瀏覽器不一致(Safari 尤其),
+  // 不明寫同源 wss 會讓 /ws 被靜默擋掉。明寫本站的 wss origin。
+  if (req) {
+    const wss = new URL(req.url).origin.replace(/^https:/, 'wss:').replace(/^http:/, 'ws:');
+    r.headers.set(
+      'content-security-policy',
+      SEC_HEADERS['content-security-policy'].replace("connect-src 'self'", `connect-src 'self' ${wss}`),
+    );
+  }
   return r;
 };
 const sameOrigin = (req: Request) => {
@@ -232,7 +241,7 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     }
   }
 
-  return withSec(await env.ASSETS.fetch(req));
+  return withSec(await env.ASSETS.fetch(req), req);
 }
 
 async function api(req: Request, env: Env, path: string, email: string, user: UserInfo): Promise<Response> {

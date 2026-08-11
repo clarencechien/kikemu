@@ -67,7 +67,14 @@ export function initListen(onPreviewStart: () => void): Listen {
     const sincePartial = (now - lastPartialAt) / 1000;
 
     if (!frames) {
-      setStat('warn', '麥克風沒有送出訊號——請檢查權限或改用其他瀏覽器');
+      // 分辨「context 沒跑」與「跑了但沒聲音」——前者是瀏覽器政策,後者是麥克風
+      const st = audioCtx?.state;
+      setStat(
+        'warn',
+        st && st !== 'running'
+          ? `音訊被瀏覽器暫停(${st})——請再按一次開始`
+          : '麥克風沒有送出訊號——請檢查權限或改用其他瀏覽器',
+      );
     } else if (!peakRms) {
       setStat('warn', '收到的音量是零——麥克風可能被靜音或被其他 App 占用');
     } else if (!lastVoiceAt || sinceVoice > 6) {
@@ -252,20 +259,63 @@ export function initListen(onPreviewStart: () => void): Listen {
     clearInterval(tick);
     tick = setInterval(diagnose, 1000);
 
+    // AudioContext 必須在**使用者手勢的同步階段**建立並 resume。
+    // 放到 await getUserMedia 之後才建,手勢已經失效 → context 停在 suspended,
+    // AudioWorklet 的 process() 從頭到尾不會被呼叫:沒有錯誤、沒有權限提示、
+    // 音量恆為零。這是實際踩到的 bug,不是理論風險。
+    let resumeP: Promise<void> | undefined;
+    try {
+      audioCtx = new AudioContext();
+      resumeP = audioCtx.resume();
+    } catch {
+      addNote('error', '這台裝置不支援 Web Audio');
+      setState('idle');
+      return;
+    }
+
     try {
       // exp3 實證:瀏覽器降噪鏈(EC/NS/AGC)對兩引擎都是零到負——全關。
       // iOS constraint 支援不完整是已知風險(PRD §8),真機驗證前先如實送出。
       mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
       });
-    } catch {
-      addNote('error', '拿不到麥克風權限——請允許麥克風,或檢查瀏覽器設定');
+    } catch (e) {
+      // 分辨原因:被拒 / 沒有裝置 / 被別的 App 占用——三種的處置完全不同
+      const name = (e as DOMException)?.name ?? '';
+      addNote(
+        'error',
+        name === 'NotAllowedError'
+          ? '麥克風權限被拒——請在網址列的鎖頭圖示裡改成「允許」,再按一次開始'
+          : name === 'NotFoundError'
+            ? '找不到麥克風裝置'
+            : name === 'NotReadableError'
+              ? '麥克風被其他 App 占用,請關掉其他錄音/通話程式'
+              : `拿不到麥克風(${name || '未知錯誤'})`,
+      );
+      cleanupAudio();
       setState('idle');
       return;
     }
 
     try {
-      audioCtx = new AudioContext();
+      await resumeP;
+      if (audioCtx.state !== 'running') await audioCtx.resume();
+      if (audioCtx.state !== 'running') {
+        addNote('error', `音訊被瀏覽器暫停(${audioCtx.state})——請再按一次開始`);
+        cleanupAudio();
+        setState('idle');
+        return;
+      }
+      const track = mediaStream.getAudioTracks()[0];
+      if (!track || track.readyState !== 'live') {
+        addNote('error', '麥克風軌道沒有啟動');
+        cleanupAudio();
+        setState('idle');
+        return;
+      }
+      // track.muted 是「來源端被靜音」——會完全沒聲音卻不報錯,一定要講出來
+      if (track.muted) addNote('error', '麥克風目前是靜音狀態(系統層),請解除靜音');
+      addNote('info', `使用麥克風:${track.label || '預設裝置'}・${audioCtx.sampleRate} Hz`);
       await audioCtx.audioWorklet.addModule('/pcm-worklet.js');
       const src = audioCtx.createMediaStreamSource(mediaStream);
       const node = new AudioWorkletNode(audioCtx, 'pcm-downsampler');
