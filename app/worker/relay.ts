@@ -66,6 +66,9 @@ export class SessionRelay {
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
     server.accept();
+    // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
+    // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
+    server.binaryType = 'arraybuffer';
     this.pipe(server, { email, limit, used, pack }).catch(e => {
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
@@ -94,6 +97,7 @@ export class SessionRelay {
     });
     const upstream = resp.webSocket;
     if (!upstream) throw new Error(`Speechmatics 連線失敗(HTTP ${resp.status})`);
+    const up: WebSocket = upstream; // pushAudio 是函式宣告,拿不到上面的 narrowing
     upstream.accept();
 
     const hardCapMs = Number(this.env.SESSION_HARD_CAP_S || 3600) * 1000;
@@ -246,12 +250,24 @@ export class SessionRelay {
         } catch {}
         return;
       }
-      // 二進位 = PCM 框。非 ArrayBuffer 型別顯式轉換(manemu 踩過 length 0 的坑)
+      // 二進位 = PCM 框。上面已設 binaryType='arraybuffer';Blob 分支是後援
+      // (執行環境若未採納設定),用序列化 promise 鏈轉換以免音框亂序。
       let bytes: Uint8Array;
       const d: any = ev.data;
       if (d instanceof ArrayBuffer) bytes = new Uint8Array(d);
       else if (ArrayBuffer.isView(d)) bytes = new Uint8Array(d.buffer, d.byteOffset, d.byteLength);
-      else return;
+      else if (typeof d?.arrayBuffer === 'function') {
+        blobChain = blobChain.then(async () => {
+          const ab = await d.arrayBuffer();
+          pushAudio(new Uint8Array(ab));
+        });
+        return;
+      } else return;
+      pushAudio(bytes);
+    });
+
+    let blobChain: Promise<void> = Promise.resolve();
+    function pushAudio(bytes: Uint8Array) {
       if (bytes.length === 0 || bytes.length > 16000) return; // 100ms@16k PCM16 = 3200 bytes,留裕度
       lastFrameAt = Date.now();
       audioSeq++;
@@ -267,9 +283,9 @@ export class SessionRelay {
         rmsN = Math.min(rmsN + 1, 30);
       }
       try {
-        upstream.send(bytes);
+        up.send(bytes);
       } catch {}
-    });
+    }
     client.addEventListener('close', () => {
       if (!ended) void finish('client-closed');
       else void finish('client-closed-after-end');
