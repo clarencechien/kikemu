@@ -91,3 +91,27 @@ GEMINI_API_KEY=...
   可能被系統回收(manemu 踩過全套坑)——需要真機驗證與背景保活策略。
 - **iOS 關閉瀏覽器降噪的實際效果**:`echoCancellation/noiseSuppression/autoGainControl:false`
   的 constraint 支援不完整,可能拿到處理過的音訊;上線前用 exp3 方法做一次 A/B。
+
+## 診斷:出不來字的時候怎麼查
+
+畫面上「有收到音、卻一個字都不出來」有三種可能,`scripts/probe-ws.mjs`
+用 exp1 實測拿到 0.836 專名召回率的**已知良品音檔**繞過瀏覽器直接灌進 `/ws`,
+一次分離出是哪一種:
+
+```bash
+cd app
+node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
+  --cookie "kk_session=…"  `# 從 DevTools 複製;開發登入可改用 --email you@example.com` \
+  --wav ../corpus/conditions/hig01_A1__N0.wav --pack higashiosaka
+```
+
+| 探針結果 | 結論 | 下一步 |
+|---|---|---|
+| 出得來日文定稿 | relay + Speechmatics + 詞表都正常 | 問題在瀏覽器送出的音訊,或現場講的不是日文 |
+| 有 partial 無定稿 | 音訊有進去,句子沒收斂 | 看 `max_delay` 與現場是否一直有背景聲 |
+| 完全沒有字 | 伺服器這側壞掉 | 查 `SPEECHMATICS_API_KEY`、額度、探針列出的 ERROR |
+
+App 內另有兩個對照數字:狀態列的**本地音量條**(worklet 算的 RMS)與 relay 每秒
+回報的**伺服器實收 RMS**。本地會動、伺服器接近零 = 音訊在傳輸中損壞;
+兩邊都有值卻沒有字 = 真的是辨識問題(對照 exp1:8dB 人聲下 SM 仍有 0.627,
+所以「完全零字」通常不是噪音,要先懷疑語言設定)。

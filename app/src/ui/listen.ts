@@ -49,6 +49,8 @@ export function initListen(onPreviewStart: () => void): Listen {
   let lastPartialAt = 0;
   let lastFinalAt = 0;
   let peakRms = 0; // 本場最大音量:全程為 0 = 麥克風根本沒訊號
+  let srvFrames = 0; // 伺服器回報的實收框數與音量(與本地對照用)
+  let srvRms = 0;
   let tick: ReturnType<typeof setInterval> | undefined;
 
   const setStat = (kind: 'idle' | 'ok' | 'warn', text: string) => {
@@ -80,8 +82,14 @@ export function initListen(onPreviewStart: () => void): Listen {
     } else if (!lastVoiceAt || sinceVoice > 6) {
       setStat('warn', '目前很安靜——靠近音源,或確認導覽員正在說話');
     } else if (!lastPartialAt || sincePartial > 8) {
-      // 有聲音進去、引擎不回話:這是「聽不出來」而不是「收不到」
-      setStat('warn', '有收到聲音,但引擎還沒認出字——可能太吵或不是日文');
+      // 有聲音進去、引擎不回話。先確認伺服器實收的到底是不是語音——
+      // 客戶端有音量但伺服器沒有 = 傳輸壞掉,那跟「引擎聽不出來」是兩回事
+      setStat(
+        'warn',
+        srvFrames && srvRms < 50
+          ? `伺服器收到 ${srvFrames} 框但音量近乎零——音訊在傳輸中損壞`
+          : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是日文`,
+      );
     } else if (lastFinalAt && lastFinalAt > lastPartialAt) {
       setStat('ok', '聽寫中・翻譯中');
     } else {
@@ -202,6 +210,10 @@ export function initListen(onPreviewStart: () => void): Listen {
         setZhError(msg.forSeq, seq => {
           if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'retryZh', seq }));
         });
+        return;
+      case 'stat':
+        srvFrames = msg.frames;
+        srvRms = msg.rms;
         return;
       case 'error':
         addNote('error', msg.message);
