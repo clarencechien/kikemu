@@ -7,6 +7,8 @@ export type SessionRecord = {
   id?: number;
   /** ISO 時間(session 結束時刻) */
   at: string;
+  /** 來源語言(worker/langs.ts 的 code);舊紀錄沒有這欄,匯出時只寫「原文」 */
+  lang?: string;
   pack: string | null;
   packName: string | null;
   /** 聽譯秒數(顯示用) */

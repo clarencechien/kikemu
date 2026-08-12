@@ -177,11 +177,10 @@ export function initListen(onPreviewStart: () => void): Listen {
       packSel.onchange = () => {
         curPack = packs.find(pk => pk.id === packSel.value) ?? null;
       };
-      // 預設選第一個包(場景包是核心資產,exp1:C+−C 全條件 +0.12~0.19)
-      if (packs.length) {
-        packSel.value = packs[0].id;
-        curPack = packs[0];
-      }
+      /* 預設不選包。場景包只在「講的就是這個地點」時有價值(exp1:+0.12~0.19),
+         自動掛上清單第一個包等於替使用者猜地點——猜錯就是把一堆不相干的專名
+         推給引擎。要用哪個包由使用者明確選。 */
+      packSel.value = '';
     } catch {
       /* 拿不到包清單就先不用包 */
     }
@@ -200,8 +199,9 @@ export function initListen(onPreviewStart: () => void): Listen {
     await sessionStore
       .save({
         at: new Date().toISOString(),
+        lang: curLang,
         pack: curPack?.id ?? null,
-        packName: curPack?.name ?? null,
+        packName: curPack ? curPack.alias || curPack.name : null, // 別名優先:匯出檔頭給人看的
         seconds,
         lines,
       })
