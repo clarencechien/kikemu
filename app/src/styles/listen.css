@@ -124,8 +124,11 @@ body[data-listen=live] #toggleBtn { background: var(--paper); color: var(--ink) 
 .histTx { flex: 1; min-width: 0 }
 .histTx .t { font-size: 14px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 .histTx .m { font-size: 11.5px; color: var(--ink-2); font-family: var(--data) }
-.histDel {
+.histDel, .histExp {
   font-size: 12px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 2px;
-  background: none; color: var(--warn); cursor: pointer;
+  background: none; cursor: pointer;
 }
+.histDel { color: var(--warn) }
+.histExp { color: var(--ink-2); font-family: var(--data); letter-spacing: .04em }
+.histExp:hover { color: var(--ink); border-color: var(--ink-2) }
 .histEmpty { padding: 26px 16px; font-size: 13.5px; color: var(--ink-2); text-align: center; line-height: 2 }
