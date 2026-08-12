@@ -12,33 +12,37 @@
 
 ---
 
-## 現況(2026-08-11)
+## 現況(2026-08-12)
 
 **端到端跑通,正式站可用。** 日文與中英夾雜兩條路徑都以評測語料實測驗證過。
 
 | 項目 | 狀態 |
 |---|---|
 | 聽譯管線(mic → WS → Speechmatics → Gemini 譯) | ✅ 正式站實測通過 |
-| 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證可用,預設日文 |
+| 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證,預設日文 |
+| **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 日文 147 詞、韓文 113 詞實測 |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
-| 登入(開發用 Email 直登)、白名單、每日配額 | ✅ |
-| `/admin`(等候名單、級別、用量、場景包管理) | ✅ |
+| 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、PWA 安裝、登入前預覽 | ✅ |
-| **場景包(詞表)已上傳 R2** | ⬜ **尚未** —— 見下方 |
 | Google OIDC(目前是開發用 Email 直登) | ⬜ 未設定 |
 | Turnstile、CANONICAL_HOST | ⬜ 未設定 |
 | iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |
+| 正式站是否已建好詞包 | ⬜ 待確認(`/admin` 產一包即可) |
 
-### ⚠ 現在還少一步:詞表沒上傳
+### 場景包:輸入「大阪城」就出一包
 
-`/api/packs` 目前回空陣列,所以線上跑的是**無詞表**狀態——等同 exp1 的 arm C,
-少掉實測 **+0.12~0.19 專名召回**的那一段。補上:
+原本要貼官方頁內文,現在在 `/admin` 選語言、填中文別名與關鍵字即可。
+兩趟——Gemini **搜尋接地**蒐集固有名詞與讀音(回報搜尋詞與引用來源),
+再結構化並按語言驗證讀音字集(日文全形假名 / 韓文諺文)。**先預覽再存**:
+讀音錯的詞表會反過來傷辨識,所以會先給你看詞條、來源筆數與警告。
+存檔直接收預覽過的詞條,不重跑搜尋(~50ms)。生成軌跡(關鍵字、搜尋詞、來源)
+存在包裡可追溯。
 
-```bash
-cd app && npm run seed:pack
-```
+這正是 exp1 §2.4 指出但當時走不了的那條路——實驗的詞典為了防洩漏只用維基百科,
+對正解專名的字面覆蓋卡在 1/6 ~ 6/7。搜尋能碰到官方頁與在地資料。
 
-上傳後探針的 `ready` 那行會從 `場景包:無 / 0 詞` 變成 `東大阪三社めぐり / 80 詞`。
+使用者端只列出**符合當前語言**的包,顯示成「別名・語言(N 詞)」;
+語言不符的包伺服器端也會忽略(不會把假名詞條餵給韓文模型)。
 
 ### 部署後怎麼複驗
 
@@ -49,12 +53,19 @@ cd app && npm run seed:pack
 cd app
 node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   --email clarence.chien@gmail.com \
-  --wav ../corpus/conditions/sakai06__N0.wav --lang ja --pack higashiosaka
+  --wav ../corpus/conditions/sakai06__N0.wav --lang ja --pack <你的包 id>
 ```
 
-這支探針已經抓到兩個真 bug:Workers 把二進位 WS 訊息以 **Blob** 交付(每一框音訊被
-靜默丟棄),以及 `cmn_en` 語言包**完全不輸出標點**(整場累積成一句、沒有增量字幕)。
-兩個都是「畫面上看起來只是沒反應」的類型,沒有已知良品音檔會很難查。
+這支探針到目前抓到的真 bug:
+
+| bug | 症狀 |
+|---|---|
+| Workers 以 **Blob** 交付二進位 WS 訊息 | 每一框音訊被靜默丟棄;SM 連得上、收得到 EndOfStream,就是一個字都沒有 |
+| `cmn_en` 語言包**完全不輸出標點** | 整場累積成一句、到收尾才吐出來,沒有增量字幕 |
+| `readPack` 讀取時丟掉 alias / lang | 韓文包在清單上顯示成日文,使用者端過濾不掉 |
+| `extractVocab` 的 `JSON.parse` 太嚴格 | 輸出被截斷時整包詞條失敗(與 `make_dict.py` 同一個坑) |
+
+全都是「畫面上看起來只是沒反應」的類型——沒有已知良品音檔會很難查。
 
 ---
 
@@ -131,6 +142,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 ```
 app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
   worker/           OIDC、白名單、配額 DO、Speechmatics relay DO、場景包、admin
+    langs.ts        語言清單唯一來源(下拉、relay 設定、詞表驗證字集都讀它)
   src/ public/      單頁 UI、AudioWorklet、PWA
   scripts/probe-ws.mjs   端到端探針(拿評測語料當迴歸測試)
 docs/PRD.md         產品規格
