@@ -9,7 +9,10 @@
 import type { Env } from './index';
 
 export type VocabEntry = { content: string; sounds_like?: string[] };
-export type VocabPack = { name: string; entries: VocabEntry[] };
+export type VocabPack = { name: string; entries: VocabEntry[]
+  /** 生成軌跡(關鍵字產包時記錄搜尋詞與來源,便於追溯與重生成) */
+  source?: { kind: string; keyword?: string; queries?: string[]; sources?: { title: string; uri: string }[]; at?: string };
+};
 export type PackMeta = { id: string; name: string; count: number; updated: string | null };
 
 export const PACK_ID_RE = /^[a-z0-9][a-z0-9_-]{0,31}$/;

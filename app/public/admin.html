@@ -87,6 +87,21 @@
 
   <h2>場景包<span class="count" id="packCount"></span></h2>
   <div id="packBox"></div>
+  <!-- 關鍵字產包:輸入「大阪城」就出一包(Gemini 搜尋接地 → 抽詞 → 假名驗證)。
+       先預覽再存:讀音錯的詞表會反過來傷辨識,不讓它直接落地。 -->
+  <form class="add" id="packSearchForm" style="flex-direction:column; align-items:stretch">
+    <div class="row-actions" style="flex-wrap:wrap">
+      <input type="text" id="skwId" placeholder="包 id(小寫英數,如 osakajo)" size="20" required>
+      <input type="text" id="skwName" placeholder="顯示名(可留空,用關鍵字)" size="22">
+      <input type="text" id="skwKeyword" placeholder="關鍵字,如 大阪城" size="18" required>
+      <button class="primary" type="submit" id="skwBtn">🔎 搜尋生成</button>
+    </div>
+    <p class="hint" id="skwHint">Gemini 會搜尋日文官方與百科資料,抽出導覽會唸到的固有名詞與假名讀音。先預覽,確認後才存。</p>
+  </form>
+  <div id="skwPreview"></div>
+
+  <details style="margin-top:10px">
+    <summary style="cursor:pointer; color:var(--ink-2); font-size:13px">或貼上來源文字(手上已有官方頁內文時)</summary>
   <form class="add" id="packForm" style="flex-direction:column; align-items:stretch">
     <div class="row-actions">
       <input type="text" id="packId" placeholder="包 id(小寫英數,如 hiraoka)" size="22" required>
@@ -96,6 +111,7 @@
     <div class="row-actions"><button class="primary" type="submit" id="packGen">生成場景包</button></div>
   </form>
   <p class="warnList" id="packWarn"></p>
+  </details>
   <p class="hint">
     詞條格式:<code>{"content":"枚岡神社","sounds_like":["ひらおかじんじゃ"]}</code>。
     sounds_like 必須全形假名(不合格自動剔除);超過 6 字標警告但不阻擋(exp1 記載的不確定性)。

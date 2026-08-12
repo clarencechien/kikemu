@@ -166,3 +166,83 @@ $("packForm").addEventListener("submit", async (e) => {
     $("gate").hidden = true; $("main").hidden = false;
   } catch (err) { $("gate").textContent = "讀取失敗:" + err.message; }
 })();
+
+/* ── 關鍵字產包(搜尋接地 → 預覽 → 確認存)──
+   分兩段的理由:讀音錯的詞條會反過來害辨識(exp1 的詞表價值來自讀音正確),
+   所以一定讓管理者先看過詞條與來源筆數。來源 0 筆 = 模型憑記憶答的,要更小心。 */
+let SKW = null; // 上一次預覽的參數,確認存檔時重用
+
+/* 警告彙總:長讀音動輒佔一半以上詞條,逐條列出沒有可讀性。
+   分類計數,並把 exp1 的實測狀態講清楚——文件說 >6 字會被忽略,
+   但 exp1 的 C+ 確實救回了「石切劔箭神社」(讀音 12 字),
+   所以就算讀音被丟,表記本身仍有加成。不阻擋、也不假裝沒事。 */
+function warnSummary(warnings) {
+  if (!warnings?.length) return "";
+  const long = warnings.filter(w => w.includes("超過 6 字")).length;
+  const other = warnings.filter(w => !w.includes("超過 6 字"));
+  const bits = [];
+  if (long) bits.push(`${long} 個詞條的假名讀音超過 6 字——Speechmatics 文件稱會忽略,` +
+    `但 exp1 實測「石切劔箭神社」(12 字讀音)仍被救回,表記本身也有加成,故保留。`);
+  if (other.length) bits.push(other.slice(0, 5).join("\n") + (other.length > 5 ? `\n…另 ${other.length - 5} 則` : ""));
+  return `<p class="warnList">${esc(bits.join("\n"))}</p>`;
+}
+
+$("packSearchForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = $("skwBtn");
+  const keyword = $("skwKeyword").value.trim();
+  const id = $("skwId").value.trim().toLowerCase();
+  const name = $("skwName").value.trim();
+  btn.disabled = true;
+  btn.textContent = "搜尋中…";
+  $("skwPreview").innerHTML = '<p class="hint">正在搜尋並抽取詞條,約 10~30 秒…</p>';
+  try {
+    const d = await api("/api/admin/pack-search", { id, name, keyword, preview: true });
+    SKW = { id, name, keyword };
+    const src = (d.sources || []).map(s =>
+      `<li><a href="${esc(s.uri)}" target="_blank" rel="noopener">${esc(s.title || s.uri)}</a></li>`).join("");
+    const terms = (d.entries || []).map(en =>
+      `<code>${esc(en.content)}</code>${en.sounds_like?.length ? `<small>(${esc(en.sounds_like[0])})</small>` : ""}`
+    ).join("、");
+    $("skwPreview").innerHTML = `
+      <div class="card" style="border:1px solid var(--line); border-radius:2px; padding:10px; margin-top:8px">
+        <b>「${esc(d.keyword)}」抽出 ${d.count} 個詞條</b>
+        <p class="hint">${d.sources?.length
+            ? `搜尋詞:${esc((d.queries || []).join(" / "))}`
+            : "⚠ 這次沒有引用外部來源(模型憑既有知識回答)——冷門地點請改用貼上官方頁內文,讀音比較可靠。"}</p>
+        <p style="font-size:13px; line-height:2; margin:8px 0">${terms}</p>
+        ${src ? `<details><summary class="hint" style="cursor:pointer">來源 ${d.sources.length} 筆</summary><ul class="hint">${src}</ul></details>` : ""}
+        ${warnSummary(d.warnings)}
+        <div class="row-actions" style="margin-top:10px">
+          <button class="primary" id="skwSave">✓ 存成場景包</button>
+          <button id="skwCancel">取消</button>
+        </div>
+      </div>`;
+  } catch (err) {
+    $("skwPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🔎 搜尋生成";
+  }
+});
+
+$("skwPreview").addEventListener("click", async (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.id === "skwCancel") { $("skwPreview").innerHTML = ""; return; }
+  if (b.id === "skwSave" && SKW) {
+    b.disabled = true;
+    b.textContent = "存檔中…";
+    try {
+      // 再跑一次(含搜尋)後落地:兩趟成本很低,換到的是「存的就是剛才看到的來源」
+      const d = await api("/api/admin/pack-search", { ...SKW, preview: false });
+      $("skwPreview").innerHTML = `<p class="hint">✓ 已存「${esc(d.name)}」(${d.count} 詞)</p>`;
+      $("skwKeyword").value = "";
+      $("skwId").value = "";
+      $("skwName").value = "";
+      await reload();
+    } catch (err) {
+      $("skwPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;
+    }
+  }
+});

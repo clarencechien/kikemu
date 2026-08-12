@@ -103,6 +103,49 @@ const VOCAB_PROMPT = `あなたは音声認識用のカスタム語彙(custom di
 `;
 
 /** 來源文字 → 原始詞條(格式驗證在 vocab.ts validateEntries) */
+/* 關鍵字產包(pass A):用 Google 搜尋接地蒐集該地點的固有名詞與讀音。
+   為什麼要接地:exp1 §2.4 記錄了「只用維基百科」的天花板——對正解專名的字面
+   覆蓋只有 1/6 ~ 6/7,在地小眾詞(いとや百貨店、旧池田電報電話局)維基沒有。
+   搜尋能碰到官方頁與在地資料,正是報告裡說「產品端可用官方頁面補充」那條路。
+
+   實測行為:模型自己決定要不要查——冷門題目觸發 2 次搜尋回 5~7 筆來源,
+   大阪城這種它本來就熟的回 0 筆(直接用參數記憶答)。兩種都可用,但來源筆數
+   要回報給管理者看,因為 0 筆代表這份詞表沒有外部佐證、讀音錯了會反而傷辨識。
+
+   搜尋工具不與 responseMimeType=application/json 併用(分兩趟比較穩,
+   也沿用 sukemu P1/P2 的分趟省錢模式:pass B 只吃 pass A 的文字)。 */
+const RESEARCH_PROMPT = (keyword: string) =>
+  `「${keyword}」について、日本語の公式サイト・観光案内・百科事典を検索してください。
+` +
+  `この場所/テーマの音声ガイドで実際に読み上げられる固有名詞を、できるだけ網羅的に集めてください。
+
+` +
+  `対象: 建物・施設名、境内の各所名、神名・仏名、人名、神事・祭事名、地名、駅名、
+` +
+  `年号・時代名、専門用語(茶道・建築・信仰など)、周辺の店舗・商店街名。
+
+` +
+  `各項目を「正式表記(ふりがな)」の形式で列挙してください。読みが不明なものは推測せず省くこと。
+` +
+  `解説は不要、一覧のみ。`;
+
+export type Research = { text: string; sources: { title: string; uri: string }[]; queries: string[] };
+
+export async function researchTerms(env: Env, keyword: string): Promise<Research> {
+  const resp = await generate(env, {
+    contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword) }] }],
+    tools: [{ google_search: {} }],
+    generationConfig: { temperature: 0.0 },
+  });
+  const text = firstText(resp) ?? '';
+  if (!text) throw new Error('搜尋沒有回結果');
+  const gm = resp?.candidates?.[0]?.groundingMetadata ?? {};
+  const sources = ((gm.groundingChunks ?? []) as any[])
+    .map(c => ({ title: String(c?.web?.title ?? ''), uri: String(c?.web?.uri ?? '') }))
+    .filter(s => s.uri);
+  return { text, sources, queries: (gm.webSearchQueries ?? []) as string[] };
+}
+
 export async function extractVocab(env: Env, sourceText: string): Promise<VocabEntry[]> {
   const resp = await generate(env, {
     contents: [{ parts: [{ text: VOCAB_PROMPT + sourceText }] }],
