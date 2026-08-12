@@ -87,7 +87,10 @@ function render() {
           <td>${esc(p.alias || p.name)}<small style="color:var(--ink-2)"> ・${esc(p.lang === "ko" ? "韓文" : "日文")}</small></td>
           <td class="ts">${Number(p.count)}</td>
           <td class="ts">${esc(String(p.updated || "").replace("T", " ").slice(0, 16))}</td>
-          <td><button class="danger" data-pack-delete="${esc(p.id)}">刪除</button></td></tr>`).join("")}</tbody></table>`;
+          <td><div class="row-actions">
+            <button data-pack-revalidate="${esc(p.id)}" title="重跑驗證 pipeline(規則後來補強過的話,舊包不會自動套用)">重驗</button>
+            <button class="danger" data-pack-delete="${esc(p.id)}">刪除</button>
+          </div></td></tr>`).join("")}</tbody></table>`;
 }
 
 async function reload() { DATA = await api("/api/admin/data"); render(); }
@@ -112,6 +115,15 @@ document.addEventListener("click", async (e) => {
       if (!confirm(`確定把 ${b.dataset.remove} 移出名單?他下一次操作就會被擋下。`)) return;
       await api("/api/admin/remove", { email: b.dataset.remove });
       toast("已移除"); await reload();
+    } else if (b.dataset.packRevalidate) {
+      b.disabled = true; // 會寫回 R2,不能連點
+      try {
+        const d = await api("/api/admin/pack-revalidate", { id: b.dataset.packRevalidate });
+        toast(d.unchanged ? `「${d.id}」重驗:沒有需要修正的詞條`
+                          : `「${d.id}」已重驗:${d.before} → ${d.count} 詞(✎${d.stats.fix} ✂${d.stats.drop})`);
+        $("packWarn").innerHTML = issueSummary(d);
+      } finally { b.disabled = false; }
+      await reload();
     } else if (b.dataset.packDelete) {
       if (!confirm(`確定刪除場景包「${b.dataset.packDelete}」?正在使用它的 session 不受影響,下一場起消失。`)) return;
       await api("/api/admin/pack-delete", { id: b.dataset.packDelete });
@@ -146,9 +158,7 @@ $("packForm").addEventListener("submit", async (e) => {
       source_text: $("packSrc").value,
     });
     toast(`「${d.name}」已存檔:${d.count} 詞條`);
-    if (d.warnings && d.warnings.length) {
-      $("packWarn").textContent = "格式警告:\n" + d.warnings.join("\n");
-    }
+    $("packWarn").innerHTML = issueSummary(d);
     $("packSrc").value = "";
     await reload();
   } catch (err) { toast("失敗:" + err.message); }
@@ -172,19 +182,44 @@ $("packForm").addEventListener("submit", async (e) => {
    所以一定讓管理者先看過詞條與來源筆數。來源 0 筆 = 模型憑記憶答的,要更小心。 */
 let SKW = null; // 上一次預覽的參數,確認存檔時重用
 
-/* 警告彙總:長讀音動輒佔一半以上詞條,逐條列出沒有可讀性。
-   分類計數,並把 exp1 的實測狀態講清楚——文件說 >6 字會被忽略,
-   但 exp1 的 C+ 確實救回了「石切劔箭神社」(讀音 12 字),
-   所以就算讀音被丟,表記本身仍有加成。不阻擋、也不假裝沒事。 */
-function warnSummary(warnings) {
-  if (!warnings?.length) return "";
-  const long = warnings.filter(w => w.includes("超過 6 字")).length;
-  const other = warnings.filter(w => !w.includes("超過 6 字"));
-  const bits = [];
-  if (long) bits.push(`${long} 個詞條的假名讀音超過 6 字——Speechmatics 文件稱會忽略,` +
-    `但 exp1 實測「石切劔箭神社」(12 字讀音)仍被救回,表記本身也有加成,故保留。`);
-  if (other.length) bits.push(other.slice(0, 5).join("\n") + (other.length > 5 ? `\n…另 ${other.length - 5} 則` : ""));
-  return `<p class="warnList">${esc(bits.join("\n"))}</p>`;
+/* 驗證 pipeline 的結果摘要(worker/vocab.ts 四段:trim → content → reading → dedupe)。
+   為什麼要把「自動修正」單獨列出來給人看:大阪城那包實測出現過
+   `黄金 of 茶室`(の 被翻成 of)與 `虎石→トらいし`(混片假名),
+   pipeline 現在會自己改掉——但改動過的詞條一定要讓管理者過目,
+   免得程式默默把某個真的叫這個名字的詞「修」壞了。
+
+   長讀音另外處理:動輒佔一半以上詞條,逐條列沒有可讀性,只給計數與實測註解。 */
+const LEVELS = { fix: { icon: "✎", label: "自動修正" }, warn: { icon: "⚠", label: "警告" }, drop: { icon: "✂", label: "剔除" } };
+
+function issueSummary(d) {
+  const issues = d.issues || [];
+  const stats = d.stats;
+  if (!issues.length && !stats) return "";
+  const long = issues.filter(i => i.message.includes("超過 6 字"));
+  const rest = issues.filter(i => !i.message.includes("超過 6 字"));
+  const head = stats
+    ? `pipeline:${stats.in} → ${stats.out} 詞・✎ ${stats.fix} 修正・⚠ ${stats.warn} 警告・✂ ${stats.drop} 剔除`
+    : "";
+
+  const groups = ["fix", "warn", "drop"].map(level => {
+    const list = rest.filter(i => i.level === level);
+    if (!list.length) return "";
+    const rows = list.slice(0, 12).map(i =>
+      `<li><code>${esc(i.content)}</code> ${esc(i.message)}</li>`).join("");
+    const more = list.length > 12 ? `<li class="hint">…另 ${list.length - 12} 則</li>` : "";
+    return `<p style="margin:6px 0 2px"><b>${LEVELS[level].icon} ${LEVELS[level].label}(${list.length})</b></p>
+            <ul class="hint" style="margin:0">${rows}${more}</ul>`;
+  }).join("");
+
+  const longNote = long.length
+    ? `<p class="hint">${long.length} 個詞條的讀音超過 6 字——Speechmatics 文件稱會忽略,` +
+      `但 exp1 實測「石切劔箭神社」(12 字讀音)仍被救回,表記本身也有加成,故保留。</p>`
+    : "";
+
+  const body = groups + longNote;
+  if (!body) return `<p class="hint">${esc(head)}</p>`;
+  return `<details ${rest.some(i => i.level !== "warn") ? "open" : ""} style="margin-top:8px">
+      <summary class="hint" style="cursor:pointer">${esc(head)}</summary>${body}</details>`;
 }
 
 /* 語言選單:哪些語言有場景包由 /api/config 決定(worker/langs.ts 是唯一來源) */
@@ -224,7 +259,7 @@ $("packSearchForm").addEventListener("submit", async (e) => {
             : "⚠ 這次沒有引用外部來源(模型憑既有知識回答)——冷門地點請改用貼上官方頁內文,讀音比較可靠。"}</p>
         <p style="font-size:13px; line-height:2; margin:8px 0">${terms}</p>
         ${src ? `<details><summary class="hint" style="cursor:pointer">來源 ${d.sources.length} 筆</summary><ul class="hint">${src}</ul></details>` : ""}
-        ${warnSummary(d.warnings)}
+        ${issueSummary(d)}
         <div class="row-actions" style="margin-top:10px">
           <button class="primary" id="skwSave">✓ 存成場景包</button>
           <button id="skwCancel">取消</button>
@@ -248,7 +283,8 @@ $("skwPreview").addEventListener("click", async (e) => {
     try {
       const d = await api("/api/admin/pack-save", SKW);
       $("skwPreview").innerHTML =
-        `<p class="hint" style="color:var(--ok)">✓ 已存「${esc(d.alias)}」(${esc(d.lang === "ko" ? "韓文" : "日文")}・${d.count} 詞,id=${esc(d.id)})——下方清單與使用者介面都會出現</p>`;
+        `<p class="hint" style="color:var(--ok)">✓ 已存「${esc(d.alias)}」(${esc(d.lang === "ko" ? "韓文" : "日文")}・${d.count} 詞,id=${esc(d.id)})——下方清單與使用者介面都會出現</p>`
+        + issueSummary(d);
       $("skwKeyword").value = "";
       $("skwId").value = "";
       $("skwAlias").value = "";

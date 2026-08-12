@@ -1,11 +1,11 @@
 /* Admin API(沿 sukemu worker/admin.ts):名單/等候名單/額度管理 + 今日用量,
-   加上 kikemu 專屬的場景包管理(pack-generate / pack-delete)。
+   加上 kikemu 專屬的場景包管理(pack-search / pack-save / pack-revalidate / pack-delete)。
    僅 ADMIN_EMAILS 內的帳號可用,閘門在 index.ts(session + isAdmin)。
    名單資料就是 R2 的兩個 JSON,想用 wrangler r2 object put 手動改也等價。 */
 
 import { CONFIG_KEYS, readAllow, readJson, writeJson } from './auth';
 import { extractVocab, researchTerms } from './gemini';
-import { deletePack, listPacks, PACK_ID_RE, savePack, validateEntries } from './vocab';
+import { deletePack, listPacks, PACK_ID_RE, readRawPack, savePack, validateEntries } from './vocab';
 import { PACK_LANGS } from './langs';
 import type { Usage } from './quota';
 import type { Env } from './index';
@@ -99,10 +99,10 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     const packLang = PACK_LANGS.includes((body0 as any).lang) ? String((body0 as any).lang) : 'ja';
     const alias = String((body0 as any).alias || '').trim().slice(0, 40) || packName;
     const raw = await extractVocab(env, src, packLang); // Gemini JSON mode 抽詞條 + 讀音
-    const { entries, warnings } = validateEntries(raw, packLang); // 依語言驗證讀音字集
+    const { entries, warnings, issues, stats } = validateEntries(raw, packLang); // 驗證 pipeline
     if (!entries.length) return bad('沒有抽出任何詞條,請換一段來源文字');
     await savePack(env, packId, { name: packName, alias, lang: packLang, entries });
-    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings });
+    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings, issues, stats });
   }
 
   /* 關鍵字產包:輸入「大阪城」就出一包。兩趟——
@@ -121,12 +121,12 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     const raw = await extractVocab(env, research.text, packLang);
     // 保險:主題本身是導覽全程重複最多次的詞,模型漏掉就程式補(實測漏過「枚岡神社」)
     if (!raw.some(e => e?.content === kw)) raw.unshift({ content: kw });
-    const { entries, warnings } = validateEntries(raw, packLang);
+    const { entries, warnings, issues, stats } = validateEntries(raw, packLang);
     if (!entries.length) return bad('搜尋結果裡抽不出詞條,請換個關鍵字或改用貼上來源文字');
 
     return Response.json({
       ok: true, keyword: kw, lang: packLang, count: entries.length,
-      entries, warnings, sources: research.sources.slice(0, 10), queries: research.queries,
+      entries, warnings, issues, stats, sources: research.sources.slice(0, 10), queries: research.queries,
     });
   }
 
@@ -144,14 +144,36 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     if (!alias) return bad('缺少中文別名(使用者介面顯示用)');
     const packLang = PACK_LANGS.includes(body.lang as any) ? String(body.lang) : 'ja';
     const packName = String(body.name || '').trim().slice(0, 60) || String(body.keyword || alias);
-    const { entries, warnings } = validateEntries((body.entries ?? []) as any, packLang);
+    // 存檔前再跑一次 pipeline:預覽送回來的詞條可能被前端改過,不能信
+    const { entries, warnings, issues, stats } = validateEntries((body.entries ?? []) as any, packLang);
     if (!entries.length) return bad('沒有可存的詞條');
 
     await savePack(env, packId, {
       name: packName, alias, lang: packLang, entries,
       source: { kind: 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: (body.sources ?? []).slice(0, 10), at: new Date().toISOString() },
     });
-    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings });
+    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings, issues, stats });
+  }
+
+  /* 重驗:把既有的包重跑一次驗證 pipeline 再存回去。
+     為什麼需要——pipeline 只在生成當下跑,規則後來補強了(content 掃描、
+     混寫假名正規化)不會回頭套用到已經存在 R2 的包。正式站第一包「大阪城」
+     就帶著 `黄金 of 茶室` 與 `トらいし` 上線,靠這支修掉,不必重跑 100 秒搜尋。
+     只有詞條會被改寫,alias / lang / source 生成軌跡原封不動。 */
+  if (path === '/api/admin/pack-revalidate' && req.method === 'POST') {
+    const { id } = (await req.json()) as { id?: string };
+    const packId = String(id || '').trim().toLowerCase();
+    if (!PACK_ID_RE.test(packId)) return bad('包 id 格式不對');
+    const pack = await readRawPack(env, packId);
+    if (!pack) return bad('找不到這個場景包', 404);
+    const before = pack.entries.length;
+    const { entries, warnings, issues, stats } = validateEntries(pack.entries, pack.lang || 'ja');
+    if (!entries.length) return bad('重驗後沒有可存的詞條,已中止(原包保持不變)');
+    if (!stats.fix && !stats.drop) {
+      return Response.json({ ok: true, id: packId, unchanged: true, count: before, warnings, issues, stats });
+    }
+    await savePack(env, packId, { ...pack, entries });
+    return Response.json({ ok: true, id: packId, count: entries.length, before, warnings, issues, stats });
   }
 
   if (path === '/api/admin/pack-delete' && req.method === 'POST') {
