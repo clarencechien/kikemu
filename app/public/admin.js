@@ -84,7 +84,7 @@ function render() {
     : `<table><thead><tr><th>ID</th><th>名稱</th><th>詞條數</th><th>更新時間</th><th>動作</th></tr></thead><tbody>${
         packs.map((p) => `<tr>
           <td class="ts">${esc(p.id)}</td>
-          <td>${esc(p.name)}</td>
+          <td>${esc(p.alias || p.name)}<small style="color:var(--ink-2)"> ・${esc(p.lang === "ko" ? "韓文" : "日文")}</small></td>
           <td class="ts">${Number(p.count)}</td>
           <td class="ts">${esc(String(p.updated || "").replace("T", " ").slice(0, 16))}</td>
           <td><button class="danger" data-pack-delete="${esc(p.id)}">刪除</button></td></tr>`).join("")}</tbody></table>`;
@@ -187,18 +187,30 @@ function warnSummary(warnings) {
   return `<p class="warnList">${esc(bits.join("\n"))}</p>`;
 }
 
+/* 語言選單:哪些語言有場景包由 /api/config 決定(worker/langs.ts 是唯一來源) */
+fetch("/api/config").then(r => r.json()).then(cfg => {
+  const sel = $("skwLang");
+  for (const l of cfg.packLangs || [{ code: "ja", label: "日文" }]) {
+    const o = document.createElement("option");
+    o.value = l.code; o.textContent = l.label;
+    sel.appendChild(o);
+  }
+}).catch(() => {});
+
 $("packSearchForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const btn = $("skwBtn");
   const keyword = $("skwKeyword").value.trim();
   const id = $("skwId").value.trim().toLowerCase();
-  const name = $("skwName").value.trim();
+  const alias = $("skwAlias").value.trim();
   btn.disabled = true;
   btn.textContent = "搜尋中…";
   $("skwPreview").innerHTML = '<p class="hint">正在搜尋並抽取詞條,約 10~30 秒…</p>';
   try {
-    const d = await api("/api/admin/pack-search", { id, name, keyword, preview: true });
-    SKW = { id, name, keyword };
+    const d = await api("/api/admin/pack-search", { keyword, lang: $("skwLang").value });
+    // 存檔時直接送回這批詞條,不重跑搜尋(省 100 秒,也保證存的就是看到的)
+    SKW = { id, alias, name: keyword, lang: d.lang, keyword,
+            entries: d.entries, sources: d.sources, queries: d.queries };
     const src = (d.sources || []).map(s =>
       `<li><a href="${esc(s.uri)}" target="_blank" rel="noopener">${esc(s.title || s.uri)}</a></li>`).join("");
     const terms = (d.entries || []).map(en =>
@@ -206,7 +218,7 @@ $("packSearchForm").addEventListener("submit", async (e) => {
     ).join("、");
     $("skwPreview").innerHTML = `
       <div class="card" style="border:1px solid var(--line); border-radius:2px; padding:10px; margin-top:8px">
-        <b>「${esc(d.keyword)}」抽出 ${d.count} 個詞條</b>
+        <b>「${esc(d.keyword)}」抽出 ${d.count} 個詞條(${esc($("skwLang").selectedOptions[0]?.textContent || "")})</b>
         <p class="hint">${d.sources?.length
             ? `搜尋詞:${esc((d.queries || []).join(" / "))}`
             : "⚠ 這次沒有引用外部來源(模型憑既有知識回答)——冷門地點請改用貼上官方頁內文,讀音比較可靠。"}</p>
@@ -234,12 +246,12 @@ $("skwPreview").addEventListener("click", async (e) => {
     b.disabled = true;
     b.textContent = "存檔中…";
     try {
-      // 再跑一次(含搜尋)後落地:兩趟成本很低,換到的是「存的就是剛才看到的來源」
-      const d = await api("/api/admin/pack-search", { ...SKW, preview: false });
-      $("skwPreview").innerHTML = `<p class="hint">✓ 已存「${esc(d.name)}」(${d.count} 詞)</p>`;
+      const d = await api("/api/admin/pack-save", SKW);
+      $("skwPreview").innerHTML =
+        `<p class="hint" style="color:var(--ok)">✓ 已存「${esc(d.alias)}」(${esc(d.lang === "ko" ? "韓文" : "日文")}・${d.count} 詞,id=${esc(d.id)})——下方清單與使用者介面都會出現</p>`;
       $("skwKeyword").value = "";
       $("skwId").value = "";
-      $("skwName").value = "";
+      $("skwAlias").value = "";
       await reload();
     } catch (err) {
       $("skwPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;

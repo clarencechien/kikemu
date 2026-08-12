@@ -22,7 +22,7 @@
 import type { Env } from './index';
 import { translateSentence } from './gemini';
 import { readPack } from './vocab';
-import { PACK_LANG, resolveLang } from './langs';
+import { resolveLang } from './langs';
 import type { Usage } from './quota';
 
 const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
@@ -95,8 +95,9 @@ export class SessionRelay {
 
     // 場景包隨 session config 送出(Speechmatics 限制:中途不可換,換包 = 重連)
     const smLang = resolveLang(lang).code;
-    // 場景包目前只做日文(詞表 sounds_like 是全形假名);其他語言一律不掛
-    const vocabPack = pack && smLang === PACK_LANG ? await readPack(this.env, pack) : null;
+    // 包的語言必須與本場語言相符才掛——把日文假名詞條餵給韓文模型只會添亂
+    const loaded = pack ? await readPack(this.env, pack) : null;
+    const vocabPack = loaded && (loaded.lang || 'ja') === smLang ? loaded : null;
     const vocab = (vocabPack?.entries ?? []).slice(0, 1000);
 
     // 上游:Speechmatics RT。需要 Authorization header → 走 fetch-upgrade

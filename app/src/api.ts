@@ -30,9 +30,10 @@ export const api = {
   config: (): Promise<{ mode: 'oidc' | 'dev'; turnstileSiteKey: string | null;
   langs: { code: string; label: string }[];
   defaultLang: string;
-  packLang: string }> => req('/api/config'),
+  packLangs: { code: string; label: string }[] }> => req('/api/config'),
   me: (): Promise<Me> => req('/api/me'),
   login: (email: string): Promise<{ email: string }> => post('/api/login', { email }),
   logout: (): Promise<void> => post('/api/logout', {}),
-  packs: (): Promise<{ packs: Pack[] }> => req('/api/packs'),
+  packs: (lang?: string): Promise<{ packs: Pack[] }> =>
+    req('/api/packs' + (lang ? `?lang=${encodeURIComponent(lang)}` : '')),
 };

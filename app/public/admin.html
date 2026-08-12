@@ -51,6 +51,9 @@
   button:disabled{opacity:.55; cursor:wait}
   form.add{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:14px 0 4px}
   .hint{font-size:12px; color:var(--ink-2); margin-top:6px}
+  .backLink{float:right; font-size:13px; font-weight:400; color:var(--brand,#B8860B); text-decoration:none;
+            border:1px solid var(--line); border-radius:2px; padding:5px 10px}
+  .backLink:hover{background:var(--chip)}
   .empty{font-size:13px; color:var(--ink-2); padding:14px 6px}
   .twd{color:var(--brand)}
   .warnList{font-size:12px; color:var(--warn); margin-top:8px; white-space:pre-line}
@@ -70,7 +73,7 @@
 <div id="gate" class="gate">載入中…</div>
 
 <div id="main" hidden>
-  <h1>kikemu 管理<small id="whoami"></small></h1>
+  <h1>kikemu 管理<small id="whoami"></small><a href="/" class="backLink">← 回 App</a></h1>
 
   <h2>等候名單<span class="count" id="waitCount"></span></h2>
   <div id="waitBox"></div>
@@ -91,8 +94,9 @@
        先預覽再存:讀音錯的詞表會反過來傷辨識,不讓它直接落地。 -->
   <form class="add" id="packSearchForm" style="flex-direction:column; align-items:stretch">
     <div class="row-actions" style="flex-wrap:wrap">
+      <select id="skwLang" title="來源語言"></select>
+      <input type="text" id="skwAlias" placeholder="中文別名(如 大阪城)" size="16" required>
       <input type="text" id="skwId" placeholder="包 id(小寫英數,如 osakajo)" size="20" required>
-      <input type="text" id="skwName" placeholder="顯示名(可留空,用關鍵字)" size="22">
       <input type="text" id="skwKeyword" placeholder="關鍵字,如 大阪城" size="18" required>
       <button class="primary" type="submit" id="skwBtn">🔎 搜尋生成</button>
     </div>

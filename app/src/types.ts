@@ -1,6 +1,15 @@
 /* 共用型別:relay 下行協定與本機紀錄。 */
 
-export type Pack = { id: string; name: string; count: number; updated: string | null };
+export type Pack = {
+  id: string;
+  name: string;
+  /** 中文別名(使用者介面顯示用;原文名對台灣使用者不好認) */
+  alias?: string;
+  /** 來源語言(ja / ko) */
+  lang: string;
+  count: number;
+  updated: string | null;
+};
 
 export type Me = { email: string; tier: string; isAdmin: boolean; usedSeconds: number; limitSeconds: number };
 

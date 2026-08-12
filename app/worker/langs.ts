@@ -23,8 +23,17 @@ export const LANGS: Lang[] = [
 
 export const DEFAULT_LANG = 'ja';
 
-/** 場景包目前只做日文(詞表的 sounds_like 驗證器只認全形假名) */
-export const PACK_LANG = 'ja';
+/** 場景包支援的語言。每種語言的 sounds_like 字集不同,驗證器要分流——
+    日文只吃全形假名、韓文吃諺文(皆經探針驗證 Speechmatics 接受)。
+    英文與中英夾雜暫不做包:英文拼寫本身即讀音,幫助有限。 */
+export const PACK_LANGS = ['ja', 'ko'] as const;
+export const packLangLabel = (code: string) => (code === 'ko' ? '韓文' : '日文');
+
+/** 讀音字集:日文全形假名(同 scripts/make_dict.py)、韓文諺文 */
+export const SOUNDS_LIKE_RE: Record<string, RegExp> = {
+  ja: /^[ぁ-ゖァ-ヺー]+$/,
+  ko: /^[가-힣ㄱ-ㅎㅏ-ㅣ]+$/,
+};
 
 export const resolveLang = (code: string | null | undefined): Lang =>
   LANGS.find(l => l.code === code) ?? LANGS[0];

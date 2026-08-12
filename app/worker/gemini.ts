@@ -114,7 +114,19 @@ const VOCAB_PROMPT = `あなたは音声認識用のカスタム語彙(custom di
 
    搜尋工具不與 responseMimeType=application/json 併用(分兩趟比較穩,
    也沿用 sukemu P1/P2 的分趟省錢模式:pass B 只吃 pass A 的文字)。 */
-const RESEARCH_PROMPT = (keyword: string) =>
+/* 韓文版:用韓語下指令,讀音要諺文(Speechmatics ko 包已探針驗證接受)。
+   兩個實測教訓照搬:主題本身要釘死在最前面、漢字與諺文表記各列一條。 */
+const RESEARCH_KO = (keyword: string) =>
+  `「${keyword}」에 대해 한국어 공식 홈페이지·관광 안내·백과사전을 검색하세요.\n` +
+  `이 장소/주제의 오디오 가이드에서 실제로 읽히는 고유명사를 최대한 폭넓게 모으세요.\n\n` +
+  `【최우선】먼저 「${keyword}」 자체의 정식 명칭을 맨 앞에 반드시 넣으세요.\n` +
+  `【중요】한자 표기와 한글 표기가 모두 쓰이는 이름은 두 가지를 각각 별도 항목으로 넣으세요.\n\n` +
+  `대상: 건물·시설명, 경내 각처 이름, 신·불 이름, 인명, 제례·행사명, 지명, 역명,\n` +
+  `연호·시대명, 전문 용어, 주변 상점·거리 이름.\n\n` +
+  `각 항목을 「정식표기(한글 읽기)」 형식으로 나열하세요. 읽기를 모르면 추측하지 말고 생략하세요.\n` +
+  `설명은 불필요, 목록만.`;
+
+const RESEARCH_JA = (keyword: string) =>
   `「${keyword}」について、日本語の公式サイト・観光案内・百科事典を検索してください。
 ` +
   `この場所/テーマの音声ガイドで実際に読み上げられる固有名詞を、できるだけ網羅的に集めてください。
@@ -129,11 +141,14 @@ const RESEARCH_PROMPT = (keyword: string) =>
 ` +
   `解説は不要、一覧のみ。`;
 
+const RESEARCH_PROMPT = (keyword: string, lang: string) =>
+  (lang === 'ko' ? RESEARCH_KO : RESEARCH_JA)(keyword);
+
 export type Research = { text: string; sources: { title: string; uri: string }[]; queries: string[] };
 
-export async function researchTerms(env: Env, keyword: string): Promise<Research> {
+export async function researchTerms(env: Env, keyword: string, lang = 'ja'): Promise<Research> {
   const resp = await generate(env, {
-    contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword) }] }],
+    contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword, lang) }] }],
     tools: [{ google_search: {} }],
     generationConfig: { temperature: 0.0 },
   });
@@ -146,14 +161,44 @@ export async function researchTerms(env: Env, keyword: string): Promise<Research
   return { text, sources, queries: (gm.webSearchQueries ?? []) as string[] };
 }
 
-export async function extractVocab(env: Env, sourceText: string): Promise<VocabEntry[]> {
+/* 容錯解析:輸出被截斷時 JSON.parse 會整份失敗,但前面幾百個詞條其實是好的。
+   先直接 parse,失敗就逐一撈出完整的 {…} 物件——scripts/make_dict.py 踩過同一個坑,
+   當時也是加了容錯才把包生出來。寧可少幾條,不要整包掉。 */
+function parseEntries(raw: string): VocabEntry[] {
+  try {
+    const items = JSON.parse(raw);
+    if (Array.isArray(items)) return items as VocabEntry[];
+  } catch {
+    /* 往下走容錯路徑 */
+  }
+  const out: VocabEntry[] = [];
+  for (const m of raw.matchAll(/\{[^{}]*\}/g)) {
+    try {
+      const o = JSON.parse(m[0]);
+      if (o && typeof o.content === 'string') out.push(o as VocabEntry);
+    } catch {
+      /* 半截的物件跳過 */
+    }
+  }
+  if (!out.length) throw new Error('詞條 JSON 解析失敗');
+  return out;
+}
+
+export async function extractVocab(env: Env, sourceText: string, lang = 'ja'): Promise<VocabEntry[]> {
+  // 讀音字集依語言:日文全形假名、韓文諺文(Speechmatics 各自接受,已探針驗證)
+  const prompt =
+    lang === 'ko'
+      ? VOCAB_PROMPT.replace('全角ひらがな', 'ハングル').replace(
+          '観光ガイドの音声認識',
+          '観光ガイド(韓国語)の音声認識',
+        )
+      : VOCAB_PROMPT;
   const resp = await generate(env, {
-    contents: [{ parts: [{ text: VOCAB_PROMPT + sourceText }] }],
-    generationConfig: { temperature: 0.0, responseMimeType: 'application/json' },
+    contents: [{ parts: [{ text: prompt + sourceText }] }],
+    // 詞條多的地點(大阪城 147 條)輸出很長,不給額度會被截斷成壞掉的 JSON
+    generationConfig: { temperature: 0.0, responseMimeType: 'application/json', maxOutputTokens: 16384 },
   });
   const raw = firstText(resp);
   if (!raw) throw new Error('gemini 沒有回詞條');
-  const items = JSON.parse(raw);
-  if (!Array.isArray(items)) throw new Error('詞條格式不是陣列');
-  return items as VocabEntry[];
+  return parseEntries(raw);
 }
