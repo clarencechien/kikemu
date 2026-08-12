@@ -19,7 +19,7 @@ import {
 } from './auth';
 import { handleAdmin } from './admin';
 import { listPacks } from './vocab';
-import { DEFAULT_LANG, LANGS, PACK_LANG } from './langs';
+import { DEFAULT_LANG, LANGS, PACK_LANGS, packLangLabel } from './langs';
 import type { Usage } from './quota';
 export { QuotaCounter } from './quota';
 export { SessionRelay } from './relay';
@@ -134,7 +134,8 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
       // 語言清單由伺服器給:加語言只改 worker/langs.ts 一處
       langs: LANGS.map(l => ({ code: l.code, label: l.label })),
       defaultLang: DEFAULT_LANG,
-      packLang: PACK_LANG,
+      // 哪些語言有場景包(前端據此決定要不要顯示包選單)
+      packLangs: PACK_LANGS.map(c => ({ code: c, label: packLangLabel(c) })),
     });
   }
 
@@ -269,7 +270,9 @@ async function api(req: Request, env: Env, path: string, email: string, user: Us
 
   // 場景包清單(頂列選擇器用;內容只在 relay session 載入)
   if (path === '/api/packs' && req.method === 'GET') {
-    return json({ ok: true, packs: await listPacks(env) });
+    const want = new URL(req.url).searchParams.get('lang');
+    const all = await listPacks(env);
+    return json({ ok: true, packs: want ? all.filter(p => p.lang === want) : all });
   }
 
   // 聽譯 relay:轉給 per-email 的 SessionRelay DO(額度由 Worker 決定,DO 只執行)

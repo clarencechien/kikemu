@@ -35,7 +35,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   let lats: number[] = [];
   let curPack: Pack | null = null;
   let curLang = 'ja';
-  let packLang = 'ja'; // 場景包目前只做日文;選其他語言時詞表不掛(伺服器也會擋)
+  let packLangs: { code: string; label: string }[] = [{ code: 'ja', label: '日文' }];
   let guidanceShown = false; // 拾音指引一次就好
   let endFuse: ReturnType<typeof setTimeout> | undefined;
 
@@ -106,7 +106,7 @@ export function initListen(onPreviewStart: () => void): Listen {
     toggleBtn.textContent = s === 'idle' ? '● 開始聽' : s === 'starting' ? '連線中…' : s === 'stopping' ? '收尾中…' : '■ 停止';
     toggleBtn.disabled = s === 'starting' || s === 'stopping';
     // 語言與詞表都隨 StartRecognition 送出,中途不可換(Speechmatics 限制)= 聽譯中鎖住
-    packSel.disabled = s !== 'idle' || curLang !== packLang;
+    packSel.disabled = s !== 'idle' || !packLangs.some(l => l.code === curLang);
     langSel.disabled = s !== 'idle';
   };
 
@@ -130,7 +130,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   async function loadLangs() {
     try {
       const cfg = await api.config();
-      packLang = cfg.packLang;
+      packLangs = cfg.packLangs?.length ? cfg.packLangs : packLangs;
       curLang = localStorage.getItem('kk_lang') || cfg.defaultLang;
       if (!cfg.langs.some(l => l.code === curLang)) curLang = cfg.defaultLang;
       langSel.innerHTML = '';
@@ -144,7 +144,7 @@ export function initListen(onPreviewStart: () => void): Listen {
       langSel.onchange = () => {
         curLang = langSel.value;
         localStorage.setItem('kk_lang', curLang);
-        syncPackAvailability();
+        void loadPacks(); // 換語言 = 換一組包
       };
       syncPackAvailability();
     } catch {
@@ -152,22 +152,26 @@ export function initListen(onPreviewStart: () => void): Listen {
     }
   }
 
-  /** 場景包只做日文:選其他語言時停用並說明,不要讓人以為詞表有生效 */
+  const packLangLabel = (c: string) => packLangs.find(l => l.code === c)?.label ?? c;
+  /** 只有做了場景包的語言才顯示包選單——不要讓人以為詞表有生效 */
   function syncPackAvailability() {
-    const ok = curLang === packLang;
+    const ok = packLangs.some(l => l.code === curLang);
     packSel.disabled = !ok || state !== 'idle';
-    packSel.title = ok ? '場景包(詞表)' : '場景包目前只支援日文';
+    packSel.title = ok ? '場景包(詞表)' : `場景包目前只支援 ${packLangs.map(l => l.label).join('、')}`;
     packSel.style.opacity = ok ? '' : '.5';
   }
 
   async function loadPacks() {
+    curPack = null;
     try {
-      const { packs } = await api.packs();
+      // 只拿本場語言的包(把日文假名詞條掛到韓文 session 只會添亂,伺服器也會擋)
+      const { packs } = await api.packs(curLang);
       packSel.innerHTML = '<option value="">(不用場景包)</option>';
       for (const pk of packs) {
         const opt = document.createElement('option');
         opt.value = pk.id;
-        opt.textContent = `${pk.name}(${pk.count} 詞)`;
+        // 顯示「中文別名 - 語言」:原文名對台灣使用者不好認
+        opt.textContent = `${pk.alias || pk.name}・${packLangLabel(pk.lang)}(${pk.count} 詞)`;
         packSel.appendChild(opt);
       }
       packSel.onchange = () => {
@@ -398,7 +402,7 @@ export function initListen(onPreviewStart: () => void): Listen {
 
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
     const q = new URLSearchParams({ lang: curLang });
-    if (curPack && curLang === packLang) q.set('pack', curPack.id);
+    if (curPack) q.set('pack', curPack.id);
     ws = new WebSocket(`${proto}://${location.host}/ws?${q}`);
     ws.binaryType = 'arraybuffer';
     ws.onmessage = ev => {

@@ -1,6 +1,6 @@
 # kikemu app — 部署與開發手冊
 
-聽日文導覽、出台灣正體字幕的 PWA。產品規格見 [`../docs/PRD.md`](../docs/PRD.md);
+聽外語導覽、出台灣正體字幕的 PWA。產品規格見 [`../docs/PRD.md`](../docs/PRD.md);
 每一條技術路線都是本 repo 四個實驗的結論(`../results/report.md`),不是偏好。
 
 ## 架構
@@ -8,7 +8,7 @@
 ```
 瀏覽器(PWA,單頁 index.html)
   mic → AudioWorklet(public/pcm-worklet.js,16kHz PCM16 100ms 框)
-      → WS /ws?pack=hiraoka ─────────────┐
+      → WS /ws?lang=ja&pack=<id> ────────┐
                                           ▼
 Cloudflare Worker(worker/index.ts)
   ├─ 靜態資產(Workers Assets ./dist,run_worker_first:安全 headers 全覆蓋)
@@ -16,12 +16,20 @@ Cloudflare Worker(worker/index.ts)
   ├─ R2 CONFIG bucket:config/allowlist.json・config/waitlist.json・vocab/{id}.json
   ├─ QUOTA DO(worker/quota.ts):每人每日聽譯秒數,UTC 00:00 = 台灣 08:00 重置
   └─ RELAY DO(worker/relay.ts,per-email)
-       ├─ 上游:Speechmatics RT WS(ja/enhanced/partials/max_delay 2.0,
-       │        additional_vocab = R2 vocab/{pack}.json;金鑰只存在 DO)
-       ├─ 下行:{partial|final} → 瀏覽器字幕流
+       ├─ 上游:Speechmatics RT WS(enhanced/partials/max_delay 2.0,
+       │        語言取自 worker/langs.ts;金鑰只存在 DO)
+       │        additional_vocab = R2 vocab/{pack}.json,**語言相符才掛**
+       ├─ 下行:{partial|final} + 每秒 {stat}(伺服器實收 RMS)
        └─ 定稿句 → Gemini generateContent(worker/gemini.ts,
                    凍結口譯 systemInstruction = scripts/prompts.py)→ {zh}
 ```
+
+**語言是 `worker/langs.ts` 一處定義**(日本語 / 한국어 / English / 中文・English 夾雜),
+前端下拉、`/api/config`、relay 的 Speechmatics 設定、場景包驗證字集都讀同一份。
+語言與詞表在 session 開始時固定,中途要換 = 重連(Speechmatics 協定限制)。
+
+`cmn_en` 雙語 pack **完全不輸出標點**,所以 relay 除了句末標點,另有長度(48 字)
+與停滯(6 秒)兩個 flush 條件,否則整場會累積成一句才吐出來。
 
 內容零留存:音訊不落地、字幕只在使用者裝置的 IndexedDB;R2 只有名單與詞表。
 
@@ -63,7 +71,7 @@ GEMINI_API_KEY=...
    | `SESSION_SECRET` | session HMAC。**fail-closed**:已設 OIDC 但缺它 → 全站鎖死 |
    | `TURNSTILE_SECRET` | 與 vars 的 `TURNSTILE_SITE_KEY` **成對**設定才啟用 |
 
-3. **種子場景包**(exp1 語料的東大阪詞表,80 詞條):
+3. **種子場景包**(exp1 語料的東大阪詞表,80 詞條;探針複驗時要用):
 
    ```sh
    npm run seed:pack
@@ -71,7 +79,7 @@ GEMINI_API_KEY=...
    #     --file seed/higashiosaka.json --remote --content-type application/json
    ```
 
-   之後的場景包直接在 `/admin` 生成(貼來源文字 → Gemini 抽詞條 → 假名驗證 → R2)。
+   之後的場景包在 `/admin` 用**關鍵字**生成,見下節。
 
 4. **部署**
 
@@ -84,6 +92,28 @@ GEMINI_API_KEY=...
 
 5. **名單**:首次登入的訪客自動進等候名單,`/admin` 一鍵核准(級別
    trial 15 分/beta 60 分/pro 180 分,或自訂每日秒數)。
+
+## 場景包:在 `/admin` 用關鍵字生成
+
+填**包 id**(小寫英數)、**中文別名**(使用者介面顯示用)、**語言**(日文 / 韓文)、
+**關鍵字**(例:大阪城),按搜尋:
+
+| 階段 | 端點 | 做的事 | 時間 |
+|---|---|---|---|
+| 預覽 | `POST /api/admin/pack-search` | pass A `google_search` 接地蒐集固有名詞與讀音 → pass B 結構化成 JSON → 依語言驗證讀音字集 | 約 60~100 秒 |
+| 存檔 | `POST /api/admin/pack-save` | 直接收預覽過的詞條寫 R2,**不重跑搜尋** | ~50ms |
+
+為什麼要先預覽:讀音錯的詞表會反過來傷辨識,所以要先看過詞條數、
+**引用來源筆數**(0 筆 = 模型憑記憶答,沒有外部佐證)與警告再存。
+存檔會把關鍵字、搜尋詞、來源一併寫進包裡(`source` 欄)可追溯。
+
+兩個實測補丁寫死在程式裡:prompt 把主題本身釘在最前面、且要求漢字與假名/諺文
+各列一條;程式再補一層——關鍵字本身若不在結果裡就強制插入(實測漏過「枚岡神社」,
+導致整包對自己的主題沒有詞條)。
+
+讀音字集依語言驗證(日文全形假名、韓文諺文,皆已探針確認 Speechmatics 接受),
+不合格的讀音剔除、>6 字只警告不阻擋。貼來源文字的舊路徑
+(`pack-generate`)仍在,適合有官方頁內文的時候。
 
 ## 已知風險(PRD §8,上線前必驗)
 
@@ -102,8 +132,11 @@ GEMINI_API_KEY=...
 cd app
 node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   --cookie "kk_session=…"  `# 從 DevTools 複製;開發登入可改用 --email you@example.com` \
-  --wav ../corpus/conditions/hig01_A1__N0.wav --pack higashiosaka
+  --wav ../corpus/conditions/hig01_A1__N0.wav --lang ja --pack higashiosaka
 ```
+
+`--lang` 預設 `ja`;`--pack` 的語言要與 `--lang` 相符,不符時 relay 會忽略詞表
+(這是刻意的:別把假名詞條餵給韓文模型)。
 
 | 探針結果 | 結論 | 下一步 |
 |---|---|---|

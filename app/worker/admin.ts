@@ -6,6 +6,7 @@
 import { CONFIG_KEYS, readAllow, readJson, writeJson } from './auth';
 import { extractVocab, researchTerms } from './gemini';
 import { deletePack, listPacks, PACK_ID_RE, savePack, validateEntries } from './vocab';
+import { PACK_LANGS } from './langs';
 import type { Usage } from './quota';
 import type { Env } from './index';
 
@@ -85,7 +86,8 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
 
   /* ---- 場景包管理(kikemu 專屬;scripts/make_dict.py 的產品化) ---- */
   if (path === '/api/admin/pack-generate' && req.method === 'POST') {
-    const { id, name, source_text } = (await req.json()) as { id?: string; name?: string; source_text?: string };
+    const body0 = (await req.json()) as { id?: string; name?: string; source_text?: string; alias?: string; lang?: string };
+    const { id, name, source_text } = body0;
     const packId = String(id || '').trim().toLowerCase();
     if (!PACK_ID_RE.test(packId)) return bad('包 id 只能是小寫英數字、- 或 _(32 字內)');
     const packName = String(name || '').trim().slice(0, 60);
@@ -94,11 +96,13 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     if (!src) return bad('缺少來源文字');
     if (src.length > MAX_SOURCE_TEXT) return bad('來源文字過長(上限 64KB)', 413);
 
-    const raw = await extractVocab(env, src); // Gemini JSON mode 抽詞條 + 假名讀音
-    const { entries, warnings } = validateEntries(raw); // 全形假名驗證;>6 字警告不阻擋
+    const packLang = PACK_LANGS.includes((body0 as any).lang) ? String((body0 as any).lang) : 'ja';
+    const alias = String((body0 as any).alias || '').trim().slice(0, 40) || packName;
+    const raw = await extractVocab(env, src, packLang); // Gemini JSON mode 抽詞條 + 讀音
+    const { entries, warnings } = validateEntries(raw, packLang); // 依語言驗證讀音字集
     if (!entries.length) return bad('沒有抽出任何詞條,請換一段來源文字');
-    await savePack(env, packId, { name: packName, entries });
-    return Response.json({ ok: true, id: packId, name: packName, count: entries.length, warnings });
+    await savePack(env, packId, { name: packName, alias, lang: packLang, entries });
+    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings });
   }
 
   /* 關鍵字產包:輸入「大阪城」就出一包。兩趟——
@@ -106,39 +110,48 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
        pass B 把 A 的文字結構化成 JSON 並做假名驗證
      preview=true 時只回結果不落地:讀音錯的詞表會反過來傷辨識,
      所以預設讓管理者先看過再存(admin.js 走兩段流程)。 */
+  /* 預覽:搜尋 + 抽詞,只回不存(約 60~100 秒) */
   if (path === '/api/admin/pack-search' && req.method === 'POST') {
-    const { id, name, keyword, preview } = (await req.json()) as {
-      id?: string; name?: string; keyword?: string; preview?: boolean;
-    };
+    const { keyword, lang } = (await req.json()) as { keyword?: string; lang?: string };
     const kw = String(keyword || '').trim().slice(0, 100);
     if (!kw) return bad('缺少關鍵字');
-    const packId = String(id || '').trim().toLowerCase();
-    const packName = String(name || '').trim().slice(0, 60) || kw;
-    if (!preview && !PACK_ID_RE.test(packId)) return bad('包 id 只能是小寫英數字、- 或 _(32 字內)');
+    const packLang = PACK_LANGS.includes(lang as any) ? String(lang) : 'ja';
 
-    const research = await researchTerms(env, kw);
-    const raw = await extractVocab(env, research.text);
+    const research = await researchTerms(env, kw, packLang);
+    const raw = await extractVocab(env, research.text, packLang);
     // 保險:主題本身是導覽全程重複最多次的詞,模型漏掉就程式補(實測漏過「枚岡神社」)
     if (!raw.some(e => e?.content === kw)) raw.unshift({ content: kw });
-    const { entries, warnings } = validateEntries(raw);
+    const { entries, warnings } = validateEntries(raw, packLang);
     if (!entries.length) return bad('搜尋結果裡抽不出詞條,請換個關鍵字或改用貼上來源文字');
 
-    if (preview) {
-      return Response.json({
-        ok: true, preview: true, keyword: kw, count: entries.length,
-        entries: entries.slice(0, 200), warnings,
-        sources: research.sources.slice(0, 10), queries: research.queries,
-      });
-    }
-    // 存檔時一併留下生成軌跡(exp1 的規矩:詞典的 prompt 與輸出要可追溯)
-    await savePack(env, packId, {
-      name: packName, entries,
-      source: { kind: 'search', keyword: kw, queries: research.queries, sources: research.sources.slice(0, 10), at: new Date().toISOString() },
-    });
     return Response.json({
-      ok: true, id: packId, name: packName, count: entries.length,
-      warnings, sources: research.sources.slice(0, 10),
+      ok: true, keyword: kw, lang: packLang, count: entries.length,
+      entries, warnings, sources: research.sources.slice(0, 10), queries: research.queries,
     });
+  }
+
+  /* 存檔:直接收預覽時看到的詞條,不重跑搜尋——
+     既省 100 秒等待,也保證「存下去的就是剛才過目的那份」。 */
+  if (path === '/api/admin/pack-save' && req.method === 'POST') {
+    const body = (await req.json()) as {
+      id?: string; alias?: string; name?: string; lang?: string; keyword?: string;
+      entries?: { content?: string; sounds_like?: string[] }[];
+      sources?: { title: string; uri: string }[]; queries?: string[];
+    };
+    const packId = String(body.id || '').trim().toLowerCase();
+    if (!PACK_ID_RE.test(packId)) return bad('包 id 只能是小寫英數字、- 或 _(32 字內)');
+    const alias = String(body.alias || '').trim().slice(0, 40);
+    if (!alias) return bad('缺少中文別名(使用者介面顯示用)');
+    const packLang = PACK_LANGS.includes(body.lang as any) ? String(body.lang) : 'ja';
+    const packName = String(body.name || '').trim().slice(0, 60) || String(body.keyword || alias);
+    const { entries, warnings } = validateEntries((body.entries ?? []) as any, packLang);
+    if (!entries.length) return bad('沒有可存的詞條');
+
+    await savePack(env, packId, {
+      name: packName, alias, lang: packLang, entries,
+      source: { kind: 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: (body.sources ?? []).slice(0, 10), at: new Date().toISOString() },
+    });
+    return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings });
   }
 
   if (path === '/api/admin/pack-delete' && req.method === 'POST') {
