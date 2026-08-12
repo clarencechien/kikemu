@@ -24,7 +24,7 @@
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
-| 本機歷史(IndexedDB)、逐場匯出 TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
+| 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
 | Google OIDC(目前是開發用 Email 直登) | ⬜ 未設定 |
 | Turnstile、CANONICAL_HOST | ⬜ 未設定 |
 | iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |

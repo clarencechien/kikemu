@@ -129,6 +129,7 @@ body[data-listen=live] #toggleBtn { background: var(--paper); color: var(--ink) 
   background: none; cursor: pointer;
 }
 .histDel { color: var(--warn) }
-.histExp { color: var(--ink-2); font-family: var(--data); letter-spacing: .04em }
+.histExpGroup { display: flex; gap: 4px }
+.histExp { color: var(--ink-2); font-family: var(--data); letter-spacing: .04em; padding: 5px 7px }
 .histExp:hover { color: var(--ink); border-color: var(--ink-2) }
 .histEmpty { padding: 26px 16px; font-size: 13.5px; color: var(--ink-2); text-align: center; line-height: 2 }
