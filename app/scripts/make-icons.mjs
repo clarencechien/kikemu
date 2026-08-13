@@ -1,7 +1,8 @@
 // kikemu PWA icon 產生器(執行:node scripts/make-icons.mjs;需 chromium 與 python3+PIL)
 // 家族設計語言(manemu 紅・說 / sukemu 藍・看 / kikemu 琥珀・聽):
 //   白底基形 + 扁平物件疊放 + 主色配一個兄弟色。
-//   kikemu = 耳機(聽)戴著字幕卡(輸出),耳罩用 manemu 紅補完色三角。
+//   kikemu = 聲波傳進來(聽)+ 字幕卡浮現(輸出),音源點用 manemu 紅補完色三角
+//   (紅點也讀作「live 收音中」)。
 // 產出:icon-512 / icon-192(圓角方、透明角)、icon-maskable-512(滿版白底,
 //   glyph 縮在 76% 安全區內)、apple-touch-icon(180,滿版白底,iOS 自己裁圓角)。
 // headless chromium 的視窗高會被 UI 吃掉 ~88px,所以開大視窗、截完用 PIL 裁切。
@@ -16,13 +17,16 @@ const WHITE = '#FFFFFF';
 // glyph 本體(viewBox 512,置中設計;交給外層決定底形與縮放)
 // 音源點在右上,三道弧朝左下傳;字幕卡在左下前景,微傾 -4° 是家族的玩心
 const glyph = `
-  <path d="M 128 236 A 128 128 0 0 1 384 236" fill="none"
-        stroke="${AMBER}" stroke-width="38" stroke-linecap="round"/>
-  <rect x="96" y="210" width="64" height="102" rx="32" fill="${RED}"/>
-  <rect x="352" y="210" width="64" height="102" rx="32" fill="${RED}"/>
-  <rect x="86" y="300" width="340" height="146" rx="40" fill="${AMBER}"/>
-  <line x1="136" y1="348" x2="336" y2="348" stroke="${WHITE}" stroke-width="30" stroke-linecap="round"/>
-  <line x1="136" y1="402" x2="262" y2="402" stroke="${WHITE}" stroke-width="30" stroke-linecap="round"/>
+  <g fill="none" stroke="${AMBER}" stroke-width="34" stroke-linecap="round">
+    <path d="M 386.0 212.0 A 76 76 0 0 1 310.0 136.0"/>
+    <path d="M 386.0 264.0 A 128 128 0 0 1 258.0 136.0"/>
+  </g>
+  <circle cx="386" cy="136" r="36" fill="${RED}"/>
+  <g transform="rotate(-4 226 376)">
+    <rect x="70" y="300" width="300" height="152" rx="42" fill="${AMBER}"/>
+    <line x1="122" y1="350" x2="316" y2="350" stroke="${WHITE}" stroke-width="30" stroke-linecap="round"/>
+    <line x1="122" y1="404" x2="244" y2="404" stroke="${WHITE}" stroke-width="30" stroke-linecap="round"/>
+  </g>
 `;
 
 // 弧線畫法說明:圓心 = 音源點(370,152),朝左下開口(角度以「向左為 0°」計)。
