@@ -222,15 +222,34 @@ function issueSummary(d) {
       <summary class="hint" style="cursor:pointer">${esc(head)}</summary>${body}</details>`;
 }
 
-/* 語言選單:哪些語言有場景包由 /api/config 決定(worker/langs.ts 是唯一來源) */
-fetch("/api/config").then(r => r.json()).then(cfg => {
+/* 語言選單:哪些語言有場景包由 worker/langs.ts 的 PACK_LANGS 決定,經 /api/config 送來。
+   這裡先用 fallback 同步畫出來、再用伺服器的清單覆蓋——選單絕不能是空的:
+   空的 <select> 在畫面上就是「不能選語言」,而原本 fetch 失敗被 .catch 吞掉,
+   使用者只看到一個點不開的框,連哪裡壞了都不知道。 */
+const PACK_LANG_FALLBACK = [{ code: "ja", label: "日文" }, { code: "ko", label: "韓文" }];
+
+function fillPackLangs(langs) {
   const sel = $("skwLang");
-  for (const l of cfg.packLangs || [{ code: "ja", label: "日文" }]) {
+  const keep = sel.value;
+  sel.innerHTML = "";
+  for (const l of langs) {
     const o = document.createElement("option");
     o.value = l.code; o.textContent = l.label;
     sel.appendChild(o);
   }
-}).catch(() => {});
+  if (keep && langs.some(l => l.code === keep)) sel.value = keep;
+}
+
+fillPackLangs(PACK_LANG_FALLBACK);
+fetch("/api/config")
+  .then(r => r.json())
+  .then(cfg => {
+    if (cfg.packLangs?.length) fillPackLangs(cfg.packLangs);
+  })
+  .catch(err => {
+    // 不靜默:fallback 還在,但要講明這份清單沒跟伺服器對過
+    $("skwHint").textContent = `語言清單讀取失敗(${err.message || err}),先用預設值 日文 / 韓文。`;
+  });
 
 $("packSearchForm").addEventListener("submit", async (e) => {
   e.preventDefault();
