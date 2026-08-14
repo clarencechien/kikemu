@@ -57,7 +57,10 @@
     <select id="packSel" aria-label="場景包">
       <option value="">(場景包)</option>
     </select>
-    <select class="pick" id="langSel" title="導覽員說的語言"></select>
+    <select class="pick" id="langSel" title="導覽員說的語言">
+      <!-- 預設值:/api/config 到手後由 listen.ts 換成完整清單。留著才不會出現空選單 -->
+      <option value="ja">日本語</option>
+    </select>
     <div class="spacer"></div>
     <button class="pick" id="histBtn">🕘 歷史</button>
     <button class="pick hidden" id="adminBtn">⚙ 管理</button>

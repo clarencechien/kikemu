@@ -199,6 +199,14 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | 有 partial 無定稿 | 音訊有進去,句子沒收斂 | 看 `max_delay` 與現場是否一直有背景聲 |
 | 完全沒有字 | 伺服器這側壞掉 | 查 `SPEECHMATICS_API_KEY`、額度、探針列出的 ERROR |
 
+**部署了卻沒生效?先想 Service Worker。** `/admin.js`、`/pcm-worklet.js` 這些
+檔名不帶 hash 的檔案,舊版 sw.js 走「快取優先」會把它們永久凍結——症狀是
+**HTML 是新的、行為是舊的**(實際發生過:admin 的語言下拉在新 HTML 裡存在,
+卻被舊版 JS 漏掉而永遠空白)。現在只有 `/assets/`、`/icons/` 快取優先,
+其餘同源檔案一律網路優先。若還是懷疑快取,DevTools → Application →
+Service Workers 勾 Update on reload,或把 `public/sw.js` 的 `CACHE` 版本號 +1
+(activate 會清掉所有舊快取,已安裝的客戶端會自己痊癒)。
+
 App 內另有兩個對照數字:狀態列的**本地音量條**(worklet 算的 RMS)與 relay 每秒
 回報的**伺服器實收 RMS**。本地會動、伺服器接近零 = 音訊在傳輸中損壞;
 兩邊都有值卻沒有字 = 真的是辨識問題(對照 exp1:8dB 人聲下 SM 仍有 0.627,

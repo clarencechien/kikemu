@@ -106,8 +106,11 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 2. **詞表投資判準:目標詞彙是「引擎沒見過的」(在地專名、料號)才值得做大;
    「引擎見過但模式不對」(通用英文術語)要先修語言設定。**
 3. **選 SM 路線的理由是抗噪與即時性,不是成本。** 兩跳架構的 API 成本
-   (~$0.47/hr)大約是一體式(~$0.22/hr)的兩倍——詞表本身很便宜
-   ($0.035/景點、一次性),但路線不便宜。
+   ~$0.35/hr vs 一體式 ~$0.22/hr(+音訊輸出)——同一數量級,但仍是兩跳比較貴。
+   詞表本身很便宜($0.14/景點、一次性)。
+   *(2026-08-14 更正:舊版寫 $0.47/hr,那是把 3.5-flash 抄成 flash-lite 價、
+   又沒關 thinking 的結果;真價 + thinking 全開其實是 $1.08/hr,關掉思考後
+   才是現在的 $0.35。細節見報告 §5。)*
 4. **外掛降噪救不了一體式,也幫不了 SM**(exp3)。快速前處理(WebRTC NS、
    譜門檻)能讓崩潰的 Gemini Live 重新開口,但召回率是 0;對 SM 零到負。
    吵雜場景的解是換引擎或改拾音物理,不是 DSP。
@@ -127,6 +130,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
 | [`results/report.md`](results/report.md) | **完整評測報告**(四個實驗合併),方法、數據、15 條侷限 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
+| [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
+| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的六條鐵律與驗證方式 |
 | [`handoff.md`](handoff.md) ~ [`handoff-v4.md`](handoff-v4.md) | 四個實驗的原始任務書 |
 
 ## 實驗規模
@@ -162,7 +167,7 @@ app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
     langs.ts        語言清單唯一來源(下拉、relay 設定、詞表驗證字集都讀它)
   src/ public/      單頁 UI、AudioWorklet、PWA
   scripts/probe-ws.mjs   端到端探針(拿評測語料當迴歸測試)
-docs/PRD.md         產品規格
+docs/               PRD.md(產品規格)、gemini-api-lessons.md(Gemini 教訓)
 scripts/ corpus/ results/    exp1・exp3・exp4(腳本、語料 metadata、原始回應)
 exp2/               exp2(中英夾雜)
 ```

@@ -30,6 +30,8 @@ const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 const IDLE_MS = 30_000;
 /** 句尾標點:定稿句切分依據(逐句觸發翻譯,非整場重譯) */
 const SENT_END = /(?<=[。!?!?])/;
+/** 同一句最多重試幾次(每次都是一筆付費呼叫) */
+const MAX_RETRY_PER_SEQ = 3;
 /* 有些語言包完全不輸出標點(實測 cmn_en 只給空格分詞),只靠標點斷句會讓
    整場累積成一大句、到收尾才吐出來——等於沒有增量字幕。所以另加長度與時間
    兩道保險:超過字數、或殘句擱太久,就當一句切出去。 */
@@ -126,6 +128,14 @@ export class SessionRelay {
     let pendingSince = 0; // 殘句開始累積的時刻(無標點語言的時間保險)
     const sentences = new Map<number, string>(); // seq → 原文(retryZh 用)
     let inflight = 0; // 未完成的翻譯呼叫數(收尾要等它們落地)
+    /* 花錢保險絲(教訓:無人看管 × 花錢 × 重試 × 失敗不可見 = 事故)。
+       秒數配額擋不住 token 花費——一場句子被切很碎的導覽,秒數沒超標但呼叫數暴增。
+       SESSION_TOKEN_CAP=0 或未設 = 不設上限,但**照樣計數**(看得見才管得住)。 */
+    const tokenCap = Number(this.env.SESSION_TOKEN_CAP || 0);
+    let spentTokens = 0;
+    let spentCalls = 0;
+    let tokenCapHit = false;
+    const retries = new Map<number, number>(); // seq → 已重試次數
 
     const send = (msg: unknown) => {
       try {
@@ -134,9 +144,19 @@ export class SessionRelay {
     };
 
     const translate = (seq: number, text: string) => {
+      if (tokenCapHit) return void send({ type: 'zhError', forSeq: seq });
       inflight++;
       translateSentence(this.env, text, smLang)
-        .then(zh => send({ type: 'zh', forSeq: seq, text: zh }))
+        .then(({ zh, usage }) => {
+          // 花費即時可視:thoughts 也算進去(它以輸出價計費)
+          spentTokens += usage.total;
+          spentCalls++;
+          if (tokenCap && spentTokens >= tokenCap) {
+            tokenCapHit = true;
+            send({ type: 'error', message: '本場翻譯 token 已達上限,後續只會有原文字幕' });
+          }
+          send({ type: 'zh', forSeq: seq, text: zh });
+        })
         .catch(() => send({ type: 'zhError', forSeq: seq }))
         .finally(() => inflight--);
     };
@@ -190,11 +210,17 @@ export class SessionRelay {
       // 計費:SM 連線中的秒數;整場連一句定稿都沒有的失敗 session 不扣額度
       const seconds = chargeStart ? (Date.now() - chargeStart) / 1000 : 0;
       const charged = charge && chargeStart > 0 && gotFinal;
-      if (charged) {
+      // token 用量與秒數分開判斷:就算這場不計秒(沒有任何定稿),
+      // 已經打出去的翻譯呼叫還是花了錢,一定要記進當日帳
+      if (charged || spentTokens) {
         await this.quotaStub(email)
-          .fetch('https://do/add', { method: 'POST', body: JSON.stringify({ seconds }) })
+          .fetch('https://do/add', {
+            method: 'POST',
+            body: JSON.stringify({ seconds: charged ? seconds : 0, tokens: spentTokens, calls: spentCalls }),
+          })
           .catch(() => {});
       }
+      console.log(`[relay] ${email} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
       send({
         type: 'done',
         reason,
@@ -266,7 +292,15 @@ export class SessionRelay {
             ended = true;
             upstream.send(JSON.stringify({ message: 'EndOfStream', last_seq_no: audioSeq }));
           } else if (m.type === 'retryZh' && sentences.has(Number(m.seq))) {
-            translate(Number(m.seq), sentences.get(Number(m.seq))!);
+            // 每句重試上限:點一次算一次錢,不設限等於把保險絲交給使用者的手指
+            const seq = Number(m.seq);
+            const n = retries.get(seq) ?? 0;
+            if (n >= MAX_RETRY_PER_SEQ) {
+              send({ type: 'error', message: `這一句已重試 ${MAX_RETRY_PER_SEQ} 次,請改用其他句子或重開一場` });
+            } else {
+              retries.set(seq, n + 1);
+              translate(seq, sentences.get(seq)!);
+            }
           }
         } catch {}
         return;
