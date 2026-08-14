@@ -8,6 +8,11 @@
   because noun outcomes within a segment are correlated.
 - Paired per-noun McNemar counts per condition.
 - CER / latency / rewrite / TW-term / adequacy summaries.
+- Token spend per arm (prompt / output / **thoughts**), read back from the
+  usageMetadata we already stored in results/raw/. Thinking tokens bill at the
+  OUTPUT rate, so leaving them out of the summary hides most of the cost:
+  the C arm's translate hop is 8.3x thoughts:output. Spend you cannot see is
+  the dangerous kind.
 Writes results/summary.json and prints markdown tables.
 """
 import json
@@ -27,6 +32,44 @@ def load():
     rows = json.loads((RES / "scores.json").read_text())
     outcomes = json.loads((RES / "noun_outcomes.json").read_text())
     return rows, outcomes
+
+
+# gemini-3.5-flash 牌價(官方 pricing 頁,2026-08-14 核實)。thinking 計輸出價。
+USD_PER_MTOK_IN, USD_PER_MTOK_OUT = 1.50, 9.00
+
+
+def token_spend():
+    """Walk results/raw/** and total the usageMetadata each run already saved."""
+    groups = defaultdict(lambda: {"calls": 0, "prompt": 0, "output": 0, "thoughts": 0})
+    for f in sorted((RES / "raw").rglob("*.json*")):
+        try:
+            if f.suffix == ".jsonl":
+                docs = [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
+            else:
+                docs = [json.loads(f.read_text())]
+        except Exception:
+            continue
+        group = f.relative_to(RES / "raw").parts[0]
+        for d in docs:
+            if not isinstance(d, dict):
+                continue
+            u = d.get("usage") or {}
+            if not isinstance(u, dict) or "promptTokenCount" not in u:
+                continue
+            g = groups[group]
+            g["calls"] += 1
+            g["prompt"] += u.get("promptTokenCount", 0)
+            g["output"] += u.get("candidatesTokenCount", 0)
+            # 沒有這個欄位 = 該路徑不收思考費(Live API 實測就是 0)
+            g["thoughts"] += u.get("thoughtsTokenCount", 0)
+    for g in groups.values():
+        g["thoughts_ratio"] = round(g["thoughts"] / g["output"], 2) if g["output"] else None
+        g["usd"] = round(
+            g["prompt"] / 1e6 * USD_PER_MTOK_IN
+            + (g["output"] + g["thoughts"]) / 1e6 * USD_PER_MTOK_OUT,
+            4,
+        )
+    return dict(groups)
 
 
 def recall_matrix(outcomes, key):
@@ -138,6 +181,8 @@ def main():
         summary["adequacy"] = {f"{a}|{c}": mean(v) for (a, c), v in adq.items()}
         summary["tw_locale"] = {f"{a}|{c}": mean(v) for (a, c), v in twl.items()}
 
+    summary["token_spend"] = token_spend()
+
     (RES / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=1))
 
     # markdown matrices
@@ -156,6 +201,16 @@ def main():
     print()
     print(json.dumps(summary["deltas"], indent=1))
     print(json.dumps(summary["latency"], indent=1))
+    print()
+    print("### Token spend (thinking bills at the output rate)")
+    print("| group | calls | prompt | output | thoughts | thoughts/output | USD |")
+    print("|---|---:|---:|---:|---:|---:|---:|")
+    for name, g in sorted(summary["token_spend"].items()):
+        ratio = "—" if g["thoughts_ratio"] is None else f"{g['thoughts_ratio']}x"
+        print(
+            f"| {name} | {g['calls']} | {g['prompt']:,} | {g['output']:,} "
+            f"| {g['thoughts']:,} | {ratio} | ${g['usd']:.4f} |"
+        )
 
 
 if __name__ == "__main__":

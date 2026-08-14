@@ -53,8 +53,40 @@ const translateUser = (lang: string, sentence: string) => {
 
 const model = (env: Env) => env.TRANSLATE_MODEL || 'gemini-3.5-flash';
 
-async function generate(env: Env, body: unknown): Promise<any> {
-  const r = await fetch(
+/* ── Thinking 稅 ──────────────────────────────────────────────
+   thinking token 以**輸出價**計費(官方 pricing 頁明載),而 3.5-flash 預設 medium。
+   逐句翻譯是機械性任務,不需要思考。同料 A/B(kikemu 凍結口譯 prompt + exp1 定稿句,
+   2026-08-14 實測):
+
+     設定              3.5-flash          3.6-flash
+     (不設)            thoughts 29.1×     29.6×
+     thinkingLevel:minimal      0×  ✓        0×  ✓
+     thinkingBudget:128        18.5×       12.0×   ← 不等於 0,別用
+     thinkingBudget:0             0×       400 拒收
+     level + budget 同給   400「only one of thinking budget and thinking level」
+
+   所以固定用 `thinkingLevel: 'minimal'`(唯一在兩代都真的歸零的寫法),
+   且**永不與 budget 同給**。舊模型/未知欄位會回 400 → 拿掉 thinkingConfig 重試一次,
+   寧可多付思考費也不要整個功能掛掉(sukemu 的 mediaResolution 是同款失敗形狀)。
+   譯文品質無退化:三句抽樣人工比對,台灣用語與專名表記皆正確。
+   env.THINKING_LEVEL 可覆寫('off' = 不送,回到預設 medium)。 */
+const thinkingOf = (env: Env) => {
+  const lv = env.THINKING_LEVEL || 'minimal';
+  return lv === 'off' ? null : { thinkingLevel: lv };
+};
+
+/** 一次呼叫的 token 用量(thoughts 也要看得見——看不見的花費才是危險的花費) */
+export type Usage = { prompt: number; output: number; thoughts: number; total: number };
+const readUsage = (resp: any): Usage => {
+  const u = resp?.usageMetadata ?? {};
+  const prompt = u.promptTokenCount ?? 0;
+  const output = u.candidatesTokenCount ?? 0;
+  const thoughts = u.thoughtsTokenCount ?? 0;
+  return { prompt, output, thoughts, total: prompt + output + thoughts };
+};
+
+async function post(env: Env, body: unknown): Promise<Response> {
+  return fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model(env)}:generateContent`,
     {
       method: 'POST',
@@ -62,6 +94,21 @@ async function generate(env: Env, body: unknown): Promise<any> {
       body: JSON.stringify(body),
     },
   );
+}
+
+/** think=false:reasoning-shaped 的呼叫(如搜尋接地)不套用 minimal */
+async function generate(env: Env, body: any, opts: { think?: boolean } = {}): Promise<any> {
+  const think = opts.think === false ? null : thinkingOf(env);
+  const withThinking = think
+    ? { ...body, generationConfig: { ...(body.generationConfig ?? {}), thinkingConfig: think } }
+    : body;
+
+  let r = await post(env, withThinking);
+  if (r.status === 400 && think) {
+    // 未知欄位 → 拿掉 thinkingConfig 重試(通用防禦:400 就退回沒有該欄位的版本)
+    console.warn('[gemini] thinkingConfig 被拒,退回不設思考重試');
+    r = await post(env, body);
+  }
   if (!r.ok) throw new Error(`gemini ${r.status}: ${(await r.text()).slice(0, 200)}`);
   return r.json();
 }
@@ -69,8 +116,12 @@ async function generate(env: Env, body: unknown): Promise<any> {
 const firstText = (resp: any): string | null =>
   resp?.candidates?.[0]?.content?.parts?.map((p: any) => p.text ?? '').join('').trim() || null;
 
-/** 定稿句 → 台灣正體譯文(exp1 同款呼叫:temperature 0.2) */
-export async function translateSentence(env: Env, sentence: string, lang = 'ja'): Promise<string> {
+/** 定稿句 → 台灣正體譯文(exp1 同款呼叫:temperature 0.2)+ 這次燒了多少 token */
+export async function translateSentence(
+  env: Env,
+  sentence: string,
+  lang = 'ja',
+): Promise<{ zh: string; usage: Usage }> {
   const resp = await generate(env, {
     systemInstruction: { parts: [{ text: interpreterSystem(lang) }] },
     contents: [{ parts: [{ text: translateUser(lang, sentence) }] }],
@@ -78,7 +129,7 @@ export async function translateSentence(env: Env, sentence: string, lang = 'ja')
   });
   const zh = firstText(resp);
   if (!zh) throw new Error('gemini 沒有回譯文');
-  return zh;
+  return { zh, usage: readUsage(resp) };
 }
 
 /** 場景包詞條抽取 prompt(scripts/make_dict.py 的產品化;來源不限維基百科) */
@@ -148,11 +199,13 @@ const RESEARCH_PROMPT = (keyword: string, lang: string) =>
 export type Research = { text: string; sources: { title: string; uri: string }[]; queries: string[] };
 
 export async function researchTerms(env: Env, keyword: string, lang = 'ja'): Promise<Research> {
+  // think 不關:pass A 要自己決定查什麼、查幾次,是 reasoning-shaped 的工作
+  // (教訓文件的「關思考看任務形狀」反例規則)。pass B 的抽取才是機械性任務。
   const resp = await generate(env, {
     contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword, lang) }] }],
     tools: [{ google_search: {} }],
     generationConfig: { temperature: 0.0 },
-  });
+  }, { think: false });
   const text = firstText(resp) ?? '';
   if (!text) throw new Error('搜尋沒有回結果');
   const gm = resp?.candidates?.[0]?.groundingMetadata ?? {};
@@ -196,7 +249,11 @@ export async function extractVocab(env: Env, sourceText: string, lang = 'ja'): P
       : VOCAB_PROMPT;
   const resp = await generate(env, {
     contents: [{ parts: [{ text: prompt + sourceText }] }],
-    // 詞條多的地點(大阪城 147 條)輸出很長,不給額度會被截斷成壞掉的 JSON
+    // 詞條多的地點(大阪城 149 條)輸出很長,不給額度會被截斷成壞掉的 JSON。
+    // 注意 thinking token 也吃 maxOutputTokens 額度——這就是設到 16384 還被截斷的原因。
+    // 實測(同 prompt,maxOutputTokens 故意設 300):預設思考 → thoughts 287 / output 9
+    // / finishReason=MAX_TOKENS(JSON 壞掉);minimal → thoughts 0 / output 206 / STOP。
+    // 現在 generate() 一律送 thinkingLevel:minimal,額度才真的都給輸出用。
     generationConfig: { temperature: 0.0, responseMimeType: 'application/json', maxOutputTokens: 16384 },
   });
   const raw = firstText(resp);

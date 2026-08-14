@@ -1,8 +1,13 @@
 "use strict";
-// kikemu 名單/額度/場景包管理(仿 sukemu public/admin.js;額度單位:秒/日,
-// 今日用量顯示分鐘 + 估算 NT$ 0.25/分,PRD §7)
+// kikemu 名單/額度/場景包管理(仿 sukemu public/admin.js;額度單位:秒/日)
+// 成本估算(PRD §7):SM $0.24/hr(按秒)+ Gemini 譯(按 token,含 thoughts)。
+// 兩種計量單位分開顯示——秒數擋不住 token 花費,合成一個數字就看不出是哪邊在燒。
 const $ = (id) => document.getElementById(id);
-const TWD_PER_MIN = 0.25;
+const USD_TWD = 32;
+const SM_USD_PER_MIN = 0.24 / 60;               // Speechmatics 牌價 $0.24/hr
+// gemini-3.5-flash $1.50/M in、$9.00/M out(2026-08-14 官方 pricing 頁;thinking 計輸出價)。
+// 這裡用輸出價當上限估(relay 回報的是 prompt+output+thoughts 總和),寧可高估不要低估。
+const GEMINI_USD_PER_MTOK = 9.00;
 let DATA = null;
 
 function toast(msg) {
@@ -28,9 +33,12 @@ function tierLabel(value) {
 }
 function usageLabel(email) {
   const u = DATA.usage[email];
-  if (!u || !u.seconds) return `<span class="ts">—</span>`;
-  const m = u.seconds / 60;
-  return `<span class="ts">${m.toFixed(1)} 分 · <b class="twd">NT$${(m * TWD_PER_MIN).toFixed(2)}</b></span>`;
+  if (!u || (!u.seconds && !u.tokens)) return `<span class="ts">—</span>`;
+  const m = (u.seconds || 0) / 60;
+  const tok = u.tokens || 0;
+  const usd = m * SM_USD_PER_MIN + (tok / 1e6) * GEMINI_USD_PER_MTOK;
+  const tokStr = tok ? ` · ${(tok / 1000).toFixed(1)}k tok/${u.calls || 0} 句` : "";
+  return `<span class="ts">${m.toFixed(1)} 分${tokStr} · <b class="twd">NT$${(usd * USD_TWD).toFixed(2)}</b></span>`;
 }
 function tierOptions(selected) {
   return Object.keys(DATA.tiers).map((t) =>

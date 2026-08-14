@@ -44,7 +44,11 @@ export interface Env {
   DEFAULT_TIER?: string;
   // 模型與熔斷
   TRANSLATE_MODEL?: string;
+  /** thinking 檔位:預設 minimal(機械性翻譯不需要思考);'off' = 不送設定 */
+  THINKING_LEVEL?: string;
   SESSION_HARD_CAP_S?: string;
+  /** 單場翻譯 token 上限(含 thoughts);0/未設 = 不限,但照樣計數 */
+  SESSION_TOKEN_CAP?: string;
   // 安全
   CANONICAL_HOST?: string;
 }

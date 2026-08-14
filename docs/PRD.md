@@ -15,7 +15,7 @@
 | 決策 | 依據(實驗) |
 |---|---|
 | 聽 = **Speechmatics 即時**,不用一體式 | exp1:人聲背景 8dB 下 Gemini Live 崩潰(0.030),SM+詞表 0.627;差距隨噪音單調放大 |
-| **地點詞表是核心資產**,隨 session 載入 | exp1:C+−C 全條件 +0.12~0.19、CI 排除 0;成本 $0.035/景點、延遲零代價 |
+| **地點詞表是核心資產**,隨 session 載入 | exp1:C+−C 全條件 +0.12~0.19、CI 排除 0;成本 $0.14/景點、延遲零代價 |
 | 譯 = **Gemini 3.5 Flash**,共用口譯 systemInstruction | exp1:台灣用語 0 失誤、adequacy 4.71;prompt 已解決在地化與不譯規則(exp2 P1 零增量) |
 | **不做**前端降噪 | exp3:外掛 DSP 對兩引擎都是零到負,WebRTC NS 還傷乾淨音源 |
 | 拾音指引進 UI(貼近音源提示) | exp4:指向性紅利歸 SM(+0.19),領夾麥/近講讓 SM 貼到天花板 |
@@ -154,10 +154,26 @@ mic → AudioWorklet(16kHz PCM16, 100ms frames)   ← 沿用 manemu pcm-worklet.
 
 ## 7. 配額與成本
 
-實測單位經濟(報告 §5):SM $0.24/hr + Gemini 譯 ~$0.23/hr ≈ **$0.47/hr ≈ NT$0.25/分**。
+實測單位經濟(報告 §5,2026-08-14 更正並含 thinking 控制後的實況):
+SM $0.24/hr + Gemini 譯 ~$0.11/hr ≈ **$0.35/hr ≈ NT$0.19/分**。
+(初版把 3.5-flash 抄成 flash-lite 價而低估 3.6 倍,且未關 thinking;
+兩者都已修正,`worker/gemini.ts` 現在固定送 `thinkingLevel: 'minimal'`。)
 
 `QUOTA_TIERS = {"admin":0,"pro":10800,"beta":3600,"trial":900}`(每日秒數,台灣 08:00 重置)
-——trial 15 分鐘足夠一場短導覽試用;admin 頁以 NT$0.25/分 估算成本。
+——trial 15 分鐘足夠一場短導覽試用。
+
+**兩種計量單位,兩道保險絲**(秒數擋不住 token 花費——同樣的一小時,句子被切得
+越碎、呼叫數越多):
+
+| 單位 | 計在哪 | 上限 |
+|---|---|---|
+| 牆鐘秒 | QUOTA DO `usage.seconds`,分級額度 | `QUOTA_TIERS` |
+| Gemini token(含 thoughts) | QUOTA DO `usage.tokens` / `calls`,relay 每場回報 | `SESSION_TOKEN_CAP`(0 = 不限但照樣計數) |
+
+同一句最多重試 `MAX_RETRY_PER_SEQ = 3` 次(每次重試都是一筆付費呼叫,
+不設限等於把保險絲交給使用者的手指)。`/admin` 的「今日」欄同時顯示
+分鐘、token 數、句數與估算 NT$。**供應商端的花費上限(AI Studio Spend 頁)
+要另外去設,那是程式管不到的第一層。**
 
 ## 8. 已知風險(先寫下來,不是實作後才發現)
 
