@@ -1,0 +1,97 @@
+{
+ "_": "領域外對照語料的候選與實測晶晶體密度。密度 = 每分鐘拉丁字母段落數,由 Speechmatics cmn_en 轉寫 5 分鐘樣本(節目中段)算出,非估計值。標尺:exp2 的 S1 10.4 / S2 4.0 / S3 4.8 個/分鐘。",
+ "probed_at": "2026-08-18",
+ "method": "exp5/scripts/probe_density.py(RSS → MP3 → 切 5 分鐘 → SM cmn_en → 算密度)",
+ "finding": "密度取決於受訪者是否在談自己動手做的實作,不取決於節目或主題領域。產業/政策訪談 1.2/分鐘;工程實作訪談 3.0~5.2/分鐘。",
+ "candidates": [
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E344",
+   "topic": "賽事轉播技術(EvoSports 技術長)",
+   "density_per_min": 4.8,
+   "uniq_terms": 18,
+   "domain": "影音串流/雲端",
+   "ml_domain": false,
+   "sample_terms": [
+    "live stream",
+    "google cloud",
+    "setup",
+    "core usage",
+    "audio"
+   ],
+   "verdict": "首選:密度等同 S3,語域徹底離開 ML"
+  },
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E324",
+   "topic": "數位憑證皮夾(數發部制度工程師)",
+   "density_per_min": 3.0,
+   "uniq_terms": 12,
+   "domain": "身分認證/公共數位",
+   "ml_domain": false,
+   "sample_terms": [
+    "apple wallet",
+    "qr code",
+    "pki",
+    "nfc",
+    "onboard",
+    "mapping"
+   ],
+   "verdict": "可用:密度略低於 S2,語域乾淨"
+  },
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E412",
+   "topic": "AI agent 工程(前小紅書工程師)",
+   "density_per_min": 5.2,
+   "uniq_terms": 13,
+   "domain": "AI 工程",
+   "ml_domain": true,
+   "sample_terms": [
+    "cloud code",
+    "feedback",
+    "skill",
+    "test"
+   ],
+   "verdict": "密度夠但語域偏 AI —— 只當作對照組,不列入主要 OOD 樣本"
+  },
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E362",
+   "topic": "資安創業(奧義智慧 CTO)",
+   "density_per_min": 2.4,
+   "uniq_terms": 7,
+   "domain": "資安/創業",
+   "ml_domain": false,
+   "sample_terms": [
+    "crowdstrike",
+    "trend micro",
+    "checkpoint",
+    "api"
+   ],
+   "verdict": "偏創業故事而非實作,密度偏低"
+  },
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E419",
+   "topic": "自駕車圖資(產業副總)",
+   "density_per_min": 1.2,
+   "domain": "產業",
+   "ml_domain": false,
+   "verdict": "太稀疏,排除"
+  },
+  {
+   "show": "塞掐 Side Chat",
+   "ep": "E414",
+   "topic": "無人機供應鏈(大學教授)",
+   "density_per_min": 1.2,
+   "domain": "產業",
+   "ml_domain": false,
+   "verdict": "太稀疏,排除"
+  }
+ ],
+ "rejected_sources": {
+  "COSCUP/SITCON/g0v": "授權最乾淨(CC BY-SA 4.0)但議程 JSON 的 record 欄位全空、議程頁也沒有影片連結,沒有可機讀的『議程→影片』對照;且影片在 YouTube,資料中心 IP 被 bot 驗證擋(本機與 Colab 皆然)。列為備援,不列首選。",
+  "ASCEND / CSZS-zh-en": "Breeze 模型卡自報的 code-switching benchmark,拿它們測等於用開發者最佳化過的靶。"
+ }
+}
