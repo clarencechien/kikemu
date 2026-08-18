@@ -1,0 +1,559 @@
+{
+ "T1": [
+  {
+   "term": "open source library",
+   "count": 6,
+   "variants": [
+    "opensourcelibrary"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Bing",
+   "count": 5,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "data",
+   "count": 5,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "open source",
+   "count": 5,
+   "variants": [
+    "open-source",
+    "opensource"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Google",
+   "count": 4,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "user",
+   "count": 3,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "Microsoft",
+   "count": 3,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "core",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "team",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "Windows stack",
+   "count": 2,
+   "variants": [
+    "windowsstack"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "feature",
+   "count": 2,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "search engine",
+   "count": 1,
+   "variants": [
+    "searchengine"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "search engine team",
+   "count": 1,
+   "variants": [
+    "searchengineteam"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "indexing",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "disk",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "pipeline",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "team own",
+   "count": 1,
+   "variants": [
+    "teamown"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "global",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "compare to",
+   "count": 1,
+   "variants": [
+    "compareto"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Frank",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "overall",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "confidential",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "copy",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "compliant",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "global search engine",
+   "count": 1,
+   "variants": [
+    "globalsearchengine"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "CDN",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "image",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "load",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "model",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "training",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "machine learning",
+   "count": 1,
+   "variants": [
+    "machinelearning"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "search",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "GG",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "company",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "CPython contributor",
+   "count": 1,
+   "variants": [
+    "cpythoncontributor"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Django contributor",
+   "count": 1,
+   "variants": [
+    "djangocontributor"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Firefox",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Monkey Spider SpiderMonkey",
+   "count": 1,
+   "variants": [
+    "monkeyspiderspidermonkey"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Monkey Spider",
+   "count": 1,
+   "variants": [
+    "monkeyspider"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "contributor",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "library",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "startup",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "stack",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "Linux",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "Windows",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "queue",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "personal interest",
+   "count": 1,
+   "variants": [
+    "personalinterest"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "community",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "business justification",
+   "count": 1,
+   "variants": [
+    "businessjustification"
+   ],
+   "class": "may_translate"
+  }
+ ],
+ "T2": [
+  {
+   "term": "Google",
+   "count": 7,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Web3",
+   "count": 4,
+   "variants": [
+    "web 3"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Fox",
+   "count": 3,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "OAuth",
+   "count": 1,
+   "variants": [
+    "o auth"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Facebook",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Google Drive",
+   "count": 1,
+   "variants": [
+    "googledrive"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "child porn",
+   "count": 1,
+   "variants": [
+    "childporn"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "medical care",
+   "count": 1,
+   "variants": [
+    "medicalcare"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "AI",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "wallet wallet",
+   "count": 1,
+   "variants": [
+    "walletwallet"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "NFT",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "generate",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "wallet",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  }
+ ],
+ "T3": [
+  {
+   "term": "IPO",
+   "count": 4,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "AI",
+   "count": 2,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "UI",
+   "count": 2,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "XX",
+   "count": 2,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "interface",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "ChatGPT",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "dashboard",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "user experience",
+   "count": 1,
+   "variants": [
+    "userexperience"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "change",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "yes or no",
+   "count": 1,
+   "variants": [
+    "yesorno"
+   ],
+   "class": "may_translate"
+  },
+  {
+   "term": "Mario",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "CEO",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "YouTuber",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "podcast",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "DevCore",
+   "count": 1,
+   "variants": [
+    "dev core"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Palo Alto",
+   "count": 1,
+   "variants": [
+    "paloalto"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "Check Point",
+   "count": 1,
+   "variants": [
+    "checkpoint"
+   ],
+   "class": "no_translate"
+  },
+  {
+   "term": "APP",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "Appier",
+   "count": 1,
+   "variants": [],
+   "class": "no_translate"
+  },
+  {
+   "term": "cycle",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  },
+  {
+   "term": "momentum",
+   "count": 1,
+   "variants": [],
+   "class": "may_translate"
+  }
+ ]
+}

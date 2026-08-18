@@ -37,15 +37,28 @@ def join(toks: list[str]) -> str:
     return "".join(out)
 
 
-def sm_context(sm_toks, a_toks, i1, i2, span=6):
-    """在 SM 的轉寫裡找同一段落的讀法(用分歧前的幾個 token 定位)"""
-    anchor = a_toks[max(0, i1 - span):i1]
-    if not anchor:
+def sm_align(sm_toks, a_toks):
+    """gm35 → SM 的 token 位置對照表。用整篇 SequenceMatcher 對齊,
+       不要用『前 N 個 token 完全相同』去定位——兩個引擎的中文用字幾乎不會
+       整段一樣,嚴格比對的結果是永遠找不到(第一版就是這樣全空的)。"""
+    m = {}
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a_toks, sm_toks,
+                                                      autojunk=False).get_opcodes():
+        if op == "equal":
+            for k in range(i2 - i1):
+                m[i1 + k] = j1 + k
+    return m
+
+
+def sm_context(sm_toks, amap, i1, i2, pad=3):
+    """SM 在同一段的讀法(用對齊表把 gm35 的位置換算到 SM 的位置)"""
+    lo = next((amap[i] for i in range(i1 - 1, max(-1, i1 - 12), -1) if i in amap), None)
+    hi = next((amap[i] for i in range(i2, min(len(amap) + 99, i2 + 12)) if i in amap), None)
+    if lo is None and hi is None:
         return ""
-    for k in range(len(sm_toks) - len(anchor)):
-        if sm_toks[k:k + len(anchor)] == anchor:
-            return join(sm_toks[k + len(anchor): k + len(anchor) + max(2, i2 - i1) + 3])
-    return ""
+    lo = lo if lo is not None else max(0, hi - 6)
+    hi = hi if hi is not None else min(len(sm_toks), lo + 6)
+    return join(sm_toks[max(0, lo - pad + 1): hi + pad])
 
 
 def main():
@@ -59,6 +72,7 @@ def main():
         a = tokens((VER / f"{seg}.gm35.txt").read_text())
         b = tokens((VER / f"{seg}.gm36.txt").read_text())
         sm = tokens((VER / f"{seg}.sm.txt").read_text())
+        amap = sm_align(sm, a)
         merged, diffs, n_latin = [], 0, 0
         latin_sec.append(f"\n## {seg}\n")
         cjk_sec.append(f"\n## {seg}\n")
@@ -73,7 +87,7 @@ def main():
             merged.extend(tokens(ruling) if ruling is not None else a[i1:i2])
             chosen = f"OVERRIDE={ruling!r}" if ruling is not None else "gm35(預設)"
             line = (f"- [{key}] gm35='{ka}' | gm36='{kb}'"
-                    f" | sm≈'{sm_context(sm, a, i1, i2)}' -> {chosen}\n")
+                    f" | sm≈'{sm_context(sm, amap, i1, i2)}' -> {chosen}\n")
             if HAS_LATIN.search(ka) or HAS_LATIN.search(kb):
                 n_latin += 1
                 latin_sec.append(line)
