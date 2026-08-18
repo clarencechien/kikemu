@@ -112,12 +112,25 @@ exp2 當初是三路轉寫 + 80 處分歧逐條人工裁決。這裡可以砍到
 
 ## 6. 驗收
 
-- [ ] 三段語料各自量過密度並落檔(`exp5/corpus/candidates.json` 格式)
-- [ ] 音檔指紋進 manifest;聲學條件由 `exp2/scripts/degrade.py` 產生
-- [ ] 正解建立過程盲化,拉丁段逐條裁決紀錄可查
-- [ ] 四個 arm 的輸出 schema 與既有 arm 一致(`transcript` 欄位、`<seg>__<cond>.json`)
-- [ ] 判讀依 §5 的表,不臨場改標準
-- [ ] 報告更新 §3D,把「能說 / 不能說」依 exp5 結果重寫
+- [x] 三段語料各自量過密度並落檔(`exp5/corpus/candidates.json`)
+- [x] 音檔指紋進 manifest;聲學條件由 `exp2/scripts/degrade.py::build()` 產生
+- [x] 正解建立過程盲化,拉丁段逐條裁決紀錄可查
+      (`exp5/corpus/reference/overrides.json`,16 條;**無人耳終審**,
+      `_protocol` 已記錄這條與 exp2 的差異)
+- [x] 四個 arm 的輸出 schema 與既有 arm 一致
+- [x] 判讀依 §5 的表,不臨場改標準 → Δ=+0.146,落在「+0.05~+0.15」那格
+- [x] 報告更新:新增 §3E,並在 §3D 末尾加了指向它的後續說明
+
+**執行時偏離任務書的三處(都寫進報告 §3E.7 與侷限 16–21):**
+
+1. SM 跑 **batch** 而非 realtime——帳號 realtime 併發上限 1,殘留 session 會堵死整條路。
+   方向已知:唯一同檔對照上 batch 比 realtime **低 0.057**,即 batch 低估 SM,
+   因此 Δ=+0.146 是偏高的估計(換 realtime 基準約 +0.09)。
+2. Breeze 跑 **CPU/fp32** 而非 notebook 的 T4/fp16——本環境無 GPU。
+   其餘參數相同(`exp5/scripts/run_breeze_cpu.py`),數值差異未量測。
+3. 加跑兩個任務書沒列的 arm:`Gbat`(gemini-3.5-flash `generateContent`)與
+   `Gbat37`(3.7-flash)。前者是為了回答「不需即時時 Gemini 多快多省」,
+   後者是因為參考轉寫由 3.5-flash 產生,需要一個**沒參與造參考**的獨立對照。
 
 ## 7. 音檔授權
 

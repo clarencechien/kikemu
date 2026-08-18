@@ -22,7 +22,8 @@
 | 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證,預設日文 |
 | **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 正式站日文 149 詞;韓文流程實測 113 詞 |
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
-| exp2 追加 arm:Breeze ASR 25(X-breeze) | ⚠️ Phase A 完成但**訓練資料含 S1/S2 來源課程**(報告 §3D);待 exp5 領域外對照 |
+| exp2 追加 arm:Breeze ASR 25(X-breeze) | ✅ Phase A + **exp5 領域外對照**完成(報告 §3D/§3E):優勢被訓練污染放大約 2~3 倍,真正站得住的是抗噪 |
+| exp5:Breeze 領域外對照(handoff-v6) | ✅ 3 段 × 2 條件 × 4 arm,128 術語實例 |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -94,7 +95,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | | exp1 日文導覽(專名) | exp2 中英夾雜演講(術語) |
 |---|---|---|
-| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D** |
+| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D;該優勢在領域外縮水約 2~3 倍,見 §3E** |
 | **詞表邊際價值** | **+0.12 ~ +0.19(核心資產)** | +0.03 ~ +0.05(小加分) |
 | 真正的槓桿 | 詞表 | **語言 pack(+0.23 ~ +0.29)** |
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
@@ -134,16 +135,16 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的六條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v6.md`](handoff-v6.md) | 六份實驗任務書(v5 = X-breeze,Phase A 完成;v6 = 領域外對照,待執行) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v6.md`](handoff-v6.md) | 六份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照,**已執行完畢**,§6 有偏離紀錄) |
 
 ## 實驗規模
 
-| | exp1 日文導覽 | exp2 中英演講 | exp3 前處理 | exp4 指向性 |
-|---|---|---|---|---|
-| 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 |
-| 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 |
-| 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 |
-| arm | 6 | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile |
+| | exp1 日文導覽 | exp2 中英演講 | exp3 前處理 | exp4 指向性 | exp5 領域外 |
+|---|---|---|---|---|---|
+| 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 | 台灣科技 podcast 3 段 × 5 分 |
+| 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 | 128 個英文術語實例 |
+| 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 | 2(M0/M3 兩端) |
+| arm | 6 | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 5 |
 
 總支出 < $10,主要成本是真實速度推流的 wall-clock。
 
@@ -172,7 +173,7 @@ app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
 docs/               PRD.md(產品規格)、gemini-api-lessons.md(Gemini 教訓)
 scripts/ corpus/ results/    exp1・exp3・exp4(腳本、語料 metadata、原始回應)
 exp2/               exp2(中英夾雜);corpus/audio_manifest.json 是音檔指紋
-exp5/               領域外對照(handoff-v6);corpus/candidates.json 是實測密度
+exp5/               領域外對照(handoff-v6);corpus/audio_manifest.json 是音檔指紋
 notebooks/          需要 GPU 的 arm(Breeze ASR 25,Colab)
 ```
 
