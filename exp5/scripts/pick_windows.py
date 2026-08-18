@@ -33,6 +33,17 @@ SKIP_TAIL = 180  # 結尾同理
 
 LATIN = re.compile(r"^[A-Za-z][A-Za-z0-9\-\.\+#]*$")
 
+# ML/AI 語域守門。exp5 存在的理由就是「換一個模型沒看過的語域」,而 Breeze 的
+# 污染來源是 ML 課程——所以視窗裡如果在聊 LLM,就算術語再密也不能用。
+# 實測踩過:只取「最密視窗」時,T2/T3 都落在受訪者談 ChatGPT / 思維鏈 / scaling
+# 的段落(AI 詞 12 與 22 次),等於把語域又繞回去了。
+ML_TERM = re.compile(
+    r"^(?:llm|gpt|chatgpt|deepseek|prompt|prompts|token|tokens|inference|agent|agents|"
+    r"embedding|embeddings|transformer|fine-?tune|fine-?tuned|pre-?trained|pretrained|"
+    r"scaling|rag|ai|ml|model|models|training|neural)$", re.I)
+ML_CJK = re.compile(r"模型|機器學習|深度學習|人工智慧|思維鏈|聊天機器人|大語言|語言模型")
+MAX_ML_PER_WINDOW = 3   # 5 分鐘視窗內最多容忍幾個 ML/AI 詞(T1 的乾淨視窗是 1)
+
 
 def transcribe_full(mp3: Path, tag: str) -> list:
     """整集轉寫,回傳 [(start_sec, word)];結果快取,不重複付費。"""
@@ -84,17 +95,27 @@ def latin_runs(words):
     return out
 
 
-def best_window(runs, dur):
+def ml_hits(words, t0, t1):
+    return sum(1 for t, w in words
+               if t0 <= t < t1 and (ML_TERM.match(w) or ML_CJK.search(w)))
+
+
+def best_window(runs, dur, words):
+    """在**通過 ML 語域守門**的視窗裡取密度最高的那個。
+       回傳 (起點, 段數, 該視窗 ML 詞數) 與整條曲線(含每格的 ML 詞數,可稽核)。"""
     lo, hi = SKIP_HEAD, max(SKIP_HEAD + WIN, dur - SKIP_TAIL - WIN)
-    best = (None, -1)
+    best = (None, -1, None)
     curve = []
     t = lo
     while t <= hi:
         n = sum(1 for r in runs if t <= r < t + WIN)
-        curve.append((round(t), n))
-        if n > best[1]:
-            best = (t, n)
+        m = ml_hits(words, t, t + WIN)
+        curve.append((round(t), n, m))
+        if m <= MAX_ML_PER_WINDOW and n > best[1]:
+            best = (t, n, m)
         t += STEP
+    if best[0] is None:
+        raise RuntimeError("整集沒有任何視窗通過 ML 語域守門——這一集不適合當領域外語料")
     return best, curve
 
 
@@ -106,14 +127,16 @@ if __name__ == "__main__":
         words = transcribe_full(mp3, c["seg"])
         dur = words[-1][0] if words else 0
         runs = latin_runs(words)
-        (start, n), curve = best_window(runs, dur)
+        (start, n, mlw), curve = best_window(runs, dur, words)
         dens_all = len(runs) / (dur / 60) if dur else 0
         print(f"\n{c['seg']} ({c['name']})")
         print(f"  整集 {dur/60:.0f} 分,拉丁段 {len(runs)} 個 = {dens_all:.1f}/分鐘")
-        print(f"  最密的 5 分鐘視窗:{int(start)}s–{int(start+WIN)}s,{n} 段 = {n/5:.1f}/分鐘")
+        print(f"  選中視窗:{int(start)}s–{int(start+WIN)}s,{n} 段 = {n/5:.1f}/分鐘"
+              f"(ML 詞 {mlw} 個,門檻 ≤{MAX_ML_PER_WINDOW})")
         picks.append({**{k: v for k, v in c.items() if k != "mp3"},
                       "start": int(start), "dur": int(WIN),
                       "window_runs": n, "window_density_per_min": round(n / 5, 1),
+                      "window_ml_terms": mlw, "ml_gate": MAX_ML_PER_WINDOW,
                       "episode_minutes": round(dur / 60, 1),
                       "episode_density_per_min": round(dens_all, 1),
                       "density_curve": curve})
