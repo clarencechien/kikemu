@@ -85,6 +85,13 @@ def main():
     meta = {"rir": rir_name, "rir_t60": round(t60, 3), "seed": SEED,
             "M2": "OOFFICE ch01 @20dB", "M3": "OMEETING ch01 @12dB"}
     for seg in ["S1", "S2", "S3"]:
+        # Skip segments whose source slice is absent, same as the missing-noise
+        # branch above. Phase A of the X-breeze arm only needs S1 and S3, and the
+        # per-segment seed (SEED + crc32(f"{seg}:{tag}")) means skipping one
+        # segment cannot change any other segment's output.
+        if not (WAV / f"{seg}.wav").exists():
+            print(f"{seg}.wav not present; skipping")
+            continue
         x, sr = sf.read(WAV / f"{seg}.wav", dtype="float64")
         assert sr == SR
         x = norm(x)
