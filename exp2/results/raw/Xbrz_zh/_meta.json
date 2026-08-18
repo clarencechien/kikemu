@@ -1,0 +1,12 @@
+{
+ "model": "MediaTek-Research/Breeze-ASR-25",
+ "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+ "dtype": "float16",
+ "chunk_length_s": 0,
+ "return_timestamps": true,
+ "transformers": "5.13.1",
+ "torch": "2.11.0+cu128",
+ "gpu": "Tesla T4",
+ "phase": "A",
+ "language_arg": "zh"
+}
