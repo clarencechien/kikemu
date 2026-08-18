@@ -1,0 +1,25 @@
+{
+ "_protocol": "裁決依據 = SM(cmn_en)的獨立讀法 + 真實世界實體名稱。exp2 當初是人工聽寫裁決、以投影片 PDF 為權威;exp5 沒有投影片,也沒有人耳複聽,所以改以『第三引擎讀法一致』與『該名稱真實存在』為準,並逐條記錄理由。這是與 exp2 協定的明確偏離,已寫進報告侷限。",
+ "_note_case": "只差大小寫的分歧(wallet/Wallet、podcast/Podcast)不裁決:score.py 比對前一律轉小寫,對召回率完全沒有影響。",
+
+ "T1:60": "做open source我不",
+ "_why_T1:60": "gm35 整段漏掉。SM 讀作『我不做open source』,證實這裡確實說了 open source。",
+
+ "T1:64": "SpiderMonkey",
+ "_why_T1:64": "SM 讀作『Monkey Spider Monkey…Monkey Spider的contributor』——聽得出是同一個詞但斷錯。SpiderMonkey 是 Mozilla 的 JS 引擎,與上文 CPython contributor 的脈絡吻合;gm36 的『Monkey』是截斷。",
+
+ "T2:4": "Fox", "T2:5": "Fox", "T2:6": "Fox",
+ "_why_T2:4-6": "SM 三處皆讀 fox。下文出現『小狐狸 wallet』(MetaMask),Fox 是指同一件事;gm36 的 Fax 不合脈絡。",
+
+ "T2:11": "雞雞",
+ "_why_T2:11": "SM 讀作『朋友的鸡鸡』,是中文詞。gm35 的『GG』把中文誤寫成拉丁字母,會在正解裡憑空多出一個英文術語,必須改掉。",
+
+ "T2:15": "",
+ "_why_T2:15": "gm35 有『porn』,gm36 與 SM 都沒有(SM 該處讀『童癖有风险吗』)。三路裡兩路無,判定為 gm35 的幻聽,移除——否則正解會多一個不存在的英文詞。",
+
+ "T2:17": "medical care醫療",
+ "_why_T2:17": "SM 讀作『其实它是medical care』,證實說的是 medical care;gm35 寫成『手術』漏掉了這個英文術語。",
+
+ "T3:36": "馬力歐",
+ "_why_T3:36": "指的是台灣 podcast 節目《馬力歐陪你喝一杯》,是中文節目名(SM 讀作『瑪利亞陪你喝』)。gm36 寫成 Mario 會憑空造出一個英文詞。"
+}

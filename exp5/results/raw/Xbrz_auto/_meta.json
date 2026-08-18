@@ -1,0 +1,14 @@
+{
+ "model": "MediaTek-Research/Breeze-ASR-25",
+ "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+ "dtype": "float32",
+ "chunk_length_s": 0,
+ "return_timestamps": true,
+ "language_arg": null,
+ "transformers": "5.15.0",
+ "torch": "2.8.0+cpu",
+ "device": "cpu",
+ "threads": 4,
+ "corpus": "exp5",
+ "note": "notebook 版跑 T4/fp16;本檔為無 GPU 環境的 CPU/fp32 複刻,其餘參數相同"
+}
