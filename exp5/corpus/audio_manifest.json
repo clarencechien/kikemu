@@ -1,0 +1,82 @@
+{
+ "_": "exp5 音檔指紋。音訊不進 repo,只存 RSS URL、視窗位移與 sha256;prep_audio.py + degrade.py 可完整重建。聲學條件由 exp2/scripts/degrade.py 的 build() 產生(同一顆 RIR、同一份 DEMAND 噪音、同一組種子),與 exp2 可比。",
+ "source_wav": {
+  "T1": {
+   "sha256": "223eaf35fba15dd6e820a8c111b7681344f5c5c1e124f8657e8b0b89942e31c0",
+   "bytes": 9600818,
+   "seconds": 300.0
+  },
+  "T2": {
+   "sha256": "fe48a6c54c41fdbd3c4d59c6b929a991f9ddb5898e7f7dd2e4a0220f3a52dc42",
+   "bytes": 9600896,
+   "seconds": 300.0
+  },
+  "T3": {
+   "sha256": "7600163ba9e50bd12a9907163e7de09ef26c736a2b68b15f44f5901dc8e16a7e",
+   "bytes": 9600668,
+   "seconds": 300.0
+  }
+ },
+ "conditions": {
+  "T1__M0": {
+   "sha256": "f3e19bde9c6a42dc75f00e34c4ffd62b716b48e726f41dfbf7eb9b6d3057dbe9",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T1__M1": {
+   "sha256": "5c1f9945dd4e5965cdfb193464ace6b7131d772dc78ac43a1a1e3aa5ff243be3",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T1__M2": {
+   "sha256": "296a11aca5f0ce9a43ed76bd13f660ee102031b060b42f922ca22405bca4d546",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T1__M3": {
+   "sha256": "ad526e081ac9ec8a69949c503662aa0410797ae6da59e51a40a45b08adb5604a",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T2__M0": {
+   "sha256": "9ea8f25a84eb0d638e9eb52e9872362f3acb1e3f343347849b9e34085c2d78be",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T2__M1": {
+   "sha256": "1cd03bc3429e4aa314a9ca24e496694570fdacab1bc71e804951171f012b4ba2",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T2__M2": {
+   "sha256": "43b345fc2972171e9ab76c1d4802d04c6ec7e4fd5a09d9d12c76d7572e943e0d",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T2__M3": {
+   "sha256": "518fccbaeb31675dd9ae0b5808c12192a51b412286f65fc379fb636ef758fc4a",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T3__M0": {
+   "sha256": "0de8baa4cdfc716221b972801a52257f5292d4f9ea79f0e53974ab226c00f77d",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T3__M1": {
+   "sha256": "f557bfb1ea68668cbdadadd353d6bc45873df3cc09656e54c1eb5fcad6a97861",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T3__M2": {
+   "sha256": "a5207d10340eb093ea4b2477e879c2aa6d06df14373a8b7a25f0d9369c0db506",
+   "bytes": 9600044,
+   "seconds": 300.0
+  },
+  "T3__M3": {
+   "sha256": "40a063c4c83ab7a02f2e61beba319cd262e5e166b36b4dc95cc1b9946a8486c0",
+   "bytes": 9600044,
+   "seconds": 300.0
+  }
+ }
+}

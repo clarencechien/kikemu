@@ -10,3 +10,5 @@ exp2/corpus/wav/
 exp2/corpus/conditions/*.wav
 corpus/conditions_dir/
 exp2/corpus/conditions_dir/
+exp5/corpus/wav/
+exp5/corpus/conditions/*.wav
