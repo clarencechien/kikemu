@@ -612,7 +612,149 @@ X-breeze 顯示**還有第三個更大的槓桿:換一個為這個語域微調�
 
 Phase A 只有 3 個檔(S1 兩條件 + S3 一條件,合計 134 個術語實例),
 **沒有跑 bootstrap CI,也沒有配對檢定**——這是快篩不是定論。
-Phase B(3 段 × 4 條件 = 12 檔)才有資格進主表。
+
+> **後續:§3E(exp5)已用領域外語料回答了這一節留下的問題。**
+> 結論是「優勢有真實成分,但被污染放大約 2~3 倍;真正站得住的是抗噪那一格」。
+> 上面「下一步」的第 1 項(領域外語料)已完成;第 2、3 項因此不再需要——
+> S1/S2 的 Phase B 只會產出污染條件下的上界,沒有決策價值。
+
+---
+
+## 3E. exp5 結果:Breeze 的優勢出了訓練領域還在嗎?(handoff-v6)
+
+**問題**:§3D 證實 Breeze ASR 25 的訓練資料含 `NTUML2021`,也就是 exp2 的 S1/S2
+來源課程——那些漂亮數字是在模型微調過的語料上量的。exp5 換一批模型沒看過的語料
+重問一次:**優勢是能力,還是記憶?**
+
+### 3E.1 語料與 arm
+
+台灣科技訪談 podcast 三段(T1 開源社群/搜尋引擎後端、T2 數位身分/網路服務、
+T3 資安產業),語域完全離開 ML,術語密度與 exp2 同級。視窗以規則挑選
+(`exp5/scripts/pick_windows.py`,含 ML 詞彙閘門,每視窗上限 3 個 AI 詞),
+避免又挑到 LLM 話題。聲學降級呼叫 **exp2 的** `degrade.py::build()`——同一顆 RIR、
+同一份 DEMAND 噪音、同一組種子,與 exp2 才是同一把尺。
+
+術語表凍結為 **128 個實例**(T1 49 詞/77 例、T2 13/24、T3 21/27)。
+16 個拉丁字母分歧的裁決記錄與理由在 `exp5/corpus/reference/overrides.json`。
+
+| arm | 引擎 | 說明 |
+|---|---|---|
+| `Xbrz_auto` | Breeze ASR 25 | `chunk_length_s=0`,revision `cffe7ccb` |
+| `Xbat_bi` | Speechmatics batch | `cmn_en` 雙語包;改用 batch 的原因見 3E.5 |
+| `G` | Gemini 3.1 Live | 一體式,1× 推流 |
+| `Gbat` / `Gbat37` | Gemini `generateContent` | 非即時對照,見 3E.6 |
+
+### 3E.2 術語召回(tolerant,128 實例 micro-average)
+
+| arm | M0 乾淨 | M3 混響+12dB 交談 | 全部 |
+|---|---|---|---|
+| Gemini 3.7 batch ※ | 0.962 | **0.880** | **0.921** |
+| Gemini 3.5 batch ※ | **0.987** | 0.816 | 0.902 |
+| **Breeze ASR 25** | 0.880 | **0.810** | **0.845** |
+| Gemini 3.1 Live | 0.930 | 0.551 | 0.741 |
+| Speechmatics batch | 0.753 | 0.646 | 0.699 |
+
+※ 這兩格有主場優勢,**不可與其他 arm 直接等價比較**,原因見 3E.7。
+
+### 3E.3 核心差值(segment-cluster bootstrap,5000 次,seed 20260818)
+
+| 比較 | 全部 | 僅 M0 | 僅 M3 |
+|---|---|---|---|
+| Breeze − SM batch | **+0.146** [+0.111, +0.185] | +0.127 [+0.115, +0.148] | **+0.165** [+0.074, +0.222] |
+| Breeze − Gemini Live | +0.104 [+0.037, +0.125] | **−0.051** [−0.074, −0.038] | **+0.259** [+0.148, +0.288] |
+| Gemini Live − SM batch | +0.041 [+0.019, +0.148] | +0.177 [+0.154, +0.222] | −0.095 [−0.185, +0.074] |
+
+只有 3 個 segment cluster,CI 必然寬——這是 n=3 的實話,不是精度。
+
+### 3E.4 判讀(對照 handoff-v6 §5 預先寫死的判讀表)
+
+規則設 Δ = Breeze 減 SM 的 tolerant 召回:
+
+| 預先寫死的門檻 | 實測 |
+|---|---|
+| ≥ +0.15 且 M3 仍領先 → 優勢可推廣 | |
+| **+0.05 ~ +0.15 → 有優勢但被污染放大** | **Δ = +0.146 ← 落這格** |
+| ≈ 0 或為負 → 領先主要來自污染 | |
+
+而且這個 +0.146 **還是偏高的估計**:規則寫的基準是 `X_bi`(realtime),exp5 的 SM
+主要跑 batch;在唯一兩者都跑過的檔(T1__M0)上 realtime 比 batch **高 0.057**。
+換算成 realtime 基準,Δ 大約是 **+0.09**,更深入中間那一格。
+
+對照 Phase A(污染語料)的 Δ = **+0.281**:**去掉污染後優勢掉到約一半,
+換成 realtime 基準則掉到約三分之一。**
+
+**結論:Phase A 的領先有真實成分,但被訓練污染放大了大約 2~3 倍。
+Breeze 是「領域內強、領域外小贏」,不足以改變 kikemu 的架構選擇。**
+
+### 3E.5 但 M3 那一格是真的
+
+handoff-v6 §5 特別交代 M3 要單獨看,理由是「記住逐字內容不會讓模型在噪音下更會聽」。
+實測站得住:
+
+- Breeze 在 M3 上贏 SM batch **+0.165**,贏 Gemini Live **+0.259**(CI 都不含 0)。
+- Gemini Live 從 M0 的 0.930 掉到 M3 的 **0.551**(掉 0.379);
+  Breeze 只從 0.880 掉到 0.810(**掉 0.070**)。
+- TER 同向:Breeze 0.161 平均,SM batch 0.202,Gemini Live 0.313。
+
+**這是 exp5 最紮實的發現:Breeze 的價值不是乾淨音訊下更準(那一格輸 Gemini),
+而是噪音下掉得少。** 對混響會議室、開放辦公室這類場景,這條特性有實用意義。
+
+失效模式也指向同一件事:Breeze 的 F1(整段漏聽)只有 12,SM batch 是 37;
+但 Breeze 的 F2(聽成別的詞)有 36,接近 SM 的 37——**它很少放棄,但常聽錯**。
+
+### 3E.6 順帶量到的:不需要即時時,Gemini 有多快多省
+
+arm `G` 用 Live API,按 1× 實時推流,5 分鐘音檔就要跑 5 分鐘——那是**即時的代價,
+不是 Gemini 的速度上限**。若情境不需要即時也不需要 timestamp,該比的是
+`generateContent`:
+
+| | 速度(5 分鐘音檔) | in / out+thoughts tokens per hr | 成本/hr |
+|---|---|---|---|
+| Gemini 3.5-flash `minimal` | **8–16s(28.8× 實時)** | 90.6k / 13.9k | **$0.26** |
+| Gemini 3.7-flash `low` | 12–17s(21.0× 實時) | 90.6k / **284k** | **$2.69** |
+| Speechmatics batch | 25–51s(6–12× 實時) | — | $0.24(牌價) |
+| Gemini 3.1 Live | 300s(1×) | — | ~$0.22 +音訊輸出 |
+| Breeze(本次 CPU/fp32) | 2089–2253s | — | 電費 |
+
+(價格 $1.50/M in、$9.00/M out、gemini-3.x-flash 級,2026-08-14 核實;
+SM $0.24/hr 為 handoff §8 費率。原始檔 `exp5/results/raw/Gbat*/`。)
+
+兩條要記住的:
+
+1. **`gemini-3.7-flash` 不支援 `thinkingLevel: "minimal"`**,送出去 400
+   `Thinking level MINIMAL is not supported for this model`。退到 `low` 之後
+   thoughts/output = **18.7×**,成本跳 10 倍。鐵律 4 在音訊轉寫上同樣成立,
+   而且「換更新的模型」不必然更省。詳見 `docs/gemini-api-lessons.md`。
+2. 這條路**沒有 timestamp、沒有 diarization、不能串流**,所以對 kikemu 本身不適用
+   (產品要求就是即時字幕)。它適用的是「離線把錄音轉成文字」那類用途。
+
+**未驗證**:LLM 轉寫會把話「修順」。3.5-flash 的輸出比 SM batch 長約 26% 且更通順,
+那多出來的部分是補完還是補出來的,**沒有做人工聽核**,不要當成準確度的證據。
+
+### 3E.7 這一節的已知偏差(三條,都會影響怎麼讀上面的表)
+
+1. **參考轉寫是 Gemini 產生的。** `exp5/scripts/transcribe_ref.py` 用
+   `gemini-3.5-flash` 為預設(gm35)、`gemini-3.6-flash` 查一致性、SM 只是第三意見
+   **沒有投票權**。所以 **Gemini 系全體有主場優勢,SM 與 Breeze 是拿對手的轉寫
+   當標準答案在被評分。**
+   - 反證一:arm `G`(Gemini 3.1 Live)也只有 0.741,優勢並非壓倒性。
+   - 反證二:另跑**沒參與造參考**的 `gemini-3.7-flash` 得 0.921,與 3.5 的 0.902
+     幾乎一致 → 不是單純的自我比對。
+   - 但 **Breeze 與 SM 之間的比較不受這條影響**(兩者都是外人),
+     3E.3 第一列與 3E.4 的判讀因此仍然成立。
+2. **Breeze 這次跑在 CPU/fp32,不是 notebook 的 T4/fp16。** 這台機器沒有 GPU。
+   model revision、`chunk_length_s=0`、`return_timestamps`、`language_arg=None`
+   全部相同,只有 device/dtype 不同,並寫進每筆結果的 meta
+   (`exp5/scripts/run_breeze_cpu.py`)。數值差異未量測。
+3. **SM 用 batch 不是 realtime**,原因是這個帳號的 realtime 併發上限是 1,
+   殘留 session 會把整條路堵死。方向已知(batch 低估 SM 約 0.057),
+   3E.4 已據此調整結論。
+
+### 3E.8 樣本規模
+
+3 段 × 2 條件 = 6 檔 × 4 個主要 arm,128 個術語實例。
+bootstrap 只有 3 個 cluster,CI 寬。**這足以推翻「優勢可推廣」,
+不足以精確估計優勢有多大。**
 
 ---
 
@@ -720,3 +862,18 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
 13. `cmn_en` 替代 `multi`:結論適用於「有專用雙語 pack」的引擎,泛多語 pack 未測
 14. 譯文層 P0/P1 只在 X 系列測(G 是一體式,無法拆層)
 15. exp2 未做 adequacy 盲評面板(只有召回率與 TER)
+
+**exp5:**
+
+16. **參考轉寫由 `gemini-3.5-flash` 產生**(gm35 預設、gm36 查一致性、SM 無投票權),
+    因此 Gemini 系 arm 有主場優勢;Breeze 與 SM 之間的比較不受影響。
+    見 §3E.7 的兩條反證
+17. **Breeze 跑在 CPU/fp32,非 notebook 的 T4/fp16**(本環境無 GPU);
+    其餘參數相同且寫進每筆 meta,但數值差異未量測
+18. **SM 用 batch 非 realtime**(帳號 realtime 併發上限 1);
+    方向已知——唯一同檔對照上 batch 比 realtime 低 0.057,即 batch 低估 SM
+19. 3 個 segment cluster、128 個術語實例,bootstrap CI 寬;
+    足以推翻「優勢可推廣」,不足以精確估計優勢大小
+20. 拉丁字母分歧的 16 條裁決**沒有人耳終審**,證據是「SM 的獨立讀法 + 實體是否真實存在」
+    (`exp5/corpus/reference/overrides.json` 的 `_protocol` 有記錄這條與 exp2 的差異)
+21. `Gbat`/`Gbat37` 的轉寫**未做人工聽核**,LLM 是否「補出」內容未驗證
