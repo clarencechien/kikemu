@@ -390,5 +390,19 @@
   "F3_flag": false,
   "ter": 0.1112,
   "hyp_cjk_ratio": 0.978
+ },
+ {
+  "arm": "Xbrz_auto",
+  "seg": "T2",
+  "cond": "M3",
+  "n_inst": 27,
+  "recall_strict": 0.8519,
+  "recall_tolerant": 0.8519,
+  "F1": 0,
+  "F2": 4,
+  "F4": 0,
+  "F3_flag": false,
+  "ter": 0.1429,
+  "hyp_cjk_ratio": 0.976
  }
 ]
