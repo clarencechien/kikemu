@@ -22,7 +22,7 @@
 | 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證,預設日文 |
 | **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 正式站日文 149 詞;韓文流程實測 113 詞 |
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
-| exp2 追加 arm:Breeze ASR 25(X-breeze) | ⬜ notebook 已備好,待在 Colab 執行 |
+| exp2 追加 arm:Breeze ASR 25(X-breeze) | ✅ Phase A 快篩完成(見報告 §3D);Phase B 待跑 |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -94,7 +94,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | | exp1 日文導覽(專名) | exp2 中英夾雜演講(術語) |
 |---|---|---|
-| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表) |
+| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D** |
 | **詞表邊際價值** | **+0.12 ~ +0.19(核心資產)** | +0.03 ~ +0.05(小加分) |
 | 真正的槓桿 | 詞表 | **語言 pack(+0.23 ~ +0.29)** |
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
