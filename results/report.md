@@ -696,11 +696,48 @@ handoff-v6 §5 特別交代 M3 要單獨看,理由是「記住逐字內容不會
   Breeze 只從 0.880 掉到 0.810(**掉 0.070**)。
 - TER 同向:Breeze 0.161 平均,SM batch 0.202,Gemini Live 0.313。
 
-**這是 exp5 最紮實的發現:Breeze 的價值不是乾淨音訊下更準(那一格輸 Gemini),
-而是噪音下掉得少。** 對混響會議室、開放辦公室這類場景,這條特性有實用意義。
+**但不要把這讀成「Breeze 抗噪最強」——它不是。** M3 的全 arm 排名:
 
-失效模式也指向同一件事:Breeze 的 F1(整段漏聽)只有 12,SM batch 是 37;
+| arm | M3 | M0→M3 掉幅 |
+|---|---|---|
+| Gemini 3.7-flash batch ※ | **0.880** | 0.082 |
+| Gemini 3.5-flash batch ※ | 0.816 | 0.171 |
+| Breeze ASR 25 | 0.810 | **0.070** |
+| Speechmatics batch | 0.646 | 0.107 |
+| Gemini 3.1 Live | 0.551 | 0.379 |
+
+Breeze 在 M3 贏的是 **SM 與 Gemini Live**;Gemini `generateContent` 與它打平(3.5)
+或贏它(3.7)。那兩格有主場優勢(§3E.7),但 3.7-flash **沒有參與造參考**,
+所以 0.880 不能當成純粹的自我比對打掉。Breeze 唯一穩坐第一的是**掉幅**,
+而 3.7-flash 的 0.082 也很接近。
+
+**所以 Breeze 不可替代的地方不是抗噪排名,而是「唯一能地端跑,而且抗噪夠好」**
+(Apache 2.0)。另外兩家都是雲端 API,音訊一定要送出去。
+
+失效模式指向它為什麼耐吵:Breeze 的 F1(整段漏聽)只有 12,SM batch 是 37;
 但 Breeze 的 F2(聽成別的詞)有 36,接近 SM 的 37——**它很少放棄,但常聽錯**。
+
+### 3E.5b 即時與非即時的最佳解剛好相反
+
+同一家、同一批音檔,Live 版在噪音下崩得最兇:
+
+| | M0 | M3 |
+|---|---|---|
+| Gemini **Live**(3.1-flash-live-preview) | **0.930**(即時裡最好) | **0.551**(全場最差) |
+| Gemini **batch**(3.5 / 3.7-flash) | 0.987 / 0.962 | 0.816 / 0.880 |
+
+**注意 3.5-flash 沒有 Live 端點**,Live 與 batch 是不同模型、不同 API,不能合稱。
+
+實務選型:
+
+| 情境 | 選誰 | 理由 |
+|---|---|---|
+| 即時 + 安靜 | Gemini Live | M0 0.930 |
+| 即時 + 吵(**kikemu 的情況**) | **Speechmatics** | M3 0.646 vs Live 0.551 |
+| 不需即時、要快要便宜 | Gemini 3.5-flash `generateContent` | 28.8× 實時、$0.26/hr;無 timestamp / diarization |
+| 資料不能出境 / 要地端 | **Breeze ASR 25** | 唯一能地端跑,且 M3 0.810 |
+
+這一格**不改 kikemu 的架構**:產品要即時、導覽現場會吵 → 仍然是 SM。
 
 ### 3E.6 順帶量到的:不需要即時時,Gemini 有多快多省
 
