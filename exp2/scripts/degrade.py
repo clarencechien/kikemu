@@ -66,8 +66,14 @@ def add_noise(x, noise, snr_db, rng):
     return x + nz * scale
 
 
-def main():
-    OUT.mkdir(parents=True, exist_ok=True)
+def build(wav_dir=None, out_dir=None, segs=("S1", "S2", "S3")):
+    """產生 M0–M3。exp5(領域外對照)呼叫同一支,確保 RIR / 噪音 / 種子完全一致——
+       另外複製一份實作就等於換了聲學條件,跟 exp2 的數字沒得比。
+       種子是 SEED + crc32(f"{seg}:{tag}"),所以換 segs 不會動到既有段落的輸出。"""
+    wav_dir = Path(wav_dir) if wav_dir else WAV
+    out_dir = Path(out_dir) if out_dir else OUT
+    OUT_ = out_dir
+    OUT_.mkdir(parents=True, exist_ok=True)
     rir, rir_name, t60 = pick_rir()
     print(f"RIR: {rir_name} T60={t60:.3f}s")
     def try_noise(zip_name, member):
@@ -84,15 +90,15 @@ def main():
     meeting = try_noise("OMEETING_16k.zip", "OMEETING/ch01.wav")
     meta = {"rir": rir_name, "rir_t60": round(t60, 3), "seed": SEED,
             "M2": "OOFFICE ch01 @20dB", "M3": "OMEETING ch01 @12dB"}
-    for seg in ["S1", "S2", "S3"]:
+    for seg in segs:
         # Skip segments whose source slice is absent, same as the missing-noise
         # branch above. Phase A of the X-breeze arm only needs S1 and S3, and the
         # per-segment seed (SEED + crc32(f"{seg}:{tag}")) means skipping one
         # segment cannot change any other segment's output.
-        if not (WAV / f"{seg}.wav").exists():
+        if not (wav_dir / f"{seg}.wav").exists():
             print(f"{seg}.wav not present; skipping")
             continue
-        x, sr = sf.read(WAV / f"{seg}.wav", dtype="float64")
+        x, sr = sf.read(wav_dir / f"{seg}.wav", dtype="float64")
         assert sr == SR
         x = norm(x)
         rev = norm(signal.fftconvolve(x, rir)[: len(x)])
@@ -103,9 +109,13 @@ def main():
             rng = np.random.default_rng(SEED + zlib.crc32(f"{seg}:{tag}".encode()))
             conds[tag] = norm(add_noise(rev, noise, snr, rng))
         for tag, y in conds.items():
-            sf.write(OUT / f"{seg}__{tag}.wav", y.astype(np.float32), SR, subtype="PCM_16")
+            sf.write(OUT_ / f"{seg}__{tag}.wav", y.astype(np.float32), SR, subtype="PCM_16")
         print(seg, "->", list(conds))
-    (OUT / "degrade_meta.json").write_text(json.dumps(meta, indent=1))
+    (OUT_ / "degrade_meta.json").write_text(json.dumps(meta, indent=1))
+
+
+def main():
+    build()
 
 
 if __name__ == "__main__":
