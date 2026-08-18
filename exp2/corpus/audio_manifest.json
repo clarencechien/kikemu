@@ -1,0 +1,138 @@
+{
+ "_": "exp2 音檔指紋。音檔本身依授權不入 repo(.gitignore),但這份指紋讓任何人都能驗證自己手上/重建出來的檔案與各 arm 實際跑的是同一份。degrade.py 已驗證為位元決定性:同樣的 wav/ + noise_src/ 重跑,12 檔 sha256 全同。",
+ "source_wav": {
+  "S1": {
+   "sha256": "ad127d3297d1532f16cb78c7d5d6687676bab8d521bcc5c4c1c182a56fae43e0",
+   "bytes": 9600078,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S2": {
+   "sha256": "c864264eff7abfe0c7abaa4b6e64ef24850a3f8b6c1f15ecaa58f57888964dad",
+   "bytes": 9600078,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S3": {
+   "sha256": "1ea7bec742a20e931f9fff2454ab472a31886fc0f8b9a1bf8ec6bce7875072ed",
+   "bytes": 6038926,
+   "seconds": 188.714,
+   "sr": 16000,
+   "ch": 1
+  }
+ },
+ "conditions": {
+  "S1__M0": {
+   "sha256": "6b1e6e206b828c63c5266b65c5fc7f938ed2a487db8bca8dada9737b1f774af2",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S1__M1": {
+   "sha256": "fd24ab9234285f88f68eae5e3f214432710ad18c90960432f508e00260f537e8",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S1__M2": {
+   "sha256": "ff5dff4233bda25833767658e3b2a2d6f523cbb3f920dfe933f47dd7d30c429c",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S1__M3": {
+   "sha256": "e2a8466fd4f69c2b6e593f96e37139937a19c2b787e2707f679c7431996dd005",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S2__M0": {
+   "sha256": "7b67bfcd78a20ee57d255022804ce52a8dfe6f21043ff8e73a04d7c61600d6ea",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S2__M1": {
+   "sha256": "0a2f20db47df006164f771ddce7fa6690d3fe8dee039fd3c36a48c62a27a1773",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S2__M2": {
+   "sha256": "75a0640a65288198f067c2cb58986e7178b2e4fd3177db65694868aaf9f2d30a",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S2__M3": {
+   "sha256": "be2808e17b8d5d2b0c52e3e7b9c373fc262318e71f9e19c661eb79cfab966e2d",
+   "bytes": 9600044,
+   "seconds": 300.0,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S3__M0": {
+   "sha256": "31716d9bb08668a14355fdf65eecb1dfbd6e8ed5ac32b89fb2f181d9650dad98",
+   "bytes": 6038892,
+   "seconds": 188.714,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S3__M1": {
+   "sha256": "3cff4f6d3fafd807b93940c65102b785baafd972f70c636865a1ab9c2b48901e",
+   "bytes": 6038892,
+   "seconds": 188.714,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S3__M2": {
+   "sha256": "6f893b3afa96128b300bfcbd62b6ad2250866b9d6550654535516f7ce1621d9a",
+   "bytes": 6038892,
+   "seconds": 188.714,
+   "sr": 16000,
+   "ch": 1
+  },
+  "S3__M3": {
+   "sha256": "f1ee6b1f3e9f5d9c02e3fceda7cda7485d1c0c3c4920ade5258b09c6c20775bd",
+   "bytes": 6038892,
+   "seconds": 188.714,
+   "sr": 16000,
+   "ch": 1
+  }
+ },
+ "noise_src": {
+  "mit_ir.zip": {
+   "url": "https://mcdermottlab.mit.edu/Reverb/IRMAudio/Audio.zip",
+   "sha256": "648e988c2b12b1df1d92abe78aff441d7cad65bee23dc91f6026d4506a389b70",
+   "bytes": 11660005,
+   "used_by": "exp2"
+  },
+  "OOFFICE_16k.zip": {
+   "url": "https://zenodo.org/api/records/1227121/files/OOFFICE_16k.zip/content",
+   "sha256": "7570c952f621990d0d71b8398107d9a78066254f883a5569abec9c233ffda358",
+   "bytes": 88995191,
+   "used_by": "exp2"
+  },
+  "OMEETING_16k.zip": {
+   "url": "https://zenodo.org/api/records/1227121/files/OMEETING_16k.zip/content",
+   "sha256": "512016cad3a42511a0fb7e3c74d6924e6efde4921a6101361f1306bf90bf2e5a",
+   "bytes": 82703355,
+   "used_by": "exp2"
+  },
+  "PCAFETER_16k.zip": {
+   "url": "https://zenodo.org/api/records/1227121/files/PCAFETER_16k.zip/content",
+   "sha256": "89be7194b83cd583c4b12f4bf7c19e9cf0e612b95312e9f4aedc968cd811bcd5",
+   "bytes": 107431494,
+   "used_by": "exp1"
+  }
+ }
+}

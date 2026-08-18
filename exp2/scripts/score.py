@@ -105,6 +105,10 @@ def main():
     rows, inst_rows = [], []
     for arm in sorted(arms):
         for f in sorted((RES / "raw" / arm).glob("*.json")):
+            # 每個 arm 目錄可以放 _meta.json 記環境與模型 revision(x-breeze 這樣做),
+            # 那不是一筆結果——只有 <seg>__<cond>.json 才是
+            if "__" not in f.stem:
+                continue
             seg, cond = f.stem.split("__")
             d = json.loads(f.read_text())
             hyp_text = d.get("transcript") or d.get("input_transcription") or ""
