@@ -22,6 +22,7 @@
 | 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證,預設日文 |
 | **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 正式站日文 149 詞;韓文流程實測 113 詞 |
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
+| exp2 追加 arm:Breeze ASR 25(X-breeze) | ⬜ notebook 已備好,待在 Colab 執行 |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -132,7 +133,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的六條鐵律與驗證方式 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v4.md`](handoff-v4.md) | 四個實驗的原始任務書 |
+| [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
+| [`handoff.md`](handoff.md) ~ [`handoff-v5.md`](handoff-v5.md) | 五份實驗任務書(v5 = X-breeze arm,待執行) |
 
 ## 實驗規模
 
@@ -169,7 +171,8 @@ app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
   scripts/probe-ws.mjs   端到端探針(拿評測語料當迴歸測試)
 docs/               PRD.md(產品規格)、gemini-api-lessons.md(Gemini 教訓)
 scripts/ corpus/ results/    exp1・exp3・exp4(腳本、語料 metadata、原始回應)
-exp2/               exp2(中英夾雜)
+exp2/               exp2(中英夾雜);corpus/audio_manifest.json 是音檔指紋
+notebooks/          需要 GPU 的 arm(Breeze ASR 25,Colab)
 ```
 
 音檔依授權不重新散布(`.gitignore`),但抓取與切片腳本可完整重現。
