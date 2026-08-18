@@ -30,6 +30,20 @@
  {
   "arm": "G",
   "seg": "T2",
+  "cond": "M0",
+  "n_inst": 27,
+  "recall_strict": 1.0,
+  "recall_tolerant": 1.0,
+  "F1": 0,
+  "F2": 0,
+  "F4": 0,
+  "F3_flag": false,
+  "ter": 0.1004,
+  "hyp_cjk_ratio": 0.979
+ },
+ {
+  "arm": "G",
+  "seg": "T2",
   "cond": "M3",
   "n_inst": 27,
   "recall_strict": 0.7037,
@@ -166,5 +180,19 @@
   "F3_flag": false,
   "ter": 0.2136,
   "hyp_cjk_ratio": 0.981
+ },
+ {
+  "arm": "Xbrz_auto",
+  "seg": "T1",
+  "cond": "M0",
+  "n_inst": 104,
+  "recall_strict": 0.875,
+  "recall_tolerant": 0.875,
+  "F1": 2,
+  "F2": 11,
+  "F4": 0,
+  "F3_flag": false,
+  "ter": 0.1408,
+  "hyp_cjk_ratio": 0.925
  }
 ]
