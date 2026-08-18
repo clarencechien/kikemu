@@ -27,7 +27,27 @@ kikemu 的逐句翻譯是機械性任務,思考完全是白付的。
 在 kikemu 的翻譯任務上 **budget 128 不等於 0**(還燒了 492~757 thoughts)。
 `thinkingBudget` 是預算不是硬上限,實際 thoughts 可以超過它。
 **只有 `thinkingLevel: "minimal"` 在兩代都真的歸零。**
-(未測:audio 轉寫任務形狀是否有同樣結論。)
+
+### 補測:audio 轉寫也一樣,而且 3.7-flash 不給你選(exp5,2026-08-18)
+
+上面那句「未測:audio 轉寫任務形狀是否有同樣結論」現在測了。
+exp5 拿同一批 5 分鐘中英夾雜音檔跑 `generateContent` 轉寫,六檔全跑:
+
+| 模型 / 設定 | thoughts | output | thoughts/output | 每小時音訊成本 | 速度 |
+|---|---|---|---|---|---|
+| 3.5-flash `thinkingLevel: "minimal"` | **0** | 1319 | **0×** ✅ | **$0.26/hr** | 28.8× 實時 |
+| 3.7-flash `thinkingLevel: "low"` | 25930 | 1386 | **18.7×** | **$2.69/hr** | 21.0× 實時 |
+
+(單檔 T1__M0 的 usage;成本以 $1.50/M in、$9.00/M out、gemini-3.x-flash 級計,
+2026-08-14 核實牌價。原始檔:`exp5/results/raw/Gbat/`、`exp5/results/raw/Gbat37/`。)
+
+兩個要記住的點:
+
+1. **轉寫是機械性任務,結論與翻譯一致**——minimal 歸零,非 minimal 就是十幾倍的稅。
+2. **`gemini-3.7-flash` 不支援 `minimal`**,送出去直接 400:
+   `Thinking level MINIMAL is not supported for this model. Please retry with other thinking level.`
+   能退的最低是 `low`,而 low **不是關閉**(18.7×),成本因此跳 10 倍。
+   所以「換更新的模型」不必然更省——升版前先確認它還吃不吃 minimal。
 
 品質沒有退化:三句抽樣人工比對,台灣用語與專名表記皆正確,
 `minimal` 甚至把「幻の堺幕府」譯得比預設思考版更貼(預設版譯成「傳說中的」)。
