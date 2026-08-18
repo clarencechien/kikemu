@@ -1,0 +1,25 @@
+{
+ "arm": "Gbat37",
+ "file": "T1__M0.wav",
+ "model": "gemini-3.7-flash",
+ "audio_s": 300.0,
+ "transcript": "主要是工業園區,蘇州工業園區是那種完全照新加坡那種建築 嗯嗯 風格,然後就是 呃有鄰里中心啊什麼,整個住起來很乾淨很舒適。 喔 真的很舒服的一個地方。 那,呃所以你這邊 呃就是剛剛講做這個 search engine 對,然後那時候就加入微軟search engine team,然後那時候做了差不多 就是Bing 就是Bing team。 哇哈哈哈哈 我在非常core的team,就應該 整個Bing就 如果從indexing這樣算的話,就應該沒有任何team比我們更core,就是不會 不會有在更底層的了。 那 我們就是從 那個data存在disk是怎麼拿出來的, 這整段送到user面前,這整段pipeline就是我們整個team on。 那是中文英文? 就是全部所有語系都 都歸你們? 我們是global的,就是做全球,對。我在那邊做也是全球,後來到了美-美國也是做全球的。 欸其實,你那時候不知道,我們那時候幹嘛,為什麼Bing搜尋這個台灣的感覺都那個不太好? 蛤? 還是這是一個錯覺? 呃 你覺得跟compare to 呃但有人講說,其實感覺搜尋結果,我那上次Frank講說,Bing的台灣的中文就搜尋結果跟 其實跟Google差不多,我我我沒這個感覺。 我現在我在想的是我這一堆東西,我不知道能不能講。 對對對 我知道很多,但是我也沒辦法去證實。 但沒有,你這一個overall的,但因為這個,反正你也離職了,所以因為他已經離職,他已經從 我也我也離開了,所以我可以講,但是 雖然這個世界很小,還是要 但是有有一些有一些data,理論上應該算是confidential。 confidential 嗯 但是可以稍微講一個概念,然後大家去想一下就是說為什麼會這個樣子,就是 對對對 呃在中國其實有一個法律是說,如果你是在中國境內營運的服務, 你的所有data, 都必須在中國啊? 必須,必須放在中國境內。 嗯 對,那呃 Google不放嘛,所以Google就出去了嘛。 啊所以微軟有放?喔!哇! 對,不是,也不是說微軟有放,而是它是說要要要有一個copy在境內。 對。 不是說我放在裡面給用,那就是一定有很多data 就是微軟是一個非常compliant的公司,所以它基本上它就變成不能放。 可以進去。 啊所以就就資料 你是反過來想的,就是說如果我今天我是一個大公司,我做global search engine,我一定把資料到處放,然後會甚至就算先不管中國法律,我一定鐵定也是會放在一份嘛,因為那麼多user在那。 對。 對啊。 我鐵定是CDN或是什麼也要放image過去嘛。 對啊。 那今天如果有些user說我的資料就不可以進到那邊, 啊就不能放。 那是不是我就不能放在那邊?那那他們那邊load起來就會比較慢。 嗯,也可能比較爛。然後有可能是各式各樣原因。 對,對,就是data越多,整個model,不只說不用training也好,微軟是最早最早就是很早很早就開始把machine learning用到各種搜尋結果的公司嘛。 會越好。 嗯 那 它能放跟不放鐵定會產生很大影響,所以從法律思考就就一定是這個結果,你哪間公司來做都一樣,Google放也是這個結果。 欸我們上次前幾集啊,我們訪問了一個這個GG啊,那他也是前微軟日本員工,啊對於微軟非常 讚譽有加。 讚譽有加,你個人評價給幾分?你待這麼久應該是不錯吧? 我覺得蠻不錯,不然 五星,五星評價,喔! 我基本上,我基本上會給五星評價。 對,叫Microsoft是個 蠻好 太特質 對,tai company。 哦,是 你可以看到很多東西,我其實 很多會一開始會覺得說, 嗯微軟是個邪惡帝國。 我做open source,我之前也做open source嘛。 對,他一一、一二年時候,我就記得這傢伙就做open source,然後忽然有一天說我加入了微軟,我那時候想說 我是C,我是CPython contributor,我是Django contributor,我是Firefox裡面那個,Monkey,SpiderMonkey的那個的,MonkeySpider的那個 肯定會。 contributor,對。然後,呃,都做過一點點東西,也不是說做很多,但是就是基本上 呃,用各種library在startup的時候做的也都是 open source的東西。那過去其實 我覺得反而有一個好處,對,這個可能會讓大家有-稍微有點想進微軟,但是這-這確實是一個事實。 我們現在就很方便,很多open source library可以用,所以你就用,然後就,欸,我東西就做完了。 對。 對。 對。 那你有沒有想過這open source library到底為什麼要在那裡? 呃,為什麼要在那裡?促進人類進步。 就是這個open source library為什麼會在那,會長這個樣子? 嗯。 它為什麼是這些參數?它為什麼是切成這個大小? 嗯嗯 其實你都不知道,它就是在社群裡面自然形成的。 對。 然後我們進到Microsoft,因為Microsoft它stack比較特殊, 就是Windows stack嘛。 嗯 所以它用Windows stack的情況下,就很多那些open source library它可能只在Linux裡面可以用,Windows不能用。 那所以就會變成什麼?自己寫啊。 對。 對。 嗯 對,自己寫。你寫的時候你就會發現,欸,寫很多東西很麻煩,其實其實很麻煩,那個cache大小有沒有對齊,你都你都其實需要重新自己思考一次。 嗯嗯 可自己思考一次,你就會發現,欸,有些東西其實是 有到 沒必要存在。 喔沒有必要存在。 沒有必要存在。那在open source library為什麼存在?它是因為更多得就是personal interest,然後存在得feature。 嗯 嗯,嗯 這也可以,這就是好處就是這是community,就是我不用因為business justification,然後去決定就說,喔我這個feature該不該存在,所以open source library就會長得很像瑞士刀, 對。 可是瑞士刀挑那些挑那些 成為瑞士刀裡面的一些元件也是有道理的。 嗯嗯 那瑞士就是一個瑞士刀",
+ "elapsed_sec": 14.2,
+ "usage": {
+  "promptTokenCount": 7551,
+  "candidatesTokenCount": 1386,
+  "totalTokenCount": 34867,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 51
+   },
+   {
+    "modality": "AUDIO",
+    "tokenCount": 7500
+   }
+  ],
+  "thoughtsTokenCount": 25930,
+  "serviceTier": "standard"
+ }
+}

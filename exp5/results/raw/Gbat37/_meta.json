@@ -1,0 +1,9 @@
+{
+ "arm": "Gbat37",
+ "model": "gemini-3.7-flash",
+ "api": "generateContent",
+ "thinkingLevel": "low",
+ "temperature": 0.0,
+ "prompt": "逐字轉寫這段音訊。說話者混用中文與英文,英文詞請原樣保留,不要翻譯。不要摘要、不要加說話者標記、不要加時間碼,只輸出轉寫文字。",
+ "note": "非 Live,一次送整段音訊;無 timestamp"
+}
