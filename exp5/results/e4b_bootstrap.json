@@ -1,0 +1,106 @@
+{
+ "_": "handoff-v9 K:E4B 的 segment-cluster bootstrap",
+ "boot": 5000,
+ "seed": 20260819,
+ "key": "tolerant",
+ "weighting": "實例加權(乘 term_outcomes 的 n 欄),與報告 §3E.2/§3E.3 一致",
+ "note": "重採樣單位是 segment(只有 3 個),CI 必然寬",
+ "pairs": {
+  "Xgma_e4b_greedy-Xbat_bi-全部": {
+   "delta": 0.0285,
+   "n_seg": 3,
+   "ci95": [
+    -0.037,
+    0.0741
+   ]
+  },
+  "Xgma_e4b_greedy-Xbat_bi-僅 M0": {
+   "delta": 0.038,
+   "n_seg": 3,
+   "ci95": [
+    0.0288,
+    0.0741
+   ]
+  },
+  "Xgma_e4b_greedy-Xbat_bi-僅 M3": {
+   "delta": 0.019,
+   "n_seg": 3,
+   "ci95": [
+    -0.1111,
+    0.0741
+   ]
+  },
+  "Xgma_e4b_greedy-Xbrz_auto-全部": {
+   "delta": -0.1171,
+   "n_seg": 3,
+   "ci95": [
+    -0.1481,
+    -0.1106
+   ]
+  },
+  "Xgma_e4b_greedy-Xbrz_auto-僅 M0": {
+   "delta": -0.0886,
+   "n_seg": 3,
+   "ci95": [
+    -0.1111,
+    -0.0741
+   ]
+  },
+  "Xgma_e4b_greedy-Xbrz_auto-僅 M3": {
+   "delta": -0.1456,
+   "n_seg": 3,
+   "ci95": [
+    -0.1852,
+    -0.1346
+   ]
+  },
+  "Xgma_e4b_greedy-Xgma_e4b-全部": {
+   "delta": 0.0443,
+   "n_seg": 3,
+   "ci95": [
+    0.0,
+    0.0625
+   ]
+  },
+  "Xgma_e4b_greedy-Xgma_e4b-僅 M0": {
+   "delta": 0.0506,
+   "n_seg": 3,
+   "ci95": [
+    0.0,
+    0.0741
+   ]
+  },
+  "Xgma_e4b_greedy-Xgma_e4b-僅 M3": {
+   "delta": 0.038,
+   "n_seg": 3,
+   "ci95": [
+    -0.037,
+    0.0673
+   ]
+  },
+  "Xgma_e4b-Xbat_bi-全部": {
+   "delta": -0.0158,
+   "n_seg": 3,
+   "ci95": [
+    -0.0556,
+    0.0741
+   ]
+  },
+  "Xgma_e4b-Xbat_bi-僅 M0": {
+   "delta": -0.0127,
+   "n_seg": 3,
+   "ci95": [
+    -0.037,
+    0.0741
+   ]
+  },
+  "Xgma_e4b-Xbat_bi-僅 M3": {
+   "delta": -0.019,
+   "n_seg": 3,
+   "ci95": [
+    -0.0741,
+    0.0741
+   ]
+  }
+ }
+}

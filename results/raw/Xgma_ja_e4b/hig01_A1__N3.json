@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "hig01_A1__N3.wav",
+ "audio_s": 111.4,
+ "transcript": "そう いう 風 に 想像 し て い ます 。 流れ 。 もま に 必要 な バッジ に 何 を 持っ て い ます か ? 人間 は 芸術 家 で ある こと も です 。 僕 も 自分 だ と いう の を し て 嫌 な 。 強く ない が 。 同じく に 答え の 時 から ご 神 に 委ねる や 。ただ 、 おはよう ござい ます 。 あれかし た と いう か 。 すごく です 。 は なく て 多い 感じ が 。 僕 の パンダ から を 取り取っ た 右 は 広 の 子 。 この チーム も です 。 今日 して さ に 、 長く ね 、 引く の に もっと と も 。 困る もの ます 。 い ます より も 。 です よ 。 より 人 に は この 2 発射 の 神 様 を ご 大 輪 と し て ます 。一体 こんな もの な の か ? グループ メーター の を 永久 する ため に 投資 し て この 地 に 会い なさい 。 文科 と の その 地 を 測り 、 デイウォーター チーム 全員 に 長年 疲労 を 激しく 警告 し た の です 。 この こと の 意味 は 、 エストムナー が 考える あまだ は 払える 大 の 試合 の です 。On m'a dit non, mais le docteur il commence. C'est juste pour savoir comment on va avoir le genre moi. Quand j'ai dit non, la gastro c'est là qui me traite illico. Moi, je crois pas même que je pourrais. Enfin, je voudrais vraiment que tu me montre mon moment. Je pense que il va me faire.",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 25.0,
+  "n_chunks": 4,
+  "prompt_tokens": 3093,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "846b04770557e58d3e69578bdb94793e095cdb4376184616bc5496f870e8b19f"
+ }
+}

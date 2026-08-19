@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "hig02_B12__N1.wav",
+ "audio_s": 101.7,
+ "transcript": "平岡 神社 拝殿 参道 広場 庭 と 入り を くぐり 広い 参道 を 進む と 参道 広場 に 出る 広場 に は あげ向き 結び と いう 特殊 な 形 の 締め縄 が 結ば れ て いる 平岡 神社 の 主祭 神 は 雨 の 小屋根 の 御子 と い い 神事 を 司さ だる 神 様 締め縄文字 にた 神話 に 深い 関わり を 持つ 神 様 で も ある 。 そんな 神 様 に ちなん で 平岡 神社 に は 毎月 12 月 に 締め縄 を 新しく かけ替える 締め掛け 神事 と いう 祭り が ある 。 別名 を お 洗い 神事 と 言い 初め に 行司 が あははは と 大声 で 笑い 参拝 者 も 続く 。 これ を 3 回 繰り返し さに その 後 、 参拝 者 と とも に 思い思い に 20 分間 笑い 続ける の だ 。 一年 の 災難 事 を 笑い飛ばし 、 福 を 招く ため に 全国 から 多く の 人 が 参加 する 。 これ は 岩戸 の 中 に 隠れ て しまっ た 天照 大御神 が 雨 の 小屋根 の 御 殿 の 神事 と 神々 の 笑い に よっ て 再び 世 に 戻り 、 この 世 の 世界 に 光 が 戻っ た 喜び を 再現 し た 神事 と し てから 行わ れ て い 。 この こと から 雨 の 豊穣 の 御言葉 日本 で 初めて 神事 を 行っ た 。 神事 を 司る 神 と なっ て み た 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 27.0,
+  "n_chunks": 4,
+  "prompt_tokens": 2850,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "9d43a913e0d60f43b058f0d92215c81d4ccb549fc985eeab2c7ca85046bdac42"
+ }
+}

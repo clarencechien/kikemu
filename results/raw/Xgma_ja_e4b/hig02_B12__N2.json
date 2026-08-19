@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "hig02_B12__N2.wav",
+ "audio_s": 101.7,
+ "transcript": "平岡 神社 配令 鍛刀 広場 2幕 2 組 組り 色い 鍛刀 進み 鍛刀 広場 に は 馬毛 の 結び と いう 特技 な 鍛石 船場 が ホスピタリティ です 。 平岡 神社 の 司祭 陣 は 雨 の 供え物 と いう 神事 を 司る 神 様 で 締め場僕 が 聞い た 神話 に 深い 関わり を 持つ 神 様 が あり どんな 神 様 に 違う ね 。 平岡 神宮 に は 毎年 12 月 に 締め縄 を 飾る 習慣 で 締め隠 神 と いう の が 聞い ます 。 特に お 笑い 神 様 。 初め に 当時 が 、 あ 、 は 、 は 。 そう 、 大笑い に 笑う 参加 者 も 。 これ を 単祭 繰り返し て 。に その 後 、 参加 者 たち の に 思い思い に 10 分間 笑い 続ける の が 記念 の 災難 ごと を 笑い飛ばし 、 区 を 招く ため に 全国 から 多く の 人 が 参加 し て おり ます 。 これ は 岩戸 の 中 に 隠れ て しまっ た アマテラス を 思い返し 、 雨 の 小屋根 の 御 殿 の 神事 と 神々 の 笑い に よっ て 再び 世 に 戻り 輝き の 世界 に 光 が 戻っ た 喜び を 再現 し た 神事 と し てここ から この 悪い 。 この こと から 雨 の 降る 、 雨 が 見事 は 日本 で 初めて 潜水 を 行っ た 。 潜水 が 司る 影 と なっ た 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 25.5,
+  "n_chunks": 4,
+  "prompt_tokens": 2850,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "dea5b07a320a252e4554bedc234e33e2a5c402e10b19578315fdae0812fd2e9a"
+ }
+}
