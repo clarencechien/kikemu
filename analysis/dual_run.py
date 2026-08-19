@@ -15,6 +15,7 @@ import difflib
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -25,9 +26,56 @@ A, B = "Abat", "Cbplus"
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 TOKEN = re.compile(r"[0-9A-Za-z]+|[^\s0-9A-Za-z]")
 
+# ── 分歧分類規則:**先於計算寫死**,不看到數字才決定怎麼分 ────────────────
+#
+# 形式分歧 = 兩邊講的是同一件事,只是寫法不同 → 不需要複核
+# 實質分歧 = 詞彙/專名/語意不同 → 要複核
+#
+# 刻意保守:**只有能明確判定為形式的才歸形式**,其餘一律算實質。
+# 這讓複核工作量的估計偏高而不是偏低——寧可承諾得保守。
+PUNCT = set('、。,.!?!?・…‥「」『』()()〈〉《》【】〔〕—ー–-~〜:;:;"\'“”‘’`,')
+# 贅詞:Gemini 批次會順手刪、SM 是逐字派,兩邊處理不同會產生大量假分歧。
+# 日文(exp1 語料)與中文(外推到會議/訪談時會用到)都先列進來。
+FILLER = {
+    # 日文
+    "えー", "ええ", "えっと", "えと", "あの", "あのー", "その", "まあ", "まー",
+    "なんか", "ちょっと", "ね", "ねー", "よ", "さ", "うん", "はい",
+    # 中文
+    "嗯", "啊", "呃", "欸", "齁", "喔", "唉", "那個", "這個", "就是",
+}
+KANSUJI = str.maketrans("〇零一二三四五六七八九", "00123456789")
+
+
+def norm_token(t: str) -> str | None:
+    """→ 正規化後的 token;回傳 None 代表「這個 token 不影響語意」。"""
+    t = unicodedata.normalize("NFKC", t).lower()   # 全半形、數字寫法
+    if not t or t in PUNCT or t.isspace():
+        return None
+    if t in FILLER:
+        return None
+    if all(c in "〇零一二三四五六七八九十" for c in t) and len(t) <= 2:
+        t = t.translate(KANSUJI)                   # 漢数字 vs アラビア数字
+    return t
+
 
 def toks(s: str) -> list[str]:
     return TOKEN.findall(s or "")
+
+
+def norm_toks(s: str) -> list[str]:
+    return [n for t in toks(s) if (n := norm_token(t)) is not None]
+
+
+def divergence(ta: list[str], tb: list[str]) -> tuple[int, int]:
+    """→ (分歧 token 數, 總 token 數)"""
+    sm = difflib.SequenceMatcher(None, ta, tb, autojunk=False)
+    tot = diff = 0
+    for op, i1, i2, j1, j2 in sm.get_opcodes():
+        n = max(i2 - i1, j2 - j1)
+        tot += n
+        if op != "equal":
+            diff += n
+    return diff, tot
 
 
 def transcript(arm: str, seg: str, cond: str) -> str:
@@ -42,21 +90,21 @@ def main() -> None:
     segs = list(json.loads((ROOT / "corpus/picks.json").read_text()))
     outcomes = json.loads((ROOT / "results/noun_outcomes.json").read_text())
 
-    # ① 複核負擔:兩份稿子的 token 級分歧比例
-    load = {}
+    # ① 複核負擔:全部分歧 vs 實質分歧
+    #    全部 = 原始 token 流的 diff(含標點、贅詞、寫法差異)
+    #    實質 = 正規化後 token 流的 diff(去掉上述形式差異)
+    load, load_sub = {}, {}
     for cond in CONDS:
-        tot = diff = 0
+        d = t = ds = ts = 0
         for seg in segs:
-            ta, tb = toks(transcript(A, seg, cond)), toks(transcript(B, seg, cond))
-            if not ta or not tb:
+            xa, xb = transcript(A, seg, cond), transcript(B, seg, cond)
+            if not xa or not xb:
                 continue
-            sm = difflib.SequenceMatcher(None, ta, tb, autojunk=False)
-            for op, i1, i2, j1, j2 in sm.get_opcodes():
-                n = max(i2 - i1, j2 - j1)
-                tot += n
-                if op != "equal":
-                    diff += n
-        load[cond] = round(diff / tot, 4) if tot else None
+            n_d, n_t = divergence(toks(xa), toks(xb))
+            n_ds, n_ts = divergence(norm_toks(xa), norm_toks(xb))
+            d += n_d; t += n_t; ds += n_ds; ts += n_ts
+        load[cond] = round(d / t, 4) if t else None
+        load_sub[cond] = round(ds / ts, 4) if ts else None
 
     # ② 分歧處誰對:只看兩邊判定不同的專名
     idx = {}
@@ -88,18 +136,23 @@ def main() -> None:
 
     out = {"note": "並排雙跑的複核負擔與分歧處勝負。純計算,無 API 呼叫。",
            "arms": [A, B],
+           "classification_rules": {
+               "形式分歧": "標點、空白、全半形、漢数字/アラビア数字、贅詞(FILLER 清單)",
+               "實質分歧": "其餘一律算實質(保守:寧可高估複核量)",
+               "filler_list": sorted(FILLER)},
            "text_divergence_ratio": load,
+           "substantive_divergence_ratio": load_sub,
            "proper_noun_split": split}
     (ROOT / "results/dual_run.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=1))
 
     print(f"並排雙跑:{A} vs {B}\n")
-    print("cond  逐字稿分歧比例  專名分歧數  只有Gemini對  只有SM對  Gemini佔比")
+    print("cond  全分歧  實質分歧  專名分歧  只有Gemini對  只有SM對  Gemini佔比")
     for c in CONDS:
         s = split[c]
         ratio = s["分歧中 Gemini 對的比例"]
-        print(f"{c}    {load[c]:>8.3f}      {s['分歧數']:>8}  {s['只有 Gemini 批次對']:>12}"
-              f"  {s['只有 SM 批次+詞表對']:>8}  "
+        print(f"{c}  {load[c]:>7.3f}  {load_sub[c]:>8.3f}  {s['分歧數']:>8}"
+              f"  {s['只有 Gemini 批次對']:>12}  {s['只有 SM 批次+詞表對']:>8}  "
               f"{'—' if ratio is None else format(ratio, '.2f'):>9}")
     print("\n→ results/dual_run.json")
 
