@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "hig02_B12__N4.wav",
+ "audio_s": 101.7,
+ "transcript": "寺岡神社は、兵庫県三田市にあります。神社には、3つの山道を進むと、山道広場があります。広場には、上げ巻結びという特殊な形の締め縄が結ばれています。寺岡神社の主祭神は、雨の小姉御の御子、といいい、神事を司る神様、締め縄です。と、人間に深い関わりを持つ神様で前。\nそんな神様にちなんで平岡神社では、毎月12月に締め縄を新しくかけ替える「締めかけ神事」という祭りがある。\n別名を「お笑い神事」といい、初めに宮司が、あ、は、は、と大笑いで笑い、参拝者も続く。\nこれを3回繰り返し、笑い は 1.7 の 人々 の とも に 思い思い に 10 分間 笑い 続ける の だ 。 1 年 の 最後 ごと を 笑い 飛ばし 福 を 招く ため に 全国 から 多く の 人 が 参加 する 。 これ は 岩戸 の 中 に 隠れ て しまっ た 忘れ られ た 追い神 が 雨 の 小雨 は 見事 の 信治 と 神々 の 笑い に よっ て 再び 世 に 戻り 小雨 が 世界 に 光 が 戻っ た 喜び を 再現 し た 信治 と し て遠からをこなされた。 この事から神の子は神の言葉、日本で初めて神事を行った。 神事を司る神となったのだ。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 23.9,
+  "n_chunks": 4,
+  "prompt_tokens": 2866,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "6484851a17e785d7e6744952b5ff7ea659dda9e8acdca7df7478e76e8288043f"
+ }
+}

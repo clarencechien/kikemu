@@ -1,6 +1,7 @@
 # kikemu — 給接手的人 / agent
 
-聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 五個引擎選型實驗與一份 oracle 分析
+聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 五個引擎選型實驗、一份 oracle 分析,
+以及在 Modal 上補測的地端線(Breeze 日文與噪音曲線、Gemma 4 三個型號、GPU 成本)
 (`scripts/`、`exp2/`、`exp5/`、`analysis/`、`results/`)。
 先讀 [`README.md`](README.md) 的現況表,再看這頁的規矩。
 
@@ -36,7 +37,7 @@
 
 7. **評估沒跑過的模型,先跑它官方樣本當基準線。**
    「會聽」不等於「聽得懂你的語料」——Gemma 4 12B 在模型卡的英文樣本上完美,
-   在自發口語台灣華語上 CER 2.231。而且模型卡的「限制」章節要讀完再動手
+   在自發口語台灣華語上 CER 2.231(同家族 E4B 在同一批片段是 0.312,見鐵律 9)。而且模型卡的「限制」章節要讀完再動手
    (kikemu 違反過三條:30 秒音訊上限、audio 要放 text 之後、不要改官方 prompt),
    為此白燒 $1.26。細節見 `results/report.md` §3F 與 `notebooks/README.md`。
 
@@ -44,6 +45,17 @@
    oracle / 天花板類分析逐項取 OR,假設你事後知道誰對——真實系統沒有那個信號,
    選錯時會**比最佳單一方案更差**。它是篩選工具,不是收益估計。
    細節見 `results/oracle_report.md` §9。
+
+9. **模型的結論要寫上「哪個型號、哪種語言」。寫寬了就是外推,而且會擴散。**
+   kikemu 犯過兩次,兩次都寫進了三份以上的文件才被實測推翻:
+   - 「Breeze 是地端推薦」→ 它是**中文**微調,日文只有 0.415(對 SM+詞表 0.791)。
+   - 「Gemma 4 不能聽」→ 三個型號測完才看清楚:**12B 吐太多**(退化生成,
+     輸出 2.2 倍長)、**E2B 不吐**(貪婪解碼下純中文 8/8 空輸出)、
+     **E4B 剛好**(exp5 0.684、純中文 CER 0.312,中文可用)。
+     **有甜蜜點,不是單調曲線;參數量往大往小都不是能力的代理指標。**
+
+   要寫成家族級或通用結論,就要有跨型號、跨語言的實測撐;沒有就標明範圍。
+   細節見 `results/report.md` §2.1c、§3F.2g 與 `results/stt-matrix.md` §6。
 
 ## 改完怎麼驗
 
@@ -67,9 +79,11 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/worker/` | relay DO(Speechmatics)、quota DO、admin、場景包、Gemini |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
-| `scripts/` | exp1/3/4 的實驗腳本 |
+| `scripts/` | exp1/3/4 的實驗腳本;`run_*_modal.py` = Modal 上的 GPU arm |
 | `exp2/` | exp2(中英夾雜) |
-| `results/report.md` | 五個實驗合併報告 + 21 條侷限 |
+| `exp5/scripts/` | exp5 腳本;`noise_curve.py`、`score_zh.py`、`debug_e2b_empty.py` |
+| `handoff-v8.md` | Modal 補測任務書:判讀規則先寫死 + 驗收 + 偏離紀錄(已全數執行) |
+| `results/report.md` | 五個實驗合併報告 + 35 條侷限(4 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
@@ -80,3 +94,6 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - 不要把音訊或字幕存到伺服器(PRD §2:內容零留存,R2 只有名單與詞表)。
 - 不要在 `getUserMedia` 打開瀏覽器降噪(exp3 實證那條鏈是負資產)。
 - 不要用未量測的說法覆蓋量測過的結論——不確定就標「未驗證」,別讓它讀起來像數據。
+- 不要刪掉已解除的侷限,改成刪節線並註明是哪次實驗解除的——結論怎麼演進要看得出來。
+- 自架開源模型前先看 `generation_config.json`:Gemma 4 三個型號都預設
+  `do_sample: true, temperature: 1.0`,不指定就是隨機取樣,同一個檔重跑會不一樣。

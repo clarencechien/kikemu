@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e2b",
+ "file": "T2_135s.wav",
+ "audio_s": 20.0,
+ "transcript": "",
+ "meta": {
+  "arm": "Zgma_e2b",
+  "model": "google/gemma-4-E2B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 0.1,
+  "prompt_tokens": 577,
+  "model_load_sec": 14.5,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8dd854a9d4255bba9cf81ae6324143d8a03e99384eebbdf15adb04529c3e0788"
+ }
+}

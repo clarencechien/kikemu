@@ -27,7 +27,9 @@
 | exp5:Breeze 領域外對照(handoff-v6) | ✅ 3 段 × 2 條件 × 6 arm,**每條件 158 術語實例** |
 | exp1 追加 arm `Abat`:Gemini 非 Live 批次 | ✅ 5 條件全覆蓋——證明「噪音崩潰」是 **Live 串流**的行為,不是模型能力上限(報告 §2.1b) |
 | oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
-| 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本)、聽不行**(自發口語台灣華語 CER 2.231 vs Breeze 0.198) |
+| 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本);聽要看型號**——三個型號測完,**E4B 是甜蜜點**:12B 吐太多(CER 2.231 退化生成)、E2B 不吐(貪婪下純中文 8/8 空輸出)、**E4B 中文可用**(CER 0.312、exp5 0.684,與 SM batch 同級)。日文三個都不行 |
+| handoff-v8 梯次二 C/D/E | ✅ **(C)** Gemma 4 **E4B 比 12B 好一個數量級**(exp5 0.741/0.627 對 0.044/0.013;輸出長度比 1.04 對 2.22)——12B 的低分是**退化生成**不是聽力,「Gemma 4 不能聽」要改成「12B 不能聽」;**(D)** Breeze 每小時音訊 GPU 成本 **T4 $0.155 最便宜**(L4 $0.175、A100 $0.412),且三張卡轉寫**逐字相同**;**(E)** exp1 日文補滿 6 段 335 專名,**0.272**(原 0.323,差 0.051 在門檻內),切塊對 Gemma 的代價 ≈ 0 |
+| handoff-v8 梯次一 A/F/B(Modal 上的 Breeze 補測) | ✅ 三格全數完成:**(A)** Breeze 日文只有 0.415,地端推薦**必須限定中文**;**(F)** 全地端聽譯鏈(Breeze 聽 + Gemma 4 譯)端到端驗證成立,0.717 > 雲端兩跳 0.626;**(B)** 噪音曲線四條件補齊,掉幅 +0.070 是全場最平,且 **CPU/fp32 與 T4/fp16 差 0.000**(exp5 侷限 17 解除) |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -35,6 +37,35 @@
 | Turnstile、CANONICAL_HOST | ⬜ 未設定 |
 | iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |
 | 正式站詞包 | ✅ 大阪城 149 詞(已逐條複驗並重驗修正) |
+
+### 盤點:哪些解完了,哪些還開著(2026-08-19)
+
+**實驗面已收斂。** 報告的 35 條侷限裡有 4 條被後續實驗解除(原文保留刪節線,
+看得出結論怎麼演進);其餘 31 條是**已知且已寫明範圍**的限制,不是待辦。
+以下是仍然開著、且**值得再花錢或花時間**的項目:
+
+| 還開著的 | 為什麼還開 | 要做的話 |
+|---|---|---|
+| **Deepgram 未執行**(侷限 3) | 環境無帳號 | keyterm prompting 上限 100 詞 vs SM 1000 詞,值得比 |
+| **SM 泛多語 `multi` pack 未測**(侷限 13) | 免費帳號回 not supported | 現有雙語結論只適用「有專用 pack」的引擎 |
+| **prompt 給脈絡能不能取代詞表**(stt-matrix「已知空白」1b) | 沒量過 | LLM 這條路沒有詞表機制,這是唯一對應手段 |
+| **三處「無人耳終審」**(侷限 6、11、20、21) | 需要人 | 參考文本、拉丁字母裁決、LLM 是否「補出」內容 |
+| **唸稿型中文語料**(侷限 16g) | 需要新語料 | 拆開「語體」與「語言」兩個變因的唯一辦法 |
+| **Gemma 的取樣變異**(侷限 16n、16o) | 只驗了 E4B 一組 | 三個型號預設 `do_sample: true`;12B 完全沒做貪婪對照 |
+| **E4B 的噪音曲線與 CI**(侷限 16l) | 只跑 M0/M3 | 要把 E4B 當地端候選就該補 |
+| **E4B 聽 + Gemma 譯**這條鏈沒接過 | 已驗的鏈第一跳是 Breeze | E4B 現在有資格當第一跳了 |
+| **全地端鏈只驗過中文** | 日文第一跳就垮(Breeze 0.415) | 中文以外沒有可推薦的地端方案 |
+| **RNNoise 未測**(exp3) | `pyrnnoise` 與環境 PyAV 不相容 | 已記錄缺口,DSP 那條路整體無效 |
+
+**產品面的待辦不在我這邊**——下面這幾條需要你去設定或用真機驗:
+
+| 待辦 | 誰做 |
+|---|---|
+| 部署最新版(`cd app && npm run deploy`) | 你 |
+| Google OIDC、Turnstile、CANONICAL_HOST | 你(Cloudflare / Google Console) |
+| iOS 真機連續收音驗證 | 你(需要實機) |
+| AI Studio Spend 頁的供應商端上限 | 你(程式管不到,見 `docs/gemini-api-lessons.md` §保險絲) |
+| 把這條分支併回 `main`(目前領先 108 個 commit) | 你決定要不要開 PR |
 
 ### 場景包:輸入「大阪城」就出一包
 
@@ -106,7 +137,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | | exp1 日文導覽(專名) | exp2 中英夾雜演講(術語) |
 |---|---|---|
-| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D;該優勢在領域外縮水約 2~3 倍,見 §3E** |
+| 最佳 arm | Speechmatics + 地點詞表(**Breeze 在日文只有 0.415,不是選項**,§2.1c) | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D;該優勢在領域外縮水約 2~3 倍,見 §3E** |
 | **詞表邊際價值** | **+0.12 ~ +0.19(核心資產)** | +0.03 ~ +0.05(小加分) |
 | 真正的槓桿 | 詞表 | **語言 pack(+0.23 ~ +0.29)** |
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
@@ -141,6 +172,11 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 7. **看到「oracle 上限 +X」就問「選錯時的下限是多少」。** 天花板類分析逐項取 OR、
    假設你事後知道誰對;真實系統選錯時會比最佳單一引擎更差。
    oracle 是「值不值得繼續看」的篩選工具,不是「做了會賺多少」的估計。
+8. **一個模型的結論要寫上「哪個型號、哪種語言」,寫寬了就是外推。**
+   本專案犯過兩次:把 Breeze 的中文數字寫成通用地端推薦(日文實測只有 0.415),
+   把 Gemma 4 12B 的失敗寫成「Gemma 4 不能聽」。三個型號都測完之後更清楚:
+   **12B 吐太多、E2B 不吐、E4B 剛好**——有甜蜜點,不是單調曲線。
+   **參數量不是能力的代理指標,往大往小都不是。**
 
 **這些結論在 app 裡的具體體現:**聽用 Speechmatics 不用一體式(規則 1)、
 場景包是核心功能(規則 2)、`getUserMedia` 三個降噪 constraint 全關(規則 4)、
@@ -152,13 +188,13 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、21 條侷限 |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**35 條侷限**(4 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
-| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的八條鐵律與驗證方式 |
+| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,待執行**。v6/v7 已執行完畢,任務書末尾有執行結果與偏離紀錄) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,梯次一 A/F/B 與梯次二 C/D/E 全部完成**。v6/v7/v8 任務書末尾都有執行結果與偏離紀錄) |
 
 ## 實驗規模
 
@@ -166,9 +202,9 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|---|---|---|---|
 | 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 | 台灣科技 podcast 3 段 × 5 分 |
 | 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 | 158 個英文術語實例/條件 |
-| 追加 | Gemma 4 日文控制組(`Xgma_ja`) | — | — | — | 純中文 20 秒視窗 × 8(CER) |
+| 追加 | Gemma 4 日文組 `Xgma_ja`(6 段)/ `_e4b` / `_e2b`;Breeze 日文 `Xbrz_ja` | — | — | — | 純中文 20 秒視窗 × 8(CER,含貪婪對照);Gemma 4 E4B / E2B;Breeze 四條件曲線 |
 | 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 | 2(M0/M3 兩端) |
-| arm | 7(含 `Abat`) | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 6 |
+| arm | 10(含 `Abat`、`Xbrz_ja`) | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 9(含 `Xgma_e4b`/`e2b`、`Xbrz_gpu`) |
 
 總支出 < $10,主要成本是真實速度推流的 wall-clock。
 
@@ -189,7 +225,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
-- **誠實記錄。** 21 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+- **誠實記錄。** 35 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+  解除的 4 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 
 ## 目錄

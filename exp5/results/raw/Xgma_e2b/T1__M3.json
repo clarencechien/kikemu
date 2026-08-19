@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_e2b",
+ "file": "T1__M3.wav",
+ "audio_s": 300.0,
+ "transcript": "特別是工業研究,書籍觀點趨勢呢,完全照新加購,然後就是 讓他們這樣子跟大家在溫,真的很很。 那,啊,所以你們就是剛剛講做這個search engine,對,然後之後就加錄了在順聽。 然後做的工作就是病,這。 粗大非常誇了,就應該整個病就如果從index計算的話應該沒有任何聽的我們跟,這是會會有這個的。 那是從那個data存在的地址是怎麼拿出來的?是傳端送到用戶面前,是傳端排塊就是我們整個聽哦。那是中文英文。 這是全球的,都會。 我們是Global的,都全球的,我在那邊做的全球,哦外到美國每個都全球。 其實你還不知道,我跟你說,幹根本被說的台灣的感覺都不太好。 還是是一個錯覺。 It's a little bit general, a comparative, 但有人演。所以感覺是覺得,我們上是Frank的講說,並的台灣的中文就送給我跟幾個個感覺。 我現在我在想的是我對東西不知道能不能講。 對對。 我知道很多。 那沒有這個overall的,但因為是,因為你理,我會說看。 但是世界很小。 但是有有一些,有一些這大概應該算是考的人球。 但是可以稍微講一個概念,然後大家就想一下就是說為什麼我會這個樣,就是在中國其實有一個法規是說如果你是在中國境內營運的,你的所有data都在中國啊,對吧,中國境內。 對,那我不放心,這個有數字。 所以我有放。 對,不是也不是說我完全有放,而是它是說要要有個copy在境內,對,不是說我放在裡面可以用,那就是一定有很多data,就是無論是一個非常compile的公司,所以它基本上它就變成不能放。 啊,所以就資料,你先反過來想的,就是說如果我今天我是一個大公司我做Google社群,我一定必須要到處放,然後會甚至就在先不管中法流,我一定一定也是要放一版,因為那麼多個使用者在的,我確定是CDN我什麼要放一邊去。 對對。 那今天如果有些user說我們的資料就不可以進到那邊。 那是不是我就不能放那邊?那那他們那邊都選就會比較慢。 哦,比較慢,然後有可能。 對,就是Data越多,整個模型,會越好,訪問training越好,緩慢是最好最好。是很找很找就開始反悔,然後要到各種社交結果的公司嘛。 那他能放不放題就會產生很大影響,所以從法律思考就就是一定是這個結果,你拿進公司來做做一樣,Google放也是這個結果。 我們上千幾級啊,我們訪問呢一個這個基準啊,那他也是前微軟日本員工,啊對於微軟非常的 有在有加,你個人評價給幾分,你待這麼久應該是不錯嘛,我覺得是蠻不錯的。 五星,五星評價,哦,我基本上會給我自己評我跟我說是個很最好的,所以,然後你看到很多東西,我其實很多人會一話會覺得說,我們這個版本說,我們做open source,我之前說版本說,對,他一,一點說我就記得是叫做open source,然後後來有一些說我家目錄微軟,我那時候想說我好像是,我是C++開發的,我是Jenkins開發的,我是Firepass裡面那個Firemonkey的那個MonkeySpider的那個,他就叫了,對,然後都做過一點點東西說都好,但是就是基本上用各種library在伺服的時候做的也都是open source的東西。 那過去其實我覺得反而是有的好處,對,這個可會讓大家有抽有內想機會,但是這確實是一個事實。 呃,我們現在就很方便,很多open source library,可以用,然後就,哎,我的東西就做完了。 對。 哎,有沒有想過這個open source library到底為什麼要用? 對啊。 because save不要再難出近的代金。 就是這個 open source 來為什麼會在,會為講這個樣子,他為什麼是這些產業,他為什麼是遷成這個大小的,就其實你都不知道,它就是在社群裡面發展。 然後我們進到 macOS,因為 macOS它是是Windows,所以它用Windows stack的情況下就很多那些open source,它是在的。 你也就會發現,其實其實很麻煩,那個遷出大小有沒有對如果,其實需要從事,可是在實法意見就會發現,有些東西其實是就倒必須存在,哦,沒有必要存在,沒有必要存在,在open source的開發者存在,它是因為更多的是就是作者允許然後存在了。 嗯,嗯,嗯。 那也可以,這就是保數就是這是quality就是我不用因為begin justification,然後去決定就說哦,這個可以存在。 在open source level就會講到一下, වශයෙන්的,可是release到挑那些挑那些行為不是知道的一些就倒。 然後release就是一個release",
+ "meta": {
+  "arm": "Xgma_e2b",
+  "model": "google/gemma-4-E2B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "chunk_sec": 30,
+  "whole_file": false,
+  "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "official",
+  "prompt_source": "模型卡 §6 官方 ASR 結構(原文未改)",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp5",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "elapsed_sec": 60.4,
+  "prompt_tokens": 8270,
+  "n_chunks": 10,
+  "model_load_sec": 17.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "ad526e081ac9ec8a69949c503662aa0410797ae6da59e51a40a45b08adb5604a",
+  "audio_matches_manifest": true
+ }
+}

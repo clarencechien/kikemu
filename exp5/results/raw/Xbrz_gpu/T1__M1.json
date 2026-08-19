@@ -1,0 +1,739 @@
+{
+ "arm": "Xbrz_gpu",
+ "file": "T1__M1.wav",
+ "audio_s": 300.0,
+ "transcript": "主要是工業園區蘇州工業園區是那種完全照新加坡那種建築風格然後就是有林立中心有什麼整個住起來很乾淨很舒適真的是很舒服的一個地方那所以你這邊就是剛剛講說這個 search engine對然後那時候就加入微軟 search engine team然後那時候做的差不多就是 bin就是 bin我在非常 cool 的 team就應該整個 bin 就如果從 indexing 這樣算的話應該沒有任何 team 比我們更 core就是不會有再更底層的了但是從那個 data 存在 disk 是怎麼拿出來的這整段送到 user 面前這整段 pipeline 就是我們整個 team那是中文英文就是全部所有語系都歸你我們是 global 的就全球的我在那邊做也是全球的然後後來到了美國一直做全球的其實你那時候不知道我那時候幹為什麼並蒐集台灣的感覺都不太好還是是個錯覺你覺得跟 comparative但有人講說其實感覺 social network我那次上次 Frank 講說變得台灣的中文 social network 跟其實跟 Google 差不多我沒這個感覺現在我在想的是我這一堆東西我不知道能不能講我知道很多那種overall 的但因為這個凡你也離職了所以因為他已經離職他現在已經從我已經離開亂歌手了但是這世界很小但是有一些電影團基本上應該算是 confidential但是可以稍微講一個概念然後去想一下就是說為什麼會這個樣子就是在中國其實有一個法律是說如果你是在中國境內營運的服務你的所有 data都在中國啊必須放在中國境內那 google 不放所以 google 就出去了所以微軟有放也不是說微軟有放而是它是說要有一個 copy 在境內不是說我放在裡面給你用那就是一定有很多 data微軟是一個非常 compliant 的公司所以它基本上它就變成不能放所以就有資料你是反過來想的就是說如果我今天我是一個大公司我做 global search engine我一定把資料到處放然後會甚至就算先不管中國法律我一定鐵定也是再放了一份因為那麼多 user 在那裡我鐵定是 cdm 我什麼也要放 image 過去那今天如果有些 user 說我的資料就不可以進到那邊那是不是我就不能放在那邊那他們那邊 load 起來就會比較慢也可能比較爛然後也有可能更是一個原因對就是 data 越多整個 model會越好不同 training 也好微軟是最早最早就是很早很早就開始把 machine learning 用到各種 searching 結果的公司那它能放跟不放一定會產生很大影響所以從法律思考就一定是這個結果你哪間公司來做都一樣 google 放也是這個結果我們上次前幾集我們訪問了一個 Gigi她也是前微軟日本員工對於微軟非常的讚譽有加你個人評價給幾分你待這麼久應該是不錯吧我覺得是滿不錯的5 星評價我基本上會給 5 星評價我覺得 Microsoft 是個老的 tech company你可以看到很多東西我其實很多人會意外會覺得說微軟是個邪惡的地方我們做 open source我之前也做 open source他 11 年 12 年的時候我就記得這傢伙就做 open source然後後來有一天說我加入了微軟我那時就想說我是 C Python contributor 我是 Django contributor我是 firefox 裡面那個monkey spider 的那個 contributor對然後都做過一點點東西也不是說做很多但是就是基本上用各種 library 在 start up 的時候做的也都是 open source 的東西那過去其實我覺得反而有一個好處對這個可能會讓大家有稍微有點想進微軟但是這確實是一個事實我們現在就很方便很多 open source library 可以用所以可以用然後就欸我的東西就做完了對那你有沒有想過這個 open source library 到底為什麼要在那裡為什麼要在那裡促進人類進步就是這個 open source library 為什麼會在會不會長這個樣子它為什麼是這些參數它為什麼是切成這個大小其實你都不知道它就是在 search 裡面自然形成的然後我們進到 Microsoft因為 Microsoft 它的 stack 比較特殊就是 windows stack 嘛所以它用 windows stack 的情況下就很多那些 open source library它可能只在 linux 裡面可以用要不然都可以用那所以就會變什麼自己寫啊你寫的時候你就會發現寫很多東西很麻煩其實很麻煩那個客戶大小有沒有對齊你都其實需要重新思考一次可是你思考一次你就會發現欸有些東西其實是沒有必要存在那在 open source 的 library 它為什麼存在它是因為更多的 personal entry 存在的 feature那也可以這就是好處就是這是 community就是我不用因為 business justification然後去決定就是說喔這個 feature 該不會存在所以 open source library 就會長得很像瑞士刀可是瑞士刀挑那些成為瑞士刀裡面的一些元件也是有道理的然後 race 就是一個瑞士刀",
+ "segments": [
+  {
+   "start": 0.0,
+   "end": 1.44,
+   "text": "主要是工業園區"
+  },
+  {
+   "start": 1.44,
+   "end": 5.4,
+   "text": "蘇州工業園區是那種完全照新加坡那種建築風格"
+  },
+  {
+   "start": 5.4,
+   "end": 7.88,
+   "text": "然後就是有林立中心有什麼"
+  },
+  {
+   "start": 7.88,
+   "end": 9.84,
+   "text": "整個住起來很乾淨很舒適"
+  },
+  {
+   "start": 9.84,
+   "end": 11.52,
+   "text": "真的是很舒服的一個地方"
+  },
+  {
+   "start": 11.52,
+   "end": 16.28,
+   "text": "那所以你這邊就是剛剛講說這個 search engine"
+  },
+  {
+   "start": 16.28,
+   "end": 16.6,
+   "text": "對"
+  },
+  {
+   "start": 16.6,
+   "end": 18.56,
+   "text": "然後那時候就加入微軟 search engine team"
+  },
+  {
+   "start": 18.56,
+   "end": 20.24,
+   "text": "然後那時候做的差不多"
+  },
+  {
+   "start": 20.24,
+   "end": 21.28,
+   "text": "就是 bin"
+  },
+  {
+   "start": 21.28,
+   "end": 24.1,
+   "text": "就是 bin"
+  },
+  {
+   "start": 24.1,
+   "end": 25.72,
+   "text": "我在非常 cool 的 team"
+  },
+  {
+   "start": 25.72,
+   "end": 28.2,
+   "text": "就應該整個 bin 就"
+  },
+  {
+   "start": 28.2,
+   "end": 29.84,
+   "text": "如果從 indexing 這樣算的話"
+  },
+  {
+   "start": 29.84,
+   "end": 32.28,
+   "text": "應該沒有任何 team 比我們更 core"
+  },
+  {
+   "start": 32.28,
+   "end": 34.08,
+   "text": "就是不會有再更底層的了"
+  },
+  {
+   "start": 34.08,
+   "end": 37.92,
+   "text": "但是從那個 data 存在 disk 是怎麼拿出來的"
+  },
+  {
+   "start": 37.92,
+   "end": 39.44,
+   "text": "這整段送到 user 面前"
+  },
+  {
+   "start": 39.44,
+   "end": 41.76,
+   "text": "這整段 pipeline 就是我們整個 team"
+  },
+  {
+   "start": 41.76,
+   "end": 43.6,
+   "text": "那是中文英文"
+  },
+  {
+   "start": 43.6,
+   "end": 45.28,
+   "text": "就是全部所有語系都歸你"
+  },
+  {
+   "start": 45.28,
+   "end": 47.16,
+   "text": "我們是 global 的就全球的"
+  },
+  {
+   "start": 47.16,
+   "end": 48.44,
+   "text": "我在那邊做也是全球的"
+  },
+  {
+   "start": 48.44,
+   "end": 50.36,
+   "text": "然後後來到了美國一直做全球的"
+  },
+  {
+   "start": 50.36,
+   "end": 51.68,
+   "text": "其實你那時候不知道"
+  },
+  {
+   "start": 51.68,
+   "end": 56.2,
+   "text": "我那時候幹為什麼並蒐集台灣的感覺都不太好"
+  },
+  {
+   "start": 56.2,
+   "end": 57.32,
+   "text": "還是是個錯覺"
+  },
+  {
+   "start": 57.32,
+   "end": 59.12,
+   "text": "你覺得跟 comparative"
+  },
+  {
+   "start": 59.12,
+   "end": 61.12,
+   "text": "但有人講說其實感覺 social network"
+  },
+  {
+   "start": 61.12,
+   "end": 62.6,
+   "text": "我那次上次 Frank 講說"
+  },
+  {
+   "start": 62.6,
+   "end": 66.0,
+   "text": "變得台灣的中文 social network 跟其實跟 Google 差不多"
+  },
+  {
+   "start": 66.0,
+   "end": 68.16,
+   "text": "我沒這個感覺"
+  },
+  {
+   "start": 68.16,
+   "end": 71.76,
+   "text": "現在我在想的是我這一堆東西我不知道能不能講"
+  },
+  {
+   "start": 71.76,
+   "end": 73.3,
+   "text": "我知道很多那種"
+  },
+  {
+   "start": 73.3,
+   "end": 76.8,
+   "text": "overall 的但因為這個凡你也離職了"
+  },
+  {
+   "start": 76.8,
+   "end": 78.64,
+   "text": "所以因為他已經離職他現在已經從"
+  },
+  {
+   "start": 78.64,
+   "end": 79.72,
+   "text": "我已經離開亂歌手了"
+  },
+  {
+   "start": 79.72,
+   "end": 81.04,
+   "text": "但是這世界很小"
+  },
+  {
+   "start": 81.04,
+   "end": 85.52,
+   "text": "但是有一些電影團基本上應該算是 confidential"
+  },
+  {
+   "start": 85.52,
+   "end": 87.64,
+   "text": "但是可以稍微講一個概念"
+  },
+  {
+   "start": 87.64,
+   "end": 88.2,
+   "text": "然後"
+  },
+  {
+   "start": 88.2,
+   "end": 90.7,
+   "text": "去想一下就是說為什麼會這個樣子"
+  },
+  {
+   "start": 90.7,
+   "end": 93.76,
+   "text": "就是在中國其實有一個法律是說"
+  },
+  {
+   "start": 93.76,
+   "end": 96.04,
+   "text": "如果你是在中國境內營運的服務"
+  },
+  {
+   "start": 96.04,
+   "end": 97.52,
+   "text": "你的所有 data"
+  },
+  {
+   "start": 97.52,
+   "end": 98.2,
+   "text": "都在中國啊"
+  },
+  {
+   "start": 98.2,
+   "end": 100.2,
+   "text": "必須放在中國境內"
+  },
+  {
+   "start": 100.2,
+   "end": 102.36,
+   "text": "那 google 不放"
+  },
+  {
+   "start": 102.36,
+   "end": 103.28,
+   "text": "所以 google 就出去了"
+  },
+  {
+   "start": 103.28,
+   "end": 105.6,
+   "text": "所以微軟有放"
+  },
+  {
+   "start": 105.6,
+   "end": 107.2,
+   "text": "也不是說微軟有放"
+  },
+  {
+   "start": 107.2,
+   "end": 110.12,
+   "text": "而是它是說要有一個 copy 在境內"
+  },
+  {
+   "start": 110.12,
+   "end": 111.8,
+   "text": "不是說我放在裡面給你用"
+  },
+  {
+   "start": 111.8,
+   "end": 114.48,
+   "text": "那就是一定有很多 data"
+  },
+  {
+   "start": 114.48,
+   "end": 116.56,
+   "text": "微軟是一個非常 compliant 的公司"
+  },
+  {
+   "start": 116.56,
+   "end": 117.88,
+   "text": "所以它基本上它就變成"
+  },
+  {
+   "start": 117.88,
+   "end": 119.16,
+   "text": "不能放"
+  },
+  {
+   "start": 119.16,
+   "end": 120.44,
+   "text": "所以就有資料"
+  },
+  {
+   "start": 120.44,
+   "end": 122.12,
+   "text": "你是反過來想的就是說"
+  },
+  {
+   "start": 122.12,
+   "end": 123.32,
+   "text": "如果我今天"
+  },
+  {
+   "start": 123.32,
+   "end": 125.04,
+   "text": "我是一個大公司我做 global search engine"
+  },
+  {
+   "start": 125.04,
+   "end": 126.4,
+   "text": "我一定把資料到處放"
+  },
+  {
+   "start": 126.4,
+   "end": 129.52,
+   "text": "然後會甚至就算先不管中國法律我一定"
+  },
+  {
+   "start": 129.52,
+   "end": 130.52,
+   "text": "鐵定也是再放了一份"
+  },
+  {
+   "start": 130.52,
+   "end": 131.96,
+   "text": "因為那麼多 user 在那裡"
+  },
+  {
+   "start": 131.96,
+   "end": 134.6,
+   "text": "我鐵定是 cdm 我什麼也要放 image 過去"
+  },
+  {
+   "start": 134.6,
+   "end": 138.12,
+   "text": "那今天如果有些 user 說我的資料就不可以進到那邊"
+  },
+  {
+   "start": 138.12,
+   "end": 139.96,
+   "text": "那是不是我就不能放在那邊"
+  },
+  {
+   "start": 139.96,
+   "end": 142.04,
+   "text": "那他們那邊 load 起來就會比較慢"
+  },
+  {
+   "start": 142.04,
+   "end": 143.2,
+   "text": "也可能比較爛"
+  },
+  {
+   "start": 143.2,
+   "end": 144.84,
+   "text": "然後也有可能更是一個原因"
+  },
+  {
+   "start": 144.84,
+   "end": 146.4,
+   "text": "對就是 data 越多"
+  },
+  {
+   "start": 146.4,
+   "end": 147.24,
+   "text": "整個 model"
+  },
+  {
+   "start": 147.24,
+   "end": 147.74,
+   "text": "會越好"
+  },
+  {
+   "start": 147.74,
+   "end": 148.56,
+   "text": "不同 training 也好"
+  },
+  {
+   "start": 148.56,
+   "end": 153.8,
+   "text": "微軟是最早最早就是很早很早就開始把 machine learning 用到各種 searching 結果的公司"
+  },
+  {
+   "start": 153.8,
+   "end": 157.0,
+   "text": "那它能放跟不放一定會產生很大影響"
+  },
+  {
+   "start": 157.0,
+   "end": 159.84,
+   "text": "所以從法律思考就一定是這個結果"
+  },
+  {
+   "start": 159.84,
+   "end": 162.64,
+   "text": "你哪間公司來做都一樣 google 放也是這個結果"
+  },
+  {
+   "start": 162.64,
+   "end": 165.96,
+   "text": "我們上次前幾集我們訪問了一個 Gigi"
+  },
+  {
+   "start": 165.96,
+   "end": 168.44,
+   "text": "她也是前微軟日本員工"
+  },
+  {
+   "start": 168.44,
+   "end": 170.04,
+   "text": "對於微軟非常的"
+  },
+  {
+   "start": 170.04,
+   "end": 171.48,
+   "text": "讚譽有加"
+  },
+  {
+   "start": 171.48,
+   "end": 173.04,
+   "text": "你個人評價給幾分"
+  },
+  {
+   "start": 173.04,
+   "end": 174.48,
+   "text": "你待這麼久應該是不錯吧"
+  },
+  {
+   "start": 174.48,
+   "end": 176.12,
+   "text": "我覺得是滿不錯的"
+  },
+  {
+   "start": 176.12,
+   "end": 178.12,
+   "text": "5 星評價"
+  },
+  {
+   "start": 178.12,
+   "end": 181.64,
+   "text": "我基本上會給 5 星評價我覺得 Microsoft 是個"
+  },
+  {
+   "start": 181.64,
+   "end": 184.0,
+   "text": "老的 tech company"
+  },
+  {
+   "start": 184.0,
+   "end": 189.12,
+   "text": "你可以看到很多東西我其實很多人會意外會覺得說"
+  },
+  {
+   "start": 189.12,
+   "end": 190.36,
+   "text": "微軟是個邪惡的地方"
+  },
+  {
+   "start": 190.36,
+   "end": 191.56,
+   "text": "我們做 open source"
+  },
+  {
+   "start": 191.56,
+   "end": 192.6,
+   "text": "我之前也做 open source"
+  },
+  {
+   "start": 192.6,
+   "end": 195.84,
+   "text": "他 11 年 12 年的時候我就記得這傢伙就做 open source"
+  },
+  {
+   "start": 195.84,
+   "end": 198.04,
+   "text": "然後後來有一天說我加入了微軟"
+  },
+  {
+   "start": 198.04,
+   "end": 198.84,
+   "text": "我那時就想說"
+  },
+  {
+   "start": 198.84,
+   "end": 201.8,
+   "text": "我是 C Python contributor 我是 Django contributor"
+  },
+  {
+   "start": 201.8,
+   "end": 203.52,
+   "text": "我是 firefox 裡面那個"
+  },
+  {
+   "start": 203.52,
+   "end": 207.64,
+   "text": "monkey spider 的那個 contributor"
+  },
+  {
+   "start": 207.64,
+   "end": 210.6,
+   "text": "對然後都做過一點點東西也不是說做很多"
+  },
+  {
+   "start": 210.6,
+   "end": 217.36,
+   "text": "但是就是基本上用各種 library 在 start up 的時候做的也都是 open source 的東西"
+  },
+  {
+   "start": 217.36,
+   "end": 221.4,
+   "text": "那過去其實我覺得反而有一個好處"
+  },
+  {
+   "start": 221.4,
+   "end": 223.8,
+   "text": "對這個可能會讓大家有稍微有點想進微軟"
+  },
+  {
+   "start": 223.8,
+   "end": 227.08,
+   "text": "但是這確實是一個事實"
+  },
+  {
+   "start": 227.08,
+   "end": 229.28,
+   "text": "我們現在就很方便很多 open source library 可以用"
+  },
+  {
+   "start": 229.28,
+   "end": 230.2,
+   "text": "所以可以用"
+  },
+  {
+   "start": 230.2,
+   "end": 231.72,
+   "text": "然後就欸我的東西就做完了"
+  },
+  {
+   "start": 231.72,
+   "end": 232.44,
+   "text": "對"
+  },
+  {
+   "start": 232.44,
+   "end": 237.52,
+   "text": "那你有沒有想過這個 open source library 到底為什麼要在那裡"
+  },
+  {
+   "start": 237.52,
+   "end": 239.64,
+   "text": "為什麼要在那裡促進人類進步"
+  },
+  {
+   "start": 239.64,
+   "end": 241.88,
+   "text": "就是這個 open source library 為什麼會在"
+  },
+  {
+   "start": 241.88,
+   "end": 243.36,
+   "text": "會不會長這個樣子"
+  },
+  {
+   "start": 243.36,
+   "end": 244.56,
+   "text": "它為什麼是這些參數"
+  },
+  {
+   "start": 244.56,
+   "end": 247.2,
+   "text": "它為什麼是切成這個大小"
+  },
+  {
+   "start": 247.2,
+   "end": 250.52,
+   "text": "其實你都不知道它就是在 search 裡面自然形成的"
+  },
+  {
+   "start": 250.52,
+   "end": 251.8,
+   "text": "然後我們進到 Microsoft"
+  },
+  {
+   "start": 251.8,
+   "end": 254.04,
+   "text": "因為 Microsoft 它的 stack 比較特殊"
+  },
+  {
+   "start": 254.04,
+   "end": 255.84,
+   "text": "就是 windows stack 嘛"
+  },
+  {
+   "start": 255.84,
+   "end": 258.76,
+   "text": "所以它用 windows stack 的情況下就很多那些 open source library"
+  },
+  {
+   "start": 258.76,
+   "end": 260.52,
+   "text": "它可能只在 linux 裡面可以用"
+  },
+  {
+   "start": 260.52,
+   "end": 261.16,
+   "text": "要不然都可以用"
+  },
+  {
+   "start": 261.16,
+   "end": 262.66,
+   "text": "那所以就會變什麼"
+  },
+  {
+   "start": 262.66,
+   "end": 264.44,
+   "text": "自己寫啊"
+  },
+  {
+   "start": 264.44,
+   "end": 265.52,
+   "text": "你寫的時候你就會發現"
+  },
+  {
+   "start": 265.52,
+   "end": 266.92,
+   "text": "寫很多東西很麻煩"
+  },
+  {
+   "start": 266.92,
+   "end": 268.04,
+   "text": "其實很麻煩"
+  },
+  {
+   "start": 268.04,
+   "end": 269.96,
+   "text": "那個客戶大小有沒有對齊"
+  },
+  {
+   "start": 269.96,
+   "end": 272.84,
+   "text": "你都其實需要重新思考一次"
+  },
+  {
+   "start": 272.84,
+   "end": 274.08,
+   "text": "可是你思考一次你就會發現"
+  },
+  {
+   "start": 274.08,
+   "end": 275.44,
+   "text": "欸有些東西其實是"
+  },
+  {
+   "start": 275.44,
+   "end": 278.12,
+   "text": "沒有必要存在"
+  },
+  {
+   "start": 278.12,
+   "end": 279.8,
+   "text": "那在 open source 的 library 它為什麼存在"
+  },
+  {
+   "start": 279.8,
+   "end": 283.52,
+   "text": "它是因為更多的 personal entry 存在的 feature"
+  },
+  {
+   "start": 283.52,
+   "end": 284.76,
+   "text": "那也可以這就是"
+  },
+  {
+   "start": 284.76,
+   "end": 286.08,
+   "text": "好處就是這是 community"
+  },
+  {
+   "start": 286.08,
+   "end": 288.44,
+   "text": "就是我不用因為 business justification"
+  },
+  {
+   "start": 288.44,
+   "end": 289.72,
+   "text": "然後去決定就是說"
+  },
+  {
+   "start": 289.72,
+   "end": 291.0,
+   "text": "喔這個 feature 該不會存在"
+  },
+  {
+   "start": 291.0,
+   "end": 294.04,
+   "text": "所以 open source library 就會長得很像瑞士刀"
+  },
+  {
+   "start": 294.04,
+   "end": 298.76,
+   "text": "可是瑞士刀挑那些成為瑞士刀裡面的一些元件也是有道理的"
+  },
+  {
+   "start": 298.76,
+   "end": 300.08,
+   "text": "然後 race 就是一個瑞士刀"
+  }
+ ],
+ "meta": {
+  "arm": "Xbrz_gpu",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float16",
+  "device": "cuda",
+  "gpu_class": "T4",
+  "chunk_length_s": 0,
+  "return_timestamps": true,
+  "language_arg": null,
+  "corpus": "exp5",
+  "conds": [
+   "M0",
+   "M1",
+   "M2",
+   "M3"
+  ],
+  "note": "T4/fp16,與 exp2 Phase A 同設定;既有的 Xbrz_auto 是 CPU/fp32,兩份都留著才比得出 dtype 差異(exp5 侷限 17)",
+  "elapsed_sec": 79.5,
+  "model_load_sec": 4.5,
+  "gpu": "Tesla T4",
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "5c1f9945dd4e5965cdfb193464ace6b7131d772dc78ac43a1a1e3aa5ff243be3",
+  "audio_matches_manifest": true
+ }
+}

@@ -27,10 +27,15 @@ exp5/results/invalid/Xgma_12b_300s_overlimit/),花費約 $0.54。
 六個檔 = 60 個 30 秒 chunk。權重快取在 Volume,重跑不用再下載。
 """
 import json
+import os
 import time
 from pathlib import Path
 
 import modal
+
+# GPU 由環境變數選:C 那格要用 L4 跑 E4B,12B 仍用 A100。
+# Modal 的 gpu= 是裝飾期常數,所以只能在 import 時決定,不能當 CLI 參數。
+GPU = os.environ.get("KIKEMU_GEMMA_GPU", "A100-40GB")
 
 ROOT = Path(__file__).resolve().parents[1]
 COND = ROOT / "corpus" / "conditions"
@@ -87,7 +92,7 @@ cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
 
 # Modal 官方 lifecycle 寫法:@modal.enter 只在容器啟動時載一次權重,
 # scaledown_window 讓容器在多次 `modal run` 之間保溫——否則每次抽驗都要重載。
-@app.cls(image=image, gpu="A100-40GB", timeout=60 * 60,
+@app.cls(image=image, gpu=GPU, timeout=60 * 60,
          volumes={"/cache": cache}, max_containers=1,
          scaledown_window=600)
 class Gemma:
@@ -225,7 +230,7 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
         payload.append((wav.read_bytes(), s_, prompt, 0))
     print(f"上傳 {len(payload)} 個檔(sha256 全部與 manifest 相符),prompt={prompt}")
 
-    meta = {"arm": arm, "model": model, "api": "modal A100-40GB",
+    meta = {"arm": arm, "model": model, "api": f"modal {GPU}",
             "load": "bf16(dtype=auto)", "chunk_sec": CHUNK_SEC, "whole_file": False,
             "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
             "modality_order": "text then audio(模型卡 §4)",

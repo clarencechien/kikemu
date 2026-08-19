@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "ikeda02__N1.wav",
+ "audio_s": 157.9,
+ "transcript": "室町 住宅 旧 池田 新 市街 ニュータウン の こと はじめ 時 は 明治 現在 の 池田 駅 の 西側 クレガ 神社 の 鳥居 の 奥 に ニュー タウン の こと はじめ と も 言う べき 町 が 誕生 し た 。 大阪 の 都市 部 で は 活気 を 求め て 人口 が 爆発 的 に 急増 住み込み で 働い たり 近く の 尺で、島ことが多くあった。そんな時代に、郊外にマイホームを求むという提案をしたのが反球電鉄の海野屋小林一蔵。明治時代は鉄道建設ラッシュが起こり各地で民営の鉄道会社が立ち上がった。後に反球電鉄となる海野ありま電気軌道もそのうちの1つ。海野とありま、2つの観光地時田 産業 の プロジェクト を スタート さ せ た 。 そして この プロジェクト を 買っ て 出 た の が 小林 だっ た 。 しかし 沿線 の 村村 は 農村 地帯 で 電車 の 利用 者 は 少ない 。 電車 に 乗る で も 乗せる の か と 迷ける 人 も い た ほど だ 。 小林 は 沿線 と なる 町 を 歩き 考え た 。 環境 汚染 が 進む 町中 で は なく 空気 の 綺麗 な 郊外 にそう、人の暮らしがあるべきではないだろうかと。小林は上客は電車が想像するという言葉を掲げた。三鷹や高津には遊園施設を作り、池田には日本初の郊外型分譲住宅地、池田新市外、後の武野町住宅を作った。周辺には病院、学校と日常生活に必要な場も作られ発展していく。 さらに小林は、住宅を分割で購入できるローンを仕組みを作り出した。 元は銀行員だった小林ならではのアイデアだ。 こうして富裕層だけでなく、一サラリーマンでも郊外に家を持てるようになり、郊外から電車に乗って会社へ通勤するというライフスタイルが定着し、安定した乗客数を見込めるようになった。 仕事と暮らしの場を分けるその斬新なアプローチは成功し、現在も続く大府スタイルのスタンダードとなっている。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 35.1,
+  "n_chunks": 6,
+  "prompt_tokens": 4434,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "66ec1b8fe0eca40fa73cffd56cee97ae1333d99956d87a231dd56716d3dd91a7"
+ }
+}

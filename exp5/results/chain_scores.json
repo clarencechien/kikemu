@@ -1,0 +1,23 @@
+{
+ "chain_brz_gemma": {
+  "chain": "Xbrz_auto → gemma-4-26b-a4b-it",
+  "term_survival": 0.7169,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
+ },
+ "chain_brz_gemini": {
+  "chain": "Xbrz_auto → gemini-3.5-flash",
+  "term_survival": 0.7952,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
+ },
+ "chain_sm_gemini": {
+  "chain": "Xbat_bi → gemini-3.5-flash",
+  "term_survival": 0.6265,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
+ }
+}

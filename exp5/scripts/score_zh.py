@@ -17,7 +17,11 @@ RAW = ROOT / "results" / "raw_zh"
 S2T = OpenCC("s2t")
 TOKEN = re.compile(r"[0-9A-Za-z]+|[^\s0-9A-Za-z]")
 ARMS = [("Zg", "Gemini 3.5 批次"), ("Zsm", "Speechmatics 批次"),
-        ("Zgma", "Gemma 4 12B"), ("Zbrz", "Breeze ASR 25")]
+        ("Zgma", "Gemma 4 12B"), ("Zgma_e4b", "Gemma 4 E4B"),
+        ("Zgma_e2b", "Gemma 4 E2B"),
+        ("Zgma_e4b_greedy", "Gemma 4 E4B(貪婪)"),
+        ("Zgma_e2b_greedy", "Gemma 4 E2B(貪婪)"),
+        ("Zbrz", "Breeze ASR 25")]
 
 
 def toks(t: str) -> list[str]:

@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e4b",
+ "file": "T2_275s.wav",
+ "audio_s": 20.0,
+ "transcript": "那在國際上哦,或台灣其實都概念是一樣的,這種數位憑證批價就是我們有一個需求,那我就可以來接收可能政府發行的憑證,或是證件,或是電子文件,那這些發行的單位其實就是分散式的,或是去中心型的,不是一個大一統的",
+ "meta": {
+  "arm": "Zgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 6.3,
+  "prompt_tokens": 577,
+  "model_load_sec": 20.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "6ea52b2276575189142ad4868c5b6bbeddb4366dba6de5d384db5297c60d6a1c"
+ }
+}

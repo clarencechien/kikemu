@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja_e2b",
+ "file": "sakai06__N3.wav",
+ "audio_s": 27.9,
+ "transcript": "まごの 市 の 堺 幕府 。 非常 に 危険 で あれ 。 ジュール 街道 沿い に ジャンネル に ござい ます 。 警官 の 交差 点 で 立ち止まり 周り を 見渡し て ほしい です 。 この 辺り 、 際 に は まごの 市 の 堺 幕府 に が あっ た と 言わ れ て い ます 。 少し 歴史 を 理解 の 冒頭 の 日々 が 始まる 少し 前 。 京都 で 大井 の 道 。",
+ "meta": {
+  "arm": "Xgma_ja_e2b",
+  "model": "google/gemma-4-E2B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 6.0,
+  "prompt_tokens": 774,
+  "model_load_sec": 12.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "69db4293f4af98e29d80c7166688882874abb9e971b791dc5688241e7081629b"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "ikeda02__N0.wav",
+ "audio_s": 157.9,
+ "transcript": "室町 住宅 9 池田 新市街 ニュー タウン の こと初め 時 は 明治 現在 の 池田 駅 の 西側 くれは 神社 の 鳥居 の 奥 に ニュー タウン の こと初め と も 言う べき 町 が 誕生 し た 大阪 の 都市 部 で は 稼ぎ を 求め て 人口 が 爆発 的 に 急増 住み込み で 働い たり 近く の 尺彼にすまうことが多かった。 そんな時代に郊外にマイホームを持とうという提案をしたのが阪急電鉄の海野屋小林一造。 明治時代は鉄道建設ラッシュが起こり、各地で民営の鉄道会社が立ち上がった。 後に阪急電鉄となる箕面有馬電気軌道もそのうちの1つ。 箕面と有馬 2つの観光地と北尾つなぐプロジェクトをスタートさせた。そしてこのプロジェクトを勝って出たのが小林だった。しかし、沿線の村村は農村地帯で電車の利用者は少ない。電車に猿でも乗せるのかとあざける人もいたほどだ。小林は沿線となる街を歩き考えた。環境汚染が進む町中ではなく空気のきれいな郊外にそして 人 の 暮らし が ある べき で は ない だろう か と 。 小林 は 乗客 は 電車 が 想像 する と いう 言葉 を 掲げ た 。 箕面 や 高座 に は 遊覧 施設 を 作り 池田 に は 日本 初 の 高外 型 分上 住宅 地 池田 新 市外 の むろ町 住宅 を 作っ た 。 周辺 に は 病院 、 学校 と 日常 生活 に 必要 な 場 も 作ら れ発展して行く。 さらに小林は住宅を分割で購入できるローンの仕組みを作り出した。 元は銀行員だった小林ならではのアイデアだ。 こうして富裕層だけでなく1サラリーマンでも郊外に家を持てるようになり、郊外から電車に乗って会社へ通勤するというライフスタイルが定着し、安定した乗客数を見込めるようになった。 仕事と暮らしの場を分ける。という、斬新なアプローチは成功し、現在も続くライフスタイルのスタンダードとなっている。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 34.7,
+  "n_chunks": 6,
+  "prompt_tokens": 4434,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "d36b8c4dd834955a1e74f383a20efca0d8481d82350bcf3d00212c4aa8ae6f8f"
+ }
+}

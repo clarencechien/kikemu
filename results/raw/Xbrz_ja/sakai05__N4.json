@@ -1,0 +1,62 @@
+{
+ "arm": "Xbrz_ja",
+ "file": "sakai05__N4.wav",
+ "audio_s": 29.9,
+ "transcript": "菅原神社の椿の井戸ザビエル公園を出て奇襲街道沿いに南へ向かうその途中にある菅原神社にも立ち寄ってみようここには千利休の師匠武之上王が愛したと伝えられる椿の井戸があるわびさびという言葉を聞いたことがあるだろうか元は和歌に関する言葉で",
+ "segments": [
+  {
+   "start": 0.0,
+   "end": 5.68,
+   "text": "菅原神社の椿の井戸"
+  },
+  {
+   "start": 5.68,
+   "end": 10.8,
+   "text": "ザビエル公園を出て奇襲街道沿いに南へ向かう"
+  },
+  {
+   "start": 10.8,
+   "end": 14.88,
+   "text": "その途中にある菅原神社にも立ち寄ってみよう"
+  },
+  {
+   "start": 14.88,
+   "end": 17.88,
+   "text": "ここには千利休の師匠"
+  },
+  {
+   "start": 17.88,
+   "end": 22.8,
+   "text": "武之上王が愛したと伝えられる椿の井戸がある"
+  },
+  {
+   "start": 22.8,
+   "end": 27.68,
+   "text": "わびさびという言葉を聞いたことがあるだろうか"
+  },
+  {
+   "start": 27.68,
+   "end": 29.96,
+   "text": "元は和歌に関する言葉で"
+  }
+ ],
+ "meta": {
+  "arm": "Xbrz_ja",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float16",
+  "device": "cuda",
+  "gpu_class": "T4",
+  "chunk_length_s": 0,
+  "return_timestamps": true,
+  "language_arg": null,
+  "corpus": "exp1(日文導覽)",
+  "note": "設定與 exp2 Phase A 相同(T4/fp16),不是 exp5 那次的 CPU/fp32",
+  "elapsed_sec": 7.5,
+  "model_load_sec": 8.7,
+  "gpu": "Tesla T4",
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "5da9c23c069cb9a01e3380510120e3b8aa70b5af8ffd383aad2b28eb6f019b51"
+ }
+}

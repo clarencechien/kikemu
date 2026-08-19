@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "ikeda03__N1.wav",
+ "audio_s": 97.2,
+ "transcript": "堺町商店街 9 田中町商店街 100 家店のこと始め 池田駅から北に伸びる堺町商店街 この商店街は駅とどこを繋ぐ道なのだろうか 小林一曾が室町住宅を作るよりずっと昔 池田は城下町として栄えていた商店街の先には、丹波地方から池田を経て、大阪へと向かう野関街道が走っており、大阪へ農産物や物資品が盛んに運ばれていた。多くの人が行き来し、大変栄えた街並みがあった。明治になり、池田駅とかつて城下町だった池田の集落を繋ぐようにして生まれた田中町商店街。電車の開通とともに近郊からの利用客が増え、商店街は賑わった。\nそうしたことから、街の名前は栄町。\n商店街は、栄町商店街となった。\n昭和初期には、北設初の百貨店\n伊勢屋百貨店が誕生。\n日早く近代的な洋風形態を取り入れて作られた、３階建ての連れ造りの建物。\n現在は、旧池田をモデルとして残されており、壁面のタイルからその時代をうかがい知ることができる。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 18.6,
+  "n_chunks": 4,
+  "prompt_tokens": 2753,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "125125f7228e06860109ff87855583d47c70684d838a80a031b741eca060ffb5"
+ }
+}

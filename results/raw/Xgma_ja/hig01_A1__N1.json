@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "hig01_A1__N1.wav",
+ "audio_s": 111.4,
+ "transcript": "イシキニツルニアジンジャ エマデ エマデニツルニア まずは屋根をみあげてみよ 肋骨と肋骨もよく見つけろとるんニキ ジンジャエノイシキニツルニア 今日この岩をも切りさき 塞まるく処に 5歳の子から 5神が偉大でを 出し て いる 。 春 の 菓子 引き神 は 時代 。 慌て 宿 の おみ から 東 の 神 から を 預かっ た 右は ひ みこと 。 この 地 に 降り立ち 全住 し て い た 一族 の お さん 長住 彦 の 妹 と 結ば れ 生まれ た の が うま島 の 見事 だ 。 岸 寺 で は この 2 橋 の 神 様 を ご 祭人 と し て 立っ て敵対するこの地は、\nジム天皇が王を平定するために東へと進み、この地に入った時、\n巫女はすでにこの地を治めていた。\n突然現れたジム天皇に長寿のヒコは激しく抵抗したが、\n巫女とジム天皇が天尊の証であるアマの母屋を互いに示し合うことで川屋は寺佐上神の使者であることが分かった。そこでに子は長住彦に派化に入りようにさとし ここに大和の国が建国したのである。その後、に子のいち族は物の上人となり天皇に使えることとなった。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 23.8,
+  "n_chunks": 4,
+  "prompt_tokens": 3109,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "04bbf47446611a7e037be474c3f2b9f3fff746a059ba475a4bc9dfae1abc4c55"
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e4b",
+ "file": "T3_200s.wav",
+ "audio_s": 20.0,
+ "transcript": "都是全部都是都是以色烈的啊,所以他們這邊公司上市跟成功賺到錢的的的的的成功的案例很多,所以我覺得要改變台灣文體業啊,最重要的你要讓投資人在文體業賺到錢,他們才會願意投的錢。其實我認識很多投資圈的一些長輩啊,或者是一些投資朋友",
+ "meta": {
+  "arm": "Zgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 6.9,
+  "prompt_tokens": 577,
+  "model_load_sec": 20.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "65c4488605d2817aa543164f30b245dca0c7d6fb26be90acd3bba5a9f5f11361"
+ }
+}

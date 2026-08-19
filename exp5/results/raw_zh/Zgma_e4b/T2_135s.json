@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e4b",
+ "file": "T2_135s.wav",
+ "audio_s": 20.0,
+ "transcript": "那大概在以太方剛出來那個時候,2015年開始吧,就有國際上的偏政府或者偏網路標準組織的人在研究說,我們能不能把這一套區塊鏈世界的創新發明,引導更接地氣的世界,尤其是政府服務,或者是大",
+ "meta": {
+  "arm": "Zgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 5.7,
+  "prompt_tokens": 577,
+  "model_load_sec": 20.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8dd854a9d4255bba9cf81ae6324143d8a03e99384eebbdf15adb04529c3e0788"
+ }
+}
