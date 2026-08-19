@@ -1,0 +1,67 @@
+{
+ "arm": "Xbrz_ja",
+ "file": "sakai06__N3.wav",
+ "audio_s": 27.9,
+ "transcript": "幻の境幕府四周街道沿いに南へ南へ宿院の交差点で立ち止まり周りを見渡して欲しいこの辺一帯には幻の境幕府があったと言われている少し歴史を振り返ろう訪問の日々が始まる少し前京都で大移民の団体",
+ "segments": [
+  {
+   "start": 0.0,
+   "end": 4.88,
+   "text": "幻の境幕府"
+  },
+  {
+   "start": 4.88,
+   "end": 8.84,
+   "text": "四周街道沿いに南へ南へ"
+  },
+  {
+   "start": 8.84,
+   "end": 11.2,
+   "text": "宿院の交差点で立ち止まり"
+  },
+  {
+   "start": 11.2,
+   "end": 14.04,
+   "text": "周りを見渡して欲しい"
+  },
+  {
+   "start": 14.04,
+   "end": 19.4,
+   "text": "この辺一帯には幻の境幕府があったと言われている"
+  },
+  {
+   "start": 19.4,
+   "end": 22.56,
+   "text": "少し歴史を振り返ろう"
+  },
+  {
+   "start": 22.56,
+   "end": 25.28,
+   "text": "訪問の日々が始まる少し前"
+  },
+  {
+   "start": 25.28,
+   "end": 27.88,
+   "text": "京都で大移民の団体"
+  }
+ ],
+ "meta": {
+  "arm": "Xbrz_ja",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float16",
+  "device": "cuda",
+  "gpu_class": "T4",
+  "chunk_length_s": 0,
+  "return_timestamps": true,
+  "language_arg": null,
+  "corpus": "exp1(日文導覽)",
+  "note": "設定與 exp2 Phase A 相同(T4/fp16),不是 exp5 那次的 CPU/fp32",
+  "elapsed_sec": 5.8,
+  "model_load_sec": 8.7,
+  "gpu": "Tesla T4",
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "69db4293f4af98e29d80c7166688882874abb9e971b791dc5688241e7081629b"
+ }
+}
