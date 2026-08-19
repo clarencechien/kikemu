@@ -37,11 +37,27 @@ AI Studio 的 50 個模型、OpenRouter 的 415 個模型裡,Gemma 4 都只有�
 
 `gemma-4-12B-it` 是 bf16 **23.9 GB** 權重,notebook 會依 GPU 記憶體自動選策略:
 
-| GPU | 策略 | 備註 |
+| GPU | 12B 能不能跑 | 策略 |
 |---|---|---|
-| **A100 40G / H100** | bf16 原生 | 與模型卡一致,最乾淨,**建議用這個** |
-| L4 24G / A10 | 4-bit NF4 | 量化不是原生設定,會寫進 meta |
-| T4 16G(免費) | 4-bit NF4 | 可能仍 OOM;真的不行就把 `MODEL_ID` 改成 `google/gemma-4-E4B-it` |
+| **A100 40G / H100** | ✅ | bf16 原生,整段送——**唯一乾淨可比的組合** |
+| L4 24G / A10 | ✅ | 4-bit NF4,整段送(量化會寫進 meta) |
+| **T4 16G(免費)** | ⚠️ **整段送會 OOM** | 自動改 60 秒切塊,或改用 `google/gemma-4-E4B-it` |
+
+**T4 為什麼不行(算術問題,不是設定問題):**
+5 分鐘音訊 ≈ **7500 個 audio token**。T4 是 compute 7.5,吃不到 SDPA 的
+flash / memory-efficient backend,會退回 math backend 把注意力矩陣整個實體化:
+
+```
+7500² × 16 heads × 4 bytes ≈ 3.4 GB      ← 實測 OOM 就是要不到這一塊
+```
+
+**權重塞得進去(4-bit 約 7 GB),注意力塞不進去。**
+notebook 偵測到 <20 GB 會自動把 `CHUNK_SEC` 設成 60。
+
+> ⚠️ **切塊的數字不能和整段的混比。** 模型看不到跨塊上下文,對專名不利,
+> 而且其他所有 arm(Breeze、Gemini 批次、SM)都是整段處理。
+> `chunk_sec` 與 `whole_file` 會寫進每筆結果的 meta,報告裡必須標明。
+> 要拿乾淨可比的數字,**請用 L4 或 A100**。
 
 **跑多久未量測**——沒有人在 GPU 上跑過這個組合。6 個檔 × 5 分鐘音訊,
 Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請預留時間。
