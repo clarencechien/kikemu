@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja_jp",
+ "file": "sakai05__N1.wav",
+ "audio_s": 29.9,
+ "transcript": "菅原 神社 の 菅 希 の 井戸 。\nザビエル 公園 を 出 て 州会 堂 沿い に 南 へ 向かう 。\nその 途中 に ある 菅原 神社 に も 立ち寄っ て みよう 。\nここ に は 千 の 離宮 の 師匠 竹の 上王 が 愛し た と 伝え られる 菅 希 の 井戸 が ある 。\nわびさび と いう 言葉 を 聞い た こと が ある だろう か 。\n元 は 若 に 関する 言葉 で",
+ "meta": {
+  "arm": "Xgma_ja_jp",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "japanese",
+  "prompt": "Transcribe the following speech segment in Japanese into Japanese text.\n\nFollow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 9.0,
+  "prompt_tokens": 830,
+  "model_load_sec": 18.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "6f76f7e162a0190a016f3e1c0590b8e75576a0094b01c287f2a4d3fd0bbacbea"
+ }
+}

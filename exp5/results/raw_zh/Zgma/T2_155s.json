@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma",
+ "file": "T2_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "對說 1 1 數為平正比，而數為比對，這是大概念。這個概念跟以前的概念完全不同，以前的政府服務可能是，他就給你一助長號碼，啊，他給你速度表，他的號板的那個家付場，那個家場來爆理保障，那你可以，",
+ "meta": {
+  "arm": "Zgma",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 7.8,
+  "prompt_tokens": 581,
+  "model_load_sec": 27.6,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "805700635ce1c977ca7ae3ecc297987d7af9fa3610fad776b1a48ce182719953"
+ }
+}

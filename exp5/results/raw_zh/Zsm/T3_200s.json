@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T3_200s.wav",
+ "audio_s": 20.0,
+ "transcript": "老师 全部都是 都 是 以色列 的 啊 所以 他们 这边 公司 上市 跟 成功 赚 到 钱 的 公司 的 成功 案例 很多 所以 我 觉得 要 改变 台湾 软体 业 重点 是 你 要 让 投资人 在 软体 业 赚 到 钱 他们 才 会 愿意 投 的 钱 其实 我 认识 很多 投资 圈 的 一些 长辈 或者 是 一些 投资 的 朋友",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 16.1,
+  "audio_sha256": "65c4488605d2817aa543164f30b245dca0c7d6fb26be90acd3bba5a9f5f11361"
+ }
+}

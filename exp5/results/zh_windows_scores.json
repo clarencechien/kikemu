@@ -1,0 +1,171 @@
+{
+ "per_window": [
+  {
+   "arm": "Zg",
+   "window": "T2_30s",
+   "cer": 0.1287,
+   "len_ratio": 1.099
+  },
+  {
+   "arm": "Zg",
+   "window": "T2_135s",
+   "cer": 0.0625,
+   "len_ratio": 1.062
+  },
+  {
+   "arm": "Zg",
+   "window": "T2_155s",
+   "cer": 0.1569,
+   "len_ratio": 1.147
+  },
+  {
+   "arm": "Zg",
+   "window": "T2_175s",
+   "cer": 0.1546,
+   "len_ratio": 1.113
+  },
+  {
+   "arm": "Zg",
+   "window": "T2_220s",
+   "cer": 0.7436,
+   "len_ratio": 1.705
+  },
+  {
+   "arm": "Zg",
+   "window": "T2_275s",
+   "cer": 0.087,
+   "len_ratio": 1.065
+  },
+  {
+   "arm": "Zg",
+   "window": "T3_155s",
+   "cer": 0.398,
+   "len_ratio": 1.224
+  },
+  {
+   "arm": "Zg",
+   "window": "T3_200s",
+   "cer": 0.3708,
+   "len_ratio": 1.27
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_30s",
+   "cer": 0.1089,
+   "len_ratio": 0.941
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_135s",
+   "cer": 0.075,
+   "len_ratio": 1.038
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_155s",
+   "cer": 0.1765,
+   "len_ratio": 0.961
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_175s",
+   "cer": 0.1856,
+   "len_ratio": 1.0
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_220s",
+   "cer": 0.4744,
+   "len_ratio": 1.282
+  },
+  {
+   "arm": "Zsm",
+   "window": "T2_275s",
+   "cer": 0.0326,
+   "len_ratio": 0.967
+  },
+  {
+   "arm": "Zsm",
+   "window": "T3_155s",
+   "cer": 0.2347,
+   "len_ratio": 0.908
+  },
+  {
+   "arm": "Zsm",
+   "window": "T3_200s",
+   "cer": 0.3596,
+   "len_ratio": 1.146
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_30s",
+   "cer": 1.1881,
+   "len_ratio": 0.505
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_135s",
+   "cer": 0.6125,
+   "len_ratio": 1.0
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_155s",
+   "cer": 0.6667,
+   "len_ratio": 0.912
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_175s",
+   "cer": 0.6598,
+   "len_ratio": 1.082
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_220s",
+   "cer": 6.8333,
+   "len_ratio": 6.641
+  },
+  {
+   "arm": "Zgma",
+   "window": "T2_275s",
+   "cer": 0.587,
+   "len_ratio": 1.087
+  },
+  {
+   "arm": "Zgma",
+   "window": "T3_155s",
+   "cer": 5.7245,
+   "len_ratio": 5.296
+  },
+  {
+   "arm": "Zgma",
+   "window": "T3_200s",
+   "cer": 1.573,
+   "len_ratio": 1.157
+  }
+ ],
+ "summary": {
+  "Zg": {
+   "label": "Gemini 3.5 批次",
+   "n": 8,
+   "cer_mean": 0.2628,
+   "cer_max": 0.7436,
+   "len_ratio_mean": 1.211
+  },
+  "Zsm": {
+   "label": "Speechmatics 批次",
+   "n": 8,
+   "cer_mean": 0.2059,
+   "cer_max": 0.4744,
+   "len_ratio_mean": 1.03
+  },
+  "Zgma": {
+   "label": "Gemma 4 12B",
+   "n": 8,
+   "cer_mean": 2.2306,
+   "cer_max": 6.8333,
+   "len_ratio_mean": 2.21
+  }
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "arm": "Zsm",
+ "corpus": "exp5 純中文 20 秒視窗",
+ "engine": "speechmatics batch",
+ "language": "cmn_en",
+ "operating_point": "enhanced"
+}

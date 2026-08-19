@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T2_275s.wav",
+ "audio_s": 20.0,
+ "transcript": "那 在 国际 上 或 台湾 其实 都 是 一样 的 这种 数位 凭证 皮夹 就是 我们 有 一个 私钥 那 我 就 可以 来 接收 可能 政府 发行 的 凭证 或是 证件 或是 电子 文件 那 这些 发行 的 单位 其实 就是 分散式 的 或是 去 中心 的 不是 一个 大一统 的",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 21.0,
+  "audio_sha256": "6ea52b2276575189142ad4868c5b6bbeddb4366dba6de5d384db5297c60d6a1c"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T2_175s.wav",
+ "audio_s": 20.0,
+ "transcript": "可以 享受 便利 的 服务 其实 到 现在 为止 很多 国家 也 是 这 样子 但是 如果 这个 政府 拿 这个 事情 来 做 不 合法 事情 其实 风险 就 会 很大 也 有 很多 国家 有 这样 的 案例 像 阿富汗 或者 是 一些 倒台 的 政府 资料 被 拿 去 用 的 故事 那 比较 新 的 世界 就 会",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 23.0,
+  "audio_sha256": "475ee8cc56827d488915ed4de3651854554c7afb03ed9bdb2968fef2d0116e34"
+ }
+}

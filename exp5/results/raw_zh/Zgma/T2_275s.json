@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma",
+ "file": "T2_275s.wav",
+ "audio_s": 20.0,
+ "transcript": "嗯，那在国际上，好台湾地区到关键影响的对所谓评正批评就是，我们有一个事物，那我觉得我就是可能政府发行的评正，也就是政建，也就是电磁文件，那这些发行的单位其实就是分山室的，就是处于型的不属于一个大一统的",
+ "meta": {
+  "arm": "Zgma",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 7.2,
+  "prompt_tokens": 581,
+  "model_load_sec": 27.6,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "6ea52b2276575189142ad4868c5b6bbeddb4366dba6de5d384db5297c60d6a1c"
+ }
+}

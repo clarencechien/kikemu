@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma",
+ "file": "T2_175s.wav",
+ "audio_s": 20.0,
+ "transcript": "計算所有變異的符,其實到現在還沒到國家是長處,但是如果那個政府拿自己的實行內造不好發信,其實封聖就是很大,啊,也有很多國家有這樣的安排,上阿福漢就是一種那個道隊的那個政府只有變拿使用的規則,對那比座星的社會周會",
+ "meta": {
+  "arm": "Zgma",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 7.7,
+  "prompt_tokens": 581,
+  "model_load_sec": 27.6,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "475ee8cc56827d488915ed4de3651854554c7afb03ed9bdb2968fef2d0116e34"
+ }
+}

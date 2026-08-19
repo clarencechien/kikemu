@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "自然人 凭证 我 不 知道 因为 我 现在 登录 的 几个 政府 的 它 其实 只要 我 账号密码 那 它 没有 要 我 用 对 它 有 不同 登录 的 分层 我 想 起来 了 对 不 对 我 如果 比较 比较 重要 的 可能 就是 要查 自然人 凭证 跟 商品 我超 讨厌 这个 东西 报税 报税 然后 第二种 就是",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 23.3,
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}
