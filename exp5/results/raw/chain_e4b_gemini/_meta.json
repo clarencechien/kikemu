@@ -1,0 +1,9 @@
+{
+ "chain": "Xgma_e4b → gemini-3.5-flash",
+ "asr_arm": "Xgma_e4b",
+ "translate_model": "gemini-3.5-flash",
+ "thinkingLevel": "minimal",
+ "temperature": 0.2,
+ "prompt": "INTERPRETER_SYSTEM(凍結)",
+ "note": "不重跑 ASR,直接吃既有轉寫"
+}

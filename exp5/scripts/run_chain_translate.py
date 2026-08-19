@@ -7,11 +7,13 @@
 **不重跑聽的那一跳**,直接吃既有的 `exp5/results/raw/<asr_arm>/` 轉寫,
 所以這一格不用 GPU、成本只有譯那跳的 API 費。
 
-三條鏈同料比較(輸入音檔完全相同,只有引擎組合不同):
+五條鏈同料比較(輸入音檔完全相同,只有引擎組合不同):
 
     Xbrz_auto  → gemma-4-26b-a4b-it    全地端候選(兩端都是開源權重)
     Xbrz_auto  → gemini-3.5-flash      只換譯的那跳,隔離「譯」的貢獻
     Xbat_bi    → gemini-3.5-flash      現行產線的形狀(雲端兩跳)
+    Xgma_e4b   → gemma-4-26b-a4b-it    **純 Gemma 全地端**(handoff-v9 G)
+    Xgma_e4b   → gemini-3.5-flash      換耳朵不換嘴,量第一跳的純效果
 
 指標(exp5 是中英夾雜,所以看**英文在譯文裡活下來沒有**):
 
@@ -42,6 +44,13 @@ CHAINS = [
     ("Xbrz_auto", "gemma-4-26b-a4b-it", "chain_brz_gemma"),
     ("Xbrz_auto", "gemini-3.5-flash", "chain_brz_gemini"),
     ("Xbat_bi", "gemini-3.5-flash", "chain_sm_gemini"),
+    # handoff-v9 G:E4B 當耳朵。前三條的耳朵是 Breeze 或 SM,
+    # E4B 是 v8 之後才有資格當第一跳的,從沒接過。
+    # chain_e4b_gemma  = **純 Gemma 全地端**(兩端都是 Gemma 4 開源權重)
+    # chain_e4b_gemini = 第二跳固定 Gemini,與 chain_brz_gemini 相減
+    #                    就是「第一跳的純效果」(任務書 §3 G 第二張表)
+    ("Xgma_e4b", "gemma-4-26b-a4b-it", "chain_e4b_gemma"),
+    ("Xgma_e4b", "gemini-3.5-flash", "chain_e4b_gemini"),
 ]
 
 

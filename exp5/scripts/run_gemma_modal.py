@@ -97,6 +97,7 @@ cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
          scaledown_window=600)
 class Gemma:
     model_id: str = modal.parameter(default="google/gemma-4-12B-it")
+    greedy: bool = modal.parameter(default=False)
 
     @modal.enter()
     def load(self):
@@ -134,9 +135,13 @@ class Gemma:
                 msgs, add_generation_prompt=True, tokenize=True,
                 return_dict=True, return_tensors="pt").to(model.device)
             n = inputs["input_ids"].shape[-1]
+            # 預設吃模型卡的 generation_config:do_sample=True、temperature=1.0。
+            # greedy=True 改成貪婪,用來分開「模型性質」與「取樣抖動」
+            # (handoff-v9 §3 J)。模式寫進 meta。
+            kw = {"do_sample": False} if self.greedy else {}
             with torch.inference_mode():
                 # 官方範例是 512。上限開太大只會讓跳針跑更久(4096 跑出 8152 字)。
-                o = model.generate(**inputs, max_new_tokens=512)
+                o = model.generate(**inputs, max_new_tokens=512, **kw)
             raw = processor.decode(o[0][n:], skip_special_tokens=False)
             # 官方解析器:自己切 <channel|> 是錯的(模型卡的 snippet 用這個)
             msg = processor.parse_response(raw, prefix=inputs["input_ids"])
@@ -170,7 +175,8 @@ class Gemma:
 
 @app.local_entrypoint()
 def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
-         prompt: str = "official", probe: int = 0, selftest: bool = False):
+         prompt: str = "official", probe: int = 0, selftest: bool = False,
+         greedy: bool = False, conds: str = ""):
     """probe=N:只跑 T1__M0 的前 N 個 chunk、兩個 prompt 變體都跑,不寫結果。
 
     先驗再全跑——前兩輪都是等整個檔跑完才發現壞掉,白燒了 $1.26。
@@ -185,7 +191,7 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
         return h.hexdigest()
 
     man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
-    gemma = Gemma(model_id=model)
+    gemma = Gemma(model_id=model, greedy=greedy)
 
     if selftest:
         # 決定性對照:模型卡自己 snippet 裡的那個範例音檔。
@@ -214,7 +220,10 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
         return
 
     picks = json.loads((ROOT / "corpus" / "picks.json").read_text())
-    stems = [f"{p_['seg']}__{c}" for p_ in picks for c in CONDS]
+    # conds 空字串 = 用預設的 CONDS(既有 arm 重跑結果不變);
+    # 傳 "M0" 或 "M1,M2" 可只跑指定條件(handoff-v9 H / J)
+    use = [c.strip() for c in conds.split(",") if c.strip()] or CONDS
+    stems = [f"{p_['seg']}__{c}" for p_ in picks for c in use]
     raw = ROOT / "results" / "raw" / arm
     raw.mkdir(parents=True, exist_ok=True)
     todo = [s_ for s_ in stems if not (raw / f"{s_}.json").exists()]
@@ -231,6 +240,10 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
     print(f"上傳 {len(payload)} 個檔(sha256 全部與 manifest 相符),prompt={prompt}")
 
     meta = {"arm": arm, "model": model, "api": f"modal {GPU}",
+            "conds": use,
+            "sampling": ("greedy(do_sample=False)" if greedy
+                         else "模型卡預設 do_sample=True, temperature=1.0, "
+                              "top_k=64, top_p=0.95 —— 單次取樣,未量測變異"),
             "load": "bf16(dtype=auto)", "chunk_sec": CHUNK_SEC, "whole_file": False,
             "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
             "modality_order": "text then audio(模型卡 §4)",
