@@ -46,16 +46,31 @@ AI Studio 的 50 個模型、OpenRouter 的 415 個模型裡,Gemma 4 都只有�
 **跑多久未量測**——沒有人在 GPU 上跑過這個組合。6 個檔 × 5 分鐘音訊,
 Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請預留時間。
 
-### 三個已經先驗過的坑(所以 notebook 裡直接寫對了)
+### 四個坑(前三個先驗過,第四個是實際跑的時候踩到的)
 
-1. **`Gemma4UnifiedProcessor` 需要 `torchvision`**——它連帶 import image processor,
-   少裝會噴 `ModuleNotFoundError: No module named 'torchvision'`,而不是一個看得懂的錯誤。
+1. **`Gemma4UnifiedProcessor` 需要 `torchvision`**——它連帶 import image processor。
+   但 **Colab 已經內建**,而且與它的 torch 是配對好的:**絕對不要 `pip install -U torchvision`**。
+   升級會裝到對不上的 build,import 時噴:
+
+   ```
+   RuntimeError: operator torchvision::nms does not exist
+   ```
+
+   **而且 pip 裝過就回不去,restart runtime 沒用**——只能
+   「執行階段 → 中斷連線並刪除執行階段」再從頭跑。
+   notebook 現在只裝 `transformers / accelerate / bitsandbytes / librosa / soundfile`,
+   並在 import 失敗時直接告訴你怎麼修。
 2. **thought channel 要濾掉。** Gemma 4 用 `<channel|>` 分隔思考與答案,
    不濾會把推理文字當成轉寫存進去。這個坑在 API 端已經踩過一次
    (見 [`docs/gemini-api-lessons.md`](../docs/gemini-api-lessons.md))。
    chat template 的 `enable_thinking` **預設就是 False**,等同 API 端的
    `thinkingLevel: "minimal"`,**不要改成 True**(CLAUDE.md 鐵律 4)。
 3. **prompt 與 exp5 的 `Gbat` arm 逐字相同。** 唯一變數要是模型,不是 prompt。
+4. **4-bit 時音訊塔要留在 bf16。** `Gemma4UnifiedMultimodalEmbedder.forward` 只在
+   `weight.dtype.is_floating_point` 為真時才把 float32 的 `input_features` 轉型;
+   量化後 weight 是 uint8,轉型不會發生。notebook 用
+   `llm_int8_skip_modules=['embed_audio','embed_vision','lm_head']` 保留它們
+   (只佔幾百 MB),並在載入後印出 dtype 供確認。只影響 L4 / T4;A100 bf16 沒這問題。
 
 ### 判讀時要記得的偏差
 
