@@ -40,6 +40,7 @@ ARMS_JA = {
     "Xgma_ja": "transcript",
     "Xgma_ja_jp": "transcript",
     "Xgma_ja_e4b": "transcript",
+    "Xgma_ja_e2b": "transcript",
     # exp1 追加:Breeze ASR 25 的日文(handoff-v8 §1 A)
     "Xbrz_ja": "transcript",
     "C": "transcript",
