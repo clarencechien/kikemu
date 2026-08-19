@@ -1,0 +1,18 @@
+{
+ "arm": "Zbrz",
+ "file": "T2_275s.wav",
+ "audio_s": 20.0,
+ "transcript": "那在國際上或台灣其實都概念是一樣的這種數位憑證皮夾就是我們有一個資料那我就可以來接收可能政府發行的憑證或是證件或是電子文件那這些發行的單位其實就是分散式的或是去中心的不是一個大一同的",
+ "meta": {
+  "arm": "Zbrz",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float32",
+  "device": "cpu",
+  "chunk_length_s": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "note": "與 exp5 的 Xbrz_auto 同設定,只是換成 CPU/fp32(本機無 GPU)",
+  "elapsed_sec": 96.5,
+  "audio_sha256": "6ea52b2276575189142ad4868c5b6bbeddb4366dba6de5d384db5297c60d6a1c"
+ }
+}

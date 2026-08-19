@@ -1,0 +1,10 @@
+{
+ "arm": "Zbrz",
+ "model": "MediaTek-Research/Breeze-ASR-25",
+ "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+ "dtype": "float32",
+ "device": "cpu",
+ "chunk_length_s": 0,
+ "corpus": "exp5 純中文 20 秒視窗",
+ "note": "與 exp5 的 Xbrz_auto 同設定,只是換成 CPU/fp32(本機無 GPU)"
+}

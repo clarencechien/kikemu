@@ -1,0 +1,18 @@
+{
+ "arm": "Zbrz",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "現在是用自然人憑證自然人憑證我不知道因為我現在最近登入了幾個政府的它其實只要我帳號密碼那它沒有要我用它有不同登入的分層我想起來了你如果比較重要的可能就是要插自然人憑證跟公共密碼我超討厭這東西的爆稅了爆稅了然後第二種當然就是",
+ "meta": {
+  "arm": "Zbrz",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float32",
+  "device": "cpu",
+  "chunk_length_s": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "note": "與 exp5 的 Xbrz_auto 同設定,只是換成 CPU/fp32(本機無 GPU)",
+  "elapsed_sec": 125.1,
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}

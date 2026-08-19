@@ -1,0 +1,18 @@
+{
+ "arm": "Zbrz",
+ "file": "T3_200s.wav",
+ "audio_s": 20.0,
+ "transcript": "全部都是以色列的所以他們這邊公司上市跟成功賺到錢的成功案例很多所以我覺得要改變台灣軟體業重點就是你要讓投資人在軟體業賺到錢他們才會願意投的錢其實我認識很多投資圈的一些長輩或是一些投資朋友",
+ "meta": {
+  "arm": "Zbrz",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float32",
+  "device": "cpu",
+  "chunk_length_s": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "note": "與 exp5 的 Xbrz_auto 同設定,只是換成 CPU/fp32(本機無 GPU)",
+  "elapsed_sec": 94.3,
+  "audio_sha256": "65c4488605d2817aa543164f30b245dca0c7d6fb26be90acd3bba5a9f5f11361"
+ }
+}

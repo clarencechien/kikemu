@@ -1,0 +1,18 @@
+{
+ "arm": "Zbrz",
+ "file": "T3_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "很少很少了然後或者說這件事情很神秘我感覺我需要有一個我是個黑帽這個駭客然後我要頂尖衝進就對著一個黑色的螢幕天天在那邊打那個是錯誤的記憶力上我們不是這樣子的我們是拿滑鼠點的而已我們不是只按按鍵的所以你會有",
+ "meta": {
+  "arm": "Zbrz",
+  "model": "MediaTek-Research/Breeze-ASR-25",
+  "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+  "dtype": "float32",
+  "device": "cpu",
+  "chunk_length_s": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "note": "與 exp5 的 Xbrz_auto 同設定,只是換成 CPU/fp32(本機無 GPU)",
+  "elapsed_sec": 118.0,
+  "audio_sha256": "e88c5992c7f7f46f309ed7e1d7b8d820021c89e562189276fff3684dfdddf7ba"
+ }
+}
