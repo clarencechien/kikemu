@@ -46,7 +46,7 @@ AI Studio 的 50 個模型、OpenRouter 的 415 個模型裡,Gemma 4 都只有�
 **跑多久未量測**——沒有人在 GPU 上跑過這個組合。6 個檔 × 5 分鐘音訊,
 Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請預留時間。
 
-### 四個坑(前三個先驗過,第四個是實際跑的時候踩到的)
+### 五個坑(前三個先驗過,第四、五個是實際在 Colab 上跑才露出來的)
 
 1. **`Gemma4UnifiedProcessor` 需要 `torchvision`**——它連帶 import image processor。
    但 **Colab 已經內建**,而且與它的 torch 是配對好的:**絕對不要 `pip install -U torchvision`**。
@@ -66,7 +66,14 @@ Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請�
    chat template 的 `enable_thinking` **預設就是 False**,等同 API 端的
    `thinkingLevel: "minimal"`,**不要改成 True**(CLAUDE.md 鐵律 4)。
 3. **prompt 與 exp5 的 `Gbat` arm 逐字相同。** 唯一變數要是模型,不是 prompt。
-4. **4-bit 時音訊塔要留在 bf16。** `Gemma4UnifiedMultimodalEmbedder.forward` 只在
+4. **乾淨環境沒有 `corpus/noise_src/`。** MIT IR(12MB)+ DEMAND(172MB)
+   被 `.gitignore` 擋掉,所以 Colab 一定缺,`degrade.py` 會噴
+   `FileNotFoundError: .../mit_ir.zip`。
+   **已修在 `exp2/scripts/degrade.py::ensure_noise_src()`**——缺哪個抓哪個、
+   對 sha256,URL 存在 `exp2/corpus/audio_manifest.json` 的 `noise_src` 區段。
+   修在腳本而不是 notebook,是因為只補在某一本 notebook 裡,下一個入口還是會踩
+   (實際踩過:exp5 的兩本 notebook 都漏了同一格)。
+5. **4-bit 時音訊塔要留在 bf16。** `Gemma4UnifiedMultimodalEmbedder.forward` 只在
    `weight.dtype.is_floating_point` 為真時才把 float32 的 `input_features` 轉型;
    量化後 weight 是 uint8,轉型不會發生。notebook 用
    `llm_int8_skip_modules=['embed_audio','embed_vision','lm_head']` 保留它們

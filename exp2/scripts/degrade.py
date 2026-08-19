@@ -17,6 +17,9 @@ from pathlib import Path
 
 import numpy as np
 import soundfile as sf
+import hashlib
+import urllib.request
+
 from scipy import signal
 
 V1 = Path(__file__).resolve().parent.parent.parent / "scripts"
@@ -31,6 +34,43 @@ SR = 16000
 SEED = 20260807
 TARGET_RT60 = 0.8
 PEAK = 0.89
+
+
+def ensure_noise_src():
+    """缺哪個抓哪個。URL 與 sha256 存在 exp2/corpus/audio_manifest.json 的
+    `noise_src` 區段(唯一事實來源)。
+
+    為什麼放在這裡而不是 notebook:`corpus/noise_src/` 被 .gitignore 擋掉
+    (MIT IR 12MB + DEMAND 172MB,不進 repo),所以**任何**乾淨環境
+    (Colab、CI、新機器)呼叫 build() 都會缺。修在這支腳本裡,
+    兩本 exp5 notebook 與所有腳本一次修好——只補在某一本 notebook 裡,
+    下一個入口還是會踩同一個坑(實際踩過:exp5 的兩本 notebook 都漏了)。
+    """
+    man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
+    NSRC.mkdir(parents=True, exist_ok=True)
+    for name, info in man.get("noise_src", {}).items():
+        if info.get("used_by") != "exp2":
+            continue                      # PCAFETER 是 exp1 用的
+        dst = NSRC / name
+        if dst.exists() and _sha256(dst) == info["sha256"]:
+            continue
+        if dst.exists():
+            print(f"  {name} sha256 不符,重抓")
+            dst.unlink()
+        print(f"  下載 {name}({info['bytes'] / 1e6:.0f}MB)…", flush=True)
+        urllib.request.urlretrieve(info["url"], dst)
+        if _sha256(dst) != info["sha256"]:
+            dst.unlink()
+            raise RuntimeError(f"{name} 下載損毀(sha256 不符),請重跑")
+        print(f"  {name} ✅")
+
+
+def _sha256(p):
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
 
 
 def norm(x):
@@ -74,6 +114,7 @@ def build(wav_dir=None, out_dir=None, segs=("S1", "S2", "S3")):
     out_dir = Path(out_dir) if out_dir else OUT
     OUT_ = out_dir
     OUT_.mkdir(parents=True, exist_ok=True)
+    ensure_noise_src()
     rir, rir_name, t60 = pick_rir()
     print(f"RIR: {rir_name} T60={t60:.3f}s")
     def try_noise(zip_name, member):
