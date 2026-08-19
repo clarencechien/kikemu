@@ -27,6 +27,7 @@
 | exp5:Breeze 領域外對照(handoff-v6) | ✅ 3 段 × 2 條件 × 6 arm,**每條件 158 術語實例** |
 | exp1 追加 arm `Abat`:Gemini 非 Live 批次 | ✅ 5 條件全覆蓋——證明「噪音崩潰」是 **Live 串流**的行為,不是模型能力上限(報告 §2.1b) |
 | oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
+| 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本)、聽不行**(自發口語台灣華語 CER 2.231 vs Breeze 0.198) |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -111,7 +112,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
 | 一體式崩潰點 | 人聲 8dB → 0.030(全滅) | 人聲 12dB → 0.396(半滅) |
 
-七條可以直接用的規則:
+八條可以直接用的規則:
 
 1. **一體式**即時**的門檻是「直接餵訊號」,不是「安靜」。** exp1 裡只加室內殘響、
    完全不加噪音,Gemini Live 就從 0.836 掉到 0.552,而 SM+詞表維持 0.836。
@@ -155,7 +156,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
-| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的七條鐵律與驗證方式 |
+| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的八條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
 | [`handoff.md`](handoff.md) ~ [`handoff-v7.md`](handoff-v7.md) | 七份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板。**v6/v7 都已執行完畢,任務書末尾有執行結果與偏離紀錄**) |
 
@@ -165,6 +166,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|---|---|---|---|
 | 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 | 台灣科技 podcast 3 段 × 5 分 |
 | 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 | 158 個英文術語實例/條件 |
+| 追加 | Gemma 4 日文控制組(`Xgma_ja`) | — | — | — | 純中文 20 秒視窗 × 8(CER) |
 | 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 | 2(M0/M3 兩端) |
 | arm | 7(含 `Abat`) | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 6 |
 
