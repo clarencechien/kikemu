@@ -1,0 +1,19 @@
+{
+ "arm": "Xbrz_gpu",
+ "model": "MediaTek-Research/Breeze-ASR-25",
+ "revision": "cffe7ccb404d025296a00758d0a33468bec3a9d0",
+ "dtype": "float16",
+ "device": "cuda",
+ "gpu_class": "T4",
+ "chunk_length_s": 0,
+ "return_timestamps": true,
+ "language_arg": null,
+ "corpus": "exp5",
+ "conds": [
+  "M0",
+  "M1",
+  "M2",
+  "M3"
+ ],
+ "note": "T4/fp16,與 exp2 Phase A 同設定;既有的 Xbrz_auto 是 CPU/fp32,兩份都留著才比得出 dtype 差異(exp5 侷限 17)"
+}
