@@ -82,8 +82,21 @@ notebook 偵測到 <20 GB 會自動把 `CHUNK_SEC` 設成 60。
 |---|---|---|---|
 | **T4 + 12B + 60s 切塊 + bf16** | ~83~125 分 | **8~12 小時** | ❌ 免費版約 4 小時就斷線,跑不完 |
 | T4 + 12B + 60s 切塊 + **fp16** | 未量測(理論上快 3~10×) | ? | ⚠️ 可試,但 Gemma 在 fp16 有 NaN 前科 |
-| **L4 / A100 + 12B + 整段** | 未量測 | 未量測 | ✅ **建議走這條** |
-| (對照)Breeze on T4 | 102 秒 | ~10 分 | ✅ |
+| **A100 + 12B + 30s 切塊** | **~3.3 分**(20s/chunk × 10) | **~20 分** | ✅ **實測**(Modal,2026-08-19) |
+| **L4 + E4B + 30s 切塊** | **~1.8 分** | **~11 分** | ✅ **實測**,而且準確度比 12B 好一個數量級 |
+| (對照)Breeze on Colab T4 | 102 秒 | ~10 分 | ✅ |
+| (對照)Breeze on **Modal** T4 / L4 / A100 | **79s** / 66s / 59s | — | ✅ 同卡不同環境差 31%,見 `results/report.md` §3E.2c |
+
+> 📌 **2026-08-19 起,Gemma / Breeze 的正式數字都改在 Modal 上跑**
+> (`exp5/scripts/run_gemma_modal.py`、`scripts/run_breeze_modal.py` 等)。
+> 這份 Colab 手冊仍然有效,但 Colab 那條路耗掉五輪來回全是環境問題,
+> **要重跑請優先用 Modal**——image 釘死、可從 agent session 直接驅動、
+> 而且 `--probe` / `--selftest` 都在腳本裡。
+>
+> ⚠️ **另一件 Colab 手冊沒提到的事**:Gemma 4 三個型號的
+> `generation_config.json` 預設 `do_sample: true, temperature: 1.0`。
+> **不指定就是隨機取樣**,同一個檔重跑會得到不同結果(實測過:一次 119 字、
+> 一次直接 `<eos>`)。要可重現就傳 `do_sample=False`,或明講數字是單次取樣。
 
 **T4 慢的主因是 dtype**:T4 是 compute 7.5,**沒有 bf16 tensor core**,
 指定 `bfloat16` 會走軟體模擬。notebook 現在依 compute capability 自動選:

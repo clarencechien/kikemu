@@ -80,7 +80,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
 | `scripts/` | exp1/3/4 的實驗腳本 |
 | `exp2/` | exp2(中英夾雜) |
-| `results/report.md` | 五個實驗合併報告 + 21 條侷限 |
+| `results/report.md` | 五個實驗合併報告 + 35 條侷限(4 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |

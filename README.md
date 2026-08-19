@@ -159,7 +159,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、21 條侷限 |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**35 條侷限**(4 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
@@ -196,7 +196,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
-- **誠實記錄。** 21 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+- **誠實記錄。** 35 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+  解除的 4 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 
 ## 目錄
