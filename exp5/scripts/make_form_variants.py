@@ -32,6 +32,24 @@ CELLS = [(s, c) for s in ("T1", "T2", "T3") for c in ("M0", "M3")]
 PUNCT = re.compile(r"[、。，,．.!?！？・…‥「」『』（）()〈〉《》【】〔〕—ー–\-~〜"
                    r"：；:;\"'“”‘’`\s]+")
 GAP_SENTENCE = 0.5      # segment 間隔超過這個秒數就當句號
+LATIN_RUN = re.compile(r"[A-Za-z][A-Za-z0-9''\-]*")   # 一段拉丁字母(含縮寫的 ' 與 -)
+SPACES = re.compile(r"[ \t\u3000]+")
+
+
+def strip_all(t: str) -> str:
+    """刪掉標點與空白——兩個變體的『內容沒被動到』就用這個當機器證明。"""
+    return PUNCT.sub("", t or "")
+
+
+def add_space_around_latin(t: str) -> str:
+    """在每一段拉丁字母前後補半形空格(handoff-v9 §4c M)。只加空白,不改字。"""
+    out = LATIN_RUN.sub(lambda m: f" {m.group(0)} ", t or "")
+    return SPACES.sub(" ", out).strip()
+
+
+def remove_spaces(t: str) -> str:
+    """把所有空白刪掉(handoff-v9 §4c M)。只刪空白,不改字。"""
+    return SPACES.sub("", t or "")
 
 
 def strip_punct(t: str) -> str:
@@ -60,6 +78,24 @@ def build_breeze_punct(stem: str) -> dict:
             "source_arm": "Xbrz_auto", "n_punct_added": out.count("。") + out.count("，")}
 
 
+def build_e4b_space(stem: str) -> dict:
+    """E4B 轉寫 + 拉丁詞兩側補空格。內容不變(只多空白)。"""
+    src = json.loads((RAW / "Xgma_e4b" / f"{stem}.json").read_text())
+    out = add_space_around_latin(src["transcript"])
+    assert strip_all(out) == strip_all(src["transcript"]), f"{stem}:加空格時內容被動到了"
+    return {"transcript": out, "source_arm": "Xgma_e4b",
+            "n_latin_runs": len(LATIN_RUN.findall(src["transcript"]))}
+
+
+def build_breeze_nospace(stem: str) -> dict:
+    """Breeze 轉寫 − 全部空白。內容不變(只少空白)。"""
+    src = json.loads((RAW / "Xbrz_auto" / f"{stem}.json").read_text())
+    out = remove_spaces(src["transcript"])
+    assert strip_all(out) == strip_all(src["transcript"]), f"{stem}:刪空格時內容被動到了"
+    return {"transcript": out, "source_arm": "Xbrz_auto",
+            "n_spaces_removed": len(SPACES.findall(src["transcript"]))}
+
+
 def build_e4b_nopunct(stem: str) -> dict:
     """把 E4B 轉寫的標點刪掉。不新增、不刪除任何字。"""
     src = json.loads((RAW / "Xgma_e4b" / f"{stem}.json").read_text())
@@ -71,9 +107,13 @@ def build_e4b_nopunct(stem: str) -> dict:
 
 def main() -> None:
     specs = [("Xbrz_punct", build_breeze_punct,
-              "Breeze 轉寫 + 依自身 segment 邊界機械插入標點(內容未動)"),
+              "L:Breeze 轉寫 + 依自身 segment 邊界機械插入標點(內容未動)"),
              ("Xgma_e4b_nopunct", build_e4b_nopunct,
-              "E4B 轉寫 − 標點(regex 刪除,內容未動)")]
+              "L:E4B 轉寫 − 標點(regex 刪除,內容未動)"),
+             ("Xgma_e4b_sp", build_e4b_space,
+              "M:E4B 轉寫 + 拉丁詞兩側補空格(只加空白)"),
+             ("Xbrz_nosp", build_breeze_nospace,
+              "M:Breeze 轉寫 − 全部空白(只刪空白)")]
     for arm, fn, note in specs:
         dst = RAW / arm
         dst.mkdir(parents=True, exist_ok=True)

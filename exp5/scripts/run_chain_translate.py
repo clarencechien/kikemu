@@ -55,6 +55,10 @@ CHAINS = [
     # 兩個來源 arm 由 make_form_variants.py 純機械產生,內容與原轉寫逐字元相同。
     ("Xbrz_punct", "gemma-4-26b-a4b-it", "chain_brzp_gemma"),
     ("Xgma_e4b_nopunct", "gemma-4-26b-a4b-it", "chain_e4bn_gemma"),
+    # handoff-v9 §4c M:L 排除了標點,但暴露出沒控制到的變因——**空格**。
+    # 這兩條只動空白,一個字元都沒改。
+    ("Xgma_e4b_sp", "gemma-4-26b-a4b-it", "chain_e4bsp_gemma"),
+    ("Xbrz_nosp", "gemma-4-26b-a4b-it", "chain_brzns_gemma"),
 ]
 
 

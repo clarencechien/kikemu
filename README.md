@@ -55,7 +55,7 @@
 | ~~Gemma 的取樣變異~~ | **已驗**(v9 J):12B 與 E4B **方向相反** | 剩:E2B 的 exp5/exp1 沒對照(16o) |
 | ~~E4B 的噪音曲線與 CI~~ | **已補**(v9 H/K):曲線線性、掉幅 +0.127、CI 已算 | 剩:prompt 變體只有 official |
 | ~~E4B 聽 + Gemma 譯沒接過~~ | **已接**(v9 G):0.518,輸給 Breeze 那條的 0.717 | 耳朵維持 Breeze |
-| **轉寫的「形式」會不會影響下游改寫**(侷限 16p) | v9 G 觀察到,但不是單變因對照 | 要把同一份轉寫加/去標點各跑一次 |
+| ~~轉寫的「形式」會不會影響下游改寫~~ | **已驗證,答案是否**(v9 L/M):標點與空格四個機械變體都跑過,同來源動 ≤ 0.05、跨來源差一個量級 | 真正原因未知,依先寫死的規則**不再猜** |
 | **全地端鏈只驗過中文** | 日文第一跳就垮(Breeze 0.415) | 中文以外沒有可推薦的地端方案 |
 | **RNNoise 未測**(exp3) | `pyrnnoise` 與環境 PyAV 不相容 | 已記錄缺口,DSP 那條路整體無效 |
 
@@ -190,7 +190,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**37 條侷限**(6 條已由後續實驗解除,原文保留刪節線) |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**37 條侷限**(7 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
@@ -228,7 +228,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
 - **誠實記錄。** 37 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
-  解除的 6 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
+  解除的 7 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 
 ## 目錄

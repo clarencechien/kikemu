@@ -1,7 +1,7 @@
 {
- "arm": "Xgma_e4b_nopunct",
+ "arm": "Xgma_e4b_sp",
  "derived": true,
- "note": "L:E4B 轉寫 − 標點(regex 刪除,內容未動)",
+ "note": "M:E4B 轉寫 + 拉丁詞兩側補空格(只加空白)",
  "method": "純機械字串操作,不經過任何模型",
  "gap_sentence_sec": 0.5,
  "invariant": "strip_punct(輸出) == strip_punct(來源轉寫)"
