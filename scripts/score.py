@@ -39,6 +39,8 @@ ARMS_JA = {
     # exp1 追加:Gemma 4 12B 的日文單語控制組(只有 sakai05/06 在 30 秒內)
     "Xgma_ja": "transcript",
     "Xgma_ja_jp": "transcript",
+    # exp1 追加:Breeze ASR 25 的日文(handoff-v8 §1 A)
+    "Xbrz_ja": "transcript",
     "C": "transcript",
     "Cplus": "transcript",
     "Cb": "transcript",       # Speechmatics batch, no dictionary
@@ -173,7 +175,7 @@ def main():
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
                 # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
-                if arm.startswith("Xgma") or arm == "Abat":
+                if arm.startswith(("Xgma", "Xbrz")) or arm == "Abat":
                     zh = None
                 elif arm == "A":
                     zh = d.get("translation", "")
