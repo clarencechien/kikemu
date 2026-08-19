@@ -28,6 +28,7 @@
 | exp1 追加 arm `Abat`:Gemini 非 Live 批次 | ✅ 5 條件全覆蓋——證明「噪音崩潰」是 **Live 串流**的行為,不是模型能力上限(報告 §2.1b) |
 | oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
 | 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本)、聽不行**(自發口語台灣華語 CER 2.231 vs Breeze 0.198) |
+| handoff-v8 梯次一 A/F/B(Modal 上的 Breeze 補測) | ✅ 三格全數完成:**(A)** Breeze 日文只有 0.415,地端推薦**必須限定中文**;**(F)** 全地端聽譯鏈(Breeze 聽 + Gemma 4 譯)端到端驗證成立,0.717 > 雲端兩跳 0.626;**(B)** 噪音曲線四條件補齊,掉幅 +0.070 是全場最平,且 **CPU/fp32 與 T4/fp16 差 0.000**(exp5 侷限 17 解除) |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -106,7 +107,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | | exp1 日文導覽(專名) | exp2 中英夾雜演講(術語) |
 |---|---|---|
-| 最佳 arm | Speechmatics + 地點詞表 | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D;該優勢在領域外縮水約 2~3 倍,見 §3E** |
+| 最佳 arm | Speechmatics + 地點詞表(**Breeze 在日文只有 0.415,不是選項**,§2.1c) | Speechmatics `cmn_en` 雙語 pack(+ 投影片詞表);**但 Breeze ASR 25 無詞表就贏過它,見 §3D;該優勢在領域外縮水約 2~3 倍,見 §3E** |
 | **詞表邊際價值** | **+0.12 ~ +0.19(核心資產)** | +0.03 ~ +0.05(小加分) |
 | 真正的槓桿 | 詞表 | **語言 pack(+0.23 ~ +0.29)** |
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
@@ -158,7 +159,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的八條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,待執行**。v6/v7 已執行完畢,任務書末尾有執行結果與偏離紀錄) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,梯次一 A/F/B 已完成、梯次二 C/D/E 待決定**。v6/v7/v8 任務書末尾都有執行結果與偏離紀錄) |
 
 ## 實驗規模
 

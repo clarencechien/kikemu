@@ -574,6 +574,34 @@
   "hyp_cjk_ratio": 0.973
  },
  {
+  "arm": "Xbrz_gpu",
+  "seg": "T3",
+  "cond": "M2",
+  "n_inst": 27,
+  "recall_strict": 0.7407,
+  "recall_tolerant": 0.7778,
+  "F1": 3,
+  "F2": 3,
+  "F4": 0,
+  "F3_flag": false,
+  "ter": 0.1719,
+  "hyp_cjk_ratio": 0.975
+ },
+ {
+  "arm": "Xbrz_gpu",
+  "seg": "T3",
+  "cond": "M3",
+  "n_inst": 27,
+  "recall_strict": 0.7407,
+  "recall_tolerant": 0.7778,
+  "F1": 3,
+  "F2": 3,
+  "F4": 0,
+  "F3_flag": false,
+  "ter": 0.1907,
+  "hyp_cjk_ratio": 0.974
+ },
+ {
   "arm": "Xgma_12b",
   "seg": "T1",
   "cond": "M0",
