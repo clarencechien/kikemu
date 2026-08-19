@@ -1,6 +1,7 @@
 # kikemu — 給接手的人 / agent
 
-聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 五個引擎選型實驗與一份 oracle 分析
+聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 五個引擎選型實驗、一份 oracle 分析,
+以及在 Modal 上補測的地端線(Breeze 日文與噪音曲線、Gemma 4 三個型號、GPU 成本)
 (`scripts/`、`exp2/`、`exp5/`、`analysis/`、`results/`)。
 先讀 [`README.md`](README.md) 的現況表,再看這頁的規矩。
 
@@ -78,8 +79,10 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/worker/` | relay DO(Speechmatics)、quota DO、admin、場景包、Gemini |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
-| `scripts/` | exp1/3/4 的實驗腳本 |
+| `scripts/` | exp1/3/4 的實驗腳本;`run_*_modal.py` = Modal 上的 GPU arm |
 | `exp2/` | exp2(中英夾雜) |
+| `exp5/scripts/` | exp5 腳本;`noise_curve.py`、`score_zh.py`、`debug_e2b_empty.py` |
+| `handoff-v8.md` | Modal 補測任務書:判讀規則先寫死 + 驗收 + 偏離紀錄(已全數執行) |
 | `results/report.md` | 五個實驗合併報告 + 35 條侷限(4 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
@@ -91,3 +94,6 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - 不要把音訊或字幕存到伺服器(PRD §2:內容零留存,R2 只有名單與詞表)。
 - 不要在 `getUserMedia` 打開瀏覽器降噪(exp3 實證那條鏈是負資產)。
 - 不要用未量測的說法覆蓋量測過的結論——不確定就標「未驗證」,別讓它讀起來像數據。
+- 不要刪掉已解除的侷限,改成刪節線並註明是哪次實驗解除的——結論怎麼演進要看得出來。
+- 自架開源模型前先看 `generation_config.json`:Gemma 4 三個型號都預設
+  `do_sample: true, temperature: 1.0`,不指定就是隨機取樣,同一個檔重跑會不一樣。
