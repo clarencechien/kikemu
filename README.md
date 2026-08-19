@@ -158,7 +158,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的八條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v7.md`](handoff-v7.md) | 七份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板。**v6/v7 都已執行完畢,任務書末尾有執行結果與偏離紀錄**) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,待執行**。v6/v7 已執行完畢,任務書末尾有執行結果與偏離紀錄) |
 
 ## 實驗規模
 
