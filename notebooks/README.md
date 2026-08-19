@@ -211,3 +211,27 @@ Breeze 的中文訓練資料全部是合成語音,真實聲學條件下的穩健
 至少得在 M0 摸到 0.81;M3 的 0.563 則是它會不會崩的照妖鏡——
 注意一體式的 G 在 M3 掉到 0.396,而它在 M0 是全場最高的 0.927。
 **乾淨條件下的領先不保證噪音下站得住**,這正是要跑 M3 的原因。
+
+---
+
+## 改完 notebook 一定要跑這個
+
+```bash
+python3 notebooks/check_notebooks.py
+```
+
+抓語法錯與「把變數用在定義它的那一格之前」。
+
+**為什麼需要它:** 開發機沒有 GPU,notebook 的 GPU 路徑一格都跑不了,
+只能靠使用者在 Colab 上回報錯誤才知道壞掉。已經這樣浪費過四輪:
+
+| # | 症狀 | 類型 | 這支抓不抓得到 |
+|---|---|---|---|
+| 1 | `operator torchvision::nms does not exist` | 升級了 Colab 內建套件 | ❌ 執行期 |
+| 2 | `FileNotFoundError: mit_ir.zip` | 缺 gitignore 掉的資料 | ❌ 執行期 |
+| 3 | `cannot import name '_center'` | pip 連鎖動到 numpy | ❌ 執行期 |
+| 4 | `NameError: CHUNK_SEC is not defined` | 變數用在定義之前 | ✅ **抓得到** |
+| 5 | `CUDA out of memory`(T4 整段 5 分鐘) | 記憶體算術 | ❌ 執行期 |
+
+第 4 個是純靜態問題,本來就不該讓使用者花一輪去發現。
+其餘四個是環境差異,只能靠把踩過的坑寫進上面的清單來避免重複。
