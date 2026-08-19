@@ -51,12 +51,22 @@ CONDS = ["M0", "M3"]
 #     每個引擎都該用它自己的最佳呼叫方式,否則量到的是「誰比較耐受別人的 prompt」。
 CHUNK_SEC = 30
 
-PROMPT = ("Transcribe the following speech segment in its original language "
-          "into text.\n\n"
-          "Follow these specific instructions for formatting the answer:\n"
-          "* Only output the transcription, with no newlines.\n"
-          "* When transcribing numbers, write the digits, i.e. write 1.7 and not "
-          "one point seven, and write 3 instead of three.")
+# 模型卡 §6 的官方 ASR prompt,一字不改。
+PROMPT_OFFICIAL = (
+    "Transcribe the following speech segment in its original language. "
+    "Follow these specific instructions for formatting the answer:\n"
+    "* Only output the transcription, with no newlines.\n"
+    "* When transcribing numbers, write the digits, i.e. write 1.7 and not "
+    "one point seven, and write 3 instead of three.")
+
+# 官方版**沒有**「保留原樣英文」這條,而 exp5 量的正是英文術語召回。
+# 實測官方版會把 data 音譯成「大河」——所以必須跑兩個變體,
+# 才分得出低召回是模型的極限還是 prompt 沒講。
+PROMPT_KEEPEN = PROMPT_OFFICIAL + (
+    "\n* The speaker mixes Mandarin Chinese and English. Keep every English "
+    "word verbatim in Latin script; do not translate or transliterate them.")
+
+PROMPTS = {"official": PROMPT_OFFICIAL, "keepen": PROMPT_KEEPEN}
 
 # 版本全部釘死——Colab 那五輪的教訓就是「浮動的相依關係會自己壞掉」。
 image = (
@@ -75,139 +85,155 @@ app = modal.App("kikemu-gemma4-asr")
 cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
 
 
-@app.function(image=image, gpu="A100-40GB", timeout=60 * 60,
-              volumes={"/cache": cache},
-              max_containers=1)
-def transcribe(wav_bytes: bytes, stem: str, model_id: str,
-               max_chunks: int = 0) -> dict:
-    import io
-    import os
-    import re
-    os.environ["HF_HOME"] = "/cache/hf"
+# Modal 官方 lifecycle 寫法:@modal.enter 只在容器啟動時載一次權重,
+# scaledown_window 讓容器在多次 `modal run` 之間保溫——否則每次抽驗都要重載。
+@app.cls(image=image, gpu="A100-40GB", timeout=60 * 60,
+         volumes={"/cache": cache}, max_containers=1,
+         scaledown_window=600)
+class Gemma:
+    model_id: str = modal.parameter(default="google/gemma-4-12B-it")
 
-    import librosa
-    import torch
-    import transformers
-    from transformers import AutoProcessor, Gemma4UnifiedForConditionalGeneration
-
-    global _M
-    if "_M" not in globals():
+    @modal.enter()
+    def load(self):
+        import os
+        os.environ["HF_HOME"] = "/cache/hf"
+        import torch
+        import transformers
+        from transformers import AutoModelForMultimodalLM, AutoProcessor
         t0 = time.time()
-        proc = AutoProcessor.from_pretrained(model_id)
-        model = Gemma4UnifiedForConditionalGeneration.from_pretrained(
-            model_id, dtype=torch.bfloat16, device_map="cuda").eval()
+        self.processor = AutoProcessor.from_pretrained(self.model_id)
+        # 官方 snippet 用 AutoModelForMultimodalLM + dtype="auto";
+        # auto mapping 指到 Gemma4UnifiedForConditionalGeneration,是同一個類別。
+        self.model = AutoModelForMultimodalLM.from_pretrained(
+            self.model_id, dtype="auto", device_map="auto").eval()
         cache.commit()          # 權重留在 Volume,下次不用再抓
-        _M = (proc, model, round(time.time() - t0, 1))
-    processor, model, load_s = _M
+        self.load_s = round(time.time() - t0, 1)
+        self.tf, self.torch_v = transformers.__version__, torch.__version__
 
-    audio, _ = librosa.load(io.BytesIO(wav_bytes), sr=16000, mono=True)
+    @modal.method()
+    def transcribe(self, wav_bytes: bytes, stem: str, prompt_key: str,
+                   max_chunks: int = 0) -> dict:
+        import io
+        import librosa
+        import torch
 
-    def one(chunk):
-        # 模型卡 §4:audio 放在 text **之後**
-        msgs = [{"role": "user", "content": [{"type": "text", "text": PROMPT},
-                                             {"type": "audio", "audio": chunk}]}]
-        inputs = processor.apply_chat_template(
-            msgs, add_generation_prompt=True, tokenize=True,
-            return_dict=True, return_tensors="pt",
-            enable_thinking=False).to(model.device)
-        n = inputs["input_ids"].shape[-1]
-        with torch.inference_mode():
-            o = model.generate(**inputs, max_new_tokens=1024, do_sample=False)
-        # skip_special_tokens=True 會把 <|channel> 標記吃掉、只留下 "thought"
-        # 這個字,所以先留著標記切,再清乾淨。
-        raw = processor.decode(o[0][n:], skip_special_tokens=False)
-        body = raw.split("<channel|>")[-1]
-        body = re.sub(r"<\|?[a-z_]+\|?>", "", body)
-        return body.strip(), n
+        processor, model, load_s = self.processor, self.model, self.load_s
+        prompt = PROMPTS[prompt_key]
+        audio, _ = librosa.load(io.BytesIO(wav_bytes), sr=16000, mono=True)
 
-    step = CHUNK_SEC * 16000
-    chunks = [audio[i:i + step] for i in range(0, len(audio), step)
-              if len(audio[i:i + step]) >= 16000]   # 不足 1 秒的尾巴丟掉
-    if max_chunks:
-        chunks = chunks[:max_chunks]   # --probe:抽驗用,不寫結果
-    t0 = time.time()
-    pieces, n_tok = [], 0
-    for i, c in enumerate(chunks):
-        ct = time.time()
-        txt, n = one(c)
-        pieces.append(txt)
-        n_tok += n
-        # 每個 chunk 印一行:沒有這個就要等整個檔跑完才知道有沒有壞掉,
-        # 上一輪就是這樣白燒了 $0.54。
-        print(f"    {stem} chunk {i + 1}/{len(chunks)} "
-              f"({time.time() - ct:.0f}s) {len(txt)}字 | {txt[:60]}", flush=True)
-    el = time.time() - t0
-    return {"stem": stem, "transcript": "".join(pieces),
-            "elapsed_sec": round(el, 1), "n_chunks": len(chunks),
-            "prompt_tokens": int(n_tok), "load_sec": load_s,
-            "transformers": transformers.__version__, "torch": torch.__version__}
+        def one(chunk):
+            # 模型卡 §4:audio 放在 text **之後**
+            msgs = [{"role": "user", "content": [{"type": "text", "text": prompt},
+                                                 {"type": "audio", "audio": chunk}]}]
+            inputs = processor.apply_chat_template(
+                msgs, add_generation_prompt=True, tokenize=True,
+                return_dict=True, return_tensors="pt").to(model.device)
+            n = inputs["input_ids"].shape[-1]
+            with torch.inference_mode():
+                # 官方範例是 512。上限開太大只會讓跳針跑更久(4096 跑出 8152 字)。
+                o = model.generate(**inputs, max_new_tokens=512)
+            raw = processor.decode(o[0][n:], skip_special_tokens=False)
+            # 官方解析器:自己切 <channel|> 是錯的(模型卡的 snippet 用這個)
+            msg = processor.parse_response(raw, prefix=inputs["input_ids"])
+            txt = msg.get("content") if isinstance(msg, dict) else str(msg)
+            if isinstance(txt, list):
+                txt = "".join(x.get("text", "") for x in txt if isinstance(x, dict))
+            return (txt or "").strip(), n
+
+        step = CHUNK_SEC * 16000
+        chunks = [audio[i:i + step] for i in range(0, len(audio), step)
+                  if len(audio[i:i + step]) >= 16000]   # 不足 1 秒的尾巴丟掉
+        if max_chunks:
+            chunks = chunks[:max_chunks]   # --probe:抽驗用,不寫結果
+        t0 = time.time()
+        pieces, n_tok = [], 0
+        for i, c in enumerate(chunks):
+            ct = time.time()
+            txt, n = one(c)
+            pieces.append(txt)
+            n_tok += n
+            # 每個 chunk 印一行:沒有這個就要等整個檔跑完才知道有沒有壞掉,
+            # 前兩輪就是這樣白燒的。
+            print(f"    [{prompt_key}] {stem} chunk {i + 1}/{len(chunks)} "
+                  f"({time.time() - ct:.0f}s) {len(txt)}字 | {txt[:70]}", flush=True)
+        el = time.time() - t0
+        return {"stem": stem, "transcript": "".join(pieces),
+                "elapsed_sec": round(el, 1), "n_chunks": len(chunks),
+                "prompt_tokens": int(n_tok), "load_sec": load_s,
+                "transformers": self.tf, "torch": self.torch_v}
 
 
 @app.local_entrypoint()
 def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
-         probe: int = 0):
-    """probe=N:只跑第一個檔的前 N 個 chunk 並印出來,不寫結果。先驗再全跑。"""
-    if probe:
-        man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
-        stem = "T1__M0"
-        wav = (ROOT / "corpus" / "conditions" / f"{stem}.wav")
-        r = transcribe.remote(wav.read_bytes(), stem, model, probe)
-        print(f"\n=== 抽驗 {stem} 前 {probe} 個 chunk ===")
-        print(f"耗時 {r['elapsed_sec']}s | {len(r['transcript'])} 字")
-        print(r["transcript"][:600])
-        return
+         prompt: str = "official", probe: int = 0):
+    """probe=N:只跑 T1__M0 的前 N 個 chunk、兩個 prompt 變體都跑,不寫結果。
 
-    man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
-    picks = json.loads((ROOT / "corpus" / "picks.json").read_text())
-    stems = [f"{p['seg']}__{c}" for p in picks for c in CONDS]
-
-    raw = ROOT / "results" / "raw" / arm
-    raw.mkdir(parents=True, exist_ok=True)
-    todo = [s for s in stems if not (raw / f"{s}.json").exists()]
-    if not todo:
-        print("全部已完成")
-        return
-
+    先驗再全跑——前兩輪都是等整個檔跑完才發現壞掉,白燒了 $1.26。
+    """
     import hashlib
 
-    def sha256(p):
+    def sha256(p_):
         h = hashlib.sha256()
-        with open(p, "rb") as f:
+        with open(p_, "rb") as f:
             for b in iter(lambda: f.read(1 << 20), b""):
                 h.update(b)
         return h.hexdigest()
 
+    man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
+    gemma = Gemma(model_id=model)
+
+    if probe:
+        stem = "T1__M0"
+        wav = COND / f"{stem}.wav"
+        for key in PROMPTS:
+            r = gemma.transcribe.remote(wav.read_bytes(), stem, key, probe)
+            print(f"\n=== [{key}] {stem} 前 {probe} 個 chunk | "
+                  f"{r['elapsed_sec']}s | {len(r['transcript'])} 字 ===")
+            print(r["transcript"][:700])
+        print("\n對照參考文本開頭:")
+        print((ROOT / "corpus/reference/T1.txt").read_text()[:300])
+        return
+
+    picks = json.loads((ROOT / "corpus" / "picks.json").read_text())
+    stems = [f"{p_['seg']}__{c}" for p_ in picks for c in CONDS]
+    raw = ROOT / "results" / "raw" / arm
+    raw.mkdir(parents=True, exist_ok=True)
+    todo = [s_ for s_ in stems if not (raw / f"{s_}.json").exists()]
+    if not todo:
+        print("全部已完成")
+        return
+
     payload = []
-    for s in todo:
-        wav = COND / f"{s}.wav"
-        digest = sha256(wav)
-        if digest != man["conditions"][s]["sha256"]:
-            raise RuntimeError(f"{s}.wav 與 manifest 不符,先跑 exp5/scripts/degrade.py")
-        payload.append((wav.read_bytes(), s, model))
-    print(f"上傳 {len(payload)} 個檔(sha256 全部與 manifest 相符)")
+    for s_ in todo:
+        wav = COND / f"{s_}.wav"
+        if sha256(wav) != man["conditions"][s_]["sha256"]:
+            raise RuntimeError(f"{s_}.wav 與 manifest 不符,先跑 exp5/scripts/degrade.py")
+        payload.append((wav.read_bytes(), s_, prompt, 0))
+    print(f"上傳 {len(payload)} 個檔(sha256 全部與 manifest 相符),prompt={prompt}")
 
     meta = {"arm": arm, "model": model, "api": "modal A100-40GB",
-            "load": "bf16", "chunk_sec": CHUNK_SEC, "whole_file": False,
+            "load": "bf16(dtype=auto)", "chunk_sec": CHUNK_SEC, "whole_file": False,
             "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
             "modality_order": "text then audio(模型卡 §4)",
-            "prompt_source": "模型卡 §6 官方 ASR 結構(與 Gbat arm 的 prompt 不同)",
-            "enable_thinking": False, "do_sample": False, "prompt": PROMPT,
-            "corpus": "exp5"}
+            "prompt_variant": prompt,
+            "prompt_source": "模型卡 §6 官方 ASR 結構"
+                             + ("(+ 保留英文指示)" if prompt == "keepen" else "(原文未改)"),
+            "decode": "max_new_tokens=512, processor.parse_response()",
+            "corpus": "exp5", "prompt": PROMPTS[prompt]}
     (raw / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1))
 
-    for r in transcribe.starmap(payload):
-        s = r["stem"]
-        wav = COND / f"{s}.wav"
-        (raw / f"{s}.json").write_text(json.dumps({
-            "arm": arm, "file": f"{s}.wav",
+    for r in gemma.transcribe.starmap(payload):
+        s_ = r["stem"]
+        wav = COND / f"{s_}.wav"
+        (raw / f"{s_}.json").write_text(json.dumps({
+            "arm": arm, "file": f"{s_}.wav",
             "audio_s": round(wav.stat().st_size / (16000 * 2), 1),
             "transcript": r["transcript"],
             "meta": {**meta, "elapsed_sec": r["elapsed_sec"],
-                     "prompt_tokens": r["prompt_tokens"],
-                     "n_chunks": r["n_chunks"],
+                     "prompt_tokens": r["prompt_tokens"], "n_chunks": r["n_chunks"],
                      "model_load_sec": r["load_sec"],
                      "transformers": r["transformers"], "torch": r["torch"],
                      "audio_sha256": sha256(wav), "audio_matches_manifest": True},
         }, ensure_ascii=False, indent=1))
-        print(f"  {s}  {r['elapsed_sec']}s  {len(r['transcript'])} 字")
+        print(f"  {s_}  {r['elapsed_sec']}s  {len(r['transcript'])} 字")
     print(f"\n→ {raw}")
