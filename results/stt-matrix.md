@@ -128,7 +128,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | SM 即時 + Gemini 譯(kikemu) | $0.35 | 1×(本來就即時) | ✅ 詞級 |
 | Gemini Live 一體式 | ~$0.22 + 音訊輸出 | 1× | ❌ |
 | Gemini `generateContent` 3.7-flash `low` | **$2.69** | 21× 實時 | ❌ |
-| Breeze ASR 25 地端 | 電費 + GPU | T4 上約 3~5× 實時 | 段級 |
+| Breeze ASR 25 地端 | 電費 + GPU | **T4 實測 2.9~3.2× 實時**;CPU 4 核約 0.14× | 段級 |
 
 > **3.7-flash 不支援 `thinkingLevel: "minimal"`**(400 直接拒收),
 > 只能退到 `low`,而 low 不是關閉——thoughts/output = 18.7×,成本跳 10 倍。
@@ -311,6 +311,9 @@ exp5 用模型沒看過的語料(台灣科技訪談 podcast 3 段,128 個英文�
 2. Whisper 家族的老毛病(重複迴圈幻覺)仍在,見報告 §3D。
 3. 沒有詞級 timestamp(只有段級),沒有 diarization,沒有詞表機制。
 4. exp5 這次跑在 CPU/fp32(環境無 GPU),與 T4/fp16 的數值差異未量測。
+5. **速度差很多**:T4/fp16 上 5 分鐘音檔約 102 秒(2.9× 實時,exp2 Phase A 實測);
+   同樣的檔在 4 核 CPU/fp32 上要 **2089~2253 秒**(約 0.14× 實時,exp5 實測)。
+   地端部署要算進 GPU 成本,不能只算電費。
 
 ---
 
