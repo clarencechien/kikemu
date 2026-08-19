@@ -20,7 +20,7 @@ SEGS = ["T1", "T2", "T3"]
 ARMS = [("Xbrz_gpu", "Breeze T4/fp16"), ("Xbrz_auto", "Breeze CPU/fp32"),
         ("Xbat_bi", "SM batch"), ("Gbat37", "Gemini 3.7 批次"),
         ("Gbat", "Gemini 3.5 批次"),
-        ("G", "Gemini Live"), ("Xgma_12b", "Gemma 4 12B")]
+        ("G", "Gemini Live"), ("Xgma_12b", "Gemma 4 12B"), ("Xgma_e4b", "Gemma 4 E4B")]
 
 
 def main() -> None:

@@ -162,7 +162,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
-| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的八條鐵律與驗證方式 |
+| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
 | [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,梯次一 A/F/B 與梯次二 C/D/E 全部完成**。v6/v7/v8 任務書末尾都有執行結果與偏離紀錄) |
 
