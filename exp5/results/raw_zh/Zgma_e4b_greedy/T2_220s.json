@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_e4b_greedy",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "是新增自然人平證。 我不知道,因為我現在登入的幾個政府的,它其實只要我賬號密碼,那它沒有要我用,對,它有不同登入的分層。 哦,我想起來了,對對,我你如果比較準比較重要的可能就是要查自然人平證跟公務員超查這種東西,報稅也報稅。 然後第二種當然就",
+ "meta": {
+  "arm": "Zgma_e4b_greedy",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 6.2,
+  "prompt_tokens": 577,
+  "model_load_sec": 19.2,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}

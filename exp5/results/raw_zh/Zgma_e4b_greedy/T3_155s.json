@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_e4b_greedy",
+ "file": "T3_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "啊很少了,然後或者說精神很神秘,我感覺我需要有一個 我是個黑貓,啊這個海客,然後我要頂著這個黑色的熒幕天天在那邊打。 那個是那個是錯誤的技能,我們不是那樣子的,我們是拿滑鼠點的而已。 我不是按鍵的。 對,你你擊會以後",
+ "meta": {
+  "arm": "Zgma_e4b_greedy",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 5.4,
+  "prompt_tokens": 577,
+  "model_load_sec": 19.2,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "e88c5992c7f7f46f309ed7e1d7b8d820021c89e562189276fff3684dfdddf7ba"
+ }
+}

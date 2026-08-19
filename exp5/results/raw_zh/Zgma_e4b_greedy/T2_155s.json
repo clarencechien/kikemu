@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_e4b_greedy",
+ "file": "T2_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "新平台的服務,對,所以因此就有了數位身份憑甲或數位憑甲之類的這樣子的概念。 這個概念跟以前的概念完全不一樣哦,以前的政府服務可能是我就給你一組帳號密碼,啊我有你的所有資料,我是個好棒的這個家父長啊,或這個家長來幫你保管,那你用了你就",
+ "meta": {
+  "arm": "Zgma_e4b_greedy",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 5.2,
+  "prompt_tokens": 577,
+  "model_load_sec": 19.2,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "805700635ce1c977ca7ae3ecc297987d7af9fa3610fad776b1a48ce182719953"
+ }
+}

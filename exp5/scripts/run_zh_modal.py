@@ -52,6 +52,7 @@ cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
          volumes={"/cache": cache}, max_containers=1, scaledown_window=600)
 class Gemma:
     model_id: str = modal.parameter(default="google/gemma-4-12B-it")
+    greedy: bool = modal.parameter(default=False)
 
     @modal.enter()
     def load(self):
@@ -84,8 +85,12 @@ class Gemma:
             return_dict=True, return_tensors="pt").to(self.model.device)
         n = inputs["input_ids"].shape[-1]
         t0 = time.time()
+        # 預設是模型卡自帶的 generation_config:do_sample=True、temperature=1.0。
+        # greedy=True 時改成貪婪解碼,用來分開「模型真的不吐」與「取樣抖動」
+        # (handoff-v8 §4 C-ter)。兩者都會寫進 meta。
+        kw = {"do_sample": False} if self.greedy else {}
         with torch.inference_mode():
-            o = self.model.generate(**inputs, max_new_tokens=512)
+            o = self.model.generate(**inputs, max_new_tokens=512, **kw)
         el = time.time() - t0
         raw = self.processor.decode(o[0][n:], skip_special_tokens=False)
         msg = self.processor.parse_response(raw, prefix=inputs["input_ids"])
@@ -100,7 +105,8 @@ class Gemma:
 
 
 @app.local_entrypoint()
-def main(model: str = "google/gemma-4-12B-it", arm: str = "Zgma"):
+def main(model: str = "google/gemma-4-12B-it", arm: str = "Zgma",
+         greedy: bool = False):
     man = json.loads((WIN / "manifest.json").read_text())["windows"]
     raw = ROOT / "results" / "raw_zh" / arm
     raw.mkdir(parents=True, exist_ok=True)
@@ -113,10 +119,13 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Zgma"):
             "load": "bf16(dtype=auto)", "whole_file": True, "chunk_sec": 0,
             "corpus": "exp5 純中文 20 秒視窗", "prompt": PROMPT,
             "prompt_source": "模型卡官方模板,未自行增修",
-            "decode": "max_new_tokens=512, processor.parse_response()"}
+            "decode": "max_new_tokens=512, processor.parse_response()",
+            "sampling": ("greedy(do_sample=False)" if greedy
+                         else "模型卡預設 do_sample=True, temperature=1.0, "
+                              "top_k=64, top_p=0.95 —— 單次取樣,未量測變異")}
     (raw / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1))
 
-    gemma = Gemma(model_id=model)
+    gemma = Gemma(model_id=model, greedy=greedy)
     payload = [((WIN / f"{s}.wav").read_bytes(), s) for s in todo]
     print(f"送出 {len(payload)} 個純中文 20 秒視窗")
     for r in gemma.run.starmap(payload):
