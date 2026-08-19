@@ -1,7 +1,71 @@
 # notebooks/ — 需要 GPU 的 arm
 
-kikemu 的實驗大多打 API,唯一需要自己跑模型的是 **Breeze ASR 25**(地端 open weights)。
-Chromebook 沒有 GPU,所以做成 Colab notebook。
+kikemu 的實驗大多打 API,需要自己跑模型的有兩個(都是 open weights):
+**Breeze ASR 25** 與 **Gemma 4 12B Unified**。Chromebook 沒有 GPU,所以做成 Colab notebook。
+
+| notebook | 模型 | 語料 | 手動步驟 |
+|---|---|---|---|
+| `breeze_asr25.ipynb` | Breeze ASR 25 | exp2(李宏毅課程) | 要先放音檔到雲端硬碟 |
+| `breeze_asr25_exp5.ipynb` | Breeze ASR 25 | exp5(podcast) | **無**,RSS 自動抓 |
+| `gemma4_12b_exp5.ipynb` | Gemma 4 12B Unified | exp5(podcast) | **無**,RSS 自動抓 |
+
+---
+
+## Gemma 4 12B Unified(X-gemma arm)
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/clarencechien/kikemu/blob/claude/improve-experiment-credibility-c8ekb2/notebooks/gemma4_12b_exp5.ipynb)
+
+**在測什麼:** Gemma 4 的**第一跳(聽)**。第二跳(譯)已經量過——
+26B/31B 能打平甚至略勝 gemini-3.5-flash,成本只有 1/22(報告 §3F)。
+但**會聽的變體在任何 API 上都拿不到**:
+
+```
+gemma-4-26b-a4b-it / gemma-4-31b-it  →  400 Audio input modality is not enabled
+```
+
+AI Studio 的 50 個模型、OpenRouter 的 415 個模型裡,Gemma 4 都只有那兩個純文字/視覺變體。
+有音訊的是 HF 上 tag `any-to-any` 的 `E2B` / `E4B` / **`12B-it`**,只能自己跑。
+
+**用 exp5 語料**,因為 Breeze、Gemini 批次、Gemini Live、Speechmatics 四個 arm
+都在同一批檔案上跑過——這是唯一能直接四方對照的地方。
+
+### 操作:開啟 → 執行階段 → 全部執行。沒有手動步驟。
+
+最後一格會直接印出對照表。跑完把 zip 交回來就能寫進報告。
+
+### 挑執行階段
+
+`gemma-4-12B-it` 是 bf16 **23.9 GB** 權重,notebook 會依 GPU 記憶體自動選策略:
+
+| GPU | 策略 | 備註 |
+|---|---|---|
+| **A100 40G / H100** | bf16 原生 | 與模型卡一致,最乾淨,**建議用這個** |
+| L4 24G / A10 | 4-bit NF4 | 量化不是原生設定,會寫進 meta |
+| T4 16G(免費) | 4-bit NF4 | 可能仍 OOM;真的不行就把 `MODEL_ID` 改成 `google/gemma-4-E4B-it` |
+
+**跑多久未量測**——沒有人在 GPU 上跑過這個組合。6 個檔 × 5 分鐘音訊,
+Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請預留時間。
+
+### 三個已經先驗過的坑(所以 notebook 裡直接寫對了)
+
+1. **`Gemma4UnifiedProcessor` 需要 `torchvision`**——它連帶 import image processor,
+   少裝會噴 `ModuleNotFoundError: No module named 'torchvision'`,而不是一個看得懂的錯誤。
+2. **thought channel 要濾掉。** Gemma 4 用 `<channel|>` 分隔思考與答案,
+   不濾會把推理文字當成轉寫存進去。這個坑在 API 端已經踩過一次
+   (見 [`docs/gemini-api-lessons.md`](../docs/gemini-api-lessons.md))。
+   chat template 的 `enable_thinking` **預設就是 False**,等同 API 端的
+   `thinkingLevel: "minimal"`,**不要改成 True**(CLAUDE.md 鐵律 4)。
+3. **prompt 與 exp5 的 `Gbat` arm 逐字相同。** 唯一變數要是模型,不是 prompt。
+
+### 判讀時要記得的偏差
+
+exp5 的參考轉寫由 `gemini-3.5-flash` 產生,**Gemini 系 arm 有主場優勢**。
+Gemma 4 與 Breeze、SM 一樣都是外人,所以:
+
+- ✅ **Gemma vs Breeze、Gemma vs SM** — 乾淨,兩邊都不與參考同源
+- ⚠️ **Gemma vs Gemini** — 對 Gemini 有利,不能直接等價比較(報告 §3E.7)
+
+---
 
 ## Breeze ASR 25(X-breeze arm)
 

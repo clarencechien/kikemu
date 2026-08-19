@@ -853,6 +853,104 @@ bootstrap 只有 3 個 cluster,CI 寬。**這足以推翻「優勢可推廣」,
 
 ---
 
+## 3F. 案外案:Gemma 4 能不能取代?(2026-08-19)
+
+### 3F.1 第一跳(聽)—— 拿不到,不是拿不動
+
+Gemma 4 的音訊能力**只在部分變體上**。HF 的 tag 直接分野:
+
+| 變體 | HF pipeline tag | 音訊 | 本環境 API |
+|---|---|---|---|
+| `gemma-4-E2B-it` / `E4B-it` / `12B-it` | `any-to-any` | ✅ | ❌ 三個端點都沒有 |
+| `gemma-4-26B-A4B-it` / `31B-it` | `image-text-to-text` | ❌ | ✅ AI Studio + OpenRouter |
+
+**能服務的兩個沒有音訊,有音訊的三個沒有端點。** 實測 400:
+
+```
+gemma-4-31b-it      "Audio input modality is not enabled for this model"
+gemma-4-26b-a4b-it  同上
+```
+
+三條路都查過:AI Studio 的 50 個模型只有那兩個 Gemma;OpenRouter(key 有效,
+可見 415 個模型)上的 Gemma 4 input modality 是 `image/text/video`,沒有 audio;
+`CLOUDSDK_AUTH_ACCESS_TOKEN` 是 proxy 佔位字串,Vertex 進不去。
+
+**所以「12B 先 ASR」這一跳無法用 API 驗證。** 要驗只能地端跑,而本機
+(4 核 CPU、15 GB RAM、22 GB 磁碟)只放得下 `E2B`(權重 10.2 GB);
+`12B-it`(`Gemma4UnifiedForConditionalGeneration`,23.9 GB)**裝不下**。
+
+**出路已備妥:** [`notebooks/gemma4_12b_exp5.ipynb`](../notebooks/gemma4_12b_exp5.ipynb)
+——Colab 一鍵跑,語料用 exp5(Breeze / Gemini 批次 / Gemini Live / SM 四個 arm
+都在同一批檔案上跑過),最後一格直接印出五方對照。**arm 代號 `Xgma_12b`,
+`score.py` 與 `compare.py` 已經認得它,結果回填即可。**
+
+三個接線細節已先在本機驗過(模型載不下,但 processor 路徑可驗):
+
+- `Gemma4UnifiedProcessor` **需要 `torchvision`**(連帶 import image processor),
+  少裝會噴看不懂的 `ModuleNotFoundError`。
+- `apply_chat_template` 的 `enable_thinking` **預設就是 `False`**,
+  關閉時送出一個立刻閉合的 `<|channel>thought\n<channel|>`——
+  等同 API 端的 `thinkingLevel: "minimal"`。
+- 28 秒音檔 → 698 個 audio frame(約 25 frame/秒),
+  5 分鐘約 7500,遠低於 262k context,**不需要切塊**。
+
+### 3F.2 第二跳(譯)—— 這個能比,而且結果值得記
+
+輸入用 `Cplus`(SM 即時 + 詞表)的日文定稿逐字稿,6 段 N0,**同一份凍結的
+`INTERPRETER_SYSTEM`**,全部 `thinkingLevel: "minimal"`,唯一變數是譯的模型。
+
+| 第二跳模型 | 專名保留 | 台灣用語誤用 | 簡體殘留 | 延遲 p50 | 成本/hr |
+|---|---|---|---|---|---|
+| gemini-3.5-flash | 0.522 | 0 | 0 | **2.5s** | $0.112 |
+| gemma-4-26b-a4b-it | 0.522 | 0 | 0 | 7.3s | **$0.005** |
+| **gemma-4-31b-it** | **0.597** | 0 | 0 | 8.4s | **$0.005** |
+
+(成本以實測 token 數計:OpenRouter 牌價 26B $0.07/$0.34 per M、
+31B $0.09/$0.34,2026-08-19 查;Gemini $1.50/$9.00,2026-08-14 查。
+原始檔 `results/raw/Cplus_translate_gemma26|gemma31|gemini_min/`。)
+
+**三件事:**
+
+1. **品質沒有退步,31B 甚至略好。** 台灣用語誤用與簡體殘留都是 0,與 Gemini 一致。
+   31B 的專名保留 0.597 vs Gemini 0.522,配對比對是 **6 中 1 失**——
+   但 `exact binomial p = 0.125`,**n 太小,是傾向不是結論**。
+   31B 獨中的是長髄彦、しめ縄、アメノコヤネノミコト、しめかけ神事、
+   箕面有馬電気軌道、丹波地方;Gemini 獨中的只有御神威(而那個詞在 oracle
+   分析裡是五個條件全 arm 皆錯的那一個)。
+   26B vs Gemini 是 3:3,`p = 1.000`,**完全打平**。
+2. **成本差 22 倍**($0.005 vs $0.112/hr),而且 OpenRouter 還有 `:free` 檔位。
+3. **但延遲差 3 倍**(p50 7.3~8.4s vs 2.5s)。**這一條決定了不換。**
+   kikemu 的第二跳是逐句即時翻譯,3 倍延遲直接反映在字幕浮現的時間上;
+   而第二跳的成本只佔全鏈 $0.35/hr 的三分之一,省下的 $0.107/hr
+   買不回 5 秒的體感。
+
+### 3F.3 結論與適用邊界
+
+**kikemu 不換。** 即時字幕的瓶頸是延遲不是成本(§5 已經量過:
+關掉 thinking 之後兩跳與一體式已是同一數量級)。
+
+**但這一格對「非即時」那條線是真的有價值**:事後逐字稿、批次翻譯場景沒有
+延遲壓力,換成 Gemma 4 就是同品質、1/22 成本,而且**權重開源可地端**——
+與 §3E 的 Breeze 合起來,「全地端聽譯鏈」第一次有了兩端都可行的候選
+(Breeze 聽 + Gemma 4 譯)。這條沒有實測過整鏈,標為**未驗證**。
+
+### 3F.4 侷限
+
+1. **n = 6 段、67 個專名、單一條件(N0)**,沒有 bootstrap CI。這是快篩不是定論。
+2. **沒有做 adequacy 盲評面板**(exp1 對第二跳做過,這裡沒有)。
+   「專名保留 / 台灣用語 / 簡體」三個是自動指標,量不到譯文的流暢度與語用。
+3. **譯文沒有人工複核。**
+4. **延遲在本環境量測**,經 agent proxy,絕對值不代表產品環境;
+   但三個模型走同一條路徑,**相對比較有效**。
+5. **Gemma 4 有一個接線坑**:它把 thinking 當一般 `part` 回傳且不一定標
+   `thought: true`,直接取 `parts[0].text` 會拿到一串英文分析而不是譯文。
+   `scripts/translate_gemma.py` 已濾掉。
+6. **Gemma 4 吃 `thinkingLevel: "minimal"` 且真的歸零**(預設譯一句燒
+   493~692 thoughts、延遲 16s;minimal 後 0 thoughts、1.9s)。
+   鐵律 4 在 Gemma 上同樣成立——而且不像 3.7-flash 那樣拒收 minimal。
+
+---
+
 ## 4. 延遲
 
 | 指標 | exp1 C | exp1 C+ | exp1 A | exp2 X_bi | exp2 Xsli_bi |
@@ -957,6 +1055,13 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
 13. `cmn_en` 替代 `multi`:結論適用於「有專用雙語 pack」的引擎,泛多語 pack 未測
 14. 譯文層 P0/P1 只在 X 系列測(G 是一體式,無法拆層)
 15. exp2 未做 adequacy 盲評面板(只有召回率與 TER)
+
+**3F(Gemma 4 案外案):**
+
+16b. n=6 段、67 專名、單一條件,無 CI;無 adequacy 盲評;譯文無人工複核
+16c. 延遲經 agent proxy 量測,絕對值不代表產品環境(相對比較仍有效)
+16d. **第一跳未驗證**——會聽的 Gemma 4 變體在本環境無任何端點,
+     「12B 聽 + 26B 譯」整鏈**沒有量過**,不要當成已驗證的架構
 
 **exp5:**
 

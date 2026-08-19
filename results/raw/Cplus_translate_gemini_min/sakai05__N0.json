@@ -1,0 +1,19 @@
+{
+ "arm": "Cplus",
+ "file": "sakai05__N0.wav",
+ "model": "gemini-3.5-flash",
+ "translation": "菅原神社的椿之井。離開薩維爾公園後，沿著紀州街道往南走。在途中的菅原神社也順道去看看吧。這裡有傳聞中千利休的師父武野紹鷗所喜愛的「椿之井」（山茶花之井）。你是否聽過「侘寂」（Wabi-Sabi）這個詞呢？這原本是與和歌相關的詞彙。",
+ "elapsed_sec": 1.7,
+ "usage": {
+  "promptTokenCount": 247,
+  "candidatesTokenCount": 95,
+  "totalTokenCount": 342,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 247
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

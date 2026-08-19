@@ -1,0 +1,9 @@
+{
+ "arm": "Cplus",
+ "hop": "translate",
+ "model": "gemini-3.5-flash",
+ "thinkingLevel": "minimal",
+ "temperature": 0.2,
+ "prompt": "INTERPRETER_SYSTEM(凍結,與 gemini 對照組逐字相同)",
+ "note": "Gemma 4 無音訊模態,只能做第二跳"
+}
