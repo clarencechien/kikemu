@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T2_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "平台 的 服务 所以 因此 就 有 了 数位 凭证 评家 或 数位 评家 之类 的 这 样子 的 概念 这个 概念 跟 以前 的 概念 完全 不 一样 以前 的 政府 服务 可能 是 我 就 给 你 一组 账号密码 我 有 你 的 所有 资料 我 是 一个 好 的 家父 长 或 家长 来 帮 你 保管 那 你 用 了 你 就",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 21.8,
+  "audio_sha256": "805700635ce1c977ca7ae3ecc297987d7af9fa3610fad776b1a48ce182719953"
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "arm": "Zg",
+ "corpus": "exp5 純中文 20 秒視窗",
+ "model": "gemini-3.5-flash",
+ "prompt": "逐字轉寫這段音訊。說話者混用中文與英文,英文詞請原樣保留,不要翻譯。不要摘要、不要加說話者標記、不要加時間碼,只輸出轉寫文字。",
+ "thinkingLevel": "minimal"
+}

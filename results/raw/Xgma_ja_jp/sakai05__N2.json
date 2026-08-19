@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja_jp",
+ "file": "sakai05__N2.wav",
+ "audio_s": 29.9,
+ "transcript": "菅原神社 の つばき の 井戸 を 訪れ ましょう 。 座備エル 公園 を 出 て 周回 道路 を に 南 へ 向かう 。 その 途中 に ある 菅原 神社 に も 立ち寄っ て みよう 。 ここ に は 瀬戸の 立居 の 師匠 谷野上 が 愛し た と 伝え られる つばき の 井戸 が ある 。 わび さび と いう 言葉 を 聞い た こと が ある だろう か ? こと は わび さび の こと だ 。",
+ "meta": {
+  "arm": "Xgma_ja_jp",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "japanese",
+  "prompt": "Transcribe the following speech segment in Japanese into Japanese text.\n\nFollow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 8.7,
+  "prompt_tokens": 830,
+  "model_load_sec": 18.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "911033d0147bd3530bfa7da39a4fb9d4c47d30b9e34dc9e1b2e7f22ee81a2d55"
+ }
+}

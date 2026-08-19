@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja_jp",
+ "file": "sakai06__N2.wav",
+ "audio_s": 27.9,
+ "transcript": "まぼろし の 境 幕府 周回 道 沿い に 南 へ 南 へ 宿員 の 放射 店 で 立ち止まり 周り を 見渡し て ほしい この 辺り 一体 に は まぼろし の 境 幕府 が あっ た と 言わ れ て いる 少し 歴史 を 振り返ろう 黄金 の 日々 が 始まる 少し 前 京都 で 王人 も 名所 の",
+ "meta": {
+  "arm": "Xgma_ja_jp",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "japanese",
+  "prompt": "Transcribe the following speech segment in Japanese into Japanese text.\n\nFollow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 6.6,
+  "prompt_tokens": 781,
+  "model_load_sec": 18.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8cf56581422c4e0d528d72854223c4e6f96a64c8328989ae8654f06486b586ae"
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma",
+ "file": "T2_135s.wav",
+ "audio_s": 20.0,
+ "transcript": "我, 當時以隊房講述來的歷史, 於 1950 年開始吧, 著有國際上的, 權政府, 護政權路標註阻止的, 在研究所, 我們不能把在套, 去開連的從中發明, 意到更的地的次, 猶其是政府, 護的",
+ "meta": {
+  "arm": "Zgma",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 8.4,
+  "prompt_tokens": 581,
+  "model_load_sec": 27.6,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8dd854a9d4255bba9cf81ae6324143d8a03e99384eebbdf15adb04529c3e0788"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "arm": "Zsm",
+ "file": "T2_30s.wav",
+ "audio_s": 20.0,
+ "transcript": "的 某种 技术 拿到 了 更新 的 世代 现在 因为 有 一些 在 做 网络 标准 的 人 他们 认为 这 样子 可能 会 被 平台 或者 是 一些 大型 服务 给 把持 这个 身份 其实 我 遇过 很多 故事 就是 之前 有 一个 学长 医院 的 学长 小儿 泌尿科 嘛 所以 很多 手术 影片 是",
+ "meta": {
+  "engine": "speechmatics batch",
+  "language": "cmn_en",
+  "operating_point": "enhanced",
+  "elapsed_sec": 15.3,
+  "audio_sha256": "c08d916e580e89ba2f2bc91b6cfa8d1d9d41eb0524fbe3ecbaacf4bb82d87a17"
+ }
+}
