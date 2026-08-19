@@ -879,6 +879,21 @@ gemma-4-26b-a4b-it  同上
 (4 核 CPU、15 GB RAM、22 GB 磁碟)只放得下 `E2B`(權重 10.2 GB);
 `12B-it`(`Gemma4UnifiedForConditionalGeneration`,23.9 GB)**裝不下**。
 
+**出路已備妥:** [`notebooks/gemma4_12b_exp5.ipynb`](../notebooks/gemma4_12b_exp5.ipynb)
+——Colab 一鍵跑,語料用 exp5(Breeze / Gemini 批次 / Gemini Live / SM 四個 arm
+都在同一批檔案上跑過),最後一格直接印出五方對照。**arm 代號 `Xgma_12b`,
+`score.py` 與 `compare.py` 已經認得它,結果回填即可。**
+
+三個接線細節已先在本機驗過(模型載不下,但 processor 路徑可驗):
+
+- `Gemma4UnifiedProcessor` **需要 `torchvision`**(連帶 import image processor),
+  少裝會噴看不懂的 `ModuleNotFoundError`。
+- `apply_chat_template` 的 `enable_thinking` **預設就是 `False`**,
+  關閉時送出一個立刻閉合的 `<|channel>thought\n<channel|>`——
+  等同 API 端的 `thinkingLevel: "minimal"`。
+- 28 秒音檔 → 698 個 audio frame(約 25 frame/秒),
+  5 分鐘約 7500,遠低於 262k context,**不需要切塊**。
+
 ### 3F.2 第二跳(譯)—— 這個能比,而且結果值得記
 
 輸入用 `Cplus`(SM 即時 + 詞表)的日文定稿逐字稿,6 段 N0,**同一份凍結的

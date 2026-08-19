@@ -7,8 +7,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ARMS = [("G", "Gemini Live"), ("Xbat_bi", "Speechmatics batch"),
-        ("X_bi", "Speechmatics realtime"), ("Xbrz_auto", "Breeze ASR 25")]
+ARMS = [("Gbat37", "Gemini 3.7 批次 ※"), ("Gbat", "Gemini 3.5 批次 ※"),
+        ("G", "Gemini Live"), ("Xbat_bi", "Speechmatics batch"),
+        ("X_bi", "Speechmatics realtime"), ("Xbrz_auto", "Breeze ASR 25"),
+        ("Xgma_12b", "Gemma 4 12B")]
 CELLS = [(s, c) for s in ("T1", "T2", "T3") for c in ("M0", "M3")]
 
 
@@ -48,7 +50,11 @@ def main():
         return sum(x - y for x, y in pairs) / len(pairs), len(pairs)
 
     print("\n配對比較(只算兩邊都有結果的格子)\n")
-    for a, b in (("Xbrz_auto", "Xbat_bi"), ("Xbrz_auto", "G"), ("G", "Xbat_bi")):
+    pairs = [("Xbrz_auto", "Xbat_bi"), ("Xbrz_auto", "G"), ("G", "Xbat_bi")]
+    if any(k[0] == "Xgma_12b" for k in idx):
+        pairs += [("Xgma_12b", "Xbrz_auto"), ("Xgma_12b", "Xbat_bi"),
+                  ("Xgma_12b", "Gbat37")]
+    for a, b in pairs:
         for tag, conds in (("全部", None), ("僅 M0", {"M0"}), ("僅 M3", {"M3"})):
             dv, n = delta(a, b)if conds is None else delta(a, b, conds)
             print(f"  {a} − {b}  {tag:<6} Δ={fmt(dv)}  n={n}")
