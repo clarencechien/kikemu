@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e4b",
+ "file": "T2_30s.wav",
+ "audio_s": 20.0,
+ "transcript": "標準的某種技術啦,那到了更新的世代哦,現在因為有一些在做網路標準的人呢,他們認為這樣子可能會被平台或者是一些大型服務給把持這個身份。 對,其實我遇過很多故事哦,就是之前有一個學長,醫院的學長,他小人 mídia顆嘛,所以很多手術影片是那個",
+ "meta": {
+  "arm": "Zgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 8.9,
+  "prompt_tokens": 577,
+  "model_load_sec": 20.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "c08d916e580e89ba2f2bc91b6cfa8d1d9d41eb0524fbe3ecbaacf4bb82d87a17"
+ }
+}

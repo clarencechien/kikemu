@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e4b",
+ "file": "T2_175s.wav",
+ "audio_s": 20.0,
+ "transcript": "可以享受便利的服務,其實到現在為止很多國家也是這樣子哦,但是如果這個政府拿這個事情來做不合法事情,其實風險就會很大,那也有很多國家有這樣子的案例,像阿富汗或者一些那個倒台的這個政府資料被拿去用的故事,對,那比較新的世界就會",
+ "meta": {
+  "arm": "Zgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 7.0,
+  "prompt_tokens": 577,
+  "model_load_sec": 20.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "475ee8cc56827d488915ed4de3651854554c7afb03ed9bdb2968fef2d0116e34"
+ }
+}

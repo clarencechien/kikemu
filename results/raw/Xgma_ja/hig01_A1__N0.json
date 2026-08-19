@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "hig01_A1__N0.wav",
+ "audio_s": 111.4,
+ "transcript": "石切り鶴宮神社。江魔殿。 江魔殿に着いたら、まずは屋根を見上げてみよう。 立派な鶴と岩を見つけることができる。 神社名の石切り鶴宮は、強固な岩を も 切り裂き、 貫くほどに ご 再人 の 力、 ご 神威 が 偉大であります。玉を払している。\n遥か昔、\n聞き心は時代\nアマテラス大御神から\n徳佐の神座からを誘った\n賑はや日のみこと\nこの地に降り立ち\n専住していた一族の、\n長巣彦の妹ともすばれ\n生まれたのが\n馬島での見ことだ。\n石切神社では\nこの二柱の神様を\nご財神として祀る。実際はこんな物語もある。 仁武天皇が要平定するために東へと進み、この地に入った時、美ことはすでにこの地を治めていた。突然現れた仁武天皇に長船彦は激しく抵抗したが、美こと仁武天皇が先祖の証であるアマの母屋を互いに示し合うことで、共に天照大御神の子孫であることが分かった。そこでミコトは長船彦に拝下に配るようにさとし。ここにヤマトの国が建国したのである。その後ミコトの一族はものべしとなり天皇に使えることとなった。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 23.2,
+  "n_chunks": 4,
+  "prompt_tokens": 3109,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "0efe0f9e866ee221985b18342f3044c5e2a6beb5c5499feda19126089fa7e1de"
+ }
+}
