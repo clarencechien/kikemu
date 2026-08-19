@@ -1,0 +1,24 @@
+{
+ "arm": "Zgma_e2b",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "是像自然人平整的。自然人平整的。我不知道,因為我現在進入的幾個政府的,他其實只要我讓號密碼,那他沒有要我用,對,還有不同登錄的分層。哦,我想起來了,對對,我,呃,你如果比較準比較重要的,可能就是要查自然人平整跟公有沒有超討銀的東西,報稅有報稅。然後,呃,第二種但就是",
+ "meta": {
+  "arm": "Zgma_e2b",
+  "model": "google/gemma-4-E2B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "elapsed_sec": 18.6,
+  "prompt_tokens": 577,
+  "model_load_sec": 14.5,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}

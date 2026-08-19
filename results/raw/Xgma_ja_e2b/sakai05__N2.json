@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja_e2b",
+ "file": "sakai05__N2.wav",
+ "audio_s": 29.9,
+ "transcript": "須磨原 神社 の つばき の 庭 。 ザビエル 公園 を 出 て 周回 道沿い に 南 へ 向かう 。 その 途中 に ある 須磨原 神社 に も 立ち寄っ て みよう 。 ここ に は 節 の 立久 の 師匠 立ち の 上 を 愛し た と 伝え られる つばき の 庭 が わびさび と いう 言葉 を 生み た こと が あり た よ 。 元 は わず に 変わっ て い た 。",
+ "meta": {
+  "arm": "Xgma_ja_e2b",
+  "model": "google/gemma-4-E2B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 6.2,
+  "prompt_tokens": 824,
+  "model_load_sec": 12.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "911033d0147bd3530bfa7da39a4fb9d4c47d30b9e34dc9e1b2e7f22ee81a2d55"
+ }
+}

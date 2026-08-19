@@ -193,6 +193,54 @@
    "len_ratio": 1.258
   },
   {
+   "arm": "Zgma_e2b",
+   "window": "T2_30s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T2_135s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T2_155s",
+   "cer": 0.2451,
+   "len_ratio": 1.108
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T2_175s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T2_220s",
+   "cer": 0.9103,
+   "len_ratio": 1.705
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T2_275s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T3_155s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
+   "arm": "Zgma_e2b",
+   "window": "T3_200s",
+   "cer": 1.0,
+   "len_ratio": 0.0
+  },
+  {
    "arm": "Zbrz",
    "window": "T2_30s",
    "cer": 0.1287,
@@ -269,6 +317,13 @@
    "cer_mean": 0.3119,
    "cer_max": 0.6282,
    "len_ratio_mean": 1.18
+  },
+  "Zgma_e2b": {
+   "label": "Gemma 4 E2B",
+   "n": 8,
+   "cer_mean": 0.8944,
+   "cer_max": 1.0,
+   "len_ratio_mean": 0.352
   },
   "Zbrz": {
    "label": "Breeze ASR 25",
