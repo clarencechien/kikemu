@@ -215,7 +215,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | §6 日文 | exp1 追加 arm `Xbrz_ja`(30 檔) | `results/raw/Xbrz_ja/` |
 | §6 全地端鏈 | exp5 `chain_*`(三條鏈同料) | `exp5/results/chain_scores.json` |
 
-完整報告與 35 條侷限:[`results/report.md`](report.md)。
+完整報告與 37 條侷限:[`results/report.md`](report.md)。
 
 ### 3.1 一體式**即時**在噪音下會崩潰,不是變差
 

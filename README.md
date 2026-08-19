@@ -28,6 +28,7 @@
 | exp1 追加 arm `Abat`:Gemini 非 Live 批次 | ✅ 5 條件全覆蓋——證明「噪音崩潰」是 **Live 串流**的行為,不是模型能力上限(報告 §2.1b) |
 | oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
 | 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本);聽要看型號**——三個型號測完,**E4B 是甜蜜點**:12B 吐太多(CER 2.231 退化生成)、E2B 不吐(貪婪下純中文 8/8 空輸出)、**E4B 中文可用**(CER 0.312、exp5 0.684,與 SM batch 同級)。日文三個都不行 |
+| handoff-v9 G/H/I/J/K(把 E4B/12B 的坑補完) | ✅ **(G)** E4B 當耳朵的全地端鏈 **0.518 < 0.65** → 耳朵**指定 Breeze**;意外抓到「數據」×14 的兩跳交互作用;**(J)** 12B 貪婪**更糟**(CER 2.231 → 3.518)→ 退化生成是模型性質,結論不用改;E4B 反向(+0.051/+0.038);**(H)** E4B 噪音曲線線性但**掉幅是 Breeze 的 1.8 倍**;**(I)** 日文補滿 335 專名 **0.328** → 「日文不可用」成立;**(K)** E4B − SM batch CI 含 0(同級)、E4B − Breeze CI 不含 0(Breeze 真的較好) |
 | handoff-v8 梯次二 C/D/E | ✅ **(C)** Gemma 4 **E4B 比 12B 好一個數量級**(exp5 0.741/0.627 對 0.044/0.013;輸出長度比 1.04 對 2.22)——12B 的低分是**退化生成**不是聽力,「Gemma 4 不能聽」要改成「12B 不能聽」;**(D)** Breeze 每小時音訊 GPU 成本 **T4 $0.155 最便宜**(L4 $0.175、A100 $0.412),且三張卡轉寫**逐字相同**;**(E)** exp1 日文補滿 6 段 335 專名,**0.272**(原 0.323,差 0.051 在門檻內),切塊對 Gemma 的代價 ≈ 0 |
 | handoff-v8 梯次一 A/F/B(Modal 上的 Breeze 補測) | ✅ 三格全數完成:**(A)** Breeze 日文只有 0.415,地端推薦**必須限定中文**;**(F)** 全地端聽譯鏈(Breeze 聽 + Gemma 4 譯)端到端驗證成立,0.717 > 雲端兩跳 0.626;**(B)** 噪音曲線四條件補齊,掉幅 +0.070 是全場最平,且 **CPU/fp32 與 T4/fp16 差 0.000**(exp5 侷限 17 解除) |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
@@ -51,9 +52,10 @@
 | **prompt 給脈絡能不能取代詞表**(stt-matrix「已知空白」1b) | 沒量過 | LLM 這條路沒有詞表機制,這是唯一對應手段 |
 | **三處「無人耳終審」**(侷限 6、11、20、21) | 需要人 | 參考文本、拉丁字母裁決、LLM 是否「補出」內容 |
 | **唸稿型中文語料**(侷限 16g) | 需要新語料 | 拆開「語體」與「語言」兩個變因的唯一辦法 |
-| **Gemma 的取樣變異**(侷限 16n、16o) | 只驗了 E4B 一組 | 三個型號預設 `do_sample: true`;12B 完全沒做貪婪對照 |
-| **E4B 的噪音曲線與 CI**(侷限 16l) | 只跑 M0/M3 | 要把 E4B 當地端候選就該補 |
-| **E4B 聽 + Gemma 譯**這條鏈沒接過 | 已驗的鏈第一跳是 Breeze | E4B 現在有資格當第一跳了 |
+| ~~Gemma 的取樣變異~~ | **已驗**(v9 J):12B 與 E4B **方向相反** | 剩:E2B 的 exp5/exp1 沒對照(16o) |
+| ~~E4B 的噪音曲線與 CI~~ | **已補**(v9 H/K):曲線線性、掉幅 +0.127、CI 已算 | 剩:prompt 變體只有 official |
+| ~~E4B 聽 + Gemma 譯沒接過~~ | **已接**(v9 G):0.518,輸給 Breeze 那條的 0.717 | 耳朵維持 Breeze |
+| **轉寫的「形式」會不會影響下游改寫**(侷限 16p) | v9 G 觀察到,但不是單變因對照 | 要把同一份轉寫加/去標點各跑一次 |
 | **全地端鏈只驗過中文** | 日文第一跳就垮(Breeze 0.415) | 中文以外沒有可推薦的地端方案 |
 | **RNNoise 未測**(exp3) | `pyrnnoise` 與環境 PyAV 不相容 | 已記錄缺口,DSP 那條路整體無效 |
 
@@ -188,13 +190,13 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**35 條侷限**(4 條已由後續實驗解除,原文保留刪節線) |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**37 條侷限**(6 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v8.md`](handoff-v8.md) | 八份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測,梯次一 A/F/B 與梯次二 C/D/E 全部完成**。v6/v7/v8 任務書末尾都有執行結果與偏離紀錄) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v9.md`](handoff-v9.md) | 九份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板;**v8 = Modal 上的 Breeze/Gemma 補測(A/F/B + C/D/E,全部完成);v9 = 把 E4B/12B 的坑補完(G/H/I/J/K,全部完成)**。v6~v9 任務書末尾都有執行結果與偏離紀錄) |
 
 ## 實驗規模
 
@@ -225,8 +227,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
-- **誠實記錄。** 35 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
-  解除的 4 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
+- **誠實記錄。** 37 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+  解除的 6 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 
 ## 目錄
