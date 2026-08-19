@@ -2,14 +2,14 @@
  "arm": "Xgma_12b",
  "model": "google/gemma-4-12B-it",
  "api": "modal A100-40GB",
- "load": "bf16",
+ "load": "bf16(dtype=auto)",
  "chunk_sec": 30,
  "whole_file": false,
  "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
  "modality_order": "text then audio(模型卡 §4)",
- "prompt_source": "模型卡 §6 官方 ASR 結構(與 Gbat arm 的 prompt 不同)",
- "enable_thinking": false,
- "do_sample": false,
- "prompt": "Transcribe the following speech segment in its original language into text.\n\nFollow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
- "corpus": "exp5"
+ "prompt_variant": "official",
+ "prompt_source": "模型卡 §6 官方 ASR 結構(原文未改)",
+ "decode": "max_new_tokens=512, processor.parse_response()",
+ "corpus": "exp5",
+ "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three."
 }
