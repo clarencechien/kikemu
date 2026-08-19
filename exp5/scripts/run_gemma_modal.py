@@ -78,7 +78,8 @@ cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
 @app.function(image=image, gpu="A100-40GB", timeout=60 * 60,
               volumes={"/cache": cache},
               max_containers=1)
-def transcribe(wav_bytes: bytes, stem: str, model_id: str) -> dict:
+def transcribe(wav_bytes: bytes, stem: str, model_id: str,
+               max_chunks: int = 0) -> dict:
     import io
     import os
     import re
@@ -122,12 +123,19 @@ def transcribe(wav_bytes: bytes, stem: str, model_id: str) -> dict:
     step = CHUNK_SEC * 16000
     chunks = [audio[i:i + step] for i in range(0, len(audio), step)
               if len(audio[i:i + step]) >= 16000]   # 不足 1 秒的尾巴丟掉
+    if max_chunks:
+        chunks = chunks[:max_chunks]   # --probe:抽驗用,不寫結果
     t0 = time.time()
     pieces, n_tok = [], 0
-    for c in chunks:
+    for i, c in enumerate(chunks):
+        ct = time.time()
         txt, n = one(c)
         pieces.append(txt)
         n_tok += n
+        # 每個 chunk 印一行:沒有這個就要等整個檔跑完才知道有沒有壞掉,
+        # 上一輪就是這樣白燒了 $0.54。
+        print(f"    {stem} chunk {i + 1}/{len(chunks)} "
+              f"({time.time() - ct:.0f}s) {len(txt)}字 | {txt[:60]}", flush=True)
     el = time.time() - t0
     return {"stem": stem, "transcript": "".join(pieces),
             "elapsed_sec": round(el, 1), "n_chunks": len(chunks),
@@ -136,7 +144,19 @@ def transcribe(wav_bytes: bytes, stem: str, model_id: str) -> dict:
 
 
 @app.local_entrypoint()
-def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b"):
+def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
+         probe: int = 0):
+    """probe=N:只跑第一個檔的前 N 個 chunk 並印出來,不寫結果。先驗再全跑。"""
+    if probe:
+        man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
+        stem = "T1__M0"
+        wav = (ROOT / "corpus" / "conditions" / f"{stem}.wav")
+        r = transcribe.remote(wav.read_bytes(), stem, model, probe)
+        print(f"\n=== 抽驗 {stem} 前 {probe} 個 chunk ===")
+        print(f"耗時 {r['elapsed_sec']}s | {len(r['transcript'])} 字")
+        print(r["transcript"][:600])
+        return
+
     man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
     picks = json.loads((ROOT / "corpus" / "picks.json").read_text())
     stems = [f"{p['seg']}__{c}" for p in picks for c in CONDS]
