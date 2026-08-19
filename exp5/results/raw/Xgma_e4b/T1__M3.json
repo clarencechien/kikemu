@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_e4b",
+ "file": "T1__M3.wav",
+ "audio_s": 300.0,
+ "transcript": "主要是工業演給書的觀影其實那我完全照新加坡的, 然後就是就是在一個時間點,有人在做講簡和乾淨的網,真的真的很。 那,所以你們就是剛剛講做這個search engine,對,然後到時候就加了,在去聽。然後時候做的操作就是ping。 存在非常core的,就應該整個ping就如果從indexing叫算的話應該沒有任何聽得我們跟,就是會,會有在這個裡面。 那是從那個data存的dataset是怎麼拿出來的?是整段送到用戶面前,這整段排排就是我們真的聽哦。 那是中文英文,就是全球通用式的都會 我們是global了,我都global。對,我在那邊都有選擇,我外到美國的都全球。 其實你都不知道,我人生時候幹過很多遍,對台灣的感覺都不太好。 還是一個錯覺,it's a little bit general compared to 那有人講東西感覺上覺得,我上次Frank來講說, بنت的台灣的中文教授就送給我跟幾個朋友,有這個感覺,我現在我在想的是我對東西有不知道能不能講,對對我知道很多,但是沒有這一個overall的概念為是什麼,因為你你你也一種,我會就看random告訴你,這個世界很小,但是有有一些,有一些這台,我覺得應該算是考的人就,但是可以稍微講一個概念,然後大家去想一下就是說我會是這個樣,就是在中國其實有一個法律是說,如果你是在中國境內的銀行,你所有data都要中國啊,對不對,在中國境內,對,那我不怕,這多是數據,所以我有法,對,不是也不是說網網有放,而是它是說要要有個copy在境內,對,不是說我放在裡面給用,那就是一定有很多data,就是原本是一個非常complicated的公司,所以他基本上他就變成不能放。 啊,所以就資料,你是反過來想的,就是說如果我今天我是一個大公司我做個搜尋引擎,我一定必須要到出發,然後會甚至就在先不管中華法的,我一定也得放一份嘛,因為這麼多個user在那,我鐵定是CDN我什麼要放IP給過去。 那今天如果有些user說我的資料就不可以進到那邊,那是不是是不是我就不能放在那邊,那那他們那邊的流量就會比較慢,會比較爛,然後有潛了個。 對,就是data越多,整個mono會越好,各方面性能也好,唯換是最早最早的是很少很少就開始跑,現在又到各種搜索結果的公式嘛。那他能算跟不放題一定會產生很大的影響,所以從法律思考就就一定是這個結果,你哪間公司來做都一樣,google方也是這個結果。對,我們上四千幾幾啊,我們訪問了一個那個技術啊,那他也是前微亂,日本員工啊對於微亂非常的在於家,你個人評價給幾分,你待這麼久應該是不錯嘛,我覺得是蠻不錯的。五星五星評價,哦,像我基本上會給我給評有沒有告訴的是個很對好的,對對他,對,你會看到很多東西,我其實 很多人會一會會覺得說,我們這個是,我們是open source,我之前都有分說,對。 他一一念一念說我就記得是加後一直說open source,然後後來有一些說我加入了微軟,我那時候想說我相信我是C++的,我是Django的,我是Firebase是裡面那個Firebase Mongo的那個Mongo Spider的那個他就不要了,對,然後都做過一點點東西,的都很多,但是就是基本上用各種library在server的時候做了,也都是open source東西。 那過去其實我覺得反而有個好處,對,這個可以讓大家有初有一些學習機會了,但是這這確實是一個事實。 我們現在就很方便很多open source library的,直接用,然後就誒,我東西就做完了。 欸,你為什麼想要open source library到底為什麼要戴它? Because因為什麼要在難出進的代進步。這個open source它為什麼會在會會講這個樣子,它為什麼是這些參數,它為什麼是簽成這個大小的,就其實你也不知道,它就是在搜索裡面這樣子。 然後我們進到Microsoft,因為Microsoft它是它的就是Windows stack。 所以它用Windows stack的情況下就很多那些open source的container是在這個Windows裡面動的。 那所以就會變,而且你也會發現,寫很多東西很麻煩,其實其實很麻煩這個簽出大小有沒有對。移動,的,其實需要證明是事實,可是你實法性就會發現,欸,有些東西其實就到必要存在,哦,沒有必要存在,沒有必要存在,在open source的library它存在,它是因為更多的就是社群引退然後存在的,那也可以,這就是跑術就是這是capability,就是我不用因為being justification,然後去決定就說哦,這個piece of documentation存在。這open source library就會講得一樣,ration log,可是registry到挑那些挑那些所謂的metadata的一些記錄就到,然後registry就是一個registry",
+ "meta": {
+  "arm": "Xgma_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "chunk_sec": 30,
+  "whole_file": false,
+  "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "official",
+  "prompt_source": "模型卡 §6 官方 ASR 結構(原文未改)",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp5",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "elapsed_sec": 109.8,
+  "prompt_tokens": 8270,
+  "n_chunks": 10,
+  "model_load_sec": 23.2,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "ad526e081ac9ec8a69949c503662aa0410797ae6da59e51a40a45b08adb5604a",
+  "audio_matches_manifest": true
+ }
+}

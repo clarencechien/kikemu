@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "hig02_B12__N0.wav",
+ "audio_s": 101.7,
+ "transcript": "平岡神社 拝殿 参道広場\n2の鳥居をくぐり広い参道を進むと参道広場に出る。\n広場には挙げ巻結びという特殊な形のしめ縄が結ばれている。\n平岡神社の主祭神は雨の小屋根の御子といい神事を司る神様。\nしめ縄この御社 に 深い 関わり を 持つ 神様 で も ある 。 そんな 神様 に ちなん で 平岡 神社 で は 毎年 12 月 に 締め縄 を 新しく かけ替える 締めかけ 神事 と いう 祭り が ある 。 別名 を お 笑い 神事 と いい 初め に 愚事 が あ 、 は 、 は と 大声 で 笑い 参拝 者 も 続く 。 これ を 3 回 繰り返し さらしかし、そのあと参拝者とともに思い思いに20分間を笑い続けるのだ。\n1年の災難ごとを笑い飛ばし、福を招くために全国から多くの人が参加する。\nこれは、岩戸のなかに隠れてしまったアマテラスオオミカミが、\n天の小屋根のミコトの神事と神神の笑いによって再び世に戻り、\n神神の世界に光が戻った喜びを再現した神事として西郷から行われている。 このことから雨の小屋根のミコトは日本で初めて神事を行った。 神事を司る神となったのだ。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 23.6,
+  "n_chunks": 4,
+  "prompt_tokens": 2866,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "f663bcf1ebc02606df964d1bef37cc11b900a0a4bcf9c2fd19102dcc6cc109d9"
+ }
+}

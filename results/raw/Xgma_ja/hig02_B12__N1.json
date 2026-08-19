@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja",
+ "file": "hig02_B12__N1.wav",
+ "audio_s": 101.7,
+ "transcript": "平岡神社はいでん参道広場。 2門をくぐり広い参道を進むと、参道広場に出る。広場には上げ巻き結びという特殊な形のしめ縄が結ばれている。平岡神社の主祭神は、雨の小舟の御子といい、真治を司る神様。 しめ縄御神輿は神話に深い関わりを持つ神様であります。\n\nそんな神様にちなんで、平岡神社では毎年12月に、しめ縄を新しく掛け替える「しめかけ神事」という祭りがある。\n\n別名を「お笑い神事」といい、初めに宮司が、「あははは」と大笑いで笑い、参拝者も続く。\n\nこれを3回繰り返し、で、 3 晩 ごと 3 敗 者 と とも に 思い思い に 20 分間 笑い 続ける の だ 。 1 年 の 財産 ごと の 笑い と 恥 を 招く ため に 全国 から 多く の 人 が 参加 する 。 これ は 岩戸 の 中 に 隠れ て しまっ た 暴れらす 黄金神 が 雨 の 小屋 を 見事 の 真治 と 神々 の 笑い に よっ て 再び 世 に 戻り この 世 に 光 が 戻っ た 喜び を 再現 し た 真治 と し てこれから 教わら れ て いる 。 この こと から ハメ の 皇女 の 見事 は 日本 で 初めて 神事 を 行っ た 。 神事 を 司る 神 と なっ た の だ 。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 25.5,
+  "n_chunks": 4,
+  "prompt_tokens": 2866,
+  "model_load_sec": 15.7,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "9d43a913e0d60f43b058f0d92215c81d4ccb549fc985eeab2c7ca85046bdac42"
+ }
+}
