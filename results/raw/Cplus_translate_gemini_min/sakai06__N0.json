@@ -1,0 +1,19 @@
+{
+ "arm": "Cplus",
+ "file": "sakai06__N0.wav",
+ "model": "gemini-3.5-flash",
+ "translation": "幻之堺幕府。沿著紀州街道一路向南。請在宿院的十字路口停下腳步，環顧四周。據說這一帶曾存在過幻之堺幕府。讓我們稍微回顧一下歷史。在黃金歲月開始前不久，京都爆發了應仁之亂。",
+ "elapsed_sec": 1.5,
+ "usage": {
+  "promptTokenCount": 236,
+  "candidatesTokenCount": 70,
+  "totalTokenCount": 306,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 236
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

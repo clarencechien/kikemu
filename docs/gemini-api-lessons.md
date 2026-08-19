@@ -52,6 +52,26 @@ exp5 拿同一批 5 分鐘中英夾雜音檔跑 `generateContent` 轉寫,六檔�
 品質沒有退化:三句抽樣人工比對,台灣用語與專名表記皆正確,
 `minimal` 甚至把「幻の堺幕府」譯得比預設思考版更貼(預設版譯成「傳說中的」)。
 
+### Gemma 4 的兩個坑(2026-08-19,同一把 key)
+
+同一個 Generative Language API 也服務 Gemma 4,但行為和 Gemini 不一樣:
+
+1. **thinking 當一般 part 回傳,且不一定標 `thought: true`。**
+   直接取 `parts[0].text` 會拿到一串英文推理分析,不是答案。
+   必須 `"".join(p["text"] for p in parts if not p.get("thought"))`。
+   Gemini 不會這樣。
+2. **`thinkingLevel: "minimal"` Gemma 4 吃,而且真的歸零。**
+   同一句翻譯:預設 493~692 thoughts、延遲 15.8~16.0s;
+   minimal 後 **0 thoughts、1.9s**。鐵律 4 在 Gemma 上同樣成立——
+   而且比 3.7-flash 好,後者直接拒收 minimal。
+3. **會聽的變體拿不到。** `gemma-4-26b-a4b-it` 與 `gemma-4-31b-it`
+   是這把 key 唯二服務的 Gemma 4,兩者送音訊都回
+   400 `Audio input modality is not enabled for this model`。
+   HF 上 tag 為 `any-to-any` 的 `E2B` / `E4B` / `12B` 才有音訊,
+   但 AI Studio 與 OpenRouter 都沒有服務。
+
+實測見 `results/report.md` §3F。
+
 ### kikemu 現在怎麼做
 
 `worker/gemini.ts` 的 `generate()` 是單一 helper,三個呼叫點共用:

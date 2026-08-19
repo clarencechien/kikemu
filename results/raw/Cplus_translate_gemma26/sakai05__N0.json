@@ -1,0 +1,19 @@
+{
+ "arm": "Cplus",
+ "file": "sakai05__N0.wav",
+ "model": "gemma-4-26b-a4b-it",
+ "translation": "菅原神社的椿之井戶。從薩比爾公園（Xavier Park）出來，沿著紀州街道向南走。途中也可以順道參訪菅原神社。這裡據說有著千利休的師父——武野紹鷗所愛慕的椿之井戶。大家聽過「侘寂（Wabi-sabi）」這個詞嗎？這原本是與和歌相關的詞彙。",
+ "elapsed_sec": 2.8,
+ "usage": {
+  "promptTokenCount": 247,
+  "candidatesTokenCount": 93,
+  "totalTokenCount": 340,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 247
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

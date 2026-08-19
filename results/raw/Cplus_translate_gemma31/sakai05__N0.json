@@ -1,0 +1,19 @@
+{
+ "arm": "Cplus",
+ "file": "sakai05__N0.wav",
+ "model": "gemma-4-31b-it",
+ "translation": "菅原神社の椿之井。離開沙比爾公園，沿著紀州街道向南前行。途中我們也來參訪一下菅原神社。這裡有一口據說深受千利休的師父武野紹鷗所喜愛的椿之井。您是否聽過「侘寂」這個詞？這原本是一個與和歌相關的詞彙。",
+ "elapsed_sec": 3.2,
+ "usage": {
+  "promptTokenCount": 247,
+  "candidatesTokenCount": 80,
+  "totalTokenCount": 327,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 247
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}
