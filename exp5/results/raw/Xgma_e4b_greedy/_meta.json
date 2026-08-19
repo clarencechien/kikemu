@@ -3,7 +3,8 @@
  "model": "google/gemma-4-E4B-it",
  "api": "modal L4",
  "conds": [
-  "M0"
+  "M1",
+  "M2"
  ],
  "sampling": "greedy(do_sample=False)",
  "load": "bf16(dtype=auto)",

@@ -337,6 +337,54 @@
    "len_ratio": 0.0
   },
   {
+   "arm": "Zgma_greedy",
+   "window": "T2_30s",
+   "cer": 0.6733,
+   "len_ratio": 0.861
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T2_135s",
+   "cer": 0.5,
+   "len_ratio": 1.012
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T2_155s",
+   "cer": 5.3529,
+   "len_ratio": 4.608
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T2_175s",
+   "cer": 0.5567,
+   "len_ratio": 1.103
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T2_220s",
+   "cer": 8.3333,
+   "len_ratio": 8.218
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T2_275s",
+   "cer": 0.5435,
+   "len_ratio": 1.043
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T3_155s",
+   "cer": 5.7041,
+   "len_ratio": 5.224
+  },
+  {
+   "arm": "Zgma_greedy",
+   "window": "T3_200s",
+   "cer": 6.4831,
+   "len_ratio": 5.775
+  },
+  {
    "arm": "Zbrz",
    "window": "T2_30s",
    "cer": 0.1287,
@@ -434,6 +482,13 @@
    "cer_mean": 1.0,
    "cer_max": 1.0,
    "len_ratio_mean": 0.0
+  },
+  "Zgma_greedy": {
+   "label": "Gemma 4 12B(貪婪)",
+   "n": 8,
+   "cer_mean": 3.5184,
+   "cer_max": 8.3333,
+   "len_ratio_mean": 3.481
   },
   "Zbrz": {
    "label": "Breeze ASR 25",

@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_greedy",
+ "file": "T2_175s.wav",
+ "audio_s": 20.0,
+ "transcript": "在想像所變異的符，其實到現在為止很多國家是這樣做，但是如果那個政府拿自己的實施內造，不合格發行，其實封成就是很多，然後很多國家有這樣的安理，上阿福漢就是一些那個到體的那個政府自由被拿使用的國事，對那比家新的世界周會",
+ "meta": {
+  "arm": "Zgma_greedy",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 5.3,
+  "prompt_tokens": 581,
+  "model_load_sec": 26.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "475ee8cc56827d488915ed4de3651854554c7afb03ed9bdb2968fef2d0116e34"
+ }
+}

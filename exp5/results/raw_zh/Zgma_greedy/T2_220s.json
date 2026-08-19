@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_greedy",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "我就是那個在那個政府的打次時要我長和密碼，那他們沒有要我用，對他們我不要他們發送，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，我就是說，",
+ "meta": {
+  "arm": "Zgma_greedy",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 35.6,
+  "prompt_tokens": 581,
+  "model_load_sec": 26.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}
