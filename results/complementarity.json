@@ -229,59 +229,69 @@
     },
     "N1": {
      "arms_present": [
+      "Abat",
       "Cb",
       "Cbplus"
      ],
      "strict": {
       "single": {
+       "Abat": 0.806,
        "Cb": 0.6269,
        "Cbplus": 0.7313
       },
-      "best_single": 0.7313,
-      "oracle": 0.7313,
-      "gain": 0.0,
+      "best_single": 0.806,
+      "oracle": 0.8657,
+      "gain": 0.0597,
       "n_items": 67
      },
      "tolerant": {
       "single": {
+       "Abat": 0.8955,
        "Cb": 0.6866,
        "Cbplus": 0.8358
       },
-      "best_single": 0.8358,
-      "oracle": 0.8358,
-      "gain": 0.0,
+      "best_single": 0.8955,
+      "oracle": 0.9403,
+      "gain": 0.0448,
       "n_items": 67
      },
      "jaccard_tolerant": {
+      "Abat+Cb": 0.2174,
+      "Abat+Cbplus": 0.2857,
       "Cb+Cbplus": 0.5238
      }
     },
     "N2": {
      "arms_present": [
+      "Abat",
       "Cb",
       "Cbplus"
      ],
      "strict": {
       "single": {
+       "Abat": 0.7612,
        "Cb": 0.597,
        "Cbplus": 0.7313
       },
-      "best_single": 0.7313,
-      "oracle": 0.7313,
-      "gain": 0.0,
+      "best_single": 0.7612,
+      "oracle": 0.8657,
+      "gain": 0.1045,
       "n_items": 67
      },
      "tolerant": {
       "single": {
+       "Abat": 0.8358,
        "Cb": 0.6567,
        "Cbplus": 0.8209
       },
-      "best_single": 0.8209,
-      "oracle": 0.8209,
-      "gain": 0.0,
+      "best_single": 0.8358,
+      "oracle": 0.9104,
+      "gain": 0.0746,
       "n_items": 67
      },
      "jaccard_tolerant": {
+      "Abat+Cb": 0.2593,
+      "Abat+Cbplus": 0.3529,
       "Cb+Cbplus": 0.5217
      }
     },

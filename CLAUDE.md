@@ -1,6 +1,7 @@
 # kikemu — 給接手的人 / agent
 
-聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 四個引擎選型實驗(`scripts/`、`exp2/`、`results/`)。
+聽外語導覽、出台灣正體字幕的 PWA(`app/`)+ 五個引擎選型實驗與一份 oracle 分析
+(`scripts/`、`exp2/`、`exp5/`、`analysis/`、`results/`)。
 先讀 [`README.md`](README.md) 的現況表,再看這頁的規矩。
 
 ## 這個 repo 的鐵律
@@ -30,7 +31,13 @@
 
 6. **數字要指得出出處。** README、PRD、report 裡的每個數字都應該對得上
    `results/` 裡的原始檔。抄外部牌價一律附**查價日期**與**模型級別**
-   (kikemu 踩過:把 3.5-flash 抄成 flash-lite 價,低估 3.6 倍還擴散到三份文件)。
+   (kikemu 踩過:把 3.5-flash 抄成 flash-lite 價,低估 3.6 倍還擴散到三份文件;
+   也踩過:exp5 的術語實例數從凍結前的舊詞表抄成 128,實際是 158,擴散到四份文件)。
+
+7. **「上限 +X」的數字要問「選錯時的下限是多少」。**
+   oracle / 天花板類分析逐項取 OR,假設你事後知道誰對——真實系統沒有那個信號,
+   選錯時會**比最佳單一方案更差**。它是篩選工具,不是收益估計。
+   細節見 `results/oracle_report.md` §9。
 
 ## 改完怎麼驗
 
@@ -56,7 +63,10 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
 | `scripts/` | exp1/3/4 的實驗腳本 |
 | `exp2/` | exp2(中英夾雜) |
-| `results/report.md` | 四個實驗合併報告 + 15 條侷限 |
+| `results/report.md` | 五個實驗合併報告 + 21 條侷限 |
+| `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
+| `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
+| `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
 | `docs/PRD.md` | 產品規格(畫面、安全基線、配額與成本) |
 
 ## 別做的事

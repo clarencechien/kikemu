@@ -7,12 +7,13 @@
 **kikemu 是琥珀(聽)**。
 
 - 產品:https://kikemu.ai-apps.work (封測中)
-- 這個 repo 同時是**產品本體**(`app/`)與**四個引擎選型實驗**(`corpus/`、`exp2/`、`results/`)。
+- 這個 repo 同時是**產品本體**(`app/`)與**五個引擎選型實驗 + 一份 oracle 天花板分析**
+  (`corpus/`、`exp2/`、`exp5/`、`analysis/`、`results/`)。
   架構的每一條決策都指得出是哪一份數據決定的。
 
 ---
 
-## 現況(2026-08-12)
+## 現況(2026-08-19)
 
 **端到端跑通,正式站可用。** 日文與中英夾雜兩條路徑都以評測語料實測驗證過。
 
@@ -23,7 +24,9 @@
 | **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 正式站日文 149 詞;韓文流程實測 113 詞 |
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
 | exp2 追加 arm:Breeze ASR 25(X-breeze) | ✅ Phase A + **exp5 領域外對照**完成(報告 §3D/§3E):優勢被訓練污染放大約 2~3 倍,真正站得住的是抗噪 |
-| exp5:Breeze 領域外對照(handoff-v6) | ✅ 3 段 × 2 條件 × 4 arm,128 術語實例 |
+| exp5:Breeze 領域外對照(handoff-v6) | ✅ 3 段 × 2 條件 × 6 arm,**每條件 158 術語實例** |
+| exp1 追加 arm `Abat`:Gemini 非 Live 批次 | ✅ 5 條件全覆蓋——證明「噪音崩潰」是 **Live 串流**的行為,不是模型能力上限(報告 §2.1b) |
+| oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
@@ -90,8 +93,15 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 ## 實驗結論(架構的依據)
 
-**一體式模型只在直接餵訊號的通道可用;只要音訊經過空氣,就要用專用 ASR。
-而詞表值不值得做,取決於「引擎缺的是什麼」。**
+**一體式模型的「即時介面」只在直接餵訊號的通道可用;只要音訊經過空氣,
+即時就要用專用 ASR。而詞表值不值得做,取決於「引擎缺的是什麼」。**
+
+> **2026-08-19 修正一條頭條結論。** 原本寫的是「一體式模型只在直接餵訊號的通道可用」,
+> 少了「即時」兩個字。exp1 補跑 `generateContent` 後量到:人聲 8dB 下
+> Gemini **Live** 召回 0.030、CER 0.911(6 段中 4 段輸出為空),
+> 同一批檔給 **批次** 是 0.567 / CER 0.348,與 SM 的 0.319 同級。
+> **崩的是串流路徑,不是模型聽不懂**(報告 §2.1b)。
+> 這不改 kikemu 的選型——產品要即時,Live 是即時唯一能用的介面。
 
 | | exp1 日文導覽(專名) | exp2 中英夾雜演講(術語) |
 |---|---|---|
@@ -101,10 +111,13 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
 | 一體式崩潰點 | 人聲 8dB → 0.030(全滅) | 人聲 12dB → 0.396(半滅) |
 
-五條可以直接用的規則:
+七條可以直接用的規則:
 
-1. **一體式的門檻是「直接餵訊號」,不是「安靜」。** exp1 裡只加室內殘響、
+1. **一體式**即時**的門檻是「直接餵訊號」,不是「安靜」。** exp1 裡只加室內殘響、
    完全不加噪音,Gemini Live 就從 0.836 掉到 0.552,而 SM+詞表維持 0.836。
+   **「即時」兩個字是後來補上的**:同一個模型走 `generateContent`(非串流)
+   在同一批檔案上是好的——人聲 8dB 下 Live 召回 0.030、批次 0.567,
+   CER 0.911 vs 0.348(報告 §2.1b)。崩的是串流路徑,不是模型聽不懂。
 2. **詞表投資判準:目標詞彙是「引擎沒見過的」(在地專名、料號)才值得做大;
    「引擎見過但模式不對」(通用英文術語)要先修語言設定。**
 3. **選 SM 路線的理由是抗噪與即時性,不是成本。** 兩跳架構的 API 成本
@@ -113,12 +126,20 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
    *(2026-08-14 更正:舊版寫 $0.47/hr,那是把 3.5-flash 抄成 flash-lite 價、
    又沒關 thinking 的結果;真價 + thinking 全開其實是 $1.08/hr,關掉思考後
    才是現在的 $0.35。細節見報告 §5。)*
-4. **外掛降噪救不了一體式,也幫不了 SM**(exp3)。快速前處理(WebRTC NS、
+4. **外掛降噪救不了一體式即時,也幫不了 SM**(exp3)。快速前處理(WebRTC NS、
    譜門檻)能讓崩潰的 Gemini Live 重新開口,但召回率是 0;對 SM 零到負。
    吵雜場景的解是換引擎或改拾音物理,不是 DSP。
+   (若場景允許非即時,換成 `generateContent` 才是有效的解。)
 5. **指向性拾音有效,但紅利歸 SM**(exp4,聲學模擬)。Speak2 級陣列讓
    SM+詞表在 8dB 人聲下 0.597→0.791、領夾麥 0.821;一體式即使配到領夾麥
    也只有 0.507——**SM 裸奔都贏 Gemini Live + 領夾**。正向採購數字需真機驗證。
+6. **不要蓋 GER / 多引擎融合**(handoff-v7)。即時場景在最需要幫助的兩格
+   天花板只有 **+0.015**;唯一超門檻的非即時 N3(+0.134)不需要 GER
+   就能拿到大部分——**兩個引擎都跑、分歧標紅給人看**即可,正常條件複核負擔約 11%。
+   同樣的錢花在麥克風上是 +0.194,而且麥克風不會幻覺。
+7. **看到「oracle 上限 +X」就問「選錯時的下限是多少」。** 天花板類分析逐項取 OR、
+   假設你事後知道誰對;真實系統選錯時會比最佳單一引擎更差。
+   oracle 是「值不值得繼續看」的篩選工具,不是「做了會賺多少」的估計。
 
 **這些結論在 app 裡的具體體現:**聽用 Speechmatics 不用一體式(規則 1)、
 場景包是核心功能(規則 2)、`getUserMedia` 三個降噪 constraint 全關(規則 4)、
@@ -130,12 +151,13 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(四個實驗合併),方法、數據、15 條侷限 |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、21 條侷限 |
+| [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
-| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的六條鐵律與驗證方式 |
+| [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的七條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
-| [`handoff.md`](handoff.md) ~ [`handoff-v6.md`](handoff-v6.md) | 六份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照,**已執行完畢**,§6 有偏離紀錄) |
+| [`handoff.md`](handoff.md) ~ [`handoff-v7.md`](handoff-v7.md) | 七份實驗任務書(v5 = X-breeze Phase A;v6 = 領域外對照;v7 = oracle 天花板。**v6/v7 都已執行完畢,任務書末尾有執行結果與偏離紀錄**) |
 
 ## 實驗規模
 
@@ -144,9 +166,12 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | 語料 | 大阪觀光局 6 段 | 李宏毅課程 3 段 × 5 分 | 同 exp1 | 同 exp1/exp2 | 台灣科技 podcast 3 段 × 5 分 |
 | 正解 | 67 個專有名詞 | 86 個英文術語實例 | 同 exp1 | 同左 | 158 個英文術語實例/條件 |
 | 聲學條件 | 5 | 4 | 4 × 3 前處理 | 3 profile × 3 條件 | 2(M0/M3 兩端) |
-| arm | 6 | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 5 |
+| arm | 7(含 `Abat`) | 6 | 2 引擎 × 3 前處理 | 2 引擎 × 3 profile | 6 |
 
 總支出 < $10,主要成本是真實速度推流的 wall-clock。
+
+外加一份 **oracle 天花板分析**(handoff-v7,[`results/oracle_report.md`](results/oracle_report.md)):
+第一輪 **0 元**——直接用既有的 per-item outcome 檔算完,沒有重跑任何 arm。
 
 ## 信度控制
 
@@ -159,8 +184,11 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **真實材料。** RIR 取自 MIT IR Survey 實測、噪音取自 DEMAND 實錄,固定種子可重現
 - **真實速度。** 所有即時 arm 以 1× 推流,訊息級時戳落檔,延遲與改寫率由此計算
 - **統計。** 配對設計 + segment-cluster bootstrap 95% CI + McNemar
-- **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現
-- **誠實記錄。** 15 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案
+- **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
+  並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
+- **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
+- **誠實記錄。** 21 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+  數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 
 ## 目錄
 
@@ -172,6 +200,7 @@ app/                產品本體(Cloudflare Workers + vanilla TS + Vite PWA)
   scripts/probe-ws.mjs   端到端探針(拿評測語料當迴歸測試)
 docs/               PRD.md(產品規格)、gemini-api-lessons.md(Gemini 教訓)
 scripts/ corpus/ results/    exp1・exp3・exp4(腳本、語料 metadata、原始回應)
+analysis/           oracle 天花板與錯誤互補性(純計算,不呼叫任何 API)
 exp2/               exp2(中英夾雜);corpus/audio_manifest.json 是音檔指紋
 exp5/               領域外對照(handoff-v6);corpus/audio_manifest.json 是音檔指紋
 notebooks/          需要 GPU 的 arm(Breeze ASR 25,Colab)

@@ -1,7 +1,7 @@
 # kikemu app — 部署與開發手冊
 
 聽外語導覽、出台灣正體字幕的 PWA。產品規格見 [`../docs/PRD.md`](../docs/PRD.md);
-每一條技術路線都是本 repo 四個實驗的結論(`../results/report.md`),不是偏好。
+每一條技術路線都是本 repo 五個實驗的結論(`../results/report.md`),不是偏好。
 
 ## 架構
 

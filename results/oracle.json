@@ -187,6 +187,7 @@
     "N1": {
      "arms_present": [
       "A",
+      "Abat",
       "C",
       "Cplus",
       "Cb",
@@ -195,6 +196,7 @@
      "single": {
       "strict": {
        "A": 0.4776,
+       "Abat": 0.806,
        "C": 0.6269,
        "Cplus": 0.7313,
        "Cb": 0.6269,
@@ -202,6 +204,7 @@
       },
       "tolerant": {
        "A": 0.5522,
+       "Abat": 0.8955,
        "C": 0.6866,
        "Cplus": 0.8358,
        "Cb": 0.6866,
@@ -210,6 +213,10 @@
      },
      "pairs": {
       "strict": {
+       "A+Abat": {
+        "oracle": 0.8358,
+        "gain_over_best_of_pair": 0.0298
+       },
        "A+C": {
         "oracle": 0.7164,
         "gain_over_best_of_pair": 0.0895
@@ -224,6 +231,22 @@
        },
        "A+Cbplus": {
         "oracle": 0.791,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+C": {
+        "oracle": 0.8657,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+Cplus": {
+        "oracle": 0.8657,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+Cb": {
+        "oracle": 0.8657,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+Cbplus": {
+        "oracle": 0.8657,
         "gain_over_best_of_pair": 0.0597
        },
        "C+Cplus": {
@@ -252,6 +275,10 @@
        }
       },
       "tolerant": {
+       "A+Abat": {
+        "oracle": 0.9104,
+        "gain_over_best_of_pair": 0.0149
+       },
        "A+C": {
         "oracle": 0.7761,
         "gain_over_best_of_pair": 0.0895
@@ -267,6 +294,22 @@
        "A+Cbplus": {
         "oracle": 0.8955,
         "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+C": {
+        "oracle": 0.9254,
+        "gain_over_best_of_pair": 0.0299
+       },
+       "Abat+Cplus": {
+        "oracle": 0.9403,
+        "gain_over_best_of_pair": 0.0448
+       },
+       "Abat+Cb": {
+        "oracle": 0.9254,
+        "gain_over_best_of_pair": 0.0299
+       },
+       "Abat+Cbplus": {
+        "oracle": 0.9403,
+        "gain_over_best_of_pair": 0.0448
        },
        "C+Cplus": {
         "oracle": 0.8358,
@@ -296,24 +339,25 @@
      },
      "all": {
       "strict": {
-       "oracle": 0.791,
+       "oracle": 0.8657,
        "gain_over_best": 0.0597,
        "n_items": 67
       },
       "tolerant": {
-       "oracle": 0.8955,
-       "gain_over_best": 0.0597,
+       "oracle": 0.9403,
+       "gain_over_best": 0.0448,
        "n_items": 67
       }
      },
      "best_single": {
-      "strict": 0.7313,
-      "tolerant": 0.8358
+      "strict": 0.806,
+      "tolerant": 0.8955
      }
     },
     "N2": {
      "arms_present": [
       "A",
+      "Abat",
       "C",
       "Cplus",
       "Cb",
@@ -322,6 +366,7 @@
      "single": {
       "strict": {
        "A": 0.1493,
+       "Abat": 0.7612,
        "C": 0.6119,
        "Cplus": 0.7015,
        "Cb": 0.597,
@@ -329,6 +374,7 @@
       },
       "tolerant": {
        "A": 0.194,
+       "Abat": 0.8358,
        "C": 0.6716,
        "Cplus": 0.806,
        "Cb": 0.6567,
@@ -337,6 +383,10 @@
      },
      "pairs": {
       "strict": {
+       "A+Abat": {
+        "oracle": 0.7761,
+        "gain_over_best_of_pair": 0.0149
+       },
        "A+C": {
         "oracle": 0.6119,
         "gain_over_best_of_pair": 0.0
@@ -352,6 +402,22 @@
        "A+Cbplus": {
         "oracle": 0.7313,
         "gain_over_best_of_pair": 0.0
+       },
+       "Abat+C": {
+        "oracle": 0.8358,
+        "gain_over_best_of_pair": 0.0746
+       },
+       "Abat+Cplus": {
+        "oracle": 0.8507,
+        "gain_over_best_of_pair": 0.0895
+       },
+       "Abat+Cb": {
+        "oracle": 0.8358,
+        "gain_over_best_of_pair": 0.0746
+       },
+       "Abat+Cbplus": {
+        "oracle": 0.8657,
+        "gain_over_best_of_pair": 0.1045
        },
        "C+Cplus": {
         "oracle": 0.7015,
@@ -379,6 +445,10 @@
        }
       },
       "tolerant": {
+       "A+Abat": {
+        "oracle": 0.8657,
+        "gain_over_best_of_pair": 0.0299
+       },
        "A+C": {
         "oracle": 0.6866,
         "gain_over_best_of_pair": 0.015
@@ -394,6 +464,22 @@
        "A+Cbplus": {
         "oracle": 0.8358,
         "gain_over_best_of_pair": 0.0149
+       },
+       "Abat+C": {
+        "oracle": 0.8955,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+Cplus": {
+        "oracle": 0.9104,
+        "gain_over_best_of_pair": 0.0746
+       },
+       "Abat+Cb": {
+        "oracle": 0.8955,
+        "gain_over_best_of_pair": 0.0597
+       },
+       "Abat+Cbplus": {
+        "oracle": 0.9104,
+        "gain_over_best_of_pair": 0.0746
        },
        "C+Cplus": {
         "oracle": 0.806,
@@ -423,19 +509,19 @@
      },
      "all": {
       "strict": {
-       "oracle": 0.7313,
-       "gain_over_best": 0.0,
+       "oracle": 0.8657,
+       "gain_over_best": 0.1045,
        "n_items": 67
       },
       "tolerant": {
-       "oracle": 0.8358,
-       "gain_over_best": 0.0149,
+       "oracle": 0.9254,
+       "gain_over_best": 0.0896,
        "n_items": 67
       }
      },
      "best_single": {
-      "strict": 0.7313,
-      "tolerant": 0.8209
+      "strict": 0.7612,
+      "tolerant": 0.8358
      }
     },
     "N3": {
@@ -798,10 +884,15 @@
      "Cb+Cbplus": 0.5294
     },
     "N1": {
+     "A+Abat": 0.1935,
      "A+C": 0.4167,
      "A+Cplus": 0.2424,
      "A+Cb": 0.4167,
      "A+Cbplus": 0.2059,
+     "Abat+C": 0.2174,
+     "Abat+Cplus": 0.2857,
+     "Abat+Cb": 0.2174,
+     "Abat+Cbplus": 0.2857,
      "C+Cplus": 0.5238,
      "C+Cb": 1.0,
      "C+Cbplus": 0.5238,
@@ -810,10 +901,15 @@
      "Cb+Cbplus": 0.5238
     },
     "N2": {
+     "A+Abat": 0.1607,
      "A+C": 0.3818,
      "A+Cplus": 0.2182,
      "A+Cb": 0.375,
      "A+Cbplus": 0.2,
+     "Abat+C": 0.2692,
+     "Abat+Cplus": 0.3333,
+     "Abat+Cb": 0.2593,
+     "Abat+Cbplus": 0.3529,
      "C+Cplus": 0.5909,
      "C+Cb": 0.9565,
      "C+Cbplus": 0.5455,
@@ -856,8 +952,8 @@
      "Cb+Cbplus": 0.55
     }
    },
-   "n_recoverable": 22,
-   "n_unrecoverable": 37
+   "n_recoverable": 26,
+   "n_unrecoverable": 28
   },
   {
    "experiment": "exp2",
