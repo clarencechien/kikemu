@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "ikeda03__N3.wav",
+ "audio_s": 97.2,
+ "transcript": "高江町 東 部 。 高橋 町 ませ ん 。 高江 町 です 。 高橋 が 始め 。 東 に 3 町 、 東 町 商店 。 この 商店 は 、 一度 昭和 時代 より ちなみ で 。 その 周辺 や 地所 は この 町 独特 を する 。 東町 に 新しい 店 は 浄化 町 と し て 作 。近隣 の 商店 街 の 作品 は 反発 走行 を 例 と し て 、 放射 状 の 配置 と 街道 の 接続 を 設計 し て おり ます 。 地元 社 に とっ て は 絶大 な 経済 的 基盤 と なっ て おり 、 多く の 人々 が 一生 大事 に とっし た 街 の 面影 が 残っ て おり ます 。 その 中 で も この レート は 活発 な 街 の 一 番 賑やか と 観光 に ひとれ られ た 田中 商店 街 は 電車 の 配線 など が島 が ある の だろう 。 どう 転換 が 見り まし た 。 その し た こと から 町 の 名前 は 添え まし て 、 商店 街 は 堺町 商店 街 と なり まし た 。 昭和 食 に は 直接 的 な 影響 が あっ て おり 、 農業 発達 的 な 陽 風 民 の と なり ます 。 理解 が でき ない もん です 。も で なく て パソコン で です 。 必須 の 単位 から 自身 で の 現代 書 を です 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 22.3,
+  "n_chunks": 4,
+  "prompt_tokens": 2737,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "2d8c7658abdfbd05af29220d84e47103ac7e57e76ff59487cc27aecbee88ba46"
+ }
+}

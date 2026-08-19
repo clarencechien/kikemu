@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "ikeda03__N2.wav",
+ "audio_s": 97.2,
+ "transcript": "高山町 商店 街 。 旧 田中町 商店 街 。 百貨 店 の ほか 始め 。 北台 駅 から 左 に 伸びる 高山 町 商店 。 この 商店 街 は 昔 と どこ を つなぐ 道 な の だろう か 。 小林 一蔵 が 緑 町 住宅 を 築く 前 、 この 街 は 上川町 と し て 栄え て い た 。商店 街 の 先 に は 半端 地 豪砂 の 池田 を 経 て 大高 江田 の 国道 の 走っ て おり 大阪 へ 農産 物 や 物資 品 が たくさん 運ば れ まし た 。 多く の 人 が 行き たい 大変 栄え た 街並み に なっ た 。 政治 は 雪場 と 勝っ て 強化 町 と なっ た 池田 の 集落 を 巡る よう に し て 生まれ た 田中 町 商店 街 。 電車 の 開通 と とも に近郊 から の 利用 客 が 増え 商店 街 は 賑わっ た 。 その し た こと から 町 の 名前 は 笹 町 、 商店 街 は 笹 町 商店 街 と なっ た 。 商売 食品 は 国説 8 の 発達 が 、 それ や 百貨 店 が 誕生 。 そち は 都会 的 な 洋風 建築 を 取り入れ た 財海 だけ の 連立 組 と いう もの 。 人材 は 急 に 豊かボード は 客 と し て 働け て も ある 。 壁面 の タイル から その 時代 を 推解 する こと も でき ます 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 24.9,
+  "n_chunks": 4,
+  "prompt_tokens": 2737,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "74784e573d83d8249999f6cc8d27cdfd977f54dd63a4fa870bf5f9a8d3e4d534"
+ }
+}

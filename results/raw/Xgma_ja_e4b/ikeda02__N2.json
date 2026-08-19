@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "ikeda02__N2.wav",
+ "audio_s": 157.9,
+ "transcript": "ローマ 市 義 、 旧 池田 神社 。 自由 タウン の 語源 。 足 は 動き 。 現在 の 時代 に とっ て し ながら 、 くれは 神社 の 鳥居 の 奥 に 自由 タウン の 語 始め 、 その 有名 な 町 が 誕生 し た 。 大阪 の 都市 部 で は 商業 機 を 求め て 人口 が 爆発 的 に 集中 、 住み込み で 働い たり 、 資格 の 職スマホ が 多かっ た 。 当時 以来 に 高海 に 毎 公路 を 沿う て いる 距離 を 走る が 、 阪急 電鉄 の 箕面 は 小林 一蔵 。 明治 時代 は 鉄道 建設 ラッシュ を 起こり 、 阪治 で 民営 の 鉄道会社 が 立ち上がっ た 。 後に 阪急 電鉄 と なる 箕面 あるいは 電気 鉄道 の その うち の 1 つ 。 箕面 と あり ます 。 2 つ の 観光 地 と新しい プロジェクト を スタート さ せ た 。 そして この プロジェクト を 確立 でき た の が 小林 だっ た 。 天然 の 村 様 、 乗船 し たい で 電車 の 利用 書 。 電車 に 疲れる の か ? と 朝日 の 人 も たこどら 。 小林 は 全然 と なる 町 を 歩き回っ た 。 環境 汚染 が 進む 街中 で は なく 空気 の 綺麗 な 郊外 にと 、 そんな 暮らし が ある べき で は ない だろう か と 。 小林 市 は 上下 は 電車 が 走走し 、 と いう こと が そこ に あっ た 。 身近 や そこ ら 近く に は 遊園 地 セット 。 一 段 に は 日本 橋 と 郊外 の 中 緩重 住宅 地 、 生田 新市 ない 。 後ろ の 室町 住宅 を 築く 。 周辺 に は 病院 、 学校 と 日常 生活 に 必要 な 場 が 付く から ね 。完成 し た 。 かなり 小西 は 住宅 を 分割 で 購入 できる ローン の 仕組み を 作り 出し た 。 元 は 自動車 団 だっ た 小林 7 で の アイデア だ 。 こう し て 不 融資 を 出し て も 、 1 ファミリー ワン で も 郊外 に 家 を 建てる よう に も 、 郊外 から 電車 に 乗っ て 会社 へ 通勤 する と いう ライフ スタイル が 定着 し 、 安定 し た 状況 を 見据え よう に なっ た 。 仕事 と 暮らし の 場 を わけ てで 、 元々 の アプローチ は 成功 し 、 現在 も 比較的 大 サイズ の ハイ カード と なっ て い ます 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 41.8,
+  "n_chunks": 6,
+  "prompt_tokens": 4410,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "4ba4ce255b15242ba11ff2d2221404620d53ad3e9eeb571d30f9c5b7ee38b0b8"
+ }
+}
