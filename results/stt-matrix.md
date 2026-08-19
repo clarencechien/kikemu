@@ -280,7 +280,7 @@ CER 說明發生了什麼:Live 在 N3 的 CER 是 **0.911**——6 段中 4 段 
 ## 6. 地端選項:Breeze ASR 25(exp5)
 
 MediaTek Research 的 Whisper-large-v2 中文微調,**Apache 2.0,可地端**。
-exp5 用模型沒看過的語料(台灣科技訪談 podcast 3 段,128 個英文術語實例)量:
+exp5 用模型沒看過的語料(台灣科技訪談 podcast 3 段,每條件 158 個英文術語實例)量:
 
 | arm | M0 乾淨 | M3 混響+12dB 交談 |
 |---|---|---|
