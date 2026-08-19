@@ -48,18 +48,20 @@ Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請�
 
 ### 五個坑(前三個先驗過,第四、五個是實際在 Colab 上跑才露出來的)
 
-1. **`Gemma4UnifiedProcessor` 需要 `torchvision`**——它連帶 import image processor。
-   但 **Colab 已經內建**,而且與它的 torch 是配對好的:**絕對不要 `pip install -U torchvision`**。
-   升級會裝到對不上的 build,import 時噴:
+1. **不要用 pip 動 Colab 內建的科學堆疊。** numpy / scipy / numba / librosa /
+   torch / torchvision 在 Colab 是**互相配對好的**,升級任何一個都會連鎖爆炸,
+   而且 **pip 裝過就回不去,restart runtime 沒用**——只能
+   「執行階段 → 中斷連線並刪除執行階段」重來。這條踩過兩次:
 
-   ```
-   RuntimeError: operator torchvision::nms does not exist
-   ```
+   | 做了什麼 | 噴什麼 |
+   |---|---|
+   | `pip install -U torchvision` | `RuntimeError: operator torchvision::nms does not exist` |
+   | `pip install -U librosa` | 連帶升 `numba` → 動到 numpy → `ImportError: cannot import name '_center' from numpy._core.umath` |
 
-   **而且 pip 裝過就回不去,restart runtime 沒用**——只能
-   「執行階段 → 中斷連線並刪除執行階段」再從頭跑。
-   notebook 現在只裝 `transformers / accelerate / bitsandbytes / librosa / soundfile`,
-   並在 import 失敗時直接告訴你怎麼修。
+   `Gemma4UnifiedProcessor` 確實需要 `torchvision`(連帶 import image processor),
+   但 **Colab 本來就有**。librosa / soundfile 同理。
+   notebook 現在**只裝缺的**(`transformers>=5.15`、`accelerate`、`bitsandbytes`),
+   並把 `numpy==<現有版本>` 一起送進 pip 當作釘子,裝完再把整條鏈 import 一次驗證。
 2. **thought channel 要濾掉。** Gemma 4 用 `<channel|>` 分隔思考與答案,
    不濾會把推理文字當成轉寫存進去。這個坑在 API 端已經踩過一次
    (見 [`docs/gemini-api-lessons.md`](../docs/gemini-api-lessons.md))。
