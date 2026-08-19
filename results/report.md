@@ -691,7 +691,8 @@ T3 資安產業),語域完全離開 ML,術語密度與 exp2 同級。視窗以�
 避免又挑到 LLM 話題。聲學降級呼叫 **exp2 的** `degrade.py::build()`——同一顆 RIR、
 同一份 DEMAND 噪音、同一組種子,與 exp2 才是同一把尺。
 
-術語表凍結為 **128 個實例**(T1 49 詞/77 例、T2 13/24、T3 21/27)。
+術語表凍結為 **每條件 158 個實例**(T1 49 詞/104 例、T2 13/27、T3 21/27;
+兩個條件合計 316 次評分)。數字出處:`exp5/results/term_outcomes.json` 的 `n` 欄位。
 16 個拉丁字母分歧的裁決記錄與理由在 `exp5/corpus/reference/overrides.json`。
 
 | arm | 引擎 | 說明 |
@@ -701,7 +702,7 @@ T3 資安產業),語域完全離開 ML,術語密度與 exp2 同級。視窗以�
 | `G` | Gemini 3.1 Live | 一體式,1× 推流 |
 | `Gbat` / `Gbat37` | Gemini `generateContent` | 非即時對照,見 3E.6 |
 
-### 3E.2 術語召回(tolerant,128 實例 micro-average)
+### 3E.2 術語召回(tolerant,每條件 158 實例 micro-average)
 
 | arm | M0 乾淨 | M3 混響+12dB 交談 | 全部 |
 |---|---|---|---|
@@ -846,7 +847,7 @@ SM $0.24/hr 為 handoff §8 費率。原始檔 `exp5/results/raw/Gbat*/`。)
 
 ### 3E.8 樣本規模
 
-3 段 × 2 條件 = 6 檔 × 4 個主要 arm,128 個術語實例。
+3 段 × 2 條件 = 6 檔 × 4 個主要 arm,每條件 158 個術語實例。
 bootstrap 只有 3 個 cluster,CI 寬。**這足以推翻「優勢可推廣」,
 不足以精確估計優勢有多大。**
 
@@ -966,7 +967,7 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
     其餘參數相同且寫進每筆 meta,但數值差異未量測
 18. **SM 用 batch 非 realtime**(帳號 realtime 併發上限 1);
     方向已知——唯一同檔對照上 batch 比 realtime 低 0.057,即 batch 低估 SM
-19. 3 個 segment cluster、128 個術語實例,bootstrap CI 寬;
+19. 3 個 segment cluster、每條件 158 個術語實例,bootstrap CI 寬;
     足以推翻「優勢可推廣」,不足以精確估計優勢大小
 20. 拉丁字母分歧的 16 條裁決**沒有人耳終審**,證據是「SM 的獨立讀法 + 實體是否真實存在」
     (`exp5/corpus/reference/overrides.json` 的 `_protocol` 有記錄這條與 exp2 的差異)
