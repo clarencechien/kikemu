@@ -1,0 +1,24 @@
+{
+ "arm": "Abat",
+ "file": "sakai06__N1.wav",
+ "model": "gemini-3.5-flash",
+ "audio_s": 27.9,
+ "input_transcription": "幻の堺幕府\n\n紀州街道沿いに南へ南へ。\n宿院の交差点で立ち止まり、周りを見渡してほしい。\nこの辺り一帯には、幻の堺幕府があったと言われている。\n少し歴史を振り返ろう。\n黄金の日々が始まる少し前、京都で応仁の乱が起こった。",
+ "elapsed_sec": 1.8,
+ "usage": {
+  "promptTokenCount": 733,
+  "candidatesTokenCount": 77,
+  "totalTokenCount": 810,
+  "promptTokensDetails": [
+   {
+    "modality": "AUDIO",
+    "tokenCount": 698
+   },
+   {
+    "modality": "TEXT",
+    "tokenCount": 35
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

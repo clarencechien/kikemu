@@ -8,11 +8,15 @@
 - `N0` **御祭神** ×1(hig01_A1) — 最佳單一 arm `Abat` 沒中,救回者:A, C, Cplus, Cb, Cbplus
 - `N0` **饒速日尊** ×1(hig01_A1) — 最佳單一 arm `Abat` 沒中,救回者:A
 - `N0` **椿の井戸** ×1(sakai05) — 最佳單一 arm `Abat` 沒中,救回者:A, C, Cplus, Cb, Cbplus
-- `N1` **主祭神** ×1(hig02_B12) — 最佳單一 arm `Cplus` 沒中,救回者:A
-- `N1` **呉服神社** ×1(ikeda02) — 最佳單一 arm `Cplus` 沒中,救回者:A
-- `N1` **池田駅** ×1(ikeda02) — 最佳單一 arm `Cplus` 沒中,救回者:A
-- `N1` **いとや百貨店** ×1(ikeda03) — 最佳單一 arm `Cplus` 沒中,救回者:Cbplus
-- `N2` **あげまき結び** ×1(hig02_B12) — 最佳單一 arm `Cbplus` 沒中,救回者:A
+- `N1` **記紀神話時代** ×1(hig01_A1) — 最佳單一 arm `Abat` 沒中,救回者:C, Cplus, Cb, Cbplus
+- `N1` **しめかけ神事** ×1(hig02_B12) — 最佳單一 arm `Abat` 沒中,救回者:Cplus, Cbplus
+- `N1` **椿の井戸** ×1(sakai05) — 最佳單一 arm `Abat` 沒中,救回者:A, C, Cplus, Cb, Cbplus
+- `N2` **御祭神** ×1(hig01_A1) — 最佳單一 arm `Abat` 沒中,救回者:C, Cplus, Cb, Cbplus
+- `N2` **絵馬殿** ×1(hig01_A1) — 最佳單一 arm `Abat` 沒中,救回者:Cplus, Cbplus
+- `N2` **あげまき結び** ×1(hig02_B12) — 最佳單一 arm `Abat` 沒中,救回者:A
+- `N2` **梅田** ×1(ikeda02) — 最佳單一 arm `Abat` 沒中,救回者:C, Cplus, Cb, Cbplus
+- `N2` **旧田中町商店街** ×1(ikeda03) — 最佳單一 arm `Abat` 沒中,救回者:A, C, Cplus, Cb, Cbplus
+- `N2` **紀州街道** ×1(sakai05) — 最佳單一 arm `Abat` 沒中,救回者:C, Cplus, Cb, Cbplus
 - `N3` **物部氏** ×1(hig01_A1) — 最佳單一 arm `Cplus` 沒中,救回者:Abat
 - `N3` **石切神社** ×1(hig01_A1) — 最佳單一 arm `Cplus` 沒中,救回者:Abat
 - `N3` **神武天皇** ×1(hig01_A1) — 最佳單一 arm `Cplus` 沒中,救回者:Abat
