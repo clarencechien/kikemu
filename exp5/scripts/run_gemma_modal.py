@@ -165,7 +165,7 @@ class Gemma:
 
 @app.local_entrypoint()
 def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
-         prompt: str = "official", probe: int = 0):
+         prompt: str = "official", probe: int = 0, selftest: bool = False):
     """probe=N:只跑 T1__M0 的前 N 個 chunk、兩個 prompt 變體都跑,不寫結果。
 
     先驗再全跑——前兩輪都是等整個檔跑完才發現壞掉,白燒了 $1.26。
@@ -181,6 +181,20 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Xgma_12b",
 
     man = json.loads((ROOT / "corpus" / "audio_manifest.json").read_text())
     gemma = Gemma(model_id=model)
+
+    if selftest:
+        # 決定性對照:模型卡自己 snippet 裡的那個範例音檔。
+        # 它若轉得好 → 設定正確,差是模型不擅長我們的語料;
+        # 它若也差   → 還有地方沒弄對,不要把結果當成模型的能力。
+        import urllib.request
+        url = ("https://raw.githubusercontent.com/google-gemma/cookbook/refs/heads/"
+               "main/apps/sample-data/journal1.wav")
+        wav_bytes = urllib.request.urlopen(url).read()
+        for key in PROMPTS:
+            r = gemma.transcribe.remote(wav_bytes, "journal1", key, 2)
+            print(f"\n=== [selftest/{key}] journal1.wav | {r['elapsed_sec']}s ===")
+            print(r["transcript"][:700])
+        return
 
     if probe:
         stem = "T1__M0"
