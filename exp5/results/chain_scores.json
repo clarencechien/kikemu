@@ -33,5 +33,19 @@
   "n_terms": 166,
   "tw_bad": 1,
   "simplified": 0
+ },
+ "chain_brzp_gemma": {
+  "chain": "Xbrz_punct → gemma-4-26b-a4b-it",
+  "term_survival": 0.7651,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
+ },
+ "chain_e4bn_gemma": {
+  "chain": "Xgma_e4b_nopunct → gemma-4-26b-a4b-it",
+  "term_survival": 0.5,
+  "n_terms": 166,
+  "tw_bad": 11,
+  "simplified": 0
  }
 }

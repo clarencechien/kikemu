@@ -51,6 +51,10 @@ CHAINS = [
     #                    就是「第一跳的純效果」(任務書 §3 G 第二張表)
     ("Xgma_e4b", "gemma-4-26b-a4b-it", "chain_e4b_gemma"),
     ("Xgma_e4b", "gemini-3.5-flash", "chain_e4b_gemini"),
+    # handoff-v9 §4b L:只差標點的 2×2(侷限 16p)。第二跳固定 gemma-4-26b,
+    # 兩個來源 arm 由 make_form_variants.py 純機械產生,內容與原轉寫逐字元相同。
+    ("Xbrz_punct", "gemma-4-26b-a4b-it", "chain_brzp_gemma"),
+    ("Xgma_e4b_nopunct", "gemma-4-26b-a4b-it", "chain_e4bn_gemma"),
 ]
 
 
