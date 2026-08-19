@@ -20,7 +20,8 @@ SEGS = ["T1", "T2", "T3"]
 ARMS = [("Xbrz_gpu", "Breeze T4/fp16"), ("Xbrz_auto", "Breeze CPU/fp32"),
         ("Xbat_bi", "SM batch"), ("Gbat37", "Gemini 3.7 批次"),
         ("Gbat", "Gemini 3.5 批次"),
-        ("G", "Gemini Live"), ("Xgma_12b", "Gemma 4 12B"), ("Xgma_e4b", "Gemma 4 E4B")]
+        ("G", "Gemini Live"), ("Xgma_12b", "Gemma 4 12B"), ("Xgma_e4b", "Gemma 4 E4B(取樣)"),
+        ("Xgma_e4b_greedy", "Gemma 4 E4B(貪婪)")]
 
 
 def main() -> None:
@@ -62,10 +63,19 @@ def main() -> None:
     print(f"  最大絕對差 {worst:.3f} → " +
           ("< 0.02,exp5 侷限 17 可解除" if worst < 0.02 else "≥ 0.02,數值受 dtype 影響"))
 
-    # 中間兩格與 M0–M3 連線的偏離:正=比連線高,負=塌陷
-    line = [gpu[0] + (gpu[3] - gpu[0]) * i / 3 for i in range(4)]
-    print("\nBreeze M1/M2 對 M0–M3 連線的偏離:" +
-          "  ".join(f"{CONDS[i]} {gpu[i] - line[i]:+.3f}" for i in (1, 2)))
+    # 中間兩格與 M0–M3 連線的偏離:正=比連線高,負=塌陷。
+    # 判讀門檻 0.03(handoff-v8 §4 B / v9 §3 H,先寫死)。
+    print("\nM1/M2 對 M0–M3 連線的偏離(門檻 ±0.03,超過就是有門檻效應):")
+    for arm, label in ARMS:
+        v = rows[arm]
+        if any(x is None for x in v):
+            continue
+        line = [v[0] + (v[3] - v[0]) * i / 3 for i in range(4)]
+        dev = [v[i] - line[i] for i in (1, 2)]
+        flag = "線性" if max(abs(x) for x in dev) < 0.03 else "**中段偏離**"
+        print(f"  {label:<22}" +
+              "  ".join(f"{CONDS[i]} {d:+.3f}" for i, d in zip((1, 2), dev)) +
+              f"   {flag}")
 
 
 if __name__ == "__main__":

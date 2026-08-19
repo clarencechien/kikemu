@@ -83,7 +83,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `exp2/` | exp2(中英夾雜) |
 | `exp5/scripts/` | exp5 腳本;`noise_curve.py`、`score_zh.py`、`debug_e2b_empty.py` |
 | `handoff-v8.md` | Modal 補測任務書:判讀規則先寫死 + 驗收 + 偏離紀錄(已全數執行) |
-| `results/report.md` | 五個實驗合併報告 + 35 條侷限(4 條已解除,保留刪節線) |
+| `results/report.md` | 五個實驗合併報告 + 37 條侷限(7 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |

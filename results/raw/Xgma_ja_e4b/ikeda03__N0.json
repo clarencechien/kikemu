@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "ikeda03__N0.wav",
+ "audio_s": 97.2,
+ "transcript": "栄町商店街 旧 田中町 商店街 百貨 店 の こと はじめ 池田 駅 から 北 に 伸びる 栄町 商店街 この 商店街 は 駅 と どこ を つなぐ 道 な の だろう か ? 小林 一蔵 が 室町 住宅 を 作る より ずっと 昔 、 池田 は 城下町 と し て 栄え て い た 。商店 街 の 先 に は 丹波 地方 から 池田 を 経 て 大阪 へ と 向かう 野瀬 街道 が 走っ て おり 大阪 へ 農産 物 や 物産 品 が 盛 に 運ば れ て い た 。 多く の 人 が 行きか い 、 大変 栄え た 町並み が あっ た 。 明治 に なり 池田 駅 と かつて 城下町 だっ た 池田 の 集落 を つなぐ よう に し て 生まれ た 田中 町 商店 街 。 電車 の 開通 と とも に近郊 から の 利用 客 が 増え 、 商店 街 は 賑わっ た 。 そう し た こと から 町 の 名前 は 栄 町 。 商店 街 は 栄町 商店 街 と なっ た 。 昭和 初期 に は 北説 初 の 百貨 店 、 糸屋 百貨 店 が 誕生 。 いち早く 近代 的 な 洋風 形態 を 取り入れ 作ら れ た 3 階 建て の レンガ造り の 建物 。 現在 は 旧 池田屏風 電話局 と し て 残さ れ て おり 、 壁面 の タイル から その 時代 を 窺い知る こと が できる 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 24.6,
+  "n_chunks": 4,
+  "prompt_tokens": 2737,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "f47731da9394bbbff2c440aa5e5efca475da58dd67508c076ca65197a6f806ee"
+ }
+}

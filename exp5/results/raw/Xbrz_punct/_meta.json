@@ -1,0 +1,8 @@
+{
+ "arm": "Xbrz_punct",
+ "derived": true,
+ "note": "L:Breeze 轉寫 + 依自身 segment 邊界機械插入標點(內容未動)",
+ "method": "純機械字串操作,不經過任何模型",
+ "gap_sentence_sec": 0.5,
+ "invariant": "strip_punct(輸出) == strip_punct(來源轉寫)"
+}

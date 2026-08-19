@@ -1,0 +1,25 @@
+{
+ "arm": "Zgma_greedy",
+ "file": "T2_135s.wav",
+ "audio_s": 20.0,
+ "transcript": "那在 1.7 剛上來的時候, 2005 年開 4, 條有國際上的編政府和編王路標注組織的人, 在研究時, 我們不能把在塔, 區塊連時節的創新發明, 提高跟這地區的時節, 尤其是政府服務, 都是",
+ "meta": {
+  "arm": "Zgma_greedy",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "corpus": "exp5 純中文 20 秒視窗",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "sampling": "greedy(do_sample=False)",
+  "elapsed_sec": 5.5,
+  "prompt_tokens": 581,
+  "model_load_sec": 26.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8dd854a9d4255bba9cf81ae6324143d8a03e99384eebbdf15adb04529c3e0788"
+ }
+}

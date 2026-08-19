@@ -1,0 +1,18 @@
+{
+ "chain": "Xbrz_nosp → gemma-4-26b-a4b-it",
+ "file": "T1__M0.wav",
+ "translation": "主要是工業園區，蘇州的工業園區是那種完全照新加坡的建築風格，那裡林立著中心，住起來非常乾淨、舒適，真的是一個很舒服的地方。所以你剛才說你在做這個 Search Engine，然後那時候加入了 Microsoft Search Engine Team，當時做的是 Bing，我是在非常核心的團隊，如果從 Indexing（索引）的角度來看，應該沒有任何團隊比我們更核心了，沒有比我們更底層的了，我們負責的是從資料存在 Disk（磁碟）如何取出，到整段送到使用者面前的整個 Pipeline（流水線）。我們團隊負責的是中文、英文，也就是全部所有的語系，我們是 Global（全球）的，我在那邊做也是全球性的，後來到了美國也是做全球業務。\n\n其實你那時候不知道，我們那時候有人問說，為什麼 Bing 在台灣的搜尋感覺都不太好，還是這只是錯覺？跟 Google 相比的話……但有人說，上次 Frank 提到 Bing 在台灣的搜尋結果其實跟 Google 差不多，我倒沒這個感覺。我現在在想的是，我手邊有一堆東西，我不知道能不能說，我知道很多但沒有任何方式可以說出來。不過既然你也離職了，雖然他已經離開 Microsoft 了，但世界很小，還是要遵守 Confidentiality（保密協議），但可以稍微講一個概念讓大家思考一下，為什麼會變成這樣。\n\n其實在中國有一個法律規定，如果你是在中國境內營運的服務，你所有的 Data（資料）都必須放在中國境內。Google 不放，所以 Google 就出去了；微軟有放，但也不是說微軟直接放，而是說必須在境內有一個 Copy（副本）。這不代表我放在裡面給你用，而是因為微軟是一家非常 Compliant（合規）的公司，所以基本上它就變成不能（隨意）放。\n\n你可以反過來想，如果我今天是一家做 Global Search Engine 的大公司，我一定會把資料到處放，甚至就算先不管中國法律，我鐵定也會在那邊放一份，因為那邊有那麼多使用者，我鐵定會用 CDN，連圖片什麼的也要放過去。如果今天有些使用者說我的資料不可以進到那邊，那我是不是就不能放在那邊？那他們那邊 Load（載入）起來就會比較慢，也可能比較爛，原因有很多，因為 Data 越多，整個 Model（模型）的各種 Training（訓練）也會受到影響。微軟是非常早、非常早就開始把 Machine Learning（機器學習）應用在各種搜尋結果的公司，能不能放資料，一定會產生很大的影響。所以從法律角度思考，結果一定是這樣，換哪間公司來做都一樣，Google 放也是這個結果。\n\n上次我們訪問了一位 Gigi，她也是前 Microsoft 日本員工，對微軟非常讚譽有加。你個人評價給幾分？你待了這麼久，應該是不錯吧？我覺得蠻不錯的，不然我不會待這麼久。五星評價，我基本上會給五星評價，我覺得 Microsoft 是個蠻好的 Company（公司）。你可以看到很多東西，其實很多人一開始會覺得微軟是個邪惡的帝國。我做 Open Source（開源），我之前也做 Open Source，我記得在 2011、2012 年的時候，我就記得這傢伙是做 Open Source 的，然後後來有一天說我加入了微軟。我那時候想說，我是 CPython 的 Contributor（貢獻者），我是 Django 的 Contributor，也是 Firefox 裡面 SpiderMonkey 的 Contributor。我都有做過一點東西，也不是說做很多，但基本上在 Startup（創業）的時候，用的各種 Library（函式庫）也都是 Open Source 的東西。\n\n過去其實我覺得反而有一個好處，這可能會讓大家稍微有點想進微軟，因為這確實是一個事實：我們現在有很多方便的 Open Source Library 可以用，用完之後我的東西就做完了。但你有沒有想過，這些 Open Source Library 到底為什麼會在那裡？為什麼會長成那個樣子？為什麼是這些參數？為什麼切成這個大小？其實你都不知道，它就是在搜尋中自然形成的。\n\n當我們進入 Microsoft，因為 Microsoft 的 Stack（技術棧）比較特殊，是 Windows Stack，所以在 Windows Stack 的情況下，很多 Open Source Library 可能只在 Linux 裡面可以用，Windows 不能用，所以就會變成要自己寫。當你寫的時候，你就會發現寫很多東西很麻煩，其實很麻煩，像是 Curve（曲線）大小有沒有對齊，你都需要重新自己思考一次。但重新思考一次後，你就會發現，有些東西其實是有道理的，沒有必要存在於 Open Source Library 中。PowerPoint 存在的 Feature（功能）是因為更多 Personal Entry（個人需求）而存在的，但這也是好處，因為這是 Community（社群），我不用因為 Business Justification（商業合理性）去決定這個 Feature 該不該存在。所以 Open Source Library 會長得很像瑞士刀，而瑞士刀裡面的那些元件，也是有道理的。",
+ "elapsed_sec": 24.2,
+ "usage": {
+  "promptTokenCount": 1156,
+  "candidatesTokenCount": 1090,
+  "totalTokenCount": 2246,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 1156
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

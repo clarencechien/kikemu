@@ -1,0 +1,33 @@
+{
+ "arm": "Xgma_e4b_greedy",
+ "file": "T1__M3.wav",
+ "audio_s": 300.0,
+ "transcript": "主要是工業演舉,書桌觀影趨勢呢,我完全照新加坡的,然後就是,然後就是這個人大家做起來很乾淨,很穩的,真的這很符合。 那啊,所以你認為就是剛剛講做這個search engine,對,然後到時候就加入到這群裡。然後時候做的操作就是bing。 我在非常core的,就應該整個bing就如果從indexing交算的話應該沒有任何聽的我們跟,就是會所有在這個裡面。 這是從那個data存的dataset是怎麼拿出來的?是整段送到用戶面前,這整段排排就是我們真的聽哦。 那是中文英文? 就是全球性的都都會 我們是global的。 我都全球的,我在那邊都有的選重,外到美國的都全球。 其實你可能不知道,我真的時候幹過什麼病,對台灣的感覺都不太好。 還是是一個錯覺。 It's a little bit general compared to 那有人同時感覺上覺得,我上次Frank來講說,並的台灣的中文教授就送給我跟一個這個感覺。 我現在我在想的是我對東西就不知道能不能講。 對對,我知道很多,但是沒有這個overall的概念,因為自己自己,因為你你你一種,我會就看random告訴。 他的世界很小,但是有有一些,有一些這台,我覺得他應該算是考的人就啊。 他是可以稍微講一個概念,然後大家去想一下就是說為什麼會這個樣,就是在中國其實有一個法律是說,如果你是在中國境內營運的公司,你所有data都在中國啊,對不對?在中國境內,對,那我不怕,這個是數據。 所以我有有放。 對,不是也不是說網上有放,而是它是說要掉要有個copy在境內,對,不是說我放在裡面給用,那就是一定有很多的data,就是原本是一個非常compiled的公司,所以它基本上它就變成不能放。 啊,所以就資料你是反過來想的,就是說如果我今天我做一個大公司我做Google搜尋引擎,我一定必須要到出發,然後會甚至就先不管中和法規,我一定也得放一份啊,因為那麼多個user在的,我鐵定是CDN我什麼要放IP去過去,那今天如果有些user說我的資料就不可以進到那邊,那是不是我就不能放在那邊,那那他們那邊都全就會比較慢,會比較爛,然後有更好的,對,就是data越多,整個mono會越好,不同trending也好,唯玩是最早最早的是很早很早就開始發羅信,然後就到各種搜尋結果的公式嘛,那它能算跟不放題一定會產生很大影響,所以從法律思考就就一定是這個結果,你哪間公司來做都一樣,Google方也是這個結果。 我們上四千幾幾啊,我們訪問了一個這個技術啊,那它也是前微軟日本員工,啊對於微軟非常的 待遇有在有加,你個人評價給幾分,你帶這麼久應該是不錯嘛,我覺得是蠻不錯的。 五星,五星評價,哦,人家我基本上會給五星評價。有沒有告訴是個很對好的,對對,然後你該看到很多東西,我其實 很多人會一會會覺得說,我們這個是,我們做open source,我之前做open source,對啊,他一一一點說我就記得是加後是做open source,然後後來有一些說我加入了微軟,我那是想說我相信,我是C++的,我是Django的,我是Firepass,在裡面那個Python,Python的那個Monkey Spider的那個他就越來越對,然後都做過一點點東西說多過我但是就是基本上用各種library在server的時候做的也都是open source的東西。那過去其實我覺得反而言之很好處,對,這個可會讓大家有超有鏈接機會論,但是這確實是一個事實。呃,我們現在就很方便很多open source library的,直接用,然後就哎,我的東西就做完了。 對。 那有沒有想過這個open source library到底為什麼要存在?因為因為是要在難出進的代進步,就是這個open source來為什麼會在會會講這個樣子,它為什麼是這些參數,它為什麼是簽成這個大小的,就其實你都不知道,它就是在搜索裡面這樣。 然後我們進到Microsoft,因為Microsoft它它的就是Windows stack。 所以它用Windows stack的情況下就很多那些open source的container是在Windows的環境裡面。 它所以就變了。 而且你也會發現,啊寫很多東西很麻煩,其實其實很麻煩那個簽度大小有沒有對。你知道,其實需要證明是是好,可是你實法意見就會發現,誒,有些東西其實就倒必要存在,哦,沒有必要存在,沒有必要存在,在open source的library它存在,它是因為更多的是作者興趣然後存在的,那也可以,這就是跑出就是這是cavity,就是我不用因為basic justification,然後去決定就說哦,這個piece of documentation存在,這open source library就會長得像presentation,可是registry到挑那些挑那些所謂的metadata的一些東西就導,然後registry就是一個registry",
+ "meta": {
+  "arm": "Xgma_e4b_greedy",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "conds": [
+   "M3"
+  ],
+  "sampling": "greedy(do_sample=False)",
+  "load": "bf16(dtype=auto)",
+  "chunk_sec": 30,
+  "whole_file": false,
+  "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "official",
+  "prompt_source": "模型卡 §6 官方 ASR 結構(原文未改)",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp5",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "elapsed_sec": 81.9,
+  "prompt_tokens": 8270,
+  "n_chunks": 10,
+  "model_load_sec": 12.6,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "ad526e081ac9ec8a69949c503662aa0410797ae6da59e51a40a45b08adb5604a",
+  "audio_matches_manifest": true
+ }
+}

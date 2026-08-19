@@ -1,0 +1,13 @@
+{
+ "arm": "Zgma_greedy",
+ "model": "google/gemma-4-12B-it",
+ "api": "modal A100-40GB",
+ "load": "bf16(dtype=auto)",
+ "whole_file": true,
+ "chunk_sec": 0,
+ "corpus": "exp5 純中文 20 秒視窗",
+ "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+ "prompt_source": "模型卡官方模板,未自行增修",
+ "decode": "max_new_tokens=512, processor.parse_response()",
+ "sampling": "greedy(do_sample=False)"
+}

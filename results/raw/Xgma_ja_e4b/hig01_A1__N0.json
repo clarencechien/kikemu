@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "hig01_A1__N0.wav",
+ "audio_s": 111.4,
+ "transcript": "石切 鶴屋 神社 絵馬 殿 。 絵馬 殿 に 着い たら まず は 屋根 を 見上げ て みよう 。 立派 な 鶴 と 矢 を 見つける こと が できる 。 神社 名 の 石切 鶴屋 は 強固 な 勇 を も 切り先 貫く ほど に ご 祭神 の 力 ご 神威 が 偉大 で ある 。魂 を 表し て いる 。 はるか 昔 、 紀神話 時代 。 アマテラス 大御神 から 極 さ の 神田 から を 授かっ た 虹早 日之御子 。 この 地 に 降り立ち 、 先住 し て い た 一族 の 王 さ 、 長末彦 の 妹 と 結ば れ 生まれ た の が 宇摩島 で の 御子 だ 。 石切 神社 で は この 2 柱 の 神 様 を ご 祭神 と し て 祀っで いる 。 実 は こんな 物語 に も ある 。 神武 天皇 が 王 を 平定 する ため に 東 へ と 進み 、 この 地 に 入っ た 時 、 御子 忘れ に この 地 を 収め て い た 。 突然 現れ た 神武 天皇 に 長宗 彦 は 激しく 抵抗 し た が 、 二子 と 神武 天皇 が 天孫 の 証 で ある 天 の 母夜 を 互い に 示し合う こと で共に天照大御神の子孫であることが分かった 。 そこで 御子 は 長船彦 に 配下 に 入る よう に 諭し 。 ここ に 大和 の 国 が 建国 し た の で ある 。 その 後 、 御子 の 一族 は 物の 悲 と なり 天皇 に 使える こと と なっ た 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 30.1,
+  "n_chunks": 4,
+  "prompt_tokens": 3093,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "0efe0f9e866ee221985b18342f3044c5e2a6beb5c5499feda19126089fa7e1de"
+ }
+}

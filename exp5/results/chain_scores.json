@@ -19,5 +19,47 @@
   "n_terms": 166,
   "tw_bad": 0,
   "simplified": 0
+ },
+ "chain_e4b_gemma": {
+  "chain": "Xgma_e4b → gemma-4-26b-a4b-it",
+  "term_survival": 0.5181,
+  "n_terms": 166,
+  "tw_bad": 14,
+  "simplified": 0
+ },
+ "chain_e4b_gemini": {
+  "chain": "Xgma_e4b → gemini-3.5-flash",
+  "term_survival": 0.6145,
+  "n_terms": 166,
+  "tw_bad": 1,
+  "simplified": 0
+ },
+ "chain_brzp_gemma": {
+  "chain": "Xbrz_punct → gemma-4-26b-a4b-it",
+  "term_survival": 0.7651,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
+ },
+ "chain_e4bn_gemma": {
+  "chain": "Xgma_e4b_nopunct → gemma-4-26b-a4b-it",
+  "term_survival": 0.5,
+  "n_terms": 166,
+  "tw_bad": 11,
+  "simplified": 0
+ },
+ "chain_e4bsp_gemma": {
+  "chain": "Xgma_e4b_sp → gemma-4-26b-a4b-it",
+  "term_survival": 0.5241,
+  "n_terms": 166,
+  "tw_bad": 16,
+  "simplified": 0
+ },
+ "chain_brzns_gemma": {
+  "chain": "Xbrz_nosp → gemma-4-26b-a4b-it",
+  "term_survival": 0.6928,
+  "n_terms": 166,
+  "tw_bad": 0,
+  "simplified": 0
  }
 }

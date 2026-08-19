@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "hig01_A1__N2.wav",
+ "audio_s": 111.4,
+ "transcript": "人間 の 瓶 が 破れ ます 。 5000円 の 声 が まるで 誰 を 狙っ てん な ? 依頼 304 で こと も でき 。 人間 の 意識 を 狂ня 。 京都 の 牢 は 話す の ある 。 ご 体質 の 力 、 ご 神 が 偉大 で ある 。から 回し て いる 。 はるか に 詳しい 。 の 動き だ 。 慌て て 大見 から 極端 の 山坂 を 達し た 。 右端 は 昨日 か 。 この チーム の 折り畳み 。 臨人 人 と 近く の 、 あの 、 長峰 の 元 と 結ば れ 生まれ た の は 宇島 で の くだ です 。 石切 神宮 は この 双葉 舎 の 神 様 の ご 祭神 と し て ます 。聞く な 、 こんな もの に なり は ない 。 神 の 天皇 が よう 遷令 する と に 東 邪子 。 この 地 に 現れ た 。 本当 は すでに 天地 を 覆っ て い た 。 敗戦 を 招か れ た 神 の 天皇 の 側近 彦 は 激しく 抵抗 し た が 、 尼子 と 神 の 天皇 が 天統 の 証 で ある 網 の 母 を 互い に 示し合う こと が 。物語 は 劇場 的 に 日本 に 持ち出さ れ まし た 。 そこ で 似 と は 長く 引き 海岸 に 敗 で 起こし ここ に 大和 の 国 が 伝拠 し て おり ます 。 その 向こう の 一族 は 物語 に 関い 全容 に 使える こと に なり まし た 。",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 26.0,
+  "n_chunks": 4,
+  "prompt_tokens": 3093,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "11ac4bed57033c006e11180ca8a6cc78c6791b707082f36565c5c03c1ab4adf9"
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "arm": "Xgma_ja_e4b",
+ "file": "ikeda02__N3.wav",
+ "audio_s": 157.9,
+ "transcript": "ローマ 地域 の 観点 、 趣味 の 手出し に 関する 問題 、 文化 の 大阪 市 は 、 市民 に 伝え た の は それ が 変化 する もの と さ れ 、 市民 の 自覚 が 町 の 安定 を 印象 し た 。 大阪 の 都市 部 は 街 を 重ね て いく よう な 爆発 的 な 成長 を する 。 どの こと は 変わら ない 。 近く に2 個 の オープン スタンス 。 この 時代 に 交換 に マイ ホール を 用途 と し て 、 フランス 革命 の 理念 や 川屋 市 に 創造 、 その 中間 の 革命 的 な 発想 の 骨 、 アクセル が 2 年 の 地方 大使 で あり ます 。 同時 に 反逆 伝説 と なる 潤 ある まで の その 地 を 執っ た と 。 理論 と あり ます 。 初期 の 観光 地 と高 3 ロジック マーケティング そして この プロジェクト を 決定 でき た の さ 、 お めでしらく だ 。 しかし 、 永遠 の 懸念 は 乗車 時台 で 電車 の 利用 者 は 多い 。 電車 に 晒 れる 生活 か と 、 新しい 地方 の 暮らし 。 是非 を し な い と 全然 と なる 理由 は ある と 考え た 。 環境 汚染 と いう の は 価値 は 同じ 。 私 の 提案 は 郊外 で衝突 、 そんな プラチナ は ある べき で は ない と 思う です が 、 です が 、 日本 に は 非常 に 大 損傷 する と いう 言葉 が 定着 し て い ます 。 身近 や 働き手 に は 擬任 し て と 。 国民 に は 日本 の 地 の 後回 な 雰囲気 を 持つ 。 しかし 、 目標 は 経済 的 さ です か ? 周辺 に は 、 学校 と 地域 共同 生活 に 居 場所 が 作ら れ株式会社 99 は 住宅 を 分割 で 購入 できる ローン を 提供 し て い ます 。 元 は 銀行 に だっ た けど 、 今 は 電話 で の 合意 と いう 形 で 投資 で も いい そう だっ て 。 そこ で 自分 の 家 を 買う ため に ローン を 立てる の が 決まっ た ん です が 、 ローン に つい て よく 分かっ て はじめ て 、 色々 知識 を 身 に 入れ 、 安心 し て ローン を 組ん で いただける と 。 自己 予算 内 の 場所 はドラマティック な アプローチ は ポジティブ 性 を 使う の は ない の か な タイトル が だ ね",
+ "meta": {
+  "arm": "Xgma_ja_e4b",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "load": "bf16(dtype=auto)",
+  "whole_file": false,
+  "chunk_sec": 30,
+  "chunk_reason": "模型卡 §7:音訊上限 30 秒",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽)長段四段,需切塊",
+  "note": "同 arm 的 sakai05/06 是整檔單發(n_chunks=1);切塊與否逐檔記在各自 meta 的 n_chunks",
+  "elapsed_sec": 41.0,
+  "n_chunks": 6,
+  "prompt_tokens": 4410,
+  "model_load_sec": 13.8,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "df20ff72a03c5a6a5e44ab5239ffd5093f8c8d0ac38288d61bb661f94be5b31c"
+ }
+}

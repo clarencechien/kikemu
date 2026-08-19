@@ -1,0 +1,33 @@
+{
+ "arm": "Xgma_e4b_greedy",
+ "file": "T1__M0.wav",
+ "audio_s": 300.0,
+ "transcript": "主要是工業園區,說這個工業園區是那種完全照新加坡那種建築的風格,然後就是有靈力中心什麼,整個住起來很乾淨很舒適,真的是很舒服的一個地方。 那所以你這邊就是剛剛講做這個search engine, 對,然後那時候就加入我軟搜尋引擎聽,然後那時候做的差不多 就是Bing,就是Bing搜尋。 我在非常酷的聽,就應該整個Bing就如果從indexing這樣算的話,應該沒有任何聽比我們跟core,就是不會不會有在跟底層了。那我們就是從那個data存到底層是怎麼拿出來的,這整段送到使用者面前,這整段pipeline就是我們整個聽音。那是中文英文,這是全部只有語系都都語言。 我們是global的,都全球的,對,我在那邊做也是全球,然後後來到美國也是做全球。 其實你說不知道,我們的時候幹為什麼被搜尋,這個台灣的感覺都那個不太好。 還是這個錯覺? 你覺得跟compiler就,在有人說其實感覺說真的,我那上次Frank講說,並的台灣的中文就受音節我跟奇跟過差不多,我我我沒這個感覺。 我現在我在想的是我這一堆東西我不知道能不能講。 對對,我知道很多那沒有這個overhaul的,但因為這個繁نيه離子,所以因為海晶離子,海晶從我從台灣的時候。 但是世界很小啊。 但是有有一些,有一些大家,一頓上應該算是conventional。 但是可以稍微講一個概念,然後大家去想一下就是說為什麼會這個樣子,就是在中國其實有一個法律是說,如果你是在中國境內營運的服,你的所有data, 對在中國啊,必須放在中國境內。 嗯。 對,那過不放嗎?所以過外都出去了嗎?所以我人有放。 對,不是也不是說微軟有放,而是它是說要要有一個copy在境內。 對,不是說我放在裡面可以用,那就是一定有很多data,就是微軟是一個非常compliant的公司,所以它基本上它就變成不能放。 啊,所以就資料 你是反過來想的,就是說如果我今天我是一個大公司我做Google搜尋群,我一定把資料到主方,然後會甚至就算先不管中文法律,我一定鐵定也是在放一份吧,因為這麼多會使用者在那,我鐵定是CDN我什麼也要放image過權。那今天如果有些使用者說我的資料就不可以進到那邊,那是不是我就不能放在那邊,那他們那邊撈起來就會比較慢。 哦,也可能比較爛,然後有可能各種原因。 有對,就是data越多,整個model會要做不同training也好,唯軟是最早最早的是很早很早就開始把machine learning用到各種搜索結果的公式嘛,那他能放跟不放題令會產生很大的影響,所以從法律思考就就一定是這個結果,你哪間公司再做都一樣,Google放也是這個結果。 誒,我們上次前幾集啊,我們訪問了一個這個具具啊,那他也是前微晚日本員工,啊對於微晚非常的在有加,你個人評價給幾分,你待這麼久應該是不錯吧。 我覺得蠻不錯不讓我。 我五星評價,哦,基本上我基本上會給五星評價。就麥克所是個很對的,可以看到很多東西,我其實很多人會一開始會覺得說,我做分說,我做open source,我之前也做分說是吧,對,他1年12年的時候我就記得是加會說open source,然後後來有一次說我加入了維軟,我那時候想說我是C,我是CPython contributor,我是Django contributor,我是Firefox裡面那個Monkey Spider Monkey的那個的,Monkey Spider的那個 contributor的,對,然後都做過一點點東西,說做很多,但是就是基本上用各種library在server的時候做的也都是open source的東西,那過去其實我覺得反而有一個好處,對,這個可能會讓大家有抽有點想進回軟,但是這確實是一個事實。 我們現在就很方便很多open source library,所以就用,然後就哎,我東西就做完了。 對,那你們想過這open source library到底為什麼要帶到那裡? 呃,為什麼要在那,促進人類進步?就是這個open source library為什麼會在會會長這個樣子,它為什麼是這些參數,它為什麼是切成這個大小? 嗯嗯。 就其實你都不知道,它就是在設計裡面自然形成的。 對。 然後我們進到Microsoft,因為Microsoft它的stack比較特殊,就是Windows stack嘛。 嗯。 所以它用Windows stack的情況下就很多那些open source library,它可能只在另的裡面可以用,在Windows不能用。 對。 所以就會變成什麼?這些啊。 嗯。 對,這些。你寫的時候你就會發現,寫很多東西很麻煩,其實其實很麻煩,那個KU大小有沒有對齊?移動,移動,其實需要重新去思考一次,可這也思考一次你就會發現,誒,有些東西其實是都不要存在。 哦,不要必要存在。 沒有必要存在,在open source library會有存在,它是因為更多的就是personal entry然後存在的feature,但也可以,這就是好處就是這是community,就是我不用因為business justification,然後去決定就說哦,我這個feature該不該存在,所以open source library就會長得像雷視刀,可是雷視刀挑那些挑那些成為雷視刀裡面的一些元件也是有道理的。那雷視就是一個雷視",
+ "meta": {
+  "arm": "Xgma_e4b_greedy",
+  "model": "google/gemma-4-E4B-it",
+  "api": "modal L4",
+  "conds": [
+   "M0"
+  ],
+  "sampling": "greedy(do_sample=False)",
+  "load": "bf16(dtype=auto)",
+  "chunk_sec": 30,
+  "whole_file": false,
+  "chunk_reason": "模型卡 §7:audio 上限 30 秒,不是記憶體妥協",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "official",
+  "prompt_source": "模型卡 §6 官方 ASR 結構(原文未改)",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp5",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "elapsed_sec": 92.7,
+  "prompt_tokens": 8270,
+  "n_chunks": 10,
+  "model_load_sec": 18.1,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "f3e19bde9c6a42dc75f00e34c4ffd62b716b48e726f41dfbf7eb9b6d3057dbe9",
+  "audio_matches_manifest": true
+ }
+}

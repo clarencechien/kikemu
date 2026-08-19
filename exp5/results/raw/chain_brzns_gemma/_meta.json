@@ -1,0 +1,9 @@
+{
+ "chain": "Xbrz_nosp → gemma-4-26b-a4b-it",
+ "asr_arm": "Xbrz_nosp",
+ "translate_model": "gemma-4-26b-a4b-it",
+ "thinkingLevel": "minimal",
+ "temperature": 0.2,
+ "prompt": "INTERPRETER_SYSTEM(凍結)",
+ "note": "不重跑 ASR,直接吃既有轉寫"
+}

@@ -1,0 +1,18 @@
+{
+ "chain": "Xgma_e4b_nopunct → gemma-4-26b-a4b-it",
+ "file": "T1__M0.wav",
+ "translation": "主要是工業園區，這個工業園區的建築風格完全仿照新加坡，而且有零能中心之類的，住宅區非常乾淨、舒適，真的是個很舒服的地方。所以你剛才提到你在做搜尋引擎（Search Engine），那時候加入了 Google 搜尋引擎，當時做的技術非常酷。如果從索引（Indexing）的角度來看，應該沒有任何技術是我們跟 Google 底層有差異的，我們研究的是從 Data 到底層是如何拿出來的，以及這整段送到用戶面前的整個 Pipeline，這就是我們整個技術的核心。而且不論是中文還是英文，我們是做全球化的（Global），我當時在那邊做也是針對全球市場，後來到美國也是做全球。其實你都不知道我在說什麼，問我搜尋引擎，台灣的感覺好像不太好，還是我的錯覺？你覺得跟編譯（Compile）有關嗎？有人說其實感覺很有趣，上次 Frank 說台灣的中文聽起來很有趣，但我沒這種感覺。我現在在想的是，我這一堆東西不知道能不能講對，我知道很多技術，但沒有進行過全面的翻修（Overhaul），因為受限於語言的差異，我也在慢慢說明。\n\n但世界很小，雖然有些內容屬於日常對話（Conversational），但可以稍微講一個概念讓大家思考一下：為什麼會變成這樣？在中國其實有一項法律規定，如果你是在中國境內營運的公司，所有的 Data 都必須放在中國境內。所以即使我人在外面，資料也必須放進去。這不是說 Microsoft 把資料放進去，而是說必須在境內留有一份副本（Copy）。因為 Microsoft 是一家非常講求合規（Compliant）的公司，所以它基本上就變成不能隨意外傳。所以你可以反過來想，如果我今天是一家做全球搜尋引擎的大公司，我一定會把資料放在主伺服器，甚至就算不考慮中國的法律，我一定也會留一份副本，因為有這麼多使用者，我一定會使用 CDN，連圖片也要放。如果有些使用者說我的資料不能進到那邊，那是不是我就不能放在那邊？那他們那邊抓取的速度就會比較慢，或者品質比較差，也可能有很多種原因。Data 越多，整個 Model 在進行不同訓練（Training）時的效果就越好。Microsoft 是非常早就在各種搜尋結果公式中使用機器學習（Machine Learning）的公司，所以能不能放資料會產生很大的影響。從法律角度思考，結果一定是如此，換成哪間公司做都一樣，Google 放也是這個結果。\n\n我們前幾集訪問了一位前 Microsoft 日本員工，對於 Microsoft 的個人評價你會給幾分？你在那邊待了這麼久，應該不錯吧？我覺得蠻不錯的，我會給五星評價。Microsoft 是一個很強大的地方，可以看到很多東西。其實很多人會覺得我做開源軟體（Open Source），我以前也做開源軟體，記得在 2012 年的時候，後來有一天說我加入了 Microsoft。那時候我既是 CPython 的貢獻者（Contributor），也是 Django 的貢獻者，還是 Firefox 裡面 SpiderMonkey 的貢獻者。雖然做過很多東西，但基本上在伺服器（Server）端使用的各種 Library，也都是開源的東西。過去我覺得這反而有一個好處，這可能會讓大家有點想進入 Microsoft 的念頭，但這確實是一個事實，現在我們使用開源 Library 非常方便，東西很快就能做完。\n\n那你有沒有想過，這些開源 Library 為什麼會長成那樣？為什麼要這樣促進人類的進步？為什麼這些 Library 會是這個樣子？為什麼是這些參數？為什麼切成這個大小？其實你都不知道，它們是在設計過程中自然形成的。當我們進入 Microsoft，因為 Microsoft 的技術棧（Stack）比較特殊，使用的是 Windows Stack，所以在 Windows Stack 的情況下，很多開源 Library 可能只能在 Linux 裡面使用，不能直接用在 Windows 上。所以當你在寫程式時，你會發現寫很多東西變得很麻煩，例如大小是否對齊之類的，這需要重新思考。而一旦開始思考，你就會發現有些東西其實是不必要的存在。\n\n為什麼開源 Library 會存在？是因為更多的個人貢獻者（Personal Contributor）所存在的 Feature，這也是好處，因為這是社群（Community），我不需要因為商業理由（Business Justification）去決定這個 Feature 該不該存在。所以開源 Library 會長得像 Linux，但 Linux 挑選那些組件（Component）進入 Linux 的過程也是有道理的，Linux 就是一個 Linux。",
+ "elapsed_sec": 21.7,
+ "usage": {
+  "promptTokenCount": 1205,
+  "candidatesTokenCount": 986,
+  "totalTokenCount": 2191,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 1205
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}
