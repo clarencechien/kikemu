@@ -18,10 +18,15 @@
     modal run exp5/scripts/run_zh_modal.py
 """
 import json
+import os
 import time
 from pathlib import Path
 
 import modal
+
+# GPU 由環境變數選:C 那格要用 L4 跑 E4B,12B 仍用 A100。
+# Modal 的 gpu= 是裝飾期常數,所以只能在 import 時決定,不能當 CLI 參數。
+GPU = os.environ.get("KIKEMU_GEMMA_GPU", "A100-40GB")
 
 ROOT = Path(__file__).resolve().parents[1]
 WIN = ROOT / "corpus" / "zh_windows"
@@ -43,7 +48,7 @@ app = modal.App("kikemu-gemma4-zh")
 cache = modal.Volume.from_name("kikemu-hf-cache", create_if_missing=True)
 
 
-@app.cls(image=image, gpu="A100-40GB", timeout=60 * 60,
+@app.cls(image=image, gpu=GPU, timeout=60 * 60,
          volumes={"/cache": cache}, max_containers=1, scaledown_window=600)
 class Gemma:
     model_id: str = modal.parameter(default="google/gemma-4-12B-it")
@@ -104,7 +109,7 @@ def main(model: str = "google/gemma-4-12B-it", arm: str = "Zgma"):
         print("全部已完成")
         return
 
-    meta = {"arm": arm, "model": model, "api": "modal A100-40GB",
+    meta = {"arm": arm, "model": model, "api": f"modal {GPU}",
             "load": "bf16(dtype=auto)", "whole_file": True, "chunk_sec": 0,
             "corpus": "exp5 純中文 20 秒視窗", "prompt": PROMPT,
             "prompt_source": "模型卡官方模板,未自行增修",
