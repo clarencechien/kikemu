@@ -36,6 +36,9 @@ ARMS_JA = {
     "A": "input_transcription",
     # exp1 追加:Gemini generateContent(非 Live),用來檢驗噪音崩潰是否為 Live 特有
     "Abat": "input_transcription",
+    # exp1 追加:Gemma 4 12B 的日文單語控制組(只有 sakai05/06 在 30 秒內)
+    "Xgma_ja": "transcript",
+    "Xgma_ja_jp": "transcript",
     "C": "transcript",
     "Cplus": "transcript",
     "Cb": "transcript",       # Speechmatics batch, no dictionary
@@ -169,8 +172,8 @@ def main():
                     "recall_tolerant": round(hits_t / len(ns), 4),
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
-                # translation text(Abat 只做聽寫,沒有翻譯層)
-                if arm == "Abat":
+                # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
+                if arm.startswith("Xgma") or arm == "Abat":
                     zh = None
                 elif arm == "A":
                     zh = d.get("translation", "")

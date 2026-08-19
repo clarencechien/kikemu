@@ -1,0 +1,27 @@
+{
+ "arm": "Xgma_ja",
+ "file": "sakai06__N2.wav",
+ "audio_s": 27.9,
+ "transcript": "馬籠の境の境部 州街道沿いに南へ南へ スクリーンを交差点で立ち止まり周りを見渡して欲しい この辺り一体には馬籠の境部があったと言われている 少し歴史を振り返ろう 黄金の日々が始まる少し前 京都で王子のなまこと。",
+ "meta": {
+  "arm": "Xgma_ja",
+  "model": "google/gemma-4-12B-it",
+  "api": "modal A100-40GB",
+  "load": "bf16(dtype=auto)",
+  "whole_file": true,
+  "chunk_sec": 0,
+  "chunk_note": "這兩段都在模型卡 §7 的 30 秒上限內,不需切塊",
+  "modality_order": "text then audio(模型卡 §4)",
+  "prompt_variant": "original",
+  "prompt": "Transcribe the following speech segment in its original language. Follow these specific instructions for formatting the answer:\n* Only output the transcription, with no newlines.\n* When transcribing numbers, write the digits, i.e. write 1.7 and not one point seven, and write 3 instead of three.",
+  "prompt_source": "模型卡官方模板,未自行增修",
+  "decode": "max_new_tokens=512, processor.parse_response()",
+  "corpus": "exp1(日文導覽,純單語)",
+  "elapsed_sec": 6.8,
+  "prompt_tokens": 779,
+  "model_load_sec": 20.4,
+  "transformers": "5.15.0",
+  "torch": "2.9.0+cu128",
+  "audio_sha256": "8cf56581422c4e0d528d72854223c4e6f96a64c8328989ae8654f06486b586ae"
+ }
+}
