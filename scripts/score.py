@@ -34,6 +34,8 @@ REF = ROOT / "corpus" / "reference"
 
 ARMS_JA = {
     "A": "input_transcription",
+    # exp1 追加:Gemini generateContent(非 Live),用來檢驗噪音崩潰是否為 Live 特有
+    "Abat": "input_transcription",
     "C": "transcript",
     "Cplus": "transcript",
     "Cb": "transcript",       # Speechmatics batch, no dictionary
@@ -167,20 +169,26 @@ def main():
                     "recall_tolerant": round(hits_t / len(ns), 4),
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
-                # translation text
-                if arm == "A":
+                # translation text(Abat 只做聽寫,沒有翻譯層)
+                if arm == "Abat":
+                    zh = None
+                elif arm == "A":
                     zh = d.get("translation", "")
                 else:
                     tf = RES / "raw" / f"{arm}_translate" / f"{seg}__{cond}.json"
                     zh = json.loads(tf.read_text())["translation"] if tf.exists() else ""
                 # cross-check: kanji proper nouns surviving into the zh text
-                zh_folded = fold(zh)
-                row["recall_in_zh"] = round(
-                    sum(noun_hit(n, zh_folded)[1] for n in ns) / len(ns), 4
-                )
-                row["tw_bad_hits"] = sum(zh.count(w) for w in TW_BAD)
-                row["simplified_chars"] = len(SIMPLIFIED_RE.findall(zh))
-                row["zh_len"] = len(zh)
+                if zh is None:
+                    row["recall_in_zh"] = row["tw_bad_hits"] = None
+                    row["simplified_chars"] = row["zh_len"] = None
+                else:
+                    zh_folded = fold(zh)
+                    row["recall_in_zh"] = round(
+                        sum(noun_hit(n, zh_folded)[1] for n in ns) / len(ns), 4
+                    )
+                    row["tw_bad_hits"] = sum(zh.count(w) for w in TW_BAD)
+                    row["simplified_chars"] = len(SIMPLIFIED_RE.findall(zh))
+                    row["zh_len"] = len(zh)
                 # latency & rewrite (batch arms have no realtime log)
                 if arm in ("C", "Cplus") and d.get("log"):
                     row.update(sm_latency(d["log"]))

@@ -1,0 +1,24 @@
+{
+ "arm": "Abat",
+ "file": "sakai05__N0.wav",
+ "model": "gemini-3.5-flash",
+ "audio_s": 29.9,
+ "input_transcription": "菅原神社のつばきの井戸\n\nザビエル公園を出て紀州街道沿いに南へ向かう。\nその途中にある菅原神社にも立ち寄ってみよう。\nここには千利休の師匠、武野紹鴎が愛したと伝えられるつばきの井戸がある。\nわびさびという言葉を聞いたことがあるだろうか。\n元は和歌に関する言葉で",
+ "elapsed_sec": 1.9,
+ "usage": {
+  "promptTokenCount": 782,
+  "candidatesTokenCount": 87,
+  "totalTokenCount": 869,
+  "promptTokensDetails": [
+   {
+    "modality": "TEXT",
+    "tokenCount": 35
+   },
+   {
+    "modality": "AUDIO",
+    "tokenCount": 747
+   }
+  ],
+  "serviceTier": "standard"
+ }
+}

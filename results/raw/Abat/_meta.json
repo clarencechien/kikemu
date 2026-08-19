@@ -1,0 +1,9 @@
+{
+ "arm": "Abat",
+ "model": "gemini-3.5-flash",
+ "api": "generateContent",
+ "thinkingLevel": "minimal",
+ "temperature": 0.0,
+ "prompt": "この音声を一字一句そのまま文字起こししてください。要約・話者ラベル・タイムコードは付けず、書き起こしのテキストだけを出力してください。",
+ "note": "非 Live,一次送整段音訊;無 timestamp。用於檢驗噪音崩潰是否為 Live 特有"
+}
