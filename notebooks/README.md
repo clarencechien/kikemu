@@ -33,6 +33,23 @@ AI Studio 的 50 個模型、OpenRouter 的 415 個模型裡,Gemma 4 都只有�
 
 最後一格會直接印出對照表。跑完把 zip 交回來就能寫進報告。
 
+### 分好幾天跑
+
+參數格的 `USE_DRIVE = True`(預設開)會把結果同步到雲端硬碟
+`MyDrive/kikemu-results/<ARM>/`,**每跑完一個 chunk 就存一次**。
+
+| 斷在哪 | 重開後從哪接 |
+|---|---|
+| 檔與檔之間 | 跳過已完成的檔 |
+| **一個檔的第 3 個 chunk** | **從第 3 個 chunk 接**,前兩個不重跑 |
+| 執行階段被刪掉 | 一樣——進度在雲端硬碟,不在 `/content` |
+
+所以最多只會損失「正在跑的那一個 chunk」。
+
+**但每個 session 仍要重抓 24GB 模型權重**(免費版雲端硬碟只有 15GB,放不下),
+所以每次重開的固定成本大約十幾分鐘。分越多天跑,這筆重複成本越高——
+真的要跑滿六個檔,還是換 L4 / A100 一次跑完比較划算。
+
 ### 挑執行階段
 
 `gemma-4-12B-it` 是 bf16 **23.9 GB** 權重,notebook 會依 GPU 記憶體自動選策略:
@@ -59,8 +76,22 @@ notebook 偵測到 <20 GB 會自動把 `CHUNK_SEC` 設成 60。
 > `chunk_sec` 與 `whole_file` 會寫進每筆結果的 meta,報告裡必須標明。
 > 要拿乾淨可比的數字,**請用 L4 或 A100**。
 
-**跑多久未量測**——沒有人在 GPU 上跑過這個組合。6 個檔 × 5 分鐘音訊,
-Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請預留時間。
+### 跑多久(2026-08-19 起有實測值)
+
+| 組合 | 每檔 5 分鐘音訊 | 6 檔合計 | 可行嗎 |
+|---|---|---|---|
+| **T4 + 12B + 60s 切塊 + bf16** | ~83~125 分 | **8~12 小時** | ❌ 免費版約 4 小時就斷線,跑不完 |
+| T4 + 12B + 60s 切塊 + **fp16** | 未量測(理論上快 3~10×) | ? | ⚠️ 可試,但 Gemma 在 fp16 有 NaN 前科 |
+| **L4 / A100 + 12B + 整段** | 未量測 | 未量測 | ✅ **建議走這條** |
+| (對照)Breeze on T4 | 102 秒 | ~10 分 | ✅ |
+
+**T4 慢的主因是 dtype**:T4 是 compute 7.5,**沒有 bf16 tensor core**,
+指定 `bfloat16` 會走軟體模擬。notebook 現在依 compute capability 自動選:
+`>= 8.0` 用 bfloat16(模型卡原生設定),`< 8.0` 用 float16(吃得到 T4 的 fp16 tensor core)。
+
+> ⚠️ **Gemma 家族在 fp16 下有數值溢位(NaN)的前科。**
+> 第 6 格的健全性檢查會抓到空輸出/亂碼——**那一格沒過就不要信結果**,
+> 老實換 L4 / A100 跑 bf16。
 
 ### 五個坑(前三個先驗過,第四、五個是實際在 Colab 上跑才露出來的)
 
@@ -96,6 +127,51 @@ Breeze 在 T4 上是每檔約 102 秒,Gemma 4 12B 比它大一個數量級,請�
    量化後 weight 是 uint8,轉型不會發生。notebook 用
    `llm_int8_skip_modules=['embed_audio','embed_vision','lm_head']` 保留它們
    (只佔幾百 MB),並在載入後印出 dtype 供確認。只影響 L4 / T4;A100 bf16 沒這問題。
+
+### 🚨 呼叫方式:照模型卡,不要自己發明(2026-08-19,燒了 $1.26 才學會)
+
+前兩次都跑出垃圾。逐項對照[模型卡](https://huggingface.co/google/gemma-4-12B-it)的
+官方 snippet 之後,查出**哪些是真的差異、哪些是我誤判**:
+
+| 我原本的寫法 | 官方 | 是不是原因 |
+|---|---|---|
+| 整段送 300 秒 | §7「maximum length of **30 seconds**」 | ✅ **是**。輸出崩成 8152 字重複迴圈 |
+| audio 放在 text **前** | §4「Audio content **after** the text」 | ✅ 是 |
+| 自己寫的中文 prompt | §6 官方 ASR 結構 | ⚠️ 見下 |
+| 手工切 `<channel\|>` 字串 | **`processor.parse_response(response, prefix=...)`** | ✅ **是**。官方有專用解析器 |
+| `max_new_tokens=4096` | 官方範例 `512` | ✅ 是。上限越高,跳針跑越久 |
+| `skip_special_tokens=True` | 官方 `False` | ✅ 是。True 會把 `<\|channel>` 吃掉只留 "thought" 這個字 |
+| 傳 numpy array | 官方傳 URL 字串 | ❌ **不是**。實測兩者產出的 `input_features` **完全相同** |
+| `Gemma4UnifiedForConditionalGeneration` | `AutoModelForMultimodalLM` | ❌ 不是。auto mapping 就是指到同一個類別 |
+| `enable_thinking=False` | 官方沒傳 | ❌ 不是。template 預設就是 False(而且這個 kwarg 其實沒被吃進去) |
+
+**模型其實聽得到。** 第二次抽驗的 chunk 2 輸出「那個**大河**,那個大河是怎麼拿出來的?
+這整段說到有」,對照參考文本「那個 **data** 存在 disk 是怎麼拿出來的,這整段送到 user
+面前」——內容對得上,只是把 `data` 音譯成「大河」。
+
+**所以剩下的真問題是 prompt。** 官方 ASR prompt 沒有「保留原樣英文」這條指示,
+而 exp5 量的正是英文術語召回。這一格必須跑**兩個變體**才分得清:
+
+| 變體 | prompt | 回答什麼問題 |
+|---|---|---|
+| `Xgma_12b` | 官方原版 | 模型的預設行為 |
+| `Xgma_12b_kw` | 官方 + 「keep English terms verbatim」 | 低召回是模型的極限,還是 prompt 沒講 |
+
+### Modal 路徑(`exp5/scripts/run_gemma_modal.py`)
+
+不想開 Colab 的話走這條,而且可以從 Claude Code session 直接驅動。
+
+- **模型常駐用 `@app.cls` + `@modal.enter()`**(Modal 官方 lifecycle 寫法),
+  搭配 `scaledown_window` 讓容器在多次 `modal run` 之間保溫——
+  否則每次抽驗都要重載一次權重。
+- `--probe N`:只跑第一個檔的前 N 個 chunk 並印出來,不寫結果。**先驗再全跑。**
+- 每個 chunk 印一行進度。前兩次都是「等整個檔跑完才發現壞掉」白燒的。
+- 音檔由本機上傳並先對 manifest sha256,不在容器裡重新產生。
+
+**成本實測**:A100-40GB $2.10/hr。12B 每個 30 秒 chunk 約 **106~116 秒**
+——比實時還慢 3.5 倍。六個檔 = 60 chunk ≈ 1.8 小時 ≈ **$3.9**。
+這個成本結構本身就值得記一筆:即使品質過關,它在非即時場景也贏不了
+Gemini `generateContent` 的 $0.26/hr 全速,只剩「必須地端」那一格有意義。
 
 ### 判讀時要記得的偏差
 
