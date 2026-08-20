@@ -56,6 +56,7 @@ ARMS_JA = {
     # exp1 追加:ElevenLabs Scribe v2 批次(handoff-v10 S1)
     "Sbat_ja": "transcript",
     "Sbat_ja_nokt": "transcript",
+    "Sbat_ja_full": "transcript",
     # exp1 追加:SM 批次 + **只給 50 條、且無讀音**的詞表(handoff-v10 S5 詞表對齊控制組)
     "Cbplus50": "transcript",
     "C": "transcript",

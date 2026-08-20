@@ -38,8 +38,9 @@ URL = "https://api.elevenlabs.io/v1/speech-to-text"
 MODEL = "scribe_v2"
 # 2026-08-20 查。抄價附日期(鐵律 6)。
 RATE_USD_PER_HOUR = {"base": 0.22, "keyterms": 0.05}
-# 即時的官方上限是 50 詞 × 20 字元;批次的**條數**上限文件沒寫,
-# 這裡取 50 是為了與即時那格(S4)用同一份詞表,讓兩格可以互比。
+# 即時的官方上限是 50 詞 × 20 字元。**批次實測吃得下完整的 166 條**
+# (50/100/166 都回 200),所以 50 這個預設純粹是為了與即時那格(S4)對齊,
+# 不是 API 限制。`--full-keyterms` 送完整詞表。
 KEYTERM_CAP = 50
 
 CORPORA = {
@@ -73,14 +74,14 @@ def seg_names(picks_path: Path) -> list[str]:
     return list(p) if isinstance(p, dict) else [x["seg"] for x in p]
 
 
-def keyterms_for(cfg, seg: str) -> list[str]:
+def keyterms_for(cfg, seg: str, cap: int = KEYTERM_CAP) -> list[str]:
     """exp1 的詞表是**逐地點**的,所以要看這一段屬於哪個 domain。"""
     if not cfg["dict"]:
         return []
     picks = json.loads(cfg["picks"].read_text())
     domain = picks[seg]["domain"]
     terms = json.loads(cfg["dict"].read_text())[domain]
-    return [t["content"] for t in terms][:KEYTERM_CAP]
+    return [t["content"] for t in terms][:cap]
 
 
 def transcribe(path: Path, lang: str, kt: list[str]) -> dict:
@@ -111,6 +112,8 @@ def main() -> None:
     ap.add_argument("--corpus", choices=list(CORPORA), required=True)
     ap.add_argument("--arm", default=None)
     ap.add_argument("--no-keyterms", action="store_true")
+    ap.add_argument("--full-keyterms", action="store_true",
+                    help="送完整詞表而非砍到 50 條(批次實測可吃 166 條)")
     ap.add_argument("--probe", action="store_true",
                     help="只跑一個檔並印出形狀,不寫結果")
     a = ap.parse_args()
@@ -121,7 +124,7 @@ def main() -> None:
     if a.probe:
         stem = stems[0]
         seg = stem.split("__")[0] if "__" in stem else stem.split("_")[0]
-        kt = [] if a.no_keyterms else keyterms_for(cfg, seg)
+        kt = [] if a.no_keyterms else keyterms_for(cfg, seg, 10**6 if a.full_keyterms else KEYTERM_CAP)
         d = transcribe(cfg["dir"] / f"{stem}.wav", cfg["lang"], kt)
         w = d.get("words", [])
         print(f"=== probe {stem}  keyterms={len(kt)}  {d['_elapsed_sec']}s")
@@ -141,7 +144,8 @@ def main() -> None:
 
     meta = {"arm": arm, "engine": "ElevenLabs Scribe", "model_id": MODEL,
             "api": URL, "language_code": cfg["lang"],
-            "keyterms": not a.no_keyterms, "keyterm_cap": KEYTERM_CAP,
+            "keyterms": not a.no_keyterms,
+            "keyterm_cap": "全部" if a.full_keyterms else KEYTERM_CAP,
             "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
             "diarize": False, "corpus": a.corpus,
             "rate_usd_per_hour": RATE_USD_PER_HOUR, "rate_checked": "2026-08-20"}
@@ -152,7 +156,7 @@ def main() -> None:
     for stem in todo:
         p = cfg["dir"] / f"{stem}.wav"
         seg = stem.split("__")[0] if "__" in stem else stem.split("_")[0]
-        kt = [] if a.no_keyterms else keyterms_for(cfg, seg)
+        kt = [] if a.no_keyterms else keyterms_for(cfg, seg, 10**6 if a.full_keyterms else KEYTERM_CAP)
         d = transcribe(p, cfg["lang"], kt)
         dur = d.get("audio_duration_secs") or 0
         total_sec += dur

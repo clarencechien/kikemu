@@ -1,0 +1,17 @@
+{
+ "arm": "Sbat_ja_full",
+ "engine": "ElevenLabs Scribe",
+ "model_id": "scribe_v2",
+ "api": "https://api.elevenlabs.io/v1/speech-to-text",
+ "language_code": "ja",
+ "keyterms": true,
+ "keyterm_cap": "全部",
+ "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
+ "diarize": false,
+ "corpus": "exp1",
+ "rate_usd_per_hour": {
+  "base": 0.22,
+  "keyterms": 0.05
+ },
+ "rate_checked": "2026-08-20"
+}
