@@ -88,6 +88,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
 | `docs/PRD.md` | 產品規格(畫面、安全基線、配額與成本) |
+| `docs/related-work.md` | 同類專案掃描(2026-08)+ 「即時場景怎麼改」;文末有與 `results/` 的對帳表 |
 
 ## 別做的事
 
