@@ -33,7 +33,14 @@
 | **Scribe v2 批次** | **0.824** | 0.866 | **0.657** | ✅ | **$0.22** |
 | SM 批次 + 完整詞表+假名 | 0.791 | 0.866 | 0.597 | ✅ | $0.24 |
 
-→ **乾淨用 Gemini、吵用 Scribe、要 diarization 才用 SM。**
+→ ~~**乾淨用 Gemini、吵用 Scribe、要 diarization 才用 SM。**~~
+**更正(2026-08-20 稍晚):後半句是錯的。** Scribe 批次本來就有 diarization
+(`diarize` / `num_speakers` ≤32 / 語者庫,**詞級帶 `speaker_id`**)——
+我把自家 runner 的 `"diarize": False`(**我們沒開**)讀成了「**它沒有**」,
+而且那個欄位根本沒送進 request。詳見 [`stt-matrix.md`](results/stt-matrix.md) §6c。
+
+→ **乾淨用 Gemini、吵用 Scribe;diarization 不再是分岔條件。**
+⚠️ **兩家分得準不準,本專案都沒量過**(沒有多語者語料,侷限 26)。
 決策樹已改版([`stt-matrix.md`](results/stt-matrix.md))。
 
 中英夾雜那格更值得看:**Scribe 0.921 完全沒給詞表**,與 Gemini 3.7 同分——
@@ -272,7 +279,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 
 ### 盤點:哪些解完了,哪些還開著(2026-08-20)
 
-**實驗面已收斂。** 報告的 42 條侷限裡有 8 條被後續實驗解除(原文保留刪節線,
+**實驗面已收斂。** 報告的 43 條侷限裡有 8 條被後續實驗解除(原文保留刪節線,
 看得出結論怎麼演進);其餘 34 條是**已知且已寫明範圍**的限制,不是待辦。
 以下是仍然開著、且**值得再花錢或花時間**的項目:
 
@@ -280,6 +287,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 |---|---|---|
 | **Deepgram 未執行**(侷限 3) | 環境無帳號 | keyterm prompting 上限 100 詞 vs SM 1000 詞,值得比 |
 | ~~ElevenLabs Scribe 未執行~~ | **批次與即時都測完**(2026-08-20):批次強(日文 0.824、中英夾雜 0.921,皆並列第一),**但即時引擎輸 SM −0.075,與批次的 +0.096 方向相反** | **主線維持 SM**;非即時線 Scribe 是強候選([`stt-matrix.md`](results/stt-matrix.md) §6b) |
+| **diarization 品質完全未量測**(侷限 26) | 語料全是**單一講者**,沒有語者標註的參考,指標定義不出來 | 要量得先找多語者素材。**能力欄位已查證**(`results/diarization_support.json`):Scribe 批次有,SM 未查證 |
 | **Breeze-ASR-**26** 未測** | 我們所有數字都是 **ASR-25** | HF 上已有 26,不要把 25 的 0.845 / 0.415 套上去 |
 | **OpenCC 依語言判斷**(app 端) | 評測腳本已依語言,**app 端沒逐欄位檢查過** | 日文欄位全域套 `s2twp` 會把「会・静・図」轉錯([`related-work.md`](docs/related-work.md) §5.1) |
 | **SM 泛多語 `multi` pack 未測**(侷限 13) | 免費帳號回 not supported | 現有雙語結論只適用「有專用 pack」的引擎 |
@@ -424,7 +432,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**42 條侷限**(8 條已由後續實驗解除,原文保留刪節線) |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**43 條侷限**(8 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/related-work.md`](docs/related-work.md) | **同類專案掃描**(2026-08):離線字幕工具的做法,以及「即時場景怎麼改」——多數結論相反。含建議行動順序 |
@@ -462,7 +470,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
-- **誠實記錄。** 42 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+- **誠實記錄。** 43 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
   解除的 8 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 

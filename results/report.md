@@ -2082,3 +2082,16 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
     **預設設定下**的結論,不是模型的固有性質。
 25. **Scribe 即時只跑了日文。** 中文與中英夾雜的即時未測(§4 決定不做,
     因為那兩條的產品情境本來就是非即時的)
+26. **diarization(講者分離)的品質完全沒量過——任何一家都沒有。**
+    語料全是**單一講者**(exp1 導覽旁白、exp2/exp5 單人授課或對談節錄),
+    沒有多語者素材,也沒有語者標註的參考,**所以連指標都定義不出來**。
+    已查證的只有**能力欄位**:Scribe 批次有 `diarize` / `num_speakers`(≤32)/
+    `diarization_threshold` / `use_speaker_library` / `detect_speaker_roles`,
+    回傳**詞級帶 `speaker_id`**(2026-08-20,`scripts/check_diarization_support.py`
+    → `results/diarization_support.json`);**Speechmatics 的參數表未查證**
+    (公開 spec 抓不到),而且本專案的 SM runner **從未開過 diarization**。
+    ⚠️ **不可以拿 §2.1d 的專名召回當 diarization 的佐證**——
+    「聽對幾個專名」與「有沒有把兩個人分對」是兩個不同的量。
+    ⚠️ 這一條同時記一次**已發生的錯誤**:`stt-matrix.md` 曾有四處寫
+    「diarization 只有 SM 有」,起因是把 `_meta.json` 的 `"diarize": False`
+    (施測紀錄:我們沒開)讀成能力宣稱(它沒有)。已更正,見 `stt-matrix.md` §6c

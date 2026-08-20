@@ -83,7 +83,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `exp2/` | exp2(中英夾雜) |
 | `exp5/scripts/` | exp5 腳本;`noise_curve.py`、`score_zh.py`、`debug_e2b_empty.py` |
 | `handoff-v8.md` | Modal 補測任務書:判讀規則先寫死 + 驗收 + 偏離紀錄(已全數執行) |
-| `results/report.md` | 五個實驗合併報告 + 42 條侷限(8 條已解除,保留刪節線) |
+| `results/report.md` | 五個實驗合併報告 + 43 條侷限(8 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
@@ -98,5 +98,10 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - 不要刪掉已解除的侷限,改成刪節線並註明是哪次實驗解除的——結論怎麼演進要看得出來。
 - 不要用 `pkill -f` 或比對 `/proc/*/cmdline` 去殺行程而不排除自己與父行程——
   包住指令的 wrapper 也會match,結果把自己殺掉(exit 144)。這個坑一天踩了三次。
+- 不要把**施測紀錄**讀成**能力宣稱**。`_meta.json` 寫 `"diarize": false` 的意思是
+  「這次沒開」,不是「它沒有」——kikemu 就這樣把「Scribe 沒有 diarization」寫進
+  四份文件,還變成決策樹的一個分岔(而那個欄位根本沒送進 request)。
+  講產品能力就去查 spec 並留下出處,例:`scripts/check_diarization_support.py`
+  → `results/diarization_support.json`。**「我們沒測」「我們沒開」「它沒有」是三件事。**
 - 自架開源模型前先看 `generation_config.json`:Gemma 4 三個型號都預設
   `do_sample: true, temperature: 1.0`,不指定就是隨機取樣,同一個檔重跑會不一樣。
