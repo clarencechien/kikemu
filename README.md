@@ -186,7 +186,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 | 還開著的 | 為什麼還開 | 要做的話 |
 |---|---|---|
 | **Deepgram 未執行**(侷限 3) | 環境無帳號 | keyterm prompting 上限 100 詞 vs SM 1000 詞,值得比 |
-| **ElevenLabs Scribe 未執行** | 從沒跑過 | 做字幕的都拿它當預設;詞級+字元級時間戳、1000 詞 keyterm。約 $0.20([`related-work.md`](docs/related-work.md) §7) |
+| **ElevenLabs Scribe 未執行** | 從沒跑過,而且 **`Scribe v2 Realtime` 是 SM 在即時主線上的直接競爭者**(~150ms、WebSocket、日文中文都支援) | 批次 $0.22/hr、即時 $0.39/hr、keyterm +$0.05(2026-08-20 查)。兩格共 < $0.6;先查清楚有無詞級時間戳與詞表上限([`related-work.md`](docs/related-work.md) §7b) |
 | **Breeze-ASR-**26** 未測** | 我們所有數字都是 **ASR-25** | HF 上已有 26,不要把 25 的 0.845 / 0.415 套上去 |
 | **OpenCC 依語言判斷**(app 端) | 評測腳本已依語言,**app 端沒逐欄位檢查過** | 日文欄位全域套 `s2twp` 會把「会・静・図」轉錯([`related-work.md`](docs/related-work.md) §5.1) |
 | **SM 泛多語 `multi` pack 未測**(侷限 13) | 免費帳號回 not supported | 現有雙語結論只適用「有專用 pack」的引擎 |
