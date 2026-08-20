@@ -137,10 +137,10 @@ def main() -> None:
                 b_only += 1
         n_split = a_only + b_only
         split[cond] = {
-            f"只有 {LABEL.get(A, A)} 對": a_only, f"只有 {LABEL.get(B, B)} 對": b_only,
+            f"只有 {LABEL.get(A, A)}對": a_only, f"只有 {LABEL.get(B, B)}對": b_only,
             "兩邊都對": agree_hit, "兩邊都錯": agree_miss,
             "分歧數": n_split,
-            f"分歧中 {LABEL.get(A, A)} 對的比例": round(a_only / n_split, 3) if n_split else None,
+            f"分歧中 {LABEL.get(A, A)}對的比例": round(a_only / n_split, 3) if n_split else None,
         }
 
     out = {"note": "並排雙跑的複核負擔與分歧處勝負。純計算,無 API 呼叫。",
@@ -161,9 +161,9 @@ def main() -> None:
           f"   (A={LABEL.get(A, A)}, B={LABEL.get(B, B)})")
     for c in CONDS:
         s = split[c]
-        ratio = s[f"分歧中 {LABEL.get(A, A)} 對的比例"]
+        ratio = s[f"分歧中 {LABEL.get(A, A)}對的比例"]
         print(f"{c}  {load[c]:>7.3f}  {load_sub[c]:>8.3f}  {s['分歧數']:>8}"
-              f"  {s[f'只有 {LABEL.get(A, A)} 對']:>12}  {s[f'只有 {LABEL.get(B, B)} 對']:>8}  "
+              f"  {s[f'只有 {LABEL.get(A, A)}對']:>12}  {s[f'只有 {LABEL.get(B, B)}對']:>8}  "
               f"{'—' if ratio is None else format(ratio, '.2f'):>9}")
     print(f"\n→ results/dual_run{'' if (A, B) == ('Abat', 'Cbplus') else f'_{A}_{B}'}.json")
 
