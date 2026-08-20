@@ -21,8 +21,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
-# exp1 的非即時兩隻:Gemini 批次 vs SM 批次 + 詞表
+# exp1 的非即時兩隻:預設 Gemini 批次 vs SM 批次 + 詞表(§8b 原本量的那一對)。
+# **2026-08-20 起可以換對**:oracle_report §8d 重算互補性之後,建議配對改成
+# Gemini 批次 + **Scribe 批次**(最佳單一 arm 從 N3 0.597 升到 0.657),
+# 所以複核負擔也要在**新的那一對**上重算——不能沿用舊配對的 11% / 49%。
+#     python3 analysis/dual_run.py                      # Abat vs Cbplus(原配對)
+#     python3 analysis/dual_run.py Abat Sbat_ja_full    # 新配對
 A, B = "Abat", "Cbplus"
+if len(sys.argv) == 3:
+    A, B = sys.argv[1], sys.argv[2]
+LABEL = {"Abat": "Gemini 批次", "Cbplus": "SM 批次+詞表",
+         "Sbat_ja_full": "Scribe 批次+完整詞表", "Sbat_ja": "Scribe 批次+50 詞"}
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 TOKEN = re.compile(r"[0-9A-Za-z]+|[^\s0-9A-Za-z]")
 
@@ -128,10 +137,10 @@ def main() -> None:
                 b_only += 1
         n_split = a_only + b_only
         split[cond] = {
-            "只有 Gemini 批次對": a_only, "只有 SM 批次+詞表對": b_only,
+            f"只有 {LABEL.get(A, A)}對": a_only, f"只有 {LABEL.get(B, B)}對": b_only,
             "兩邊都對": agree_hit, "兩邊都錯": agree_miss,
             "分歧數": n_split,
-            "分歧中 Gemini 對的比例": round(a_only / n_split, 3) if n_split else None,
+            f"分歧中 {LABEL.get(A, A)}對的比例": round(a_only / n_split, 3) if n_split else None,
         }
 
     out = {"note": "並排雙跑的複核負擔與分歧處勝負。純計算,無 API 呼叫。",
@@ -143,18 +152,20 @@ def main() -> None:
            "text_divergence_ratio": load,
            "substantive_divergence_ratio": load_sub,
            "proper_noun_split": split}
-    (ROOT / "results/dual_run.json").write_text(
+    (ROOT / ("results/dual_run.json" if (A, B) == ("Abat", "Cbplus")
+                     else f"results/dual_run_{A}_{B}.json")).write_text(
         json.dumps(out, ensure_ascii=False, indent=1))
 
     print(f"並排雙跑:{A} vs {B}\n")
-    print("cond  全分歧  實質分歧  專名分歧  只有Gemini對  只有SM對  Gemini佔比")
+    print(f"cond  全分歧  實質分歧  專名分歧  只有A對  只有B對  A佔比"
+          f"   (A={LABEL.get(A, A)}, B={LABEL.get(B, B)})")
     for c in CONDS:
         s = split[c]
-        ratio = s["分歧中 Gemini 對的比例"]
+        ratio = s[f"分歧中 {LABEL.get(A, A)}對的比例"]
         print(f"{c}  {load[c]:>7.3f}  {load_sub[c]:>8.3f}  {s['分歧數']:>8}"
-              f"  {s['只有 Gemini 批次對']:>12}  {s['只有 SM 批次+詞表對']:>8}  "
+              f"  {s[f'只有 {LABEL.get(A, A)}對']:>12}  {s[f'只有 {LABEL.get(B, B)}對']:>8}  "
               f"{'—' if ratio is None else format(ratio, '.2f'):>9}")
-    print("\n→ results/dual_run.json")
+    print(f"\n→ results/dual_run{'' if (A, B) == ('Abat', 'Cbplus') else f'_{A}_{B}'}.json")
 
 
 if __name__ == "__main__":
