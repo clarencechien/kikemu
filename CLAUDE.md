@@ -89,6 +89,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
 | `docs/PRD.md` | 產品規格(畫面、安全基線、配額與成本) |
 | `docs/related-work.md` | 同類專案掃描(2026-08)+ 「即時場景怎麼改」;文末有與 `results/` 的對帳表 |
+| `results/pairing_report.md` | 非即時雙跑配對(handoff-v11):Jaccard/oracle/勝率,配對定案 Gemini+Scribe |
+| `handoff-v11.md` | 配對任務書 + 執行紀錄;§11.3 記了四條規則瑕疵(含主判讀語料的參考污染) |
 | `docs/offline-meeting-architecture.md` | 案外案:離線會議記錄架構(非即時/多講者/中文)。文末有對帳表,改了六處 |
 
 ## 別做的事

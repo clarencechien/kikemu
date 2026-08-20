@@ -196,6 +196,7 @@ Modal CLI 查不到費用,權威在 dashboard)。另有先前**白燒的 $1.26**
 | oracle 天花板與錯誤互補性(handoff-v7) | ✅ 結論:**不做 GER/融合**,改做非即時的「並排雙跑 + 人工複核」([`oracle_report.md`](results/oracle_report.md)) |
 | 案外案:Gemma 4 能不能取代兩跳(報告 §3F) | ✅ **譯可以(1/22 成本);聽只有 E4B 能用,只在中文,而且接成鏈仍輸 Breeze**——三個聽的型號測完,E4B 是甜蜜點(12B 吐太多、E2B 不吐)。[一頁摘要見下](#gemma-4-家族一頁講完五個型號三份語料三輪驗證) |
 | handoff-v10 S1~S5(ElevenLabs Scribe) | ✅ **批次很強、即時不行**:批次日文 0.824 / 中英夾雜 0.921(並列第一,N3 **0.657 全場最高**,詞表對齊後**引擎勝 SM +0.096**);**即時引擎輸 SM −0.075,與批次方向相反**——`scribe_v2` 與 `scribe_v2_realtime` 是兩顆不同的模型。**非即時決策樹改版,即時主線不動** |
+| handoff-v11(非即時雙跑配對) | ✅ **配對定案:Gemini 批次 + Scribe 批次**,零 API 成本純計算。**「架構家族距離」那條推論被推翻**——三對 Jaccard 打平(exp5 是 SM 略低 0.178/0.217、exp1 是 Scribe 略低 0.315/0.333,兩邊顛倒且都在雜訊裡),判讀落到第二判準;**最有說服力的卻是規則之外的勝率**:SM×Gemini 分歧 88 處但 SM 只對 14%(蓋章),Scribe×Gemini 分歧 36 處、勝率 0.58(真的在選)。三跑增益全部 < 0.03,不做 |
 | handoff-v9 G/H/I/J/K(把 E4B/12B 的坑補完) | ✅ **(G)** E4B 當耳朵的全地端鏈 **0.518 < 0.65** → 耳朵**指定 Breeze**;意外抓到「數據」×14 的兩跳交互作用;**(J)** 12B 貪婪**更糟**(CER 2.231 → 3.518)→ 退化生成是模型性質,結論不用改;E4B 反向(+0.051/+0.038);**(H)** E4B 噪音曲線線性但**掉幅是 Breeze 的 1.8 倍**;**(I)** 日文補滿 335 專名 **0.328** → 「日文不可用」成立;**(K)** E4B − SM batch CI 含 0(同級)、E4B − Breeze CI 不含 0(Breeze 真的較好) |
 | handoff-v8 梯次二 C/D/E | ✅ **(C)** Gemma 4 **E4B 比 12B 好一個數量級**(exp5 0.741/0.627 對 0.044/0.013;輸出長度比 1.04 對 2.22)——12B 的低分是**退化生成**不是聽力,「Gemma 4 不能聽」要改成「12B 不能聽」;**(D)** Breeze 每小時音訊 GPU 成本 **T4 $0.155 最便宜**(L4 $0.175、A100 $0.412),且三張卡轉寫**逐字相同**;**(E)** exp1 日文補滿 6 段 335 專名,**0.272**(原 0.323,差 0.051 在門檻內),切塊對 Gemma 的代價 ≈ 0 |
 | handoff-v8 梯次一 A/F/B(Modal 上的 Breeze 補測) | ✅ 三格全數完成:**(A)** Breeze 日文只有 0.415,地端推薦**必須限定中文**;**(F)** 全地端聽譯鏈(Breeze 聽 + Gemma 4 譯)端到端驗證成立,0.717 > 雲端兩跳 0.626;**(B)** 噪音曲線四條件補齊,掉幅 +0.070 是全場最平,且 **CPU/fp32 與 T4/fp16 差 0.000**(exp5 侷限 17 解除) |
@@ -387,7 +388,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | 一體式乾淨條件 | 打平(0.836 vs 0.836) | 略勝(0.927 vs 0.833,CI 下緣壓 0) |
 | 一體式崩潰點 | 人聲 8dB → 0.030(全滅) | 人聲 12dB → 0.396(半滅) |
 
-八條可以直接用的規則:
+九條可以直接用的規則:
 
 1. **一體式**即時**的門檻是「直接餵訊號」,不是「安靜」。** exp1 裡只加室內殘響、
    完全不加噪音,Gemini Live 就從 0.836 掉到 0.552,而 SM+詞表維持 0.836。
@@ -421,6 +422,14 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
    把 Gemma 4 12B 的失敗寫成「Gemma 4 不能聽」。三個型號都測完之後更清楚:
    **12B 吐太多、E2B 不吐、E4B 剛好**——有甜蜜點,不是單調曲線。
    **參數量不是能力的代理指標,往大往小都不是。**
+9. **雙跑要配誰,不能用「架構家族距離」推,要量 Jaccard。** 曾經推論
+   「Scribe 偏生成式、SM 是逐幀同步,所以 SM 最互補」——**量完之後那個差異不存在**
+   (exp5 是 SM 略低 0.178 對 0.217、exp1 是 Scribe 略低 0.315 對 0.333,
+   **兩邊顛倒且都在雜訊裡**)。而且那條推論的前提是猜的:Scribe 的解碼器架構未公開。
+   唯一被量測支持的家族規則是**一個 LLM 配一個專用 ASR**——兩個專用 ASR 的 J
+   在兩個語料都是最高(0.237 / 0.449),它們確實錯在一起。
+   量它零成本;猜錯的成本是整條線用了較差的配對而沒人發現
+   ([`pairing_report.md`](results/pairing_report.md))。
 
 **這些結論在 app 裡的具體體現:**聽用 Speechmatics 不用一體式(規則 1)、
 場景包是核心功能(規則 2)、`getUserMedia` 三個降噪 constraint 全關(規則 4)、
@@ -436,6 +445,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/related-work.md`](docs/related-work.md) | **同類專案掃描**(2026-08):離線字幕工具的做法,以及「即時場景怎麼改」——多數結論相反。含建議行動順序 |
+| [`results/pairing_report.md`](results/pairing_report.md) | **非即時雙跑配對的互補性實驗**(handoff-v11):三對 Jaccard × 條件 × strict/tolerant + pooled + bootstrap;配對定案與四條規則瑕疵的紀錄 |
 | [`docs/offline-meeting-architecture.md`](docs/offline-meeting-architecture.md) | **案外案:離線會議記錄的建議架構**(非即時、多講者、中文)。並排雙跑 + 只複核實質分歧;收進來時對帳改了六處,最大一處是把 L1 的引擎從 SM 換成 Scribe |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |

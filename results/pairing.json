@@ -1,0 +1,1370 @@
+{
+ "note": "handoff-v11:非即時雙跑配對的互補性。純計算,無 API 呼叫。",
+ "weighting": {
+  "exp5": "實例加權(n),與報告召回率一致",
+  "exp1": "每項等權(該檔無 n 欄)"
+ },
+ "correctness_check": {
+  "exp5": {
+   "Gbat/M0/strict": {
+    "oracle_single": 0.9873,
+    "report": 0.9874,
+    "match": true,
+    "n": 158
+   },
+   "Gbat/M0/tolerant": {
+    "oracle_single": 0.9873,
+    "report": 0.9874,
+    "match": true,
+    "n": 158
+   },
+   "Gbat/M3/strict": {
+    "oracle_single": 0.8038,
+    "report": 0.8038,
+    "match": true,
+    "n": 158
+   },
+   "Gbat/M3/tolerant": {
+    "oracle_single": 0.8165,
+    "report": 0.8164,
+    "match": true,
+    "n": 158
+   },
+   "Xbat_bi/M0/strict": {
+    "oracle_single": 0.7468,
+    "report": 0.7468,
+    "match": true,
+    "n": 158
+   },
+   "Xbat_bi/M0/tolerant": {
+    "oracle_single": 0.7532,
+    "report": 0.7532,
+    "match": true,
+    "n": 158
+   },
+   "Xbat_bi/M3/strict": {
+    "oracle_single": 0.6392,
+    "report": 0.6392,
+    "match": true,
+    "n": 158
+   },
+   "Xbat_bi/M3/tolerant": {
+    "oracle_single": 0.6456,
+    "report": 0.6456,
+    "match": true,
+    "n": 158
+   },
+   "Sbat_bi/M0/strict": {
+    "oracle_single": 0.943,
+    "report": 0.943,
+    "match": true,
+    "n": 158
+   },
+   "Sbat_bi/M0/tolerant": {
+    "oracle_single": 0.943,
+    "report": 0.943,
+    "match": true,
+    "n": 158
+   },
+   "Sbat_bi/M3/strict": {
+    "oracle_single": 0.8987,
+    "report": 0.8987,
+    "match": true,
+    "n": 158
+   },
+   "Sbat_bi/M3/tolerant": {
+    "oracle_single": 0.8987,
+    "report": 0.8987,
+    "match": true,
+    "n": 158
+   }
+  },
+  "exp1": {
+   "Abat/N0/strict": {
+    "oracle_single": 0.8806,
+    "report": 0.8806,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N0/tolerant": {
+    "oracle_single": 0.9403,
+    "report": 0.9403,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N1/strict": {
+    "oracle_single": 0.806,
+    "report": 0.806,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N1/tolerant": {
+    "oracle_single": 0.8955,
+    "report": 0.8955,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N2/strict": {
+    "oracle_single": 0.7612,
+    "report": 0.7612,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N2/tolerant": {
+    "oracle_single": 0.8358,
+    "report": 0.8358,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N3/strict": {
+    "oracle_single": 0.4925,
+    "report": 0.4925,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N3/tolerant": {
+    "oracle_single": 0.5672,
+    "report": 0.5672,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N4/strict": {
+    "oracle_single": 0.8358,
+    "report": 0.8358,
+    "match": true,
+    "n": 67
+   },
+   "Abat/N4/tolerant": {
+    "oracle_single": 0.8955,
+    "report": 0.8955,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N0/strict": {
+    "oracle_single": 0.7761,
+    "report": 0.7761,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N0/tolerant": {
+    "oracle_single": 0.8657,
+    "report": 0.8657,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N1/strict": {
+    "oracle_single": 0.7313,
+    "report": 0.7313,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N1/tolerant": {
+    "oracle_single": 0.8358,
+    "report": 0.8358,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N2/strict": {
+    "oracle_single": 0.7313,
+    "report": 0.7313,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N2/tolerant": {
+    "oracle_single": 0.8209,
+    "report": 0.8209,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N3/strict": {
+    "oracle_single": 0.5075,
+    "report": 0.5075,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N3/tolerant": {
+    "oracle_single": 0.597,
+    "report": 0.597,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N4/strict": {
+    "oracle_single": 0.7463,
+    "report": 0.7463,
+    "match": true,
+    "n": 67
+   },
+   "Cbplus/N4/tolerant": {
+    "oracle_single": 0.8358,
+    "report": 0.8358,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N0/strict": {
+    "oracle_single": 0.7612,
+    "report": 0.7612,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N0/tolerant": {
+    "oracle_single": 0.8657,
+    "report": 0.8657,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N1/strict": {
+    "oracle_single": 0.7761,
+    "report": 0.7761,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N1/tolerant": {
+    "oracle_single": 0.8955,
+    "report": 0.8955,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N2/strict": {
+    "oracle_single": 0.7015,
+    "report": 0.7015,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N2/tolerant": {
+    "oracle_single": 0.8209,
+    "report": 0.8209,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N3/strict": {
+    "oracle_single": 0.5522,
+    "report": 0.5522,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N3/tolerant": {
+    "oracle_single": 0.6567,
+    "report": 0.6567,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N4/strict": {
+    "oracle_single": 0.7612,
+    "report": 0.7612,
+    "match": true,
+    "n": 67
+   },
+   "Sbat_ja_full/N4/tolerant": {
+    "oracle_single": 0.8806,
+    "report": 0.8806,
+    "match": true,
+    "n": 67
+   }
+  },
+  "all_match": true
+ },
+ "pairs": {
+  "exp5": {
+   "label": "exp5 領域外(中英夾雜,3 段 × M0/M3,實例加權)",
+   "primary": true,
+   "conds": {
+    "M0": {
+     "SM × Gemini": {
+      "arms": [
+       "Xbat_bi",
+       "Gbat"
+      ],
+      "strict": {
+       "jaccard": 0.05,
+       "jaccard_unweighted": 0.069,
+       "single": {
+        "Xbat_bi": 0.7468,
+        "Gbat": 0.9873
+       },
+       "best_single": 0.9873,
+       "pair_oracle": 0.9873,
+       "gain_over_best": 0.0,
+       "n_either_wrong": 40,
+       "a_only": 0,
+       "b_only": 38,
+       "divergent": 38,
+       "a_win_rate": 0.0
+      },
+      "tolerant": {
+       "jaccard": 0.0513,
+       "jaccard_unweighted": 0.0714,
+       "single": {
+        "Xbat_bi": 0.7532,
+        "Gbat": 0.9873
+       },
+       "best_single": 0.9873,
+       "pair_oracle": 0.9873,
+       "gain_over_best": 0.0,
+       "n_either_wrong": 39,
+       "a_only": 0,
+       "b_only": 37,
+       "divergent": 37,
+       "a_win_rate": 0.0
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_bi",
+       "Gbat"
+      ],
+      "strict": {
+       "jaccard": 0.1,
+       "jaccard_unweighted": 0.1,
+       "single": {
+        "Sbat_bi": 0.943,
+        "Gbat": 0.9873
+       },
+       "best_single": 0.9873,
+       "pair_oracle": 0.9937,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 10,
+       "a_only": 1,
+       "b_only": 8,
+       "divergent": 9,
+       "a_win_rate": 0.111
+      },
+      "tolerant": {
+       "jaccard": 0.1,
+       "jaccard_unweighted": 0.1,
+       "single": {
+        "Sbat_bi": 0.943,
+        "Gbat": 0.9873
+       },
+       "best_single": 0.9873,
+       "pair_oracle": 0.9937,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 10,
+       "a_only": 1,
+       "b_only": 8,
+       "divergent": 9,
+       "a_win_rate": 0.111
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Xbat_bi",
+       "Sbat_bi"
+      ],
+      "strict": {
+       "jaccard": 0.1951,
+       "jaccard_unweighted": 0.2667,
+       "single": {
+        "Xbat_bi": 0.7468,
+        "Sbat_bi": 0.943
+       },
+       "best_single": 0.943,
+       "pair_oracle": 0.9494,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 41,
+       "a_only": 1,
+       "b_only": 32,
+       "divergent": 33,
+       "a_win_rate": 0.03
+      },
+      "tolerant": {
+       "jaccard": 0.2,
+       "jaccard_unweighted": 0.2759,
+       "single": {
+        "Xbat_bi": 0.7532,
+        "Sbat_bi": 0.943
+       },
+       "best_single": 0.943,
+       "pair_oracle": 0.9494,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 40,
+       "a_only": 1,
+       "b_only": 31,
+       "divergent": 32,
+       "a_win_rate": 0.031
+      }
+     }
+    },
+    "M3": {
+     "SM × Gemini": {
+      "arms": [
+       "Xbat_bi",
+       "Gbat"
+      ],
+      "strict": {
+       "jaccard": 0.2394,
+       "jaccard_unweighted": 0.2979,
+       "single": {
+        "Xbat_bi": 0.6392,
+        "Gbat": 0.8038
+       },
+       "best_single": 0.8038,
+       "pair_oracle": 0.8924,
+       "gain_over_best": 0.0886,
+       "n_either_wrong": 71,
+       "a_only": 14,
+       "b_only": 40,
+       "divergent": 54,
+       "a_win_rate": 0.259
+      },
+      "tolerant": {
+       "jaccard": 0.25,
+       "jaccard_unweighted": 0.3111,
+       "single": {
+        "Xbat_bi": 0.6456,
+        "Gbat": 0.8165
+       },
+       "best_single": 0.8165,
+       "pair_oracle": 0.8924,
+       "gain_over_best": 0.0759,
+       "n_either_wrong": 68,
+       "a_only": 12,
+       "b_only": 39,
+       "divergent": 51,
+       "a_win_rate": 0.235
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_bi",
+       "Gbat"
+      ],
+      "strict": {
+       "jaccard": 0.2368,
+       "jaccard_unweighted": 0.3333,
+       "single": {
+        "Sbat_bi": 0.8987,
+        "Gbat": 0.8038
+       },
+       "best_single": 0.8987,
+       "pair_oracle": 0.943,
+       "gain_over_best": 0.0443,
+       "n_either_wrong": 38,
+       "a_only": 22,
+       "b_only": 7,
+       "divergent": 29,
+       "a_win_rate": 0.759
+      },
+      "tolerant": {
+       "jaccard": 0.25,
+       "jaccard_unweighted": 0.3462,
+       "single": {
+        "Sbat_bi": 0.8987,
+        "Gbat": 0.8165
+       },
+       "best_single": 0.8987,
+       "pair_oracle": 0.943,
+       "gain_over_best": 0.0443,
+       "n_either_wrong": 36,
+       "a_only": 20,
+       "b_only": 7,
+       "divergent": 27,
+       "a_win_rate": 0.741
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Xbat_bi",
+       "Sbat_bi"
+      ],
+      "strict": {
+       "jaccard": 0.2586,
+       "jaccard_unweighted": 0.3571,
+       "single": {
+        "Xbat_bi": 0.6392,
+        "Sbat_bi": 0.8987
+       },
+       "best_single": 0.8987,
+       "pair_oracle": 0.9051,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 58,
+       "a_only": 1,
+       "b_only": 42,
+       "divergent": 43,
+       "a_win_rate": 0.023
+      },
+      "tolerant": {
+       "jaccard": 0.2632,
+       "jaccard_unweighted": 0.3659,
+       "single": {
+        "Xbat_bi": 0.6456,
+        "Sbat_bi": 0.8987
+       },
+       "best_single": 0.8987,
+       "pair_oracle": 0.9051,
+       "gain_over_best": 0.0063,
+       "n_either_wrong": 57,
+       "a_only": 1,
+       "b_only": 41,
+       "divergent": 42,
+       "a_win_rate": 0.024
+      }
+     }
+    }
+   }
+  },
+  "exp1": {
+   "label": "exp1 日文導覽(6 段 × N0–N4,每項等權)",
+   "primary": false,
+   "conds": {
+    "N0": {
+     "SM × Gemini": {
+      "arms": [
+       "Cbplus",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.2105,
+       "jaccard_unweighted": 0.2105,
+       "single": {
+        "Cbplus": 0.7761,
+        "Abat": 0.8806
+       },
+       "best_single": 0.8806,
+       "pair_oracle": 0.9403,
+       "gain_over_best": 0.0597,
+       "n_either_wrong": 19,
+       "a_only": 4,
+       "b_only": 11,
+       "divergent": 15,
+       "a_win_rate": 0.267
+      },
+      "tolerant": {
+       "jaccard": 0.1818,
+       "jaccard_unweighted": 0.1818,
+       "single": {
+        "Cbplus": 0.8657,
+        "Abat": 0.9403
+       },
+       "best_single": 0.9403,
+       "pair_oracle": 0.9701,
+       "gain_over_best": 0.0299,
+       "n_either_wrong": 11,
+       "a_only": 2,
+       "b_only": 7,
+       "divergent": 9,
+       "a_win_rate": 0.222
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_ja_full",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.3333,
+       "jaccard_unweighted": 0.3333,
+       "single": {
+        "Sbat_ja_full": 0.7612,
+        "Abat": 0.8806
+       },
+       "best_single": 0.8806,
+       "pair_oracle": 0.9104,
+       "gain_over_best": 0.0299,
+       "n_either_wrong": 18,
+       "a_only": 2,
+       "b_only": 10,
+       "divergent": 12,
+       "a_win_rate": 0.167
+      },
+      "tolerant": {
+       "jaccard": 0.1818,
+       "jaccard_unweighted": 0.1818,
+       "single": {
+        "Sbat_ja_full": 0.8657,
+        "Abat": 0.9403
+       },
+       "best_single": 0.9403,
+       "pair_oracle": 0.9701,
+       "gain_over_best": 0.0299,
+       "n_either_wrong": 11,
+       "a_only": 2,
+       "b_only": 7,
+       "divergent": 9,
+       "a_win_rate": 0.222
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Cbplus",
+       "Sbat_ja_full"
+      ],
+      "strict": {
+       "jaccard": 0.6316,
+       "jaccard_unweighted": 0.6316,
+       "single": {
+        "Cbplus": 0.7761,
+        "Sbat_ja_full": 0.7612
+       },
+       "best_single": 0.7761,
+       "pair_oracle": 0.8209,
+       "gain_over_best": 0.0448,
+       "n_either_wrong": 19,
+       "a_only": 4,
+       "b_only": 3,
+       "divergent": 7,
+       "a_win_rate": 0.571
+      },
+      "tolerant": {
+       "jaccard": 0.5,
+       "jaccard_unweighted": 0.5,
+       "single": {
+        "Cbplus": 0.8657,
+        "Sbat_ja_full": 0.8657
+       },
+       "best_single": 0.8657,
+       "pair_oracle": 0.9104,
+       "gain_over_best": 0.0448,
+       "n_either_wrong": 12,
+       "a_only": 3,
+       "b_only": 3,
+       "divergent": 6,
+       "a_win_rate": 0.5
+      }
+     }
+    },
+    "N1": {
+     "SM × Gemini": {
+      "arms": [
+       "Cbplus",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.4091,
+       "jaccard_unweighted": 0.4091,
+       "single": {
+        "Cbplus": 0.7313,
+        "Abat": 0.806
+       },
+       "best_single": 0.806,
+       "pair_oracle": 0.8657,
+       "gain_over_best": 0.0597,
+       "n_either_wrong": 22,
+       "a_only": 4,
+       "b_only": 9,
+       "divergent": 13,
+       "a_win_rate": 0.308
+      },
+      "tolerant": {
+       "jaccard": 0.2857,
+       "jaccard_unweighted": 0.2857,
+       "single": {
+        "Cbplus": 0.8358,
+        "Abat": 0.8955
+       },
+       "best_single": 0.8955,
+       "pair_oracle": 0.9403,
+       "gain_over_best": 0.0448,
+       "n_either_wrong": 14,
+       "a_only": 3,
+       "b_only": 7,
+       "divergent": 10,
+       "a_win_rate": 0.3
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_ja_full",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.4,
+       "jaccard_unweighted": 0.4,
+       "single": {
+        "Sbat_ja_full": 0.7761,
+        "Abat": 0.806
+       },
+       "best_single": 0.806,
+       "pair_oracle": 0.8806,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 20,
+       "a_only": 5,
+       "b_only": 7,
+       "divergent": 12,
+       "a_win_rate": 0.417
+      },
+      "tolerant": {
+       "jaccard": 0.1667,
+       "jaccard_unweighted": 0.1667,
+       "single": {
+        "Sbat_ja_full": 0.8955,
+        "Abat": 0.8955
+       },
+       "best_single": 0.8955,
+       "pair_oracle": 0.9701,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 12,
+       "a_only": 5,
+       "b_only": 5,
+       "divergent": 10,
+       "a_win_rate": 0.5
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Cbplus",
+       "Sbat_ja_full"
+      ],
+      "strict": {
+       "jaccard": 0.5,
+       "jaccard_unweighted": 0.5,
+       "single": {
+        "Cbplus": 0.7313,
+        "Sbat_ja_full": 0.7761
+       },
+       "best_single": 0.7761,
+       "pair_oracle": 0.8358,
+       "gain_over_best": 0.0597,
+       "n_either_wrong": 22,
+       "a_only": 4,
+       "b_only": 7,
+       "divergent": 11,
+       "a_win_rate": 0.364
+      },
+      "tolerant": {
+       "jaccard": 0.2857,
+       "jaccard_unweighted": 0.2857,
+       "single": {
+        "Cbplus": 0.8358,
+        "Sbat_ja_full": 0.8955
+       },
+       "best_single": 0.8955,
+       "pair_oracle": 0.9403,
+       "gain_over_best": 0.0448,
+       "n_either_wrong": 14,
+       "a_only": 3,
+       "b_only": 7,
+       "divergent": 10,
+       "a_win_rate": 0.3
+      }
+     }
+    },
+    "N2": {
+     "SM × Gemini": {
+      "arms": [
+       "Cbplus",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.36,
+       "jaccard_unweighted": 0.36,
+       "single": {
+        "Cbplus": 0.7313,
+        "Abat": 0.7612
+       },
+       "best_single": 0.7612,
+       "pair_oracle": 0.8657,
+       "gain_over_best": 0.1045,
+       "n_either_wrong": 25,
+       "a_only": 7,
+       "b_only": 9,
+       "divergent": 16,
+       "a_win_rate": 0.438
+      },
+      "tolerant": {
+       "jaccard": 0.3529,
+       "jaccard_unweighted": 0.3529,
+       "single": {
+        "Cbplus": 0.8209,
+        "Abat": 0.8358
+       },
+       "best_single": 0.8358,
+       "pair_oracle": 0.9104,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 17,
+       "a_only": 5,
+       "b_only": 6,
+       "divergent": 11,
+       "a_win_rate": 0.455
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_ja_full",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.3846,
+       "jaccard_unweighted": 0.3846,
+       "single": {
+        "Sbat_ja_full": 0.7015,
+        "Abat": 0.7612
+       },
+       "best_single": 0.7612,
+       "pair_oracle": 0.8507,
+       "gain_over_best": 0.0896,
+       "n_either_wrong": 26,
+       "a_only": 6,
+       "b_only": 10,
+       "divergent": 16,
+       "a_win_rate": 0.375
+      },
+      "tolerant": {
+       "jaccard": 0.2778,
+       "jaccard_unweighted": 0.2778,
+       "single": {
+        "Sbat_ja_full": 0.8209,
+        "Abat": 0.8358
+       },
+       "best_single": 0.8358,
+       "pair_oracle": 0.9254,
+       "gain_over_best": 0.0896,
+       "n_either_wrong": 18,
+       "a_only": 6,
+       "b_only": 7,
+       "divergent": 13,
+       "a_win_rate": 0.462
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Cbplus",
+       "Sbat_ja_full"
+      ],
+      "strict": {
+       "jaccard": 0.5833,
+       "jaccard_unweighted": 0.5833,
+       "single": {
+        "Cbplus": 0.7313,
+        "Sbat_ja_full": 0.7015
+       },
+       "best_single": 0.7313,
+       "pair_oracle": 0.791,
+       "gain_over_best": 0.0597,
+       "n_either_wrong": 24,
+       "a_only": 6,
+       "b_only": 4,
+       "divergent": 10,
+       "a_win_rate": 0.6
+      },
+      "tolerant": {
+       "jaccard": 0.5,
+       "jaccard_unweighted": 0.5,
+       "single": {
+        "Cbplus": 0.8209,
+        "Sbat_ja_full": 0.8209
+       },
+       "best_single": 0.8209,
+       "pair_oracle": 0.8806,
+       "gain_over_best": 0.0597,
+       "n_either_wrong": 16,
+       "a_only": 4,
+       "b_only": 4,
+       "divergent": 8,
+       "a_win_rate": 0.5
+      }
+     }
+    },
+    "N3": {
+     "SM × Gemini": {
+      "arms": [
+       "Cbplus",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.4889,
+       "jaccard_unweighted": 0.4889,
+       "single": {
+        "Cbplus": 0.5075,
+        "Abat": 0.4925
+       },
+       "best_single": 0.5075,
+       "pair_oracle": 0.6716,
+       "gain_over_best": 0.1642,
+       "n_either_wrong": 45,
+       "a_only": 12,
+       "b_only": 11,
+       "divergent": 23,
+       "a_win_rate": 0.522
+      },
+      "tolerant": {
+       "jaccard": 0.4737,
+       "jaccard_unweighted": 0.4737,
+       "single": {
+        "Cbplus": 0.597,
+        "Abat": 0.5672
+       },
+       "best_single": 0.597,
+       "pair_oracle": 0.7313,
+       "gain_over_best": 0.1343,
+       "n_either_wrong": 38,
+       "a_only": 11,
+       "b_only": 9,
+       "divergent": 20,
+       "a_win_rate": 0.55
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_ja_full",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.561,
+       "jaccard_unweighted": 0.561,
+       "single": {
+        "Sbat_ja_full": 0.5522,
+        "Abat": 0.4925
+       },
+       "best_single": 0.5522,
+       "pair_oracle": 0.6567,
+       "gain_over_best": 0.1045,
+       "n_either_wrong": 41,
+       "a_only": 11,
+       "b_only": 7,
+       "divergent": 18,
+       "a_win_rate": 0.611
+      },
+      "tolerant": {
+       "jaccard": 0.4857,
+       "jaccard_unweighted": 0.4857,
+       "single": {
+        "Sbat_ja_full": 0.6567,
+        "Abat": 0.5672
+       },
+       "best_single": 0.6567,
+       "pair_oracle": 0.7463,
+       "gain_over_best": 0.0896,
+       "n_either_wrong": 35,
+       "a_only": 12,
+       "b_only": 6,
+       "divergent": 18,
+       "a_win_rate": 0.667
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Cbplus",
+       "Sbat_ja_full"
+      ],
+      "strict": {
+       "jaccard": 0.6154,
+       "jaccard_unweighted": 0.6154,
+       "single": {
+        "Cbplus": 0.5075,
+        "Sbat_ja_full": 0.5522
+       },
+       "best_single": 0.5522,
+       "pair_oracle": 0.6418,
+       "gain_over_best": 0.0896,
+       "n_either_wrong": 39,
+       "a_only": 6,
+       "b_only": 9,
+       "divergent": 15,
+       "a_win_rate": 0.4
+      },
+      "tolerant": {
+       "jaccard": 0.5152,
+       "jaccard_unweighted": 0.5152,
+       "single": {
+        "Cbplus": 0.597,
+        "Sbat_ja_full": 0.6567
+       },
+       "best_single": 0.6567,
+       "pair_oracle": 0.7463,
+       "gain_over_best": 0.0896,
+       "n_either_wrong": 33,
+       "a_only": 6,
+       "b_only": 10,
+       "divergent": 16,
+       "a_win_rate": 0.375
+      }
+     }
+    },
+    "N4": {
+     "SM × Gemini": {
+      "arms": [
+       "Cbplus",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.1667,
+       "jaccard_unweighted": 0.1667,
+       "single": {
+        "Cbplus": 0.7463,
+        "Abat": 0.8358
+       },
+       "best_single": 0.8358,
+       "pair_oracle": 0.9403,
+       "gain_over_best": 0.1045,
+       "n_either_wrong": 24,
+       "a_only": 7,
+       "b_only": 13,
+       "divergent": 20,
+       "a_win_rate": 0.35
+      },
+      "tolerant": {
+       "jaccard": 0.125,
+       "jaccard_unweighted": 0.125,
+       "single": {
+        "Cbplus": 0.8358,
+        "Abat": 0.8955
+       },
+       "best_single": 0.8955,
+       "pair_oracle": 0.9701,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 16,
+       "a_only": 5,
+       "b_only": 9,
+       "divergent": 14,
+       "a_win_rate": 0.357
+      }
+     },
+     "Scribe × Gemini": {
+      "arms": [
+       "Sbat_ja_full",
+       "Abat"
+      ],
+      "strict": {
+       "jaccard": 0.2857,
+       "jaccard_unweighted": 0.2857,
+       "single": {
+        "Sbat_ja_full": 0.7612,
+        "Abat": 0.8358
+       },
+       "best_single": 0.8358,
+       "pair_oracle": 0.9104,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 21,
+       "a_only": 5,
+       "b_only": 10,
+       "divergent": 15,
+       "a_win_rate": 0.333
+      },
+      "tolerant": {
+       "jaccard": 0.1538,
+       "jaccard_unweighted": 0.1538,
+       "single": {
+        "Sbat_ja_full": 0.8806,
+        "Abat": 0.8955
+       },
+       "best_single": 0.8955,
+       "pair_oracle": 0.9701,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 13,
+       "a_only": 5,
+       "b_only": 6,
+       "divergent": 11,
+       "a_win_rate": 0.455
+      }
+     },
+     "SM × Scribe": {
+      "arms": [
+       "Cbplus",
+       "Sbat_ja_full"
+      ],
+      "strict": {
+       "jaccard": 0.5,
+       "jaccard_unweighted": 0.5,
+       "single": {
+        "Cbplus": 0.7463,
+        "Sbat_ja_full": 0.7612
+       },
+       "best_single": 0.7612,
+       "pair_oracle": 0.8358,
+       "gain_over_best": 0.0746,
+       "n_either_wrong": 22,
+       "a_only": 5,
+       "b_only": 6,
+       "divergent": 11,
+       "a_win_rate": 0.455
+      },
+      "tolerant": {
+       "jaccard": 0.3571,
+       "jaccard_unweighted": 0.3571,
+       "single": {
+        "Cbplus": 0.8358,
+        "Sbat_ja_full": 0.8806
+       },
+       "best_single": 0.8806,
+       "pair_oracle": 0.9254,
+       "gain_over_best": 0.0448,
+       "n_either_wrong": 14,
+       "a_only": 3,
+       "b_only": 6,
+       "divergent": 9,
+       "a_win_rate": 0.333
+      }
+     }
+    }
+   }
+  }
+ },
+ "three_way": {
+  "exp5": {
+   "M0": {
+    "strict": {
+     "three_way_oracle": 0.9937,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9937,
+     "gain": 0.0
+    },
+    "tolerant": {
+     "three_way_oracle": 0.9937,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9937,
+     "gain": 0.0
+    }
+   },
+   "M3": {
+    "strict": {
+     "three_way_oracle": 0.943,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.943,
+     "gain": 0.0
+    },
+    "tolerant": {
+     "three_way_oracle": 0.943,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.943,
+     "gain": 0.0
+    }
+   }
+  },
+  "exp1": {
+   "N0": {
+    "strict": {
+     "three_way_oracle": 0.9403,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.9403,
+     "gain": 0.0
+    },
+    "tolerant": {
+     "three_way_oracle": 0.9701,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.9701,
+     "gain": 0.0
+    }
+   },
+   "N1": {
+    "strict": {
+     "three_way_oracle": 0.8955,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.8806,
+     "gain": 0.0149
+    },
+    "tolerant": {
+     "three_way_oracle": 0.9701,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9701,
+     "gain": 0.0
+    }
+   },
+   "N2": {
+    "strict": {
+     "three_way_oracle": 0.8806,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.8657,
+     "gain": 0.0149
+    },
+    "tolerant": {
+     "three_way_oracle": 0.9254,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9254,
+     "gain": 0.0
+    }
+   },
+   "N3": {
+    "strict": {
+     "three_way_oracle": 0.7164,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.6716,
+     "gain": 0.0448
+    },
+    "tolerant": {
+     "three_way_oracle": 0.791,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.7463,
+     "gain": 0.0448
+    }
+   },
+   "N4": {
+    "strict": {
+     "three_way_oracle": 0.9403,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.9403,
+     "gain": 0.0
+    },
+    "tolerant": {
+     "three_way_oracle": 0.9701,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.9701,
+     "gain": 0.0
+    }
+   }
+  }
+ },
+ "pooled": {
+  "exp5": {
+   "strict": {
+    "SM × Gemini": {
+     "jaccard": 0.1712,
+     "best_single": 0.8956,
+     "pair_oracle": 0.9399,
+     "gain_over_best": 0.0443,
+     "divergent": 92,
+     "a_win_rate": 0.152
+    },
+    "Scribe × Gemini": {
+     "jaccard": 0.2083,
+     "best_single": 0.9209,
+     "pair_oracle": 0.9684,
+     "gain_over_best": 0.0475,
+     "divergent": 38,
+     "a_win_rate": 0.605
+    },
+    "SM × Scribe": {
+     "jaccard": 0.2323,
+     "best_single": 0.9209,
+     "pair_oracle": 0.9272,
+     "gain_over_best": 0.0063,
+     "divergent": 76,
+     "a_win_rate": 0.026
+    },
+    "ΔJ(Scribe×Gemini − SM×Gemini)": {
+     "delta_point": 0.0372,
+     "ci_lo": -0.1875,
+     "ci_hi": 0.1746,
+     "n_clusters": 3,
+     "ci_includes_zero": true
+    },
+    "三跑": {
+     "three_way_oracle": 0.9684,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9684,
+     "gain": -0.0
+    }
+   },
+   "tolerant": {
+    "SM × Gemini": {
+     "jaccard": 0.1776,
+     "best_single": 0.9019,
+     "pair_oracle": 0.9399,
+     "gain_over_best": 0.038,
+     "divergent": 88,
+     "a_win_rate": 0.136
+    },
+    "Scribe × Gemini": {
+     "jaccard": 0.2174,
+     "best_single": 0.9209,
+     "pair_oracle": 0.9684,
+     "gain_over_best": 0.0475,
+     "divergent": 36,
+     "a_win_rate": 0.583
+    },
+    "SM × Scribe": {
+     "jaccard": 0.2371,
+     "best_single": 0.9209,
+     "pair_oracle": 0.9272,
+     "gain_over_best": 0.0063,
+     "divergent": 74,
+     "a_win_rate": 0.027
+    },
+    "ΔJ(Scribe×Gemini − SM×Gemini)": {
+     "delta_point": 0.0398,
+     "ci_lo": -0.1875,
+     "ci_hi": 0.1607,
+     "n_clusters": 3,
+     "ci_includes_zero": true
+    },
+    "三跑": {
+     "three_way_oracle": 0.9684,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9684,
+     "gain": -0.0
+    }
+   }
+  },
+  "exp1": {
+   "strict": {
+    "SM × Gemini": {
+     "jaccard": 0.3556,
+     "best_single": 0.7552,
+     "pair_oracle": 0.8567,
+     "gain_over_best": 0.1015,
+     "divergent": 87,
+     "a_win_rate": 0.391
+    },
+    "Scribe × Gemini": {
+     "jaccard": 0.4206,
+     "best_single": 0.7552,
+     "pair_oracle": 0.8418,
+     "gain_over_best": 0.0866,
+     "divergent": 73,
+     "a_win_rate": 0.397
+    },
+    "SM × Scribe": {
+     "jaccard": 0.5714,
+     "best_single": 0.7104,
+     "pair_oracle": 0.7851,
+     "gain_over_best": 0.0746,
+     "divergent": 54,
+     "a_win_rate": 0.463
+    },
+    "ΔJ(Scribe×Gemini − SM×Gemini)": {
+     "delta_point": 0.0651,
+     "ci_lo": -0.0337,
+     "ci_hi": 0.193,
+     "n_clusters": 6,
+     "ci_includes_zero": true
+    },
+    "三跑": {
+     "three_way_oracle": 0.8746,
+     "best_pair": "SM × Gemini",
+     "best_pair_oracle": 0.8567,
+     "gain": 0.0179
+    }
+   },
+   "tolerant": {
+    "SM × Gemini": {
+     "jaccard": 0.3333,
+     "best_single": 0.8269,
+     "pair_oracle": 0.9045,
+     "gain_over_best": 0.0776,
+     "divergent": 64,
+     "a_win_rate": 0.406
+    },
+    "Scribe × Gemini": {
+     "jaccard": 0.3146,
+     "best_single": 0.8269,
+     "pair_oracle": 0.9164,
+     "gain_over_best": 0.0896,
+     "divergent": 61,
+     "a_win_rate": 0.492
+    },
+    "SM × Scribe": {
+     "jaccard": 0.4494,
+     "best_single": 0.8239,
+     "pair_oracle": 0.8806,
+     "gain_over_best": 0.0567,
+     "divergent": 49,
+     "a_win_rate": 0.388
+    },
+    "ΔJ(Scribe×Gemini − SM×Gemini)": {
+     "delta_point": -0.0187,
+     "ci_lo": -0.0693,
+     "ci_hi": 0.0805,
+     "n_clusters": 6,
+     "ci_includes_zero": true
+    },
+    "三跑": {
+     "three_way_oracle": 0.9254,
+     "best_pair": "Scribe × Gemini",
+     "best_pair_oracle": 0.9164,
+     "gain": 0.009
+    }
+   }
+  }
+ },
+ "sensitivity_alt_gemini": {
+  "exp5": {
+   "M0": {
+    "SM × Gemini3.7": 0.125,
+    "Scribe × Gemini3.7": 0.0714
+   },
+   "M3": {
+    "SM × Gemini3.7": 0.1905,
+    "Scribe × Gemini3.7": 0.4
+   }
+  }
+ }
+}
