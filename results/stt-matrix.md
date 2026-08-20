@@ -159,7 +159,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | Gemini `generateContent` 3.5-flash `minimal` | **$0.26** | 28.8× 實時 | ❌ |
 | Speechmatics 批次 | $0.24 | 6~12× 實時 | ✅ 詞級 |
 | **ElevenLabs Scribe v2 批次** | **$0.22**(+keyterms $0.05) | 快(43.8 分音訊約 3 分鐘) | ✅ 詞級 |
-| ElevenLabs Scribe v2 Realtime | $0.39(**未測**) | 1×,官方稱 ~150ms | 未查證 |
+| ElevenLabs Scribe v2 Realtime | $0.39(+keyterms $0.05) | 1×;定稿 p50 1.76s,但**每 13.7 秒才定稿一次** | ✅ 詞級(`committed_transcript_with_timestamps`) |
 | SM 即時 + Gemini 譯(kikemu) | $0.35 | 1×(本來就即時) | ✅ 詞級 |
 | Gemini Live 一體式 | ~$0.22 + 音訊輸出 | 1× | ❌ |
 | Gemini `generateContent` 3.7-flash `low` | **$2.69** | 21× 實時 | ❌ |
@@ -217,7 +217,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | §6 日文 | exp1 追加 arm `Xbrz_ja`(30 檔) | `results/raw/Xbrz_ja/` |
 | §6 全地端鏈 | exp5 `chain_*`(三條鏈同料) | `exp5/results/chain_scores.json` |
 
-完整報告與 40 條侷限:[`results/report.md`](report.md)。
+完整報告與 42 條侷限:[`results/report.md`](report.md)。
 
 ### 3.1 一體式**即時**在噪音下會崩潰,不是變差
 
@@ -571,11 +571,37 @@ Scribe **即時**的詞表上限是 **50 詞、無讀音欄位**,SM 是 1000 詞
   `400 All keywords must be less than 50 characters`。
 - 牌價(2026-08-20):批次 $0.22/hr、即時 $0.39/hr、keyterms +$0.05/hr。**PAYG,不需訂閱。**
 
-### ⚠️ 還沒測的那一半,而且正是主線
+### 即時那一半:結論相反,主線不要換
 
-**Scribe v2 Realtime 完全未測。** 上面全部是批次。
-**Gemini 那次的教訓正好是「批次好不代表即時好」**(批次 0.567 vs Live 0.030,§3.1b)。
-**在即時那格跑完之前,不要把上面的數字當成換主線的依據。**
+**即時已測(2026-08-20),而且方向與批次相反。**
+
+| arm(exp1 日文,即時) | 全部 | N3 人群 8dB |
+|---|---|---|
+| **SM 即時 + 完整詞表+假名**(現行產線) | **0.791** | **0.627** |
+| SM 即時 + 50 詞(控制組) | 0.699 | 0.478 |
+| **Scribe v2 Realtime + 50 keyterms** | **0.624** | 0.343 |
+
+| | 引擎的差(詞表對齊後) |
+|---|---|
+| 批次 `scribe_v2` | **+0.096**(Scribe 較強) |
+| **即時 `scribe_v2_realtime`** | **−0.075**(Scribe **較弱**) |
+
+> **`scribe_v2` 與 `scribe_v2_realtime` 是兩顆不同的模型,而且即時那顆比較弱。**
+> 這是「批次好不代表即時好」的**第二個廠商實例**(第一個是 Gemini,
+> 批次 0.567 / Live 0.030)。**兩次都是即時那顆較弱。**
+
+**還有一個節奏問題:**
+
+| | commit 間隔 | 每次定稿 | 定稿 p50 | 改寫率 |
+|---|---|---|---|---|
+| SM(`max_delay=2.0`) | 每 **0.6 秒**音訊 | 2.5 字 | 2.23s | **0.165** |
+| Scribe(VAD 預設) | 每 **13.7 秒**音訊 | 56 字 | 1.76s | **0.783** |
+
+Scribe 單次定稿到得比較快,但**兩次定稿之間隔 14 秒**——文字那 14 秒都還會改。
+兩層時間軸(暫定/定稿)接不上。⚠️ **這是 `commit_strategy=vad` 的預設值,
+API 有 `manual` 與 VAD 門檻可調,本專案沒調過**,不要當成模型的固有性質。
+
+**所以:非即時線 Scribe 是強候選,即時線維持 Speechmatics。**
 
 ---
 
