@@ -186,6 +186,9 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 | 還開著的 | 為什麼還開 | 要做的話 |
 |---|---|---|
 | **Deepgram 未執行**(侷限 3) | 環境無帳號 | keyterm prompting 上限 100 詞 vs SM 1000 詞,值得比 |
+| **ElevenLabs Scribe 未執行** | 從沒跑過 | 做字幕的都拿它當預設;詞級+字元級時間戳、1000 詞 keyterm。約 $0.20([`related-work.md`](docs/related-work.md) §7) |
+| **Breeze-ASR-**26** 未測** | 我們所有數字都是 **ASR-25** | HF 上已有 26,不要把 25 的 0.845 / 0.415 套上去 |
+| **OpenCC 依語言判斷**(app 端) | 評測腳本已依語言,**app 端沒逐欄位檢查過** | 日文欄位全域套 `s2twp` 會把「会・静・図」轉錯([`related-work.md`](docs/related-work.md) §5.1) |
 | **SM 泛多語 `multi` pack 未測**(侷限 13) | 免費帳號回 not supported | 現有雙語結論只適用「有專用 pack」的引擎 |
 | **prompt 給脈絡能不能取代詞表**(stt-matrix「已知空白」1b) | 沒量過 | LLM 這條路沒有詞表機制,這是唯一對應手段 |
 | **三處「無人耳終審」**(侷限 6、11、20、21) | 需要人 | 參考文本、拉丁字母裁決、LLM 是否「補出」內容 |
@@ -331,6 +334,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**37 條侷限**(7 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
+| [`docs/related-work.md`](docs/related-work.md) | **同類專案掃描**(2026-08):離線字幕工具的做法,以及「即時場景怎麼改」——多數結論相反。含建議行動順序 |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
