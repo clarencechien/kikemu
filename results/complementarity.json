@@ -745,6 +745,580 @@
      }
     }
    }
+  },
+  {
+   "experiment": "exp1",
+   "subset": "非即時新配對",
+   "arms": [
+    "Abat",
+    "Sbat_ja_full"
+   ],
+   "why": "Gemini 批次 + Scribe 批次。兩者總分幾乎相同(0.827 / 0.824)但噪音下的強弱相反,是雙線最有機會的一組。",
+   "conds": {
+    "N0": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.8806,
+       "Sbat_ja_full": 0.7612
+      },
+      "best_single": 0.8806,
+      "oracle": 0.9104,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.9403,
+       "Sbat_ja_full": 0.8657
+      },
+      "best_single": 0.9403,
+      "oracle": 0.9701,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1818
+     }
+    },
+    "N1": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.806,
+       "Sbat_ja_full": 0.7761
+      },
+      "best_single": 0.806,
+      "oracle": 0.8806,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8955,
+       "Sbat_ja_full": 0.8955
+      },
+      "best_single": 0.8955,
+      "oracle": 0.9701,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1667
+     }
+    },
+    "N2": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.7612,
+       "Sbat_ja_full": 0.7015
+      },
+      "best_single": 0.7612,
+      "oracle": 0.8507,
+      "gain": 0.0896,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8358,
+       "Sbat_ja_full": 0.8209
+      },
+      "best_single": 0.8358,
+      "oracle": 0.9254,
+      "gain": 0.0896,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.2778
+     }
+    },
+    "N3": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.4925,
+       "Sbat_ja_full": 0.5522
+      },
+      "best_single": 0.5522,
+      "oracle": 0.6567,
+      "gain": 0.1045,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.5672,
+       "Sbat_ja_full": 0.6567
+      },
+      "best_single": 0.6567,
+      "oracle": 0.7463,
+      "gain": 0.0896,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.4857
+     }
+    },
+    "N4": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.8358,
+       "Sbat_ja_full": 0.7612
+      },
+      "best_single": 0.8358,
+      "oracle": 0.9104,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8955,
+       "Sbat_ja_full": 0.8806
+      },
+      "best_single": 0.8955,
+      "oracle": 0.9701,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1538
+     }
+    }
+   }
+  },
+  {
+   "experiment": "exp1",
+   "subset": "非即時三方",
+   "arms": [
+    "Abat",
+    "Sbat_ja_full",
+    "Cbplus"
+   ],
+   "why": "再加上 SM 批次+詞表。三個都拿得到詞級 timestamp 或不需要。",
+   "conds": {
+    "N0": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full",
+      "Cbplus"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.8806,
+       "Sbat_ja_full": 0.7612,
+       "Cbplus": 0.7761
+      },
+      "best_single": 0.8806,
+      "oracle": 0.9403,
+      "gain": 0.0597,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.9403,
+       "Sbat_ja_full": 0.8657,
+       "Cbplus": 0.8657
+      },
+      "best_single": 0.9403,
+      "oracle": 0.9701,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1818,
+      "Abat+Cbplus": 0.1818,
+      "Sbat_ja_full+Cbplus": 0.5
+     }
+    },
+    "N1": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full",
+      "Cbplus"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.806,
+       "Sbat_ja_full": 0.7761,
+       "Cbplus": 0.7313
+      },
+      "best_single": 0.806,
+      "oracle": 0.8955,
+      "gain": 0.0896,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8955,
+       "Sbat_ja_full": 0.8955,
+       "Cbplus": 0.8358
+      },
+      "best_single": 0.8955,
+      "oracle": 0.9701,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1667,
+      "Abat+Cbplus": 0.2857,
+      "Sbat_ja_full+Cbplus": 0.2857
+     }
+    },
+    "N2": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full",
+      "Cbplus"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.7612,
+       "Sbat_ja_full": 0.7015,
+       "Cbplus": 0.7313
+      },
+      "best_single": 0.7612,
+      "oracle": 0.8806,
+      "gain": 0.1194,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8358,
+       "Sbat_ja_full": 0.8209,
+       "Cbplus": 0.8209
+      },
+      "best_single": 0.8358,
+      "oracle": 0.9254,
+      "gain": 0.0896,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.2778,
+      "Abat+Cbplus": 0.3529,
+      "Sbat_ja_full+Cbplus": 0.5
+     }
+    },
+    "N3": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full",
+      "Cbplus"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.4925,
+       "Sbat_ja_full": 0.5522,
+       "Cbplus": 0.5075
+      },
+      "best_single": 0.5522,
+      "oracle": 0.7164,
+      "gain": 0.1642,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.5672,
+       "Sbat_ja_full": 0.6567,
+       "Cbplus": 0.597
+      },
+      "best_single": 0.6567,
+      "oracle": 0.791,
+      "gain": 0.1343,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.4857,
+      "Abat+Cbplus": 0.4737,
+      "Sbat_ja_full+Cbplus": 0.5152
+     }
+    },
+    "N4": {
+     "arms_present": [
+      "Abat",
+      "Sbat_ja_full",
+      "Cbplus"
+     ],
+     "strict": {
+      "single": {
+       "Abat": 0.8358,
+       "Sbat_ja_full": 0.7612,
+       "Cbplus": 0.7463
+      },
+      "best_single": 0.8358,
+      "oracle": 0.9403,
+      "gain": 0.1045,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Abat": 0.8955,
+       "Sbat_ja_full": 0.8806,
+       "Cbplus": 0.8358
+      },
+      "best_single": 0.8955,
+      "oracle": 0.9701,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Abat+Sbat_ja_full": 0.1538,
+      "Abat+Cbplus": 0.125,
+      "Sbat_ja_full+Cbplus": 0.3571
+     }
+    }
+   }
+  },
+  {
+   "experiment": "exp1",
+   "subset": "Scribe 內部對照",
+   "arms": [
+    "Sbat_ja_full",
+    "Srt_ja"
+   ],
+   "why": "同廠商的批次 vs 即時。§2.1e 證實那是兩顆不同的模型,所以這組的增益**不是**「同引擎抖動」,而是真的模型差異。",
+   "conds": {
+    "N0": {
+     "arms_present": [
+      "Sbat_ja_full",
+      "Srt_ja"
+     ],
+     "strict": {
+      "single": {
+       "Sbat_ja_full": 0.7612,
+       "Srt_ja": 0.7015
+      },
+      "best_single": 0.7612,
+      "oracle": 0.8358,
+      "gain": 0.0746,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Sbat_ja_full": 0.8657,
+       "Srt_ja": 0.7612
+      },
+      "best_single": 0.8657,
+      "oracle": 0.9104,
+      "gain": 0.0448,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Sbat_ja_full+Srt_ja": 0.3158
+     }
+    },
+    "N1": {
+     "arms_present": [
+      "Sbat_ja_full",
+      "Srt_ja"
+     ],
+     "strict": {
+      "single": {
+       "Sbat_ja_full": 0.7761,
+       "Srt_ja": 0.6418
+      },
+      "best_single": 0.7761,
+      "oracle": 0.8209,
+      "gain": 0.0448,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Sbat_ja_full": 0.8955,
+       "Srt_ja": 0.7164
+      },
+      "best_single": 0.8955,
+      "oracle": 0.9104,
+      "gain": 0.0149,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Sbat_ja_full+Srt_ja": 0.3
+     }
+    },
+    "N2": {
+     "arms_present": [
+      "Sbat_ja_full",
+      "Srt_ja"
+     ],
+     "strict": {
+      "single": {
+       "Sbat_ja_full": 0.7015,
+       "Srt_ja": 0.4627
+      },
+      "best_single": 0.7015,
+      "oracle": 0.7015,
+      "gain": 0.0,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Sbat_ja_full": 0.8209,
+       "Srt_ja": 0.5522
+      },
+      "best_single": 0.8209,
+      "oracle": 0.8209,
+      "gain": 0.0,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Sbat_ja_full+Srt_ja": 0.4
+     }
+    },
+    "N3": {
+     "arms_present": [
+      "Sbat_ja_full",
+      "Srt_ja"
+     ],
+     "strict": {
+      "single": {
+       "Sbat_ja_full": 0.5522,
+       "Srt_ja": 0.3134
+      },
+      "best_single": 0.5522,
+      "oracle": 0.5821,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Sbat_ja_full": 0.6567,
+       "Srt_ja": 0.3433
+      },
+      "best_single": 0.6567,
+      "oracle": 0.6866,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Sbat_ja_full+Srt_ja": 0.4565
+     }
+    },
+    "N4": {
+     "arms_present": [
+      "Sbat_ja_full",
+      "Srt_ja"
+     ],
+     "strict": {
+      "single": {
+       "Sbat_ja_full": 0.7612,
+       "Srt_ja": 0.6716
+      },
+      "best_single": 0.7612,
+      "oracle": 0.806,
+      "gain": 0.0448,
+      "n_items": 67
+     },
+     "tolerant": {
+      "single": {
+       "Sbat_ja_full": 0.8806,
+       "Srt_ja": 0.7463
+      },
+      "best_single": 0.8806,
+      "oracle": 0.9104,
+      "gain": 0.0299,
+      "n_items": 67
+     },
+     "jaccard_tolerant": {
+      "Sbat_ja_full+Srt_ja": 0.3158
+     }
+    }
+   }
+  },
+  {
+   "experiment": "exp5",
+   "subset": "乾淨三方(都不與參考同源)",
+   "arms": [
+    "Xbrz_auto",
+    "Xbat_bi",
+    "Sbat_bi"
+   ],
+   "why": "Breeze + SM + Scribe。exp5 唯一完全避開主場偏差的三方組合。",
+   "conds": {
+    "M0": {
+     "arms_present": [
+      "Xbrz_auto",
+      "Xbat_bi",
+      "Sbat_bi"
+     ],
+     "strict": {
+      "single": {
+       "Xbrz_auto": 0.8734,
+       "Xbat_bi": 0.7468,
+       "Sbat_bi": 0.943
+      },
+      "best_single": 0.943,
+      "oracle": 0.962,
+      "gain": 0.019,
+      "n_items": 158
+     },
+     "tolerant": {
+      "single": {
+       "Xbrz_auto": 0.8797,
+       "Xbat_bi": 0.7532,
+       "Sbat_bi": 0.943
+      },
+      "best_single": 0.943,
+      "oracle": 0.962,
+      "gain": 0.019,
+      "n_items": 158
+     },
+     "jaccard_tolerant": {
+      "Xbrz_auto+Xbat_bi": 0.4,
+      "Xbrz_auto+Sbat_bi": 0.4375,
+      "Xbat_bi+Sbat_bi": 0.2759
+     }
+    },
+    "M3": {
+     "arms_present": [
+      "Xbrz_auto",
+      "Xbat_bi",
+      "Sbat_bi"
+     ],
+     "strict": {
+      "single": {
+       "Xbrz_auto": 0.8038,
+       "Xbat_bi": 0.6392,
+       "Sbat_bi": 0.8987
+      },
+      "best_single": 0.8987,
+      "oracle": 0.9177,
+      "gain": 0.019,
+      "n_items": 158
+     },
+     "tolerant": {
+      "single": {
+       "Xbrz_auto": 0.8101,
+       "Xbat_bi": 0.6456,
+       "Sbat_bi": 0.8987
+      },
+      "best_single": 0.8987,
+      "oracle": 0.9177,
+      "gain": 0.019,
+      "n_items": 158
+     },
+     "jaccard_tolerant": {
+      "Xbrz_auto+Xbat_bi": 0.4884,
+      "Xbrz_auto+Sbat_bi": 0.4815,
+      "Xbat_bi+Sbat_bi": 0.3659
+     }
+    }
+   }
   }
  ]
 }

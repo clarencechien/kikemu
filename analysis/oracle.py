@@ -29,7 +29,11 @@ EXPERIMENTS = {
         "key": "noun",
         "arms": {"A": "Gemini Live", "Abat": "Gemini 批次",
                  "C": "SM 即時", "Cplus": "SM 即時+詞表",
-                 "Cb": "SM 批次", "Cbplus": "SM 批次+詞表"},
+                 "Cb": "SM 批次", "Cbplus": "SM 批次+詞表",
+                 # handoff-v10:Scribe。批次與即時是**不同模型**(§2.1e),分開列。
+                 "Sbat_ja_full": "Scribe 批次+全詞表",
+                 "Sbat_ja": "Scribe 批次+50詞",
+                 "Srt_ja": "Scribe 即時+50詞"},
         "conds": ["N0", "N1", "N2", "N3", "N4"],
         "clean_ref": True,   # 參考來自大阪觀光局頁面,無主場偏差
     },
@@ -47,14 +51,16 @@ EXPERIMENTS = {
         "key": "term",
         "arms": {"G": "Gemini Live", "Gbat": "Gemini 3.5 批次",
                  "Gbat37": "Gemini 3.7 批次", "Xbat_bi": "SM 批次",
-                 "X_bi": "SM 即時", "Xbrz_auto": "Breeze"},
+                 "X_bi": "SM 即時", "Xbrz_auto": "Breeze",
+                 "Sbat_bi": "Scribe 批次"},
         "conds": ["M0", "M3"],
         "clean_ref": False,  # 參考由 gemini-3.5-flash 產生 → Gemini 系有主場偏差
     },
 }
 
 # exp5 的「乾淨組」:把與參考同源的 Gemini 全部排除,只剩兩個外人。
-EXP5_CLEAN_ARMS = ["Xbrz_auto", "Xbat_bi"]
+# handoff-v10:Scribe 也沒參與造參考,所以它是第三個「外人」。
+EXP5_CLEAN_ARMS = ["Xbrz_auto", "Xbat_bi", "Sbat_bi"]
 
 
 def load(spec: dict):
