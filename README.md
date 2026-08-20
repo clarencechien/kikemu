@@ -288,7 +288,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 | **Deepgram 未執行**(侷限 3) | 環境無帳號 | keyterm prompting 上限 100 詞 vs SM 1000 詞,值得比 |
 | ~~ElevenLabs Scribe 未執行~~ | **批次與即時都測完**(2026-08-20):批次強(日文 0.824、中英夾雜 0.921,皆並列第一),**但即時引擎輸 SM −0.075,與批次的 +0.096 方向相反** | **主線維持 SM**;非即時線 Scribe 是強候選([`stt-matrix.md`](results/stt-matrix.md) §6b) |
 | **diarization 品質完全未量測**(侷限 26) | 語料全是**單一講者**,沒有語者標註的參考,指標定義不出來 | 要量得先找多語者素材。**能力欄位已查證**(`results/diarization_support.json`):Scribe 批次有,SM 未查證 |
-| **Breeze-ASR-**26** 未測** | 我們所有數字都是 **ASR-25** | HF 上已有 26,不要把 25 的 0.845 / 0.415 套上去 |
+| **Breeze-ASR-**26** 未測** | 我們所有數字都是 **ASR-25** | **26 是台語模型,不是 25 的版本升級**(HF 標籤 `taiwanese-hokkien`/`taigi`/`nan`;25 只有 `zh`/`en`,2026-08-20 查)。**目標語言不同,25 的 0.845 / 0.415 一個都不能套** |
 | **OpenCC 依語言判斷**(app 端) | 評測腳本已依語言,**app 端沒逐欄位檢查過** | 日文欄位全域套 `s2twp` 會把「会・静・図」轉錯([`related-work.md`](docs/related-work.md) §5.1) |
 | **SM 泛多語 `multi` pack 未測**(侷限 13) | 免費帳號回 not supported | 現有雙語結論只適用「有專用 pack」的引擎 |
 | **prompt 給脈絡能不能取代詞表**(stt-matrix「已知空白」1b) | 沒量過 | LLM 這條路沒有詞表機制,這是唯一對應手段 |
@@ -436,6 +436,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/related-work.md`](docs/related-work.md) | **同類專案掃描**(2026-08):離線字幕工具的做法,以及「即時場景怎麼改」——多數結論相反。含建議行動順序 |
+| [`docs/offline-meeting-architecture.md`](docs/offline-meeting-architecture.md) | **案外案:離線會議記錄的建議架構**(非即時、多講者、中文)。並排雙跑 + 只複核實質分歧;收進來時對帳改了六處,最大一處是把 L1 的引擎從 SM 換成 Scribe |
 | [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) | **Gemini API 教訓**:thinking 稅 A/B 實測、成本表更正、保險絲四層現況 |
 | [`CLAUDE.md`](CLAUDE.md) | 接手須知:這個 repo 的九條鐵律與驗證方式 |
 | [`notebooks/README.md`](notebooks/README.md) | **Colab 操作手冊**:Breeze ASR 25(X-breeze arm)一鍵開跑 |
