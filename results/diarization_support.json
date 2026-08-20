@@ -1,0 +1,66 @@
+{
+ "checked": "2026-08-20",
+ "what_this_proves": "參數存在與否,不是分得準不準(侷限 26)",
+ "elevenlabs_scribe_batch": {
+  "request_params": {
+   "num_speakers": {
+    "type": "anyOf",
+    "default": null,
+    "desc": "The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the am"
+   },
+   "diarize": {
+    "type": "boolean",
+    "default": false,
+    "desc": "Whether to annotate which speaker is currently talking in the uploaded file."
+   },
+   "diarization_threshold": {
+    "type": "anyOf",
+    "default": null,
+    "desc": "Diarization threshold to apply during speaker diarization. A higher value means there will be a lower chance of one speaker being diarized as two different speakers but also a higher chance of two dif"
+   },
+   "use_multi_channel": {
+    "type": "boolean",
+    "default": false,
+    "desc": "Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned pe"
+   },
+   "multichannel_output_style": {
+    "type": "string",
+    "default": "separate",
+    "desc": "Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whos"
+   },
+   "use_speaker_library": {
+    "type": "boolean",
+    "default": false,
+    "desc": "Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's"
+   },
+   "detect_speaker_roles": {
+    "type": "boolean",
+    "default": false,
+    "desc": "Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speak"
+   }
+  },
+  "word_fields": [
+   "text",
+   "start",
+   "end",
+   "type",
+   "speaker_id",
+   "logprob",
+   "characters",
+   "channel_index"
+  ],
+  "word_level_speaker_id": true,
+  "source": "https://api.elevenlabs.io/openapi.json",
+  "note": "批次端點。即時 WebSocket 不在這份 OpenAPI 裡,**未查證**。"
+ },
+ "speechmatics": {
+  "request_params": null,
+  "status": "未查證",
+  "tried": {
+   "https://asr.api.speechmatics.com/v2/openapi.json": 404,
+   "https://docs.speechmatics.com/openapi.json": 404,
+   "https://raw.githubusercontent.com/speechmatics/speechmatics-python/main/asyncapi.yml": 404
+  },
+  "note": "抓不到公開 spec。本專案的 SM runner 從未開過 diarization(`run_speechmatics_batch.py` 的 transcription_config 只有 language 與 operating_point),所以連『我們送過什麼』都沒有紀錄。"
+ }
+}

@@ -20,7 +20,10 @@ Breeze 的日文與噪音曲線、全地端聽譯鏈、Gemma 4 型號差異、GP
    乾淨用 **Gemini 批次**(28.8× 實時、$0.26/hr、日文 N0 0.940,但**沒有 timestamp**);
    吵用 **ElevenLabs Scribe v2 批次**($0.22/hr、日文 N3 **0.657 全場最高**、
    **有詞級 timestamp**)。**2026-08-20 起「要 timestamp 就得犧牲準確度」不再成立**
-   ——Scribe 兩者兼具(§6b)。diarization 仍然只有 SM 有。
+   ——Scribe 兩者兼具(§6b)。~~diarization 仍然只有 SM 有。~~
+   **那句是錯的**:Scribe 批次有 `diarize` / `num_speakers` / 語者庫,
+   而且**詞級帶 `speaker_id`**(§6c,證據 `results/diarization_support.json`)。
+   ⚠️ 但**兩家的 diarization 品質本專案都沒量過**(侷限 26)。
 3. **資料不能出境就只剩地端,但地端不是將就——前提是你講中文。**
    Breeze ASR 25(Apache 2.0)在純中文短片段上 CER **0.198,比 Speechmatics 還低**;
    噪音曲線也是全場最平(M0→M3 只掉 0.070,§6)。
@@ -85,7 +88,10 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 字幕、對齊、逐字定位需要詞級時間戳 → **專用 ASR,沒有第二個選項**。
 摘要、問答、筆記不需要 → LLM 批次直接吃音訊,更快更便宜也更準。
 
-同理,**需要分辨誰在說話(diarization)也只能用專用 ASR**。
+同理,**需要分辨誰在說話(diarization)也只能用專用 ASR**——
+但「專用 ASR」不等於「只有 SM」,見 §6c(這裡曾經寫錯過)。
+地端另有獨立的 diarization 元件(pyannote / NeMo / sherpa-onnx),
+**可以跟任何 ASR 分開接**,不必綁同一家。
 
 ### 5. 資料能不能出境 —— 決定能不能用雲端
 
@@ -99,6 +105,8 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 - SM on-prem / Google Cloud STT On-Prem —— 本專案未測
 - **中文以外的地端方案,本專案沒有可推薦的**——不要拿 Breeze 的數字外推
 - GPU 成本:Breeze 在 **T4 每小時音訊 $0.155**,是三張卡裡最便宜的(§6)
+- **要分辨誰在說話,地端有獨立元件可接**(pyannote / NeMo / sherpa-onnx),
+  不必跟 ASR 同一家,**也不必出境**——見 §6c。全部**未測**
 
 ---
 
@@ -141,7 +149,12 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
                             ✗ 沒有 timestamp
    吵(遠場、人聲背景)──► **ElevenLabs Scribe v2 批次**
                             日文 N3 **0.657 全場最高**、有詞級 timestamp、$0.22/hr
-   要 diarization ─────► **SM 批次**(只有它有)
+   ~~要 diarization ─► **SM 批次**(只有它有)~~   ← **這一行是錯的,2026-08-20 移除**
+   要 diarization ─────► **不影響上面的選擇**:Scribe 批次本身就有
+                         (`diarize` + 詞級 `speaker_id`);SM 批次也有。
+                         ⚠️ **兩家分得準不準本專案都沒量過**(侷限 26),
+                         所以這一項**不該拿來當分岔條件**——先照「吵不吵」選,
+                         再確認那一家的 diarization 夠不夠用。細節見 §6c
    ⑦ 錯一個詞的代價高嗎?
 
 ⑦ 錯一個詞的代價高嗎(法遵、料號、廠區記錄)?
@@ -164,7 +177,11 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | **逐字稿・遠場或有人聲背景** | 不用 | **吵** | **ElevenLabs Scribe v2 批次** | 日文 N3 **0.657 全場最高**;$0.22/hr,而且**附詞級 timestamp**(§6b) |
 | **Podcast 摘要・問答** | 不用 | 乾淨 | **Gemini `generateContent`** | 不需 timestamp,LLM 直接吃音訊最省 |
 | **影片字幕製作** | 不用 | — | **Scribe v2 批次**(次選 SM 批次 + 詞表) | 要詞級時間戳。**2026-08-20 改**:Scribe 同時有時間戳與 Gemini 級準確度,不必再為了時間戳犧牲準確度(§6b) |
-| **會議記錄(要分辨誰說的)** | 不用 | 近場 | **SM 批次(diarization)** | LLM 批次無 diarization |
+| **會議記錄・線上(每人一軌)** | 不用 | 近場 | **Scribe 批次 `use_multi_channel=true`** | **先問有沒有分軌再談 diarization。** 分軌把「誰說話」從聲學推測變成查表,重疊發言也不會壞;線上會議的錄製通常拿得到(§6c) |
+| **會議記錄(要分辨誰說的,可出境)** | 不用 | 近場 | **Scribe 批次 `diarize=true`**(次選 SM 批次) | **2026-08-20 更正**:原本寫「只有 SM 有」是錯的。Scribe 有 `diarize`/`num_speakers`(≤32)/語者庫,**詞級帶 `speaker_id`**,而且更便宜。LLM 批次仍然無 diarization。⚠️ 兩家的準確度都未量測(侷限 26,§6c) |
+| **會議記錄(要分辨誰說的,吵/遠場)** | 不用 | **吵** | **Scribe 批次 `diarize=true`** | 遠場會議是 diarization 最難的情況(重疊發言 + 混響)。Scribe 在 N3 是全場最高 0.657,**但那是專名召回,不是 diarization 準確度**——別把兩件事混為一談 |
+| **會議記錄(不可出境,要分辨誰說的,中文)** | 不用 | 近場 | **Breeze ASR 25 + pyannote 3.1**,要摘要再串 **Gemma 4 26B** | 全地端。ASR 與 diarization **是兩個可以分開換的元件**,不必同一家(§6c)。⚠️ 這條鏈本專案**沒有端到端跑過**——Breeze 與 Gemma 那兩跳驗證過(§6),**中間接 pyannote 那一跳沒有** |
+| **會議記錄(不可出境,非中文)** | 不用 | 近場 | **本專案沒有可推薦的 ASR** | diarization 那一跳(pyannote/NeMo)與語言無關,但**聽的那一跳**沒有:Breeze 是中文微調,日文 0.415(§6) |
 | **影片字幕**(有字卡) | 不用 | — | **不用 STT**,多模態模型直讀影片 | 字卡是純視覺,cascaded 看不見 |
 | **時間戳校正** | 不用 | — | **最便宜的詞級時間戳引擎** | forced alignment 已知答案,不需要準 |
 | **法遵逐字稿・廠區**(可出境) | 不用 | 中等 | **並排雙跑:Gemini 批次 + Scribe 批次**,分歧標紅人工複核 | 錯一個詞成本高;複核負擔約 11% 全文(§8)。**2026-08-20 換配對**:N3 的最佳單一 arm 從 0.597 升到 0.657,而且兩者錯誤重疊度低([`oracle_report.md`](oracle_report.md) §8d) |
@@ -204,6 +221,10 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 3. **有沒有畫面資訊決定要不要 STT。** 有字卡、投影片、圖表的,
    直接讓多模態模型看,不要 cascade。
 4. **要 timestamp 或 diarization,LLM 這條路直接出局**,不必比準確度。
+   ⚠️ 但**別把「LLM 沒有」推成「只有某一家有」**——這份文件就犯過:
+   「diarization 只有 SM 有」錯了四處,起因是把自家 runner 的
+   `"diarize": False`(我們沒開)讀成「它沒有」。**「我們沒開」≠「它沒有」**;
+   能力宣稱要查 spec,而且要留下出處(§6c)。
 5. **看到「oracle 上限 +X」就問「選錯時的下限是多少」。** 天花板類分析
    逐項取 OR、假設你事後知道誰對;真實系統選錯時會比最佳單一引擎更差。
 6. **換模型先跑它官方樣本當基準線。** 「會聽」不等於「聽得懂你的語料」——
@@ -238,7 +259,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | §6 日文 | exp1 追加 arm `Xbrz_ja`(30 檔) | `results/raw/Xbrz_ja/` |
 | §6 全地端鏈 | exp5 `chain_*`(三條鏈同料) | `exp5/results/chain_scores.json` |
 
-完整報告與 42 條侷限:[`results/report.md`](report.md)。
+完整報告與 43 條侷限:[`results/report.md`](report.md)。
 
 ### 3.1 一體式**即時**在噪音下會崩潰,不是變差
 
@@ -623,6 +644,112 @@ Scribe 單次定稿到得比較快,但**兩次定稿之間隔 14 秒**——文�
 API 有 `manual` 與 VAD 門檻可調,本專案沒調過**,不要當成模型的固有性質。
 
 **所以:非即時線 Scribe 是強候選,即時線維持 Speechmatics。**
+
+---
+
+## 6c. 講者分離(diarization):一次更正 + 地端選項
+
+### 先說更正:「只有 SM 有」是錯的
+
+這份文件到 2026-08-20 之前有**四處**寫著 diarization 只有 Speechmatics 有
+(TL;DR、判準 4、決策樹 ⑥、情境矩陣),README 的決策句也跟著寫
+「要 diarization 才用 SM」。**四處都錯。**
+
+錯的來源查得到:`scripts/run_scribe_batch.py` 在 `_meta.json` 記了
+`"diarize": False` —— 那是「**這次沒開**」的施測紀錄
+(而且它根本沒把這個欄位送進 request,`transcribe()` 只送 `model_id` /
+`language_code` / `keyterms`)。這被讀成「**它沒有**」,然後擴散成決策樹的一個分岔。
+
+> **「我們沒開」≠「它沒有」。** 施測紀錄講的是我們做了什麼,
+> 不是產品能做什麼;要講能力就得查 spec。
+
+同一件事也適用在 SM 身上:`run_speechmatics_batch.py` 的 `transcription_config`
+只有 `language` 與 `operating_point`,**我們從來沒在 SM 上開過 diarization**。
+換句話說,原本那句話**兩邊都沒有實測支撐**。
+
+### 實際查到的(2026-08-20,`results/diarization_support.json`)
+
+`python3 scripts/check_diarization_support.py` 可重跑,**不花錢**(只讀公開 spec)。
+
+**ElevenLabs Scribe 批次** —— `/v1/speech-to-text` 有五個相關參數:
+
+| 參數 | 預設 | 作用 |
+|---|---|---|
+| `diarize` | `false` | 開關 |
+| `num_speakers` | — | 上限 **32** 人 |
+| `diarization_threshold` | — | 0.1~0.4,調「一人被拆成兩人」的傾向 |
+| `use_speaker_library` | `false` | 比對 workspace 已註冊語者 → 這是**語者辨識**,不只是分離 |
+| `detect_speaker_roles` | `false` | 標 `agent`/`customer` 而非 `speaker_0/1` |
+| `use_multi_channel` | `false` | **分軌**:每軌當一個人,不靠聲學分群 |
+| `multichannel_output_style` | `separate` | 分軌的輸出排版 |
+
+回傳的 `SpeechToTextWordResponseModel` 欄位是
+`text / start / end / type / speaker_id / logprob / characters / channel_index`
+——**詞級帶 `speaker_id`** ✅,而且**帶 `channel_index`**。
+
+> 💡 **會議記錄最該先問的是「有沒有分軌」,不是「diarization 準不準」。**
+> 每人一支麥 / 每個遠端與會者一條軌時,`use_multi_channel=true`
+> 把「誰在說話」從**聲學推測**變成**查表**,那是完全不同等級的可靠度
+> ——重疊發言也不會壞。⚠️ 但 `detect_speaker_roles` 與它**不能併用**。
+> 線上會議軟體的錄製通常拿得到分軌,實體會議室的單一麥克風拿不到。
+> **拿得到分軌就別用 diarization。**
+
+**Speechmatics** —— **未查證**。三個公開 spec URL 全 404(清單在證據檔裡),
+所以這裡**不填參數表**,以免又變成一次憑印象的宣稱。
+
+**即時那半** —— Scribe 的 WebSocket 不在那份 OpenAPI 裡,**未查證**。
+
+### ⚠️ 這一節證明的是「有沒有這個參數」,不是「分得準不準」
+
+**本專案沒有多語者語料,兩家的 diarization 品質一個數字都沒量過**(侷限 26)。
+所以:
+
+- ✅ 可以寫:「Scribe 批次有 diarization,而且參數比我們原本以為的多」
+- ❌ 不可以寫:「Scribe 的 diarization 比 SM 好」——那是外推(鐵律 9)
+- ❌ 也不可以拿 §6b 的 **N3 0.657** 當佐證:那是**專名召回**,
+  跟「有沒有把兩個人分對」是兩個不同的量
+- ❌ **開了 diarization 之後的價格未查證。** §6b 的 $0.22/hr 是
+  **沒開**的牌價;開了會不會加價、`use_speaker_library` 是不是加購,
+  都**沒查**。要用之前自己確認並附查價日期(鐵律 6)
+
+### 地端選項:ASR 與 diarization 是可以分開換的兩個元件
+
+這是「不可出境的會議記錄」那格原本缺的資訊。重點是**不必綁同一家**——
+diarization 有成熟的獨立元件,吃音訊、吐「誰在第幾秒到第幾秒說話」,
+再跟任何 ASR 的詞級時間戳對齊即可:
+
+| 元件 | 大概是什麼 | 備註 |
+|---|---|---|
+| **pyannote.audio**(`speaker-diarization-3.1`) | 事實標準,多數方案底下都是它 | 模型在 HF 上要先同意授權條款 |
+| **NVIDIA NeMo**(TitaNet 嵌入 + MSDD / Sortformer) | 另一條主線,Sortformer 有串流版 | 重,吃 GPU |
+| **WhisperX** | Whisper + pyannote 打包,直接吐「詞級時間戳 + 語者」 | 最省事的整包 |
+| **sherpa-onnx** | ONNX 離線 pipeline | 弱機器也跑得動 |
+| **3D-Speaker**(CAM++ / ERes2Net) | 阿里,**中文語者嵌入**表現好 | 中文地端這格值得先看 |
+| **diart** | 線上/串流 diarization | 即時場景用 |
+
+**⚠️ 以上六個本專案一個都沒測過**,是通用背景資訊,不是推薦。
+放這裡的用途是:讓「不可出境 + 要分辨誰說的」那格**不再是空的**。
+
+**中文全地端的形狀**(未端到端驗證):
+
+```
+音訊 ─┬─► Breeze ASR 25 ──► 詞/段級時間戳 + 中文逐字 ← 這一跳驗證過(§6)
+      └─► pyannote 3.1 ──► 語者時段                  ← 這一跳沒驗證過
+                    ↓ 對齊
+              帶語者的逐字稿
+                    ↓
+              Gemma 4 26B 摘要/翻譯                   ← 這一跳驗證過(§6)
+```
+
+**兩頭驗過、中間沒驗過。** 要用之前先量中間那一跳,
+不要因為兩端有數字就當整條鏈有數字——那是把 §6 的結論外推。
+
+### 即時的 diarization 難一級
+
+離線可以看完整段再回頭分群;線上只能邊聽邊決定,
+**「第 5 分鐘才發現這是第 3 個人」時前面已經標錯了**。
+kikemu 主線是單一講者旁白,用不到這一格——
+**這一節的影響在跨專案選型,不在 kikemu 產品本身。**
 
 ---
 
