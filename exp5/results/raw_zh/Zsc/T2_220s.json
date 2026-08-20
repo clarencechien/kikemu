@@ -1,0 +1,1032 @@
+{
+ "arm": "Zsc",
+ "file": "T2_220s.wav",
+ "audio_s": 20.0,
+ "transcript": "现在用自然人凭证。 自然人凭证。 我不知道，因为我现在最近登录了几个政府的，它其实只要我账号密码，那它没有要我用。 对，它有不同登录的分层。 哦，我想起来了，对对。我，呃，你如果比较，就比较重要的，可能就是要插自然人凭证跟公民，我超讨厌这个东西的。 报税哦，报税[笑]。 然后第二种当然就是",
+ "words": [
+  {
+   "text": "现",
+   "start": 0.119,
+   "end": 0.179,
+   "type": "word",
+   "logprob": -0.006965757813304663
+  },
+  {
+   "text": "在",
+   "start": 0.179,
+   "end": 0.28,
+   "type": "word",
+   "logprob": -0.006965757813304663
+  },
+  {
+   "text": "用",
+   "start": 0.28,
+   "end": 0.479,
+   "type": "word",
+   "logprob": -0.6246410608291626
+  },
+  {
+   "text": "自",
+   "start": 0.479,
+   "end": 0.56,
+   "type": "word",
+   "logprob": -0.0003579214389901608
+  },
+  {
+   "text": "然",
+   "start": 0.56,
+   "end": 0.639,
+   "type": "word",
+   "logprob": -0.0003579214389901608
+  },
+  {
+   "text": "人",
+   "start": 0.639,
+   "end": 0.819,
+   "type": "word",
+   "logprob": -0.00010895135346800089
+  },
+  {
+   "text": "凭",
+   "start": 0.819,
+   "end": 0.899,
+   "type": "word",
+   "logprob": -0.11789577454328537
+  },
+  {
+   "text": "证",
+   "start": 0.899,
+   "end": 0.919,
+   "type": "word",
+   "logprob": -0.0007236960809677839
+  },
+  {
+   "text": "。",
+   "start": 0.919,
+   "end": 0.919,
+   "type": "word",
+   "logprob": -0.0017754758009687066
+  },
+  {
+   "text": " ",
+   "start": 0.919,
+   "end": 1.1,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "自",
+   "start": 1.1,
+   "end": 1.24,
+   "type": "word",
+   "logprob": -1.4424220353248529e-05
+  },
+  {
+   "text": "然",
+   "start": 1.24,
+   "end": 1.419,
+   "type": "word",
+   "logprob": -1.4424220353248529e-05
+  },
+  {
+   "text": "人",
+   "start": 1.419,
+   "end": 1.699,
+   "type": "word",
+   "logprob": -0.00014041867689229548
+  },
+  {
+   "text": "凭",
+   "start": 1.699,
+   "end": 1.899,
+   "type": "word",
+   "logprob": -0.00014828535495325923
+  },
+  {
+   "text": "证",
+   "start": 1.899,
+   "end": 1.919,
+   "type": "word",
+   "logprob": -6.151010165922344e-05
+  },
+  {
+   "text": "。",
+   "start": 1.919,
+   "end": 1.919,
+   "type": "word",
+   "logprob": -5.0424259825376794e-05
+  },
+  {
+   "text": " ",
+   "start": 1.919,
+   "end": 2.019,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "我",
+   "start": 2.019,
+   "end": 2.139,
+   "type": "word",
+   "logprob": -2.3841830625315197e-06
+  },
+  {
+   "text": "不",
+   "start": 2.139,
+   "end": 2.239,
+   "type": "word",
+   "logprob": -3.2186455882765586e-06
+  },
+  {
+   "text": "知",
+   "start": 2.24,
+   "end": 2.359,
+   "type": "word",
+   "logprob": -3.2186455882765586e-06
+  },
+  {
+   "text": "道",
+   "start": 2.359,
+   "end": 2.419,
+   "type": "word",
+   "logprob": -3.2186455882765586e-06
+  },
+  {
+   "text": "，",
+   "start": 2.419,
+   "end": 2.499,
+   "type": "word",
+   "logprob": -1.0013530300057027e-05
+  },
+  {
+   "text": "因",
+   "start": 2.5,
+   "end": 2.559,
+   "type": "word",
+   "logprob": -0.0008530553313903511
+  },
+  {
+   "text": "为",
+   "start": 2.559,
+   "end": 2.619,
+   "type": "word",
+   "logprob": -0.0008530553313903511
+  },
+  {
+   "text": "我",
+   "start": 2.619,
+   "end": 2.759,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "现",
+   "start": 2.759,
+   "end": 2.839,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "在",
+   "start": 2.839,
+   "end": 2.939,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "最",
+   "start": 2.939,
+   "end": 3.079,
+   "type": "word",
+   "logprob": -0.00013147920253686607
+  },
+  {
+   "text": "近",
+   "start": 3.079,
+   "end": 3.279,
+   "type": "word",
+   "logprob": -0.00013147920253686607
+  },
+  {
+   "text": "登",
+   "start": 3.279,
+   "end": 3.439,
+   "type": "word",
+   "logprob": -0.18881821632385254
+  },
+  {
+   "text": "录",
+   "start": 3.439,
+   "end": 3.5,
+   "type": "word",
+   "logprob": -0.18881821632385254
+  },
+  {
+   "text": "了",
+   "start": 3.5,
+   "end": 3.759,
+   "type": "word",
+   "logprob": -0.0003960540343541652
+  },
+  {
+   "text": "几",
+   "start": 3.759,
+   "end": 3.899,
+   "type": "word",
+   "logprob": -0.0003361137059982866
+  },
+  {
+   "text": "个",
+   "start": 3.899,
+   "end": 4.119,
+   "type": "word",
+   "logprob": -0.0003361137059982866
+  },
+  {
+   "text": "政",
+   "start": 4.119,
+   "end": 4.259,
+   "type": "word",
+   "logprob": -0.00015090756642166525
+  },
+  {
+   "text": "府",
+   "start": 4.259,
+   "end": 4.399,
+   "type": "word",
+   "logprob": -0.00015090756642166525
+  },
+  {
+   "text": "的",
+   "start": 4.4,
+   "end": 4.559,
+   "type": "word",
+   "logprob": -1.311301275563892e-06
+  },
+  {
+   "text": "，",
+   "start": 4.559,
+   "end": 4.639,
+   "type": "word",
+   "logprob": -1.1920928244535389e-07
+  },
+  {
+   "text": "它",
+   "start": 4.639,
+   "end": 4.899,
+   "type": "word",
+   "logprob": -3.540453326422721e-05
+  },
+  {
+   "text": "其",
+   "start": 4.9,
+   "end": 5.0,
+   "type": "word",
+   "logprob": -1.8954096958623268e-05
+  },
+  {
+   "text": "实",
+   "start": 5.0,
+   "end": 5.199,
+   "type": "word",
+   "logprob": -1.8954096958623268e-05
+  },
+  {
+   "text": "只",
+   "start": 5.199,
+   "end": 5.359,
+   "type": "word",
+   "logprob": -0.0006059955921955407
+  },
+  {
+   "text": "要",
+   "start": 5.359,
+   "end": 5.619,
+   "type": "word",
+   "logprob": -0.0006059955921955407
+  },
+  {
+   "text": "我",
+   "start": 5.619,
+   "end": 5.739,
+   "type": "word",
+   "logprob": -3.576272320060525e-06
+  },
+  {
+   "text": "账",
+   "start": 5.739,
+   "end": 5.859,
+   "type": "word",
+   "logprob": -0.055384330451488495
+  },
+  {
+   "text": "号",
+   "start": 5.859,
+   "end": 6.039,
+   "type": "word",
+   "logprob": -0.055384330451488495
+  },
+  {
+   "text": "密",
+   "start": 6.039,
+   "end": 6.159,
+   "type": "word",
+   "logprob": -4.1960789531003684e-05
+  },
+  {
+   "text": "码",
+   "start": 6.159,
+   "end": 6.339,
+   "type": "word",
+   "logprob": -4.1960789531003684e-05
+  },
+  {
+   "text": "，",
+   "start": 6.339,
+   "end": 6.539,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "那",
+   "start": 6.539,
+   "end": 6.879,
+   "type": "word",
+   "logprob": -6.6756979322235566e-06
+  },
+  {
+   "text": "它",
+   "start": 6.879,
+   "end": 6.999,
+   "type": "word",
+   "logprob": -3.6000557884108275e-05
+  },
+  {
+   "text": "没",
+   "start": 7.0,
+   "end": 7.139,
+   "type": "word",
+   "logprob": -1.9550132492440753e-05
+  },
+  {
+   "text": "有",
+   "start": 7.139,
+   "end": 7.339,
+   "type": "word",
+   "logprob": -1.9550132492440753e-05
+  },
+  {
+   "text": "要",
+   "start": 7.339,
+   "end": 7.559,
+   "type": "word",
+   "logprob": -3.576278118089249e-07
+  },
+  {
+   "text": "我",
+   "start": 7.559,
+   "end": 7.919,
+   "type": "word",
+   "logprob": -4.792098479811102e-05
+  },
+  {
+   "text": "用",
+   "start": 7.919,
+   "end": 8.159,
+   "type": "word",
+   "logprob": -7.629365427419543e-06
+  },
+  {
+   "text": "。",
+   "start": 8.159,
+   "end": 8.159,
+   "type": "word",
+   "logprob": -0.09639929234981537
+  },
+  {
+   "text": " ",
+   "start": 8.159,
+   "end": 8.699,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "对",
+   "start": 8.699,
+   "end": 8.76,
+   "type": "word",
+   "logprob": -2.7418097943154862e-06
+  },
+  {
+   "text": "，",
+   "start": 8.76,
+   "end": 8.8,
+   "type": "word",
+   "logprob": -1.5258672647178173e-05
+  },
+  {
+   "text": "它",
+   "start": 8.8,
+   "end": 8.899,
+   "type": "word",
+   "logprob": -5.209310256759636e-05
+  },
+  {
+   "text": "有",
+   "start": 8.899,
+   "end": 9.099,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "不",
+   "start": 9.099,
+   "end": 9.219,
+   "type": "word",
+   "logprob": -4.184158387943171e-05
+  },
+  {
+   "text": "同",
+   "start": 9.22,
+   "end": 9.479,
+   "type": "word",
+   "logprob": -4.184158387943171e-05
+  },
+  {
+   "text": "登",
+   "start": 9.479,
+   "end": 9.639,
+   "type": "word",
+   "logprob": -0.00955154001712799
+  },
+  {
+   "text": "录",
+   "start": 9.639,
+   "end": 9.819,
+   "type": "word",
+   "logprob": -0.00955154001712799
+  },
+  {
+   "text": "的",
+   "start": 9.819,
+   "end": 10.059,
+   "type": "word",
+   "logprob": -0.054981376975774765
+  },
+  {
+   "text": "分",
+   "start": 10.059,
+   "end": 10.099,
+   "type": "word",
+   "logprob": -0.054981376975774765
+  },
+  {
+   "text": "层",
+   "start": 10.099,
+   "end": 10.119,
+   "type": "word",
+   "logprob": -0.006479327101260424
+  },
+  {
+   "text": "。",
+   "start": 10.119,
+   "end": 10.119,
+   "type": "word",
+   "logprob": -2.7418097943154862e-06
+  },
+  {
+   "text": " ",
+   "start": 10.119,
+   "end": 10.199,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "哦",
+   "start": 10.199,
+   "end": 10.219,
+   "type": "word",
+   "logprob": -0.07709253579378128
+  },
+  {
+   "text": "，",
+   "start": 10.219,
+   "end": 10.319,
+   "type": "word",
+   "logprob": -0.004555680323392153
+  },
+  {
+   "text": "我",
+   "start": 10.319,
+   "end": 10.5,
+   "type": "word",
+   "logprob": -0.0002227773511549458
+  },
+  {
+   "text": "想",
+   "start": 10.5,
+   "end": 10.619,
+   "type": "word",
+   "logprob": -0.0002227773511549458
+  },
+  {
+   "text": "起",
+   "start": 10.619,
+   "end": 10.699,
+   "type": "word",
+   "logprob": -0.00014923889830242842
+  },
+  {
+   "text": "来",
+   "start": 10.699,
+   "end": 10.8,
+   "type": "word",
+   "logprob": -0.00014923889830242842
+  },
+  {
+   "text": "了",
+   "start": 10.8,
+   "end": 10.819,
+   "type": "word",
+   "logprob": -1.156323378381785e-05
+  },
+  {
+   "text": "，",
+   "start": 10.819,
+   "end": 10.939,
+   "type": "word",
+   "logprob": -1.2993727978027891e-05
+  },
+  {
+   "text": "对",
+   "start": 10.939,
+   "end": 11.0,
+   "type": "word",
+   "logprob": -1.0251946150674485e-05
+  },
+  {
+   "text": "对",
+   "start": 11.0,
+   "end": 11.099,
+   "type": "word",
+   "logprob": -2.3483953555114567e-05
+  },
+  {
+   "text": "。",
+   "start": 11.099,
+   "end": 11.099,
+   "type": "word",
+   "logprob": -0.014163801446557045
+  },
+  {
+   "text": "我",
+   "start": 11.399,
+   "end": 11.479,
+   "type": "word",
+   "logprob": -5.960462772236497e-07
+  },
+  {
+   "text": "，",
+   "start": 11.479,
+   "end": 11.839,
+   "type": "word",
+   "logprob": -0.0014900782844051719
+  },
+  {
+   "text": "呃",
+   "start": 11.84,
+   "end": 11.899,
+   "type": "word",
+   "logprob": -0.0015705404803156853
+  },
+  {
+   "text": "，",
+   "start": 11.899,
+   "end": 12.219,
+   "type": "word",
+   "logprob": -0.0386890210211277
+  },
+  {
+   "text": "你",
+   "start": 12.219,
+   "end": 12.359,
+   "type": "word",
+   "logprob": -4.3987260141875595e-05
+  },
+  {
+   "text": "如",
+   "start": 12.359,
+   "end": 12.46,
+   "type": "word",
+   "logprob": -2.312633478140924e-05
+  },
+  {
+   "text": "果",
+   "start": 12.46,
+   "end": 12.579,
+   "type": "word",
+   "logprob": -2.312633478140924e-05
+  },
+  {
+   "text": "比",
+   "start": 12.579,
+   "end": 12.639,
+   "type": "word",
+   "logprob": -8.523101132595912e-05
+  },
+  {
+   "text": "较",
+   "start": 12.639,
+   "end": 12.759,
+   "type": "word",
+   "logprob": -8.523101132595912e-05
+  },
+  {
+   "text": "，",
+   "start": 12.759,
+   "end": 13.019,
+   "type": "word",
+   "logprob": -0.0003987947420682758
+  },
+  {
+   "text": "就",
+   "start": 13.019,
+   "end": 13.139,
+   "type": "word",
+   "logprob": -0.043935276567935944
+  },
+  {
+   "text": "比",
+   "start": 13.139,
+   "end": 13.179,
+   "type": "word",
+   "logprob": -1.6331539882230572e-05
+  },
+  {
+   "text": "较",
+   "start": 13.179,
+   "end": 13.419,
+   "type": "word",
+   "logprob": -1.6331539882230572e-05
+  },
+  {
+   "text": "重",
+   "start": 13.42,
+   "end": 13.519,
+   "type": "word",
+   "logprob": -0.0005902693956159055
+  },
+  {
+   "text": "要",
+   "start": 13.519,
+   "end": 13.619,
+   "type": "word",
+   "logprob": -0.0005902693956159055
+  },
+  {
+   "text": "的",
+   "start": 13.619,
+   "end": 13.719,
+   "type": "word",
+   "logprob": -0.0005902693956159055
+  },
+  {
+   "text": "，",
+   "start": 13.719,
+   "end": 13.779,
+   "type": "word",
+   "logprob": -0.00014029949670657516
+  },
+  {
+   "text": "可",
+   "start": 13.779,
+   "end": 13.92,
+   "type": "word",
+   "logprob": -2.372236667724792e-05
+  },
+  {
+   "text": "能",
+   "start": 13.92,
+   "end": 13.939,
+   "type": "word",
+   "logprob": -2.372236667724792e-05
+  },
+  {
+   "text": "就",
+   "start": 13.939,
+   "end": 14.059,
+   "type": "word",
+   "logprob": -0.0007433511782437563
+  },
+  {
+   "text": "是",
+   "start": 14.059,
+   "end": 14.219,
+   "type": "word",
+   "logprob": -0.0007433511782437563
+  },
+  {
+   "text": "要",
+   "start": 14.219,
+   "end": 14.979,
+   "type": "word",
+   "logprob": -0.0007433511782437563
+  },
+  {
+   "text": "插",
+   "start": 14.979,
+   "end": 15.219,
+   "type": "word",
+   "logprob": -0.0033408564049750566
+  },
+  {
+   "text": "自",
+   "start": 15.219,
+   "end": 15.279,
+   "type": "word",
+   "logprob": -0.0007351318490691483
+  },
+  {
+   "text": "然",
+   "start": 15.279,
+   "end": 15.46,
+   "type": "word",
+   "logprob": -0.0007351318490691483
+  },
+  {
+   "text": "人",
+   "start": 15.46,
+   "end": 15.559,
+   "type": "word",
+   "logprob": -1.311301275563892e-06
+  },
+  {
+   "text": "凭",
+   "start": 15.559,
+   "end": 15.639,
+   "type": "word",
+   "logprob": -0.0022826348431408405
+  },
+  {
+   "text": "证",
+   "start": 15.639,
+   "end": 15.779,
+   "type": "word",
+   "logprob": -0.00021586472576018423
+  },
+  {
+   "text": "跟",
+   "start": 15.779,
+   "end": 15.88,
+   "type": "word",
+   "logprob": -1.680836794548668e-05
+  },
+  {
+   "text": "公",
+   "start": 15.88,
+   "end": 16.039,
+   "type": "word",
+   "logprob": -0.31726518273353577
+  },
+  {
+   "text": "民",
+   "start": 16.039,
+   "end": 16.1,
+   "type": "word",
+   "logprob": -0.31726518273353577
+  },
+  {
+   "text": "，",
+   "start": 16.1,
+   "end": 16.139,
+   "type": "word",
+   "logprob": -0.010133485309779644
+  },
+  {
+   "text": "我",
+   "start": 16.139,
+   "end": 16.359,
+   "type": "word",
+   "logprob": -2.0265558760002023e-06
+  },
+  {
+   "text": "超",
+   "start": 16.359,
+   "end": 16.479,
+   "type": "word",
+   "logprob": -3.814689989667386e-06
+  },
+  {
+   "text": "讨",
+   "start": 16.479,
+   "end": 16.539,
+   "type": "word",
+   "logprob": -8.4638240878121e-06
+  },
+  {
+   "text": "厌",
+   "start": 16.539,
+   "end": 16.639,
+   "type": "word",
+   "logprob": -8.4638240878121e-06
+  },
+  {
+   "text": "这",
+   "start": 16.639,
+   "end": 16.719,
+   "type": "word",
+   "logprob": -0.7656952142715454
+  },
+  {
+   "text": "个",
+   "start": 16.719,
+   "end": 16.779,
+   "type": "word",
+   "logprob": -0.7656952142715454
+  },
+  {
+   "text": "东",
+   "start": 16.779,
+   "end": 16.919,
+   "type": "word",
+   "logprob": -8.427741704508662e-05
+  },
+  {
+   "text": "西",
+   "start": 16.92,
+   "end": 17.0,
+   "type": "word",
+   "logprob": -8.427741704508662e-05
+  },
+  {
+   "text": "的",
+   "start": 17.0,
+   "end": 17.02,
+   "type": "word",
+   "logprob": -0.6931760311126709
+  },
+  {
+   "text": "。",
+   "start": 17.02,
+   "end": 17.02,
+   "type": "word",
+   "logprob": -5.006777428206988e-06
+  },
+  {
+   "text": " ",
+   "start": 17.02,
+   "end": 17.219,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "报",
+   "start": 17.219,
+   "end": 17.319,
+   "type": "word",
+   "logprob": -0.001751794945448637
+  },
+  {
+   "text": "税",
+   "start": 17.319,
+   "end": 17.42,
+   "type": "word",
+   "logprob": -0.0004124982515349984
+  },
+  {
+   "text": "哦",
+   "start": 17.42,
+   "end": 17.52,
+   "type": "word",
+   "logprob": -0.21443185210227966
+  },
+  {
+   "text": "，",
+   "start": 17.52,
+   "end": 17.68,
+   "type": "word",
+   "logprob": -0.47409725189208984
+  },
+  {
+   "text": "报",
+   "start": 17.68,
+   "end": 17.799,
+   "type": "word",
+   "logprob": -7.152555099310121e-07
+  },
+  {
+   "text": "税",
+   "start": 17.799,
+   "end": 17.84,
+   "type": "word",
+   "logprob": -1.847726889536716e-05
+  },
+  {
+   "text": "[笑]",
+   "start": 17.84,
+   "end": 17.879,
+   "type": "audio_event",
+   "logprob": -0.3565891682210349
+  },
+  {
+   "text": "。",
+   "start": 17.879,
+   "end": 17.879,
+   "type": "word",
+   "logprob": -0.479515939950943
+  },
+  {
+   "text": " ",
+   "start": 17.879,
+   "end": 18.5,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "然",
+   "start": 18.5,
+   "end": 18.68,
+   "type": "word",
+   "logprob": -4.482168878894299e-05
+  },
+  {
+   "text": "后",
+   "start": 18.68,
+   "end": 19.1,
+   "type": "word",
+   "logprob": -4.482168878894299e-05
+  },
+  {
+   "text": "第",
+   "start": 19.1,
+   "end": 19.34,
+   "type": "word",
+   "logprob": -0.4022926092147827
+  },
+  {
+   "text": "二",
+   "start": 19.34,
+   "end": 19.459,
+   "type": "word",
+   "logprob": -0.4022926092147827
+  },
+  {
+   "text": "种",
+   "start": 19.459,
+   "end": 19.619,
+   "type": "word",
+   "logprob": -3.8265450712060556e-05
+  },
+  {
+   "text": "当",
+   "start": 19.619,
+   "end": 19.699,
+   "type": "word",
+   "logprob": -0.03271999582648277
+  },
+  {
+   "text": "然",
+   "start": 19.699,
+   "end": 19.899,
+   "type": "word",
+   "logprob": -0.03271999582648277
+  },
+  {
+   "text": "就",
+   "start": 19.899,
+   "end": 19.959,
+   "type": "word",
+   "logprob": -4.541770613286644e-05
+  },
+  {
+   "text": "是",
+   "start": 19.959,
+   "end": 19.979,
+   "type": "word",
+   "logprob": -4.541770613286644e-05
+  }
+ ],
+ "meta": {
+  "arm": "Zsc",
+  "engine": "ElevenLabs Scribe",
+  "model_id": "scribe_v2",
+  "api": "https://api.elevenlabs.io/v1/speech-to-text",
+  "language_code": "zh",
+  "keyterms": true,
+  "keyterm_cap": 50,
+  "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
+  "diarize": false,
+  "corpus": "zh",
+  "rate_usd_per_hour": {
+   "base": 0.22,
+   "keyterms": 0.05
+  },
+  "rate_checked": "2026-08-20",
+  "n_keyterms": 0,
+  "elapsed_sec": 2.0,
+  "language_detected": "zho",
+  "language_probability": 1.0,
+  "transcription_id": "hLCOUTseptnL6SjbWhL6",
+  "audio_sha256": "1e52ca120c96ad040907906d157c09ad19e7995dce4625d1f158faddc4f5f369"
+ }
+}

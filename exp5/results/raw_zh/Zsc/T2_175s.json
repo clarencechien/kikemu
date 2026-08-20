@@ -1,0 +1,822 @@
+{
+ "arm": "Zsc",
+ "file": "T2_175s.wav",
+ "audio_s": 20.0,
+ "transcript": "可以享受便利的服务。其实到现在为止很多国家也是这样子哦。但是如果这个政府拿这个事情来做不合法事情，其实风险就会很大。那也有很多国家有这样子的案例，像阿富汗或是一些那个倒台的这个政府资料被拿去用的故事。对，那比较新的世界就会变——",
+ "words": [
+  {
+   "text": "可",
+   "start": 0.219,
+   "end": 0.299,
+   "type": "word",
+   "logprob": -8.821448318485636e-06
+  },
+  {
+   "text": "以",
+   "start": 0.299,
+   "end": 0.459,
+   "type": "word",
+   "logprob": -8.821448318485636e-06
+  },
+  {
+   "text": "享",
+   "start": 0.459,
+   "end": 0.559,
+   "type": "word",
+   "logprob": -0.0001113352773245424
+  },
+  {
+   "text": "受",
+   "start": 0.56,
+   "end": 0.74,
+   "type": "word",
+   "logprob": -0.0001113352773245424
+  },
+  {
+   "text": "便",
+   "start": 0.74,
+   "end": 0.839,
+   "type": "word",
+   "logprob": -0.0020880342926830053
+  },
+  {
+   "text": "利",
+   "start": 0.839,
+   "end": 0.899,
+   "type": "word",
+   "logprob": -0.0020880342926830053
+  },
+  {
+   "text": "的",
+   "start": 0.899,
+   "end": 1.139,
+   "type": "word",
+   "logprob": -0.00018225439998786896
+  },
+  {
+   "text": "服",
+   "start": 1.139,
+   "end": 1.24,
+   "type": "word",
+   "logprob": -0.00018225439998786896
+  },
+  {
+   "text": "务",
+   "start": 1.24,
+   "end": 1.299,
+   "type": "word",
+   "logprob": -0.00018225439998786896
+  },
+  {
+   "text": "。",
+   "start": 1.299,
+   "end": 1.299,
+   "type": "word",
+   "logprob": -0.0009148702956736088
+  },
+  {
+   "text": "其",
+   "start": 1.5,
+   "end": 1.579,
+   "type": "word",
+   "logprob": -2.777537883957848e-05
+  },
+  {
+   "text": "实",
+   "start": 1.579,
+   "end": 1.659,
+   "type": "word",
+   "logprob": -2.777537883957848e-05
+  },
+  {
+   "text": "到",
+   "start": 1.659,
+   "end": 1.799,
+   "type": "word",
+   "logprob": -3.266281055402942e-05
+  },
+  {
+   "text": "现",
+   "start": 1.799,
+   "end": 1.959,
+   "type": "word",
+   "logprob": -3.266281055402942e-05
+  },
+  {
+   "text": "在",
+   "start": 1.959,
+   "end": 2.119,
+   "type": "word",
+   "logprob": -3.266281055402942e-05
+  },
+  {
+   "text": "为",
+   "start": 2.119,
+   "end": 2.179,
+   "type": "word",
+   "logprob": -3.3854863431770355e-05
+  },
+  {
+   "text": "止",
+   "start": 2.18,
+   "end": 2.279,
+   "type": "word",
+   "logprob": -3.3854863431770355e-05
+  },
+  {
+   "text": "很",
+   "start": 2.279,
+   "end": 2.44,
+   "type": "word",
+   "logprob": -0.03804405406117439
+  },
+  {
+   "text": "多",
+   "start": 2.44,
+   "end": 2.519,
+   "type": "word",
+   "logprob": -0.03804405406117439
+  },
+  {
+   "text": "国",
+   "start": 2.519,
+   "end": 2.639,
+   "type": "word",
+   "logprob": -1.597391747054644e-05
+  },
+  {
+   "text": "家",
+   "start": 2.639,
+   "end": 2.74,
+   "type": "word",
+   "logprob": -1.597391747054644e-05
+  },
+  {
+   "text": "也",
+   "start": 2.74,
+   "end": 2.859,
+   "type": "word",
+   "logprob": -1.1920928244535389e-07
+  },
+  {
+   "text": "是",
+   "start": 2.859,
+   "end": 2.979,
+   "type": "word",
+   "logprob": -1.1920928244535389e-07
+  },
+  {
+   "text": "这",
+   "start": 2.98,
+   "end": 3.139,
+   "type": "word",
+   "logprob": -0.00033706706017255783
+  },
+  {
+   "text": "样",
+   "start": 3.139,
+   "end": 3.24,
+   "type": "word",
+   "logprob": -0.00033706706017255783
+  },
+  {
+   "text": "子",
+   "start": 3.24,
+   "end": 3.379,
+   "type": "word",
+   "logprob": -4.768370445162873e-07
+  },
+  {
+   "text": "哦",
+   "start": 3.379,
+   "end": 3.439,
+   "type": "word",
+   "logprob": -0.033726222813129425
+  },
+  {
+   "text": "。",
+   "start": 3.439,
+   "end": 3.439,
+   "type": "word",
+   "logprob": -2.7418097943154862e-06
+  },
+  {
+   "text": "但",
+   "start": 4.019,
+   "end": 4.36,
+   "type": "word",
+   "logprob": -0.4871799647808075
+  },
+  {
+   "text": "是",
+   "start": 4.36,
+   "end": 4.94,
+   "type": "word",
+   "logprob": -0.4871799647808075
+  },
+  {
+   "text": "如",
+   "start": 4.94,
+   "end": 5.059,
+   "type": "word",
+   "logprob": -0.011048568412661552
+  },
+  {
+   "text": "果",
+   "start": 5.059,
+   "end": 5.199,
+   "type": "word",
+   "logprob": -0.011048568412661552
+  },
+  {
+   "text": "这",
+   "start": 5.199,
+   "end": 5.319,
+   "type": "word",
+   "logprob": -1.1920922133867862e-06
+  },
+  {
+   "text": "个",
+   "start": 5.319,
+   "end": 5.619,
+   "type": "word",
+   "logprob": -1.1920922133867862e-06
+  },
+  {
+   "text": "政",
+   "start": 5.619,
+   "end": 5.799,
+   "type": "word",
+   "logprob": -3.40932747349143e-05
+  },
+  {
+   "text": "府",
+   "start": 5.799,
+   "end": 6.159,
+   "type": "word",
+   "logprob": -3.40932747349143e-05
+  },
+  {
+   "text": "拿",
+   "start": 6.159,
+   "end": 6.359,
+   "type": "word",
+   "logprob": -3.576272320060525e-06
+  },
+  {
+   "text": "这",
+   "start": 6.359,
+   "end": 6.519,
+   "type": "word",
+   "logprob": -4.291525328881107e-06
+  },
+  {
+   "text": "个",
+   "start": 6.519,
+   "end": 6.719,
+   "type": "word",
+   "logprob": -4.291525328881107e-06
+  },
+  {
+   "text": "事",
+   "start": 6.719,
+   "end": 6.819,
+   "type": "word",
+   "logprob": -2.9802276912960224e-06
+  },
+  {
+   "text": "情",
+   "start": 6.819,
+   "end": 6.999,
+   "type": "word",
+   "logprob": -2.9802276912960224e-06
+  },
+  {
+   "text": "来",
+   "start": 7.0,
+   "end": 7.219,
+   "type": "word",
+   "logprob": -4.172316494077677e-06
+  },
+  {
+   "text": "做",
+   "start": 7.219,
+   "end": 7.739,
+   "type": "word",
+   "logprob": -6.9141146923357155e-06
+  },
+  {
+   "text": "不",
+   "start": 7.739,
+   "end": 7.879,
+   "type": "word",
+   "logprob": -3.814689989667386e-06
+  },
+  {
+   "text": "合",
+   "start": 7.879,
+   "end": 7.999,
+   "type": "word",
+   "logprob": -0.0004365683125797659
+  },
+  {
+   "text": "法",
+   "start": 8.0,
+   "end": 8.22,
+   "type": "word",
+   "logprob": -0.0004365683125797659
+  },
+  {
+   "text": "事",
+   "start": 8.22,
+   "end": 8.359,
+   "type": "word",
+   "logprob": -0.0015093612018972635
+  },
+  {
+   "text": "情",
+   "start": 8.359,
+   "end": 8.639,
+   "type": "word",
+   "logprob": -0.0015093612018972635
+  },
+  {
+   "text": "，",
+   "start": 8.639,
+   "end": 8.739,
+   "type": "word",
+   "logprob": -1.5497195136049413e-06
+  },
+  {
+   "text": "其",
+   "start": 8.739,
+   "end": 8.84,
+   "type": "word",
+   "logprob": -6.198863957251888e-06
+  },
+  {
+   "text": "实",
+   "start": 8.84,
+   "end": 9.059,
+   "type": "word",
+   "logprob": -6.198863957251888e-06
+  },
+  {
+   "text": "风",
+   "start": 9.059,
+   "end": 9.139,
+   "type": "word",
+   "logprob": -0.00024136967840604484
+  },
+  {
+   "text": "险",
+   "start": 9.139,
+   "end": 9.219,
+   "type": "word",
+   "logprob": -0.00024136967840604484
+  },
+  {
+   "text": "就",
+   "start": 9.22,
+   "end": 9.319,
+   "type": "word",
+   "logprob": -0.00014244495832826942
+  },
+  {
+   "text": "会",
+   "start": 9.319,
+   "end": 9.42,
+   "type": "word",
+   "logprob": -0.00014244495832826942
+  },
+  {
+   "text": "很",
+   "start": 9.42,
+   "end": 9.679,
+   "type": "word",
+   "logprob": -1.645074735279195e-05
+  },
+  {
+   "text": "大",
+   "start": 9.679,
+   "end": 9.759,
+   "type": "word",
+   "logprob": -1.645074735279195e-05
+  },
+  {
+   "text": "。",
+   "start": 9.759,
+   "end": 9.759,
+   "type": "word",
+   "logprob": -1.2636104656849056e-05
+  },
+  {
+   "text": "那",
+   "start": 10.319,
+   "end": 10.659,
+   "type": "word",
+   "logprob": -0.012745704501867294
+  },
+  {
+   "text": "也",
+   "start": 10.659,
+   "end": 10.739,
+   "type": "word",
+   "logprob": -2.47952248173533e-05
+  },
+  {
+   "text": "有",
+   "start": 10.739,
+   "end": 10.939,
+   "type": "word",
+   "logprob": -2.47952248173533e-05
+  },
+  {
+   "text": "很",
+   "start": 10.939,
+   "end": 11.059,
+   "type": "word",
+   "logprob": -2.861018856492592e-06
+  },
+  {
+   "text": "多",
+   "start": 11.059,
+   "end": 11.259,
+   "type": "word",
+   "logprob": -2.861018856492592e-06
+  },
+  {
+   "text": "国",
+   "start": 11.259,
+   "end": 11.359,
+   "type": "word",
+   "logprob": -1.1444026313256472e-05
+  },
+  {
+   "text": "家",
+   "start": 11.359,
+   "end": 11.519,
+   "type": "word",
+   "logprob": -1.1444026313256472e-05
+  },
+  {
+   "text": "有",
+   "start": 11.519,
+   "end": 11.639,
+   "type": "word",
+   "logprob": -2.3007127310847864e-05
+  },
+  {
+   "text": "这",
+   "start": 11.639,
+   "end": 11.779,
+   "type": "word",
+   "logprob": -0.0004481264913920313
+  },
+  {
+   "text": "样",
+   "start": 11.779,
+   "end": 11.84,
+   "type": "word",
+   "logprob": -0.0004481264913920313
+  },
+  {
+   "text": "子",
+   "start": 11.84,
+   "end": 11.979,
+   "type": "word",
+   "logprob": -4.6491513785440475e-06
+  },
+  {
+   "text": "的",
+   "start": 11.979,
+   "end": 12.139,
+   "type": "word",
+   "logprob": -4.6491513785440475e-06
+  },
+  {
+   "text": "案",
+   "start": 12.139,
+   "end": 12.219,
+   "type": "word",
+   "logprob": -0.0005124686285853386
+  },
+  {
+   "text": "例",
+   "start": 12.219,
+   "end": 12.399,
+   "type": "word",
+   "logprob": -0.0005124686285853386
+  },
+  {
+   "text": "，",
+   "start": 12.399,
+   "end": 12.579,
+   "type": "word",
+   "logprob": -0.023277824744582176
+  },
+  {
+   "text": "像",
+   "start": 12.579,
+   "end": 13.019,
+   "type": "word",
+   "logprob": -7.390948667307384e-06
+  },
+  {
+   "text": "阿",
+   "start": 13.019,
+   "end": 13.439,
+   "type": "word",
+   "logprob": -0.004152841866016388
+  },
+  {
+   "text": "富",
+   "start": 13.439,
+   "end": 13.579,
+   "type": "word",
+   "logprob": -0.013372140936553478
+  },
+  {
+   "text": "汗",
+   "start": 13.579,
+   "end": 13.779,
+   "type": "word",
+   "logprob": -0.0006323245470412076
+  },
+  {
+   "text": "或",
+   "start": 13.779,
+   "end": 13.899,
+   "type": "word",
+   "logprob": -0.04993546009063721
+  },
+  {
+   "text": "是",
+   "start": 13.899,
+   "end": 14.039,
+   "type": "word",
+   "logprob": -0.00010966652916977182
+  },
+  {
+   "text": "一",
+   "start": 14.039,
+   "end": 14.179,
+   "type": "word",
+   "logprob": -0.00010966652916977182
+  },
+  {
+   "text": "些",
+   "start": 14.179,
+   "end": 14.639,
+   "type": "word",
+   "logprob": -0.00010966652916977182
+  },
+  {
+   "text": "那",
+   "start": 14.639,
+   "end": 14.719,
+   "type": "word",
+   "logprob": -0.034456562250852585
+  },
+  {
+   "text": "个",
+   "start": 14.719,
+   "end": 14.919,
+   "type": "word",
+   "logprob": -0.034456562250852585
+  },
+  {
+   "text": "倒",
+   "start": 14.92,
+   "end": 15.159,
+   "type": "word",
+   "logprob": -0.00024232311989180744
+  },
+  {
+   "text": "台",
+   "start": 15.159,
+   "end": 15.299,
+   "type": "word",
+   "logprob": -0.00023731753753963858
+  },
+  {
+   "text": "的",
+   "start": 15.299,
+   "end": 15.479,
+   "type": "word",
+   "logprob": -3.5523738915799186e-05
+  },
+  {
+   "text": "这",
+   "start": 15.479,
+   "end": 15.559,
+   "type": "word",
+   "logprob": -0.016036225482821465
+  },
+  {
+   "text": "个",
+   "start": 15.559,
+   "end": 15.839,
+   "type": "word",
+   "logprob": -0.016036225482821465
+  },
+  {
+   "text": "政",
+   "start": 15.839,
+   "end": 15.939,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "府",
+   "start": 15.939,
+   "end": 16.239,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "资",
+   "start": 16.239,
+   "end": 16.34,
+   "type": "word",
+   "logprob": -0.00010585224663373083
+  },
+  {
+   "text": "料",
+   "start": 16.34,
+   "end": 16.5,
+   "type": "word",
+   "logprob": -0.00010585224663373083
+  },
+  {
+   "text": "被",
+   "start": 16.5,
+   "end": 16.68,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "拿",
+   "start": 16.68,
+   "end": 16.739,
+   "type": "word",
+   "logprob": -1.1920928244535389e-07
+  },
+  {
+   "text": "去",
+   "start": 16.739,
+   "end": 16.959,
+   "type": "word",
+   "logprob": -1.847726889536716e-05
+  },
+  {
+   "text": "用",
+   "start": 16.959,
+   "end": 17.079,
+   "type": "word",
+   "logprob": -0.0006755692302249372
+  },
+  {
+   "text": "的",
+   "start": 17.079,
+   "end": 17.399,
+   "type": "word",
+   "logprob": -0.0006755692302249372
+  },
+  {
+   "text": "故",
+   "start": 17.399,
+   "end": 17.539,
+   "type": "word",
+   "logprob": -0.0030482991132885218
+  },
+  {
+   "text": "事",
+   "start": 17.539,
+   "end": 17.619,
+   "type": "word",
+   "logprob": -0.0030482991132885218
+  },
+  {
+   "text": "。",
+   "start": 17.619,
+   "end": 17.619,
+   "type": "word",
+   "logprob": -5.1377883210079744e-05
+  },
+  {
+   "text": "对",
+   "start": 18.1,
+   "end": 18.159,
+   "type": "word",
+   "logprob": -1.111960768699646
+  },
+  {
+   "text": "，",
+   "start": 18.159,
+   "end": 18.299,
+   "type": "word",
+   "logprob": -3.576278118089249e-07
+  },
+  {
+   "text": "那",
+   "start": 18.299,
+   "end": 18.899,
+   "type": "word",
+   "logprob": -7.533743337262422e-05
+  },
+  {
+   "text": "比",
+   "start": 18.899,
+   "end": 19.02,
+   "type": "word",
+   "logprob": -0.0001479277852922678
+  },
+  {
+   "text": "较",
+   "start": 19.02,
+   "end": 19.239,
+   "type": "word",
+   "logprob": -0.0001479277852922678
+  },
+  {
+   "text": "新",
+   "start": 19.239,
+   "end": 19.359,
+   "type": "word",
+   "logprob": -2.455681169521995e-05
+  },
+  {
+   "text": "的",
+   "start": 19.359,
+   "end": 19.579,
+   "type": "word",
+   "logprob": -2.455681169521995e-05
+  },
+  {
+   "text": "世",
+   "start": 19.579,
+   "end": 19.659,
+   "type": "word",
+   "logprob": -6.19869097135961e-05
+  },
+  {
+   "text": "界",
+   "start": 19.659,
+   "end": 19.819,
+   "type": "word",
+   "logprob": -6.19869097135961e-05
+  },
+  {
+   "text": "就",
+   "start": 19.819,
+   "end": 19.899,
+   "type": "word",
+   "logprob": -0.00018475732940714806
+  },
+  {
+   "text": "会",
+   "start": 19.899,
+   "end": 19.959,
+   "type": "word",
+   "logprob": -0.00018475732940714806
+  },
+  {
+   "text": "变",
+   "start": 19.959,
+   "end": 19.979,
+   "type": "word",
+   "logprob": -0.0308989230543375
+  },
+  {
+   "text": "——",
+   "start": 19.979,
+   "end": 19.979,
+   "type": "word",
+   "logprob": -0.983633279800415
+  }
+ ],
+ "meta": {
+  "arm": "Zsc",
+  "engine": "ElevenLabs Scribe",
+  "model_id": "scribe_v2",
+  "api": "https://api.elevenlabs.io/v1/speech-to-text",
+  "language_code": "zh",
+  "keyterms": true,
+  "keyterm_cap": 50,
+  "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
+  "diarize": false,
+  "corpus": "zh",
+  "rate_usd_per_hour": {
+   "base": 0.22,
+   "keyterms": 0.05
+  },
+  "rate_checked": "2026-08-20",
+  "n_keyterms": 0,
+  "elapsed_sec": 1.6,
+  "language_detected": "zho",
+  "language_probability": 1.0,
+  "transcription_id": "Ohq6LlzjLz4HeATAY6X1",
+  "audio_sha256": "475ee8cc56827d488915ed4de3651854554c7afb03ed9bdb2968fef2d0116e34"
+ }
+}

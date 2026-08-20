@@ -30,9 +30,15 @@ PICKS = json.loads((ROOT / "corpus" / "picks.json").read_text())
 
 def config_for(arm: str, seg_id: str) -> dict:
     tc = {"language": "ja", "operating_point": "enhanced"}
-    if arm == "Cbplus":
+    if arm.startswith("Cbplus"):
         vocab = json.loads((ROOT / "corpus" / "dict" / "speechmatics_vocab.json").read_text())
-        tc["additional_vocab"] = vocab[PICKS[seg_id]["domain"]]
+        v = vocab[PICKS[seg_id]["domain"]]
+        # handoff-v10 S5:詞表對齊控制組。Scribe 即時的上限是 50 詞且**沒有讀音欄位**,
+        # 所以要跟它比引擎,SM 這邊也必須砍到同樣的 50 條、且拿掉 sounds_like。
+        # 沒有這個控制組,Scribe vs Cbplus 量到的是「詞表容量 + 讀音」的差,不是引擎的差。
+        if arm == "Cbplus50":
+            v = [{"content": x["content"]} for x in v[:50]]
+        tc["additional_vocab"] = v
     return {"type": "transcription", "transcription_config": tc}
 
 

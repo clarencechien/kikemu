@@ -22,11 +22,16 @@ ARMS = [("Zg", "Gemini 3.5 批次"), ("Zsm", "Speechmatics 批次"),
         ("Zgma_e4b_greedy", "Gemma 4 E4B(貪婪)"),
         ("Zgma_e2b_greedy", "Gemma 4 E2B(貪婪)"),
         ("Zgma_greedy", "Gemma 4 12B(貪婪)"),
-        ("Zbrz", "Breeze ASR 25")]
+        ("Zbrz", "Breeze ASR 25"), ("Zsc", "ElevenLabs Scribe v2")]
+
+# handoff-v10 §4b(看到分數之前寫死):Scribe 會輸出 audio event 標記(如 [笑声])。
+# 那是註記不是轉寫,沒有其他 arm 會產生它,不移除等於平白讓它的 CER 變差。
+AUDIO_EVENT = re.compile(r"[\[［][^\]］]{0,12}[\]］]")
 
 
 def toks(t: str) -> list[str]:
-    return [x.lower() for x in TOKEN.findall(S2T.convert(t or ""))]
+    t = AUDIO_EVENT.sub("", t or "")
+    return [x.lower() for x in TOKEN.findall(S2T.convert(t))]
 
 
 def cer(ref: str, hyp: str) -> float:

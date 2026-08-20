@@ -1,0 +1,899 @@
+{
+ "arm": "Zsc",
+ "file": "T3_155s.wav",
+ "audio_s": 20.0,
+ "transcript": "很少。 很少了，然后或者说这件事情很神秘，我感觉我需要有一个，我是个黑帽，我是个骇客，然后我要顶尖- 就对着一个黑色的荧幕天天在那边打。 那个是，那个是错误的既定印象，我们不是那样子的，我们是拿滑鼠点而已，我们不是只按按键的。 对，所以你就会有这种",
+ "words": [
+  {
+   "text": "很",
+   "start": 1.059,
+   "end": 1.339,
+   "type": "word",
+   "logprob": -0.14354705810546875
+  },
+  {
+   "text": "少",
+   "start": 1.339,
+   "end": 1.399,
+   "type": "word",
+   "logprob": -0.14354705810546875
+  },
+  {
+   "text": "。",
+   "start": 1.399,
+   "end": 1.399,
+   "type": "word",
+   "logprob": -0.03459763899445534
+  },
+  {
+   "text": " ",
+   "start": 1.399,
+   "end": 1.559,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "很",
+   "start": 1.559,
+   "end": 1.859,
+   "type": "word",
+   "logprob": -3.0517112463712692e-05
+  },
+  {
+   "text": "少",
+   "start": 1.86,
+   "end": 2.039,
+   "type": "word",
+   "logprob": -3.0517112463712692e-05
+  },
+  {
+   "text": "了",
+   "start": 2.039,
+   "end": 2.18,
+   "type": "word",
+   "logprob": -6.318072337307967e-06
+  },
+  {
+   "text": "，",
+   "start": 2.18,
+   "end": 2.279,
+   "type": "word",
+   "logprob": -0.006761173252016306
+  },
+  {
+   "text": "然",
+   "start": 2.279,
+   "end": 2.44,
+   "type": "word",
+   "logprob": -4.577531944960356e-05
+  },
+  {
+   "text": "后",
+   "start": 2.44,
+   "end": 2.98,
+   "type": "word",
+   "logprob": -4.577531944960356e-05
+  },
+  {
+   "text": "或",
+   "start": 2.98,
+   "end": 3.039,
+   "type": "word",
+   "logprob": -0.1830950677394867
+  },
+  {
+   "text": "者",
+   "start": 3.039,
+   "end": 3.159,
+   "type": "word",
+   "logprob": -0.1830950677394867
+  },
+  {
+   "text": "说",
+   "start": 3.159,
+   "end": 3.339,
+   "type": "word",
+   "logprob": -0.00013386306818574667
+  },
+  {
+   "text": "这",
+   "start": 3.339,
+   "end": 3.439,
+   "type": "word",
+   "logprob": -0.25128984451293945
+  },
+  {
+   "text": "件",
+   "start": 3.439,
+   "end": 3.519,
+   "type": "word",
+   "logprob": -0.0008797351038083434
+  },
+  {
+   "text": "事",
+   "start": 3.519,
+   "end": 3.539,
+   "type": "word",
+   "logprob": -0.0008797351038083434
+  },
+  {
+   "text": "情",
+   "start": 3.539,
+   "end": 3.679,
+   "type": "word",
+   "logprob": -0.0008797351038083434
+  },
+  {
+   "text": "很",
+   "start": 3.679,
+   "end": 3.959,
+   "type": "word",
+   "logprob": -2.038458114839159e-05
+  },
+  {
+   "text": "神",
+   "start": 3.959,
+   "end": 4.099,
+   "type": "word",
+   "logprob": -2.8490614567999728e-05
+  },
+  {
+   "text": "秘",
+   "start": 4.099,
+   "end": 4.259,
+   "type": "word",
+   "logprob": -2.8490614567999728e-05
+  },
+  {
+   "text": "，",
+   "start": 4.259,
+   "end": 4.299,
+   "type": "word",
+   "logprob": -0.0017033604672178626
+  },
+  {
+   "text": "我",
+   "start": 4.299,
+   "end": 4.519,
+   "type": "word",
+   "logprob": -4.410734163684538e-06
+  },
+  {
+   "text": "感",
+   "start": 4.519,
+   "end": 4.639,
+   "type": "word",
+   "logprob": -2.1576648578047752e-05
+  },
+  {
+   "text": "觉",
+   "start": 4.639,
+   "end": 4.759,
+   "type": "word",
+   "logprob": -2.1576648578047752e-05
+  },
+  {
+   "text": "我",
+   "start": 4.759,
+   "end": 4.96,
+   "type": "word",
+   "logprob": -3.325883881188929e-05
+  },
+  {
+   "text": "需",
+   "start": 4.96,
+   "end": 5.119,
+   "type": "word",
+   "logprob": -2.5629668016335927e-05
+  },
+  {
+   "text": "要",
+   "start": 5.119,
+   "end": 5.219,
+   "type": "word",
+   "logprob": -2.5629668016335927e-05
+  },
+  {
+   "text": "有",
+   "start": 5.219,
+   "end": 5.38,
+   "type": "word",
+   "logprob": -3.40932747349143e-05
+  },
+  {
+   "text": "一",
+   "start": 5.38,
+   "end": 5.48,
+   "type": "word",
+   "logprob": -3.40932747349143e-05
+  },
+  {
+   "text": "个",
+   "start": 5.48,
+   "end": 5.559,
+   "type": "word",
+   "logprob": -3.40932747349143e-05
+  },
+  {
+   "text": "，",
+   "start": 5.559,
+   "end": 6.259,
+   "type": "word",
+   "logprob": -0.00021395778458099812
+  },
+  {
+   "text": "我",
+   "start": 6.259,
+   "end": 6.379,
+   "type": "word",
+   "logprob": -0.00025876989820972085
+  },
+  {
+   "text": "是",
+   "start": 6.379,
+   "end": 6.539,
+   "type": "word",
+   "logprob": -0.00025876989820972085
+  },
+  {
+   "text": "个",
+   "start": 6.539,
+   "end": 7.059,
+   "type": "word",
+   "logprob": -2.169585604860913e-05
+  },
+  {
+   "text": "黑",
+   "start": 7.059,
+   "end": 7.199,
+   "type": "word",
+   "logprob": -2.3841855067985307e-07
+  },
+  {
+   "text": "帽",
+   "start": 7.199,
+   "end": 7.359,
+   "type": "word",
+   "logprob": -0.0022670540492981672
+  },
+  {
+   "text": "，",
+   "start": 7.359,
+   "end": 7.559,
+   "type": "word",
+   "logprob": -0.0011817384511232376
+  },
+  {
+   "text": "我",
+   "start": 7.559,
+   "end": 7.579,
+   "type": "word",
+   "logprob": -0.3950342833995819
+  },
+  {
+   "text": "是",
+   "start": 7.579,
+   "end": 7.819,
+   "type": "word",
+   "logprob": -0.3950342833995819
+  },
+  {
+   "text": "个",
+   "start": 7.819,
+   "end": 8.119,
+   "type": "word",
+   "logprob": -0.0014737708261236548
+  },
+  {
+   "text": "骇",
+   "start": 8.119,
+   "end": 8.26,
+   "type": "word",
+   "logprob": -0.5271544456481934
+  },
+  {
+   "text": "客",
+   "start": 8.26,
+   "end": 8.34,
+   "type": "word",
+   "logprob": -3.099436753473128e-06
+  },
+  {
+   "text": "，",
+   "start": 8.34,
+   "end": 8.439,
+   "type": "word",
+   "logprob": -9.179073458653875e-06
+  },
+  {
+   "text": "然",
+   "start": 8.439,
+   "end": 8.539,
+   "type": "word",
+   "logprob": -0.0008397151832468808
+  },
+  {
+   "text": "后",
+   "start": 8.539,
+   "end": 8.939,
+   "type": "word",
+   "logprob": -0.0008397151832468808
+  },
+  {
+   "text": "我",
+   "start": 8.939,
+   "end": 9.039,
+   "type": "word",
+   "logprob": -0.00019059749320149422
+  },
+  {
+   "text": "要",
+   "start": 9.039,
+   "end": 9.26,
+   "type": "word",
+   "logprob": -0.00019059749320149422
+  },
+  {
+   "text": "顶",
+   "start": 9.26,
+   "end": 9.479,
+   "type": "word",
+   "logprob": -0.09708787500858307
+  },
+  {
+   "text": "尖",
+   "start": 9.479,
+   "end": 9.5,
+   "type": "word",
+   "logprob": -0.0568586029112339
+  },
+  {
+   "text": "-",
+   "start": 9.5,
+   "end": 9.5,
+   "type": "word",
+   "logprob": -1.4800480604171753
+  },
+  {
+   "text": " ",
+   "start": 9.5,
+   "end": 9.5,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "就",
+   "start": 9.5,
+   "end": 9.5,
+   "type": "word",
+   "logprob": -0.05634526163339615
+  },
+  {
+   "text": "对",
+   "start": 9.5,
+   "end": 9.619,
+   "type": "word",
+   "logprob": -0.0022204285487532616
+  },
+  {
+   "text": "着",
+   "start": 9.619,
+   "end": 9.739,
+   "type": "word",
+   "logprob": -0.0022204285487532616
+  },
+  {
+   "text": "一",
+   "start": 9.739,
+   "end": 9.819,
+   "type": "word",
+   "logprob": -0.0002812943421304226
+  },
+  {
+   "text": "个",
+   "start": 9.819,
+   "end": 10.079,
+   "type": "word",
+   "logprob": -0.0002812943421304226
+  },
+  {
+   "text": "黑",
+   "start": 10.079,
+   "end": 10.319,
+   "type": "word",
+   "logprob": -1.5020257706055418e-05
+  },
+  {
+   "text": "色",
+   "start": 10.319,
+   "end": 10.559,
+   "type": "word",
+   "logprob": 0.0
+  },
+  {
+   "text": "的",
+   "start": 10.559,
+   "end": 10.739,
+   "type": "word",
+   "logprob": 0.0
+  },
+  {
+   "text": "荧",
+   "start": 10.739,
+   "end": 10.84,
+   "type": "word",
+   "logprob": -0.4261535108089447
+  },
+  {
+   "text": "幕",
+   "start": 10.84,
+   "end": 11.119,
+   "type": "word",
+   "logprob": -0.00018857131362892687
+  },
+  {
+   "text": "天",
+   "start": 11.119,
+   "end": 11.259,
+   "type": "word",
+   "logprob": -0.5761052966117859
+  },
+  {
+   "text": "天",
+   "start": 11.259,
+   "end": 11.399,
+   "type": "word",
+   "logprob": -0.5761052966117859
+  },
+  {
+   "text": "在",
+   "start": 11.399,
+   "end": 11.5,
+   "type": "word",
+   "logprob": -1.6927575416048057e-05
+  },
+  {
+   "text": "那",
+   "start": 11.5,
+   "end": 11.639,
+   "type": "word",
+   "logprob": -1.6927575416048057e-05
+  },
+  {
+   "text": "边",
+   "start": 11.639,
+   "end": 11.839,
+   "type": "word",
+   "logprob": -0.00015043080202303827
+  },
+  {
+   "text": "打",
+   "start": 11.84,
+   "end": 11.859,
+   "type": "word",
+   "logprob": -0.0002733095607254654
+  },
+  {
+   "text": "。",
+   "start": 11.859,
+   "end": 11.859,
+   "type": "word",
+   "logprob": -2.372236667724792e-05
+  },
+  {
+   "text": " ",
+   "start": 11.859,
+   "end": 12.519,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "那",
+   "start": 12.519,
+   "end": 12.539,
+   "type": "word",
+   "logprob": -0.00011145447206217796
+  },
+  {
+   "text": "个",
+   "start": 12.539,
+   "end": 12.56,
+   "type": "word",
+   "logprob": -0.00011145447206217796
+  },
+  {
+   "text": "是",
+   "start": 12.56,
+   "end": 12.56,
+   "type": "word",
+   "logprob": -1.4305104514278355e-06
+  },
+  {
+   "text": "，",
+   "start": 12.56,
+   "end": 12.56,
+   "type": "word",
+   "logprob": -5.245195097813848e-06
+  },
+  {
+   "text": "那",
+   "start": 12.56,
+   "end": 12.579,
+   "type": "word",
+   "logprob": -5.471556869451888e-05
+  },
+  {
+   "text": "个",
+   "start": 12.579,
+   "end": 12.719,
+   "type": "word",
+   "logprob": -5.471556869451888e-05
+  },
+  {
+   "text": "是",
+   "start": 12.719,
+   "end": 12.839,
+   "type": "word",
+   "logprob": -0.00011085849109804258
+  },
+  {
+   "text": "错",
+   "start": 12.84,
+   "end": 12.899,
+   "type": "word",
+   "logprob": -0.015896495431661606
+  },
+  {
+   "text": "误",
+   "start": 12.899,
+   "end": 13.039,
+   "type": "word",
+   "logprob": -0.015896495431661606
+  },
+  {
+   "text": "的",
+   "start": 13.039,
+   "end": 13.099,
+   "type": "word",
+   "logprob": -0.015896495431661606
+  },
+  {
+   "text": "既",
+   "start": 13.099,
+   "end": 13.219,
+   "type": "word",
+   "logprob": -0.618545651435852
+  },
+  {
+   "text": "定",
+   "start": 13.219,
+   "end": 13.399,
+   "type": "word",
+   "logprob": -0.0012451999355107546
+  },
+  {
+   "text": "印",
+   "start": 13.399,
+   "end": 13.479,
+   "type": "word",
+   "logprob": -0.4610430598258972
+  },
+  {
+   "text": "象",
+   "start": 13.479,
+   "end": 13.559,
+   "type": "word",
+   "logprob": -0.4610430598258972
+  },
+  {
+   "text": "，",
+   "start": 13.559,
+   "end": 14.039,
+   "type": "word",
+   "logprob": -0.4981235861778259
+  },
+  {
+   "text": "我",
+   "start": 14.039,
+   "end": 14.119,
+   "type": "word",
+   "logprob": -0.048811689019203186
+  },
+  {
+   "text": "们",
+   "start": 14.119,
+   "end": 14.319,
+   "type": "word",
+   "logprob": -0.048811689019203186
+  },
+  {
+   "text": "不",
+   "start": 14.319,
+   "end": 14.38,
+   "type": "word",
+   "logprob": -4.768360213347478e-06
+  },
+  {
+   "text": "是",
+   "start": 14.38,
+   "end": 14.5,
+   "type": "word",
+   "logprob": -4.768360213347478e-06
+  },
+  {
+   "text": "那",
+   "start": 14.5,
+   "end": 14.659,
+   "type": "word",
+   "logprob": -0.06113532558083534
+  },
+  {
+   "text": "样",
+   "start": 14.659,
+   "end": 14.719,
+   "type": "word",
+   "logprob": -0.06113532558083534
+  },
+  {
+   "text": "子",
+   "start": 14.719,
+   "end": 14.839,
+   "type": "word",
+   "logprob": -2.264974000354414e-06
+  },
+  {
+   "text": "的",
+   "start": 14.839,
+   "end": 14.959,
+   "type": "word",
+   "logprob": -2.264974000354414e-06
+  },
+  {
+   "text": "，",
+   "start": 14.96,
+   "end": 15.059,
+   "type": "word",
+   "logprob": -8.987976616481319e-05
+  },
+  {
+   "text": "我",
+   "start": 15.059,
+   "end": 15.139,
+   "type": "word",
+   "logprob": -0.005772349424660206
+  },
+  {
+   "text": "们",
+   "start": 15.139,
+   "end": 15.239,
+   "type": "word",
+   "logprob": -0.005772349424660206
+  },
+  {
+   "text": "是",
+   "start": 15.239,
+   "end": 15.439,
+   "type": "word",
+   "logprob": -4.0531076592742465e-06
+  },
+  {
+   "text": "拿",
+   "start": 15.439,
+   "end": 15.639,
+   "type": "word",
+   "logprob": -9.417489309271332e-06
+  },
+  {
+   "text": "滑",
+   "start": 15.639,
+   "end": 15.799,
+   "type": "word",
+   "logprob": -0.009890242479741573
+  },
+  {
+   "text": "鼠",
+   "start": 15.799,
+   "end": 15.959,
+   "type": "word",
+   "logprob": -0.00042000532266683877
+  },
+  {
+   "text": "点",
+   "start": 15.96,
+   "end": 16.159,
+   "type": "word",
+   "logprob": -0.07991861552000046
+  },
+  {
+   "text": "而",
+   "start": 16.159,
+   "end": 16.26,
+   "type": "word",
+   "logprob": -0.06348368525505066
+  },
+  {
+   "text": "已",
+   "start": 16.26,
+   "end": 16.359,
+   "type": "word",
+   "logprob": -0.06348368525505066
+  },
+  {
+   "text": "，",
+   "start": 16.359,
+   "end": 16.759,
+   "type": "word",
+   "logprob": -6.437094270950183e-05
+  },
+  {
+   "text": "我",
+   "start": 16.76,
+   "end": 16.94,
+   "type": "word",
+   "logprob": -0.0015561387408524752
+  },
+  {
+   "text": "们",
+   "start": 16.94,
+   "end": 17.059,
+   "type": "word",
+   "logprob": -0.0015561387408524752
+  },
+  {
+   "text": "不",
+   "start": 17.059,
+   "end": 17.199,
+   "type": "word",
+   "logprob": -0.002230538986623287
+  },
+  {
+   "text": "是",
+   "start": 17.199,
+   "end": 17.319,
+   "type": "word",
+   "logprob": -0.002230538986623287
+  },
+  {
+   "text": "只",
+   "start": 17.319,
+   "end": 17.479,
+   "type": "word",
+   "logprob": -0.00048673225683160126
+  },
+  {
+   "text": "按",
+   "start": 17.479,
+   "end": 17.579,
+   "type": "word",
+   "logprob": -1.585470999998506e-05
+  },
+  {
+   "text": "按",
+   "start": 17.579,
+   "end": 17.859,
+   "type": "word",
+   "logprob": -0.0002029928145930171
+  },
+  {
+   "text": "键",
+   "start": 17.859,
+   "end": 17.999,
+   "type": "word",
+   "logprob": -0.001572444918565452
+  },
+  {
+   "text": "的",
+   "start": 18.0,
+   "end": 18.159,
+   "type": "word",
+   "logprob": -1.3232143828645349e-05
+  },
+  {
+   "text": "。",
+   "start": 18.159,
+   "end": 18.159,
+   "type": "word",
+   "logprob": -0.0004689785710070282
+  },
+  {
+   "text": " ",
+   "start": 18.159,
+   "end": 18.519,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "对",
+   "start": 18.52,
+   "end": 18.719,
+   "type": "word",
+   "logprob": -0.013586667366325855
+  },
+  {
+   "text": "，",
+   "start": 18.719,
+   "end": 18.779,
+   "type": "word",
+   "logprob": -1.8954096958623268e-05
+  },
+  {
+   "text": "所",
+   "start": 18.779,
+   "end": 18.859,
+   "type": "word",
+   "logprob": -0.00010835537250386551
+  },
+  {
+   "text": "以",
+   "start": 18.859,
+   "end": 19.139,
+   "type": "word",
+   "logprob": -0.00010835537250386551
+  },
+  {
+   "text": "你",
+   "start": 19.139,
+   "end": 19.319,
+   "type": "word",
+   "logprob": -0.050280824303627014
+  },
+  {
+   "text": "就",
+   "start": 19.319,
+   "end": 19.52,
+   "type": "word",
+   "logprob": -0.08614054322242737
+  },
+  {
+   "text": "会",
+   "start": 19.52,
+   "end": 19.699,
+   "type": "word",
+   "logprob": -0.08614054322242737
+  },
+  {
+   "text": "有",
+   "start": 19.699,
+   "end": 19.919,
+   "type": "word",
+   "logprob": -0.10700983554124832
+  },
+  {
+   "text": "这",
+   "start": 19.92,
+   "end": 19.959,
+   "type": "word",
+   "logprob": -0.8810553550720215
+  },
+  {
+   "text": "种",
+   "start": 19.959,
+   "end": 19.979,
+   "type": "word",
+   "logprob": -0.8810553550720215
+  }
+ ],
+ "meta": {
+  "arm": "Zsc",
+  "engine": "ElevenLabs Scribe",
+  "model_id": "scribe_v2",
+  "api": "https://api.elevenlabs.io/v1/speech-to-text",
+  "language_code": "zh",
+  "keyterms": true,
+  "keyterm_cap": 50,
+  "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
+  "diarize": false,
+  "corpus": "zh",
+  "rate_usd_per_hour": {
+   "base": 0.22,
+   "keyterms": 0.05
+  },
+  "rate_checked": "2026-08-20",
+  "n_keyterms": 0,
+  "elapsed_sec": 1.6,
+  "language_detected": "zho",
+  "language_probability": 1.0,
+  "transcription_id": "9NkocazeiAsVB7Tn7Qrg",
+  "audio_sha256": "e88c5992c7f7f46f309ed7e1d7b8d820021c89e562189276fff3684dfdddf7ba"
+ }
+}
