@@ -32,6 +32,16 @@ ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results"
 REF = ROOT / "corpus" / "reference"
 
+# handoff-v10 §4b(**在看到分數之前**寫死):Scribe 會輸出 audio event 標記
+# (實測 exp5 出現 `[笑声]`)。那是註記不是轉寫,而且**沒有其他 arm 會產生它**,
+# 不移除等於平白讓它的輸出變長、CER 變差。對其他 arm 是 no-op。
+AUDIO_EVENT = re.compile(r"[\[［][^\]］]{0,12}[\]］]")
+
+
+def strip_audio_events(t: str) -> str:
+    return AUDIO_EVENT.sub("", t or "")
+
+
 ARMS_JA = {
     "A": "input_transcription",
     # exp1 追加:Gemini generateContent(非 Live),用來檢驗噪音崩潰是否為 Live 特有
@@ -43,6 +53,15 @@ ARMS_JA = {
     "Xgma_ja_e2b": "transcript",
     # exp1 追加:Breeze ASR 25 的日文(handoff-v8 §1 A)
     "Xbrz_ja": "transcript",
+    # exp1 追加:ElevenLabs Scribe v2 批次(handoff-v10 S1)
+    "Sbat_ja": "transcript",
+    "Sbat_ja_nokt": "transcript",
+    "Sbat_ja_full": "transcript",
+    # exp1 追加:Scribe v2 Realtime 與 SM 即時的詞表對齊控制組(handoff-v10 S4)
+    "Srt_ja": "transcript",
+    "Cplus50": "transcript",
+    # exp1 追加:SM 批次 + **只給 50 條、且無讀音**的詞表(handoff-v10 S5 詞表對齊控制組)
+    "Cbplus50": "transcript",
     "C": "transcript",
     "Cplus": "transcript",
     "Cb": "transcript",       # Speechmatics batch, no dictionary
@@ -177,7 +196,7 @@ def main():
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
                 # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
-                if arm.startswith(("Xgma", "Xbrz")) or arm == "Abat":
+                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja"):
                     zh = None
                 elif arm == "A":
                     zh = d.get("translation", "")

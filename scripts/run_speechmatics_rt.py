@@ -38,9 +38,14 @@ def transcription_config(arm: str, seg_id: str) -> dict:
         "enable_partials": True,
         "max_delay": 2.0,
     }
-    if arm == "Cplus":
+    if arm.startswith("Cplus"):
         vocab = json.loads((ROOT / "corpus" / "dict" / "speechmatics_vocab.json").read_text())
-        cfg["additional_vocab"] = vocab[PICKS[seg_id]["domain"]]
+        v = vocab[PICKS[seg_id]["domain"]]
+        # handoff-v10 S4 的詞表對齊控制組:Scribe **即時**的上限是 50 詞且沒有
+        # 讀音欄位,要跟它比引擎,SM 這邊也必須砍到同樣 50 條、拿掉 sounds_like。
+        if arm == "Cplus50":
+            v = [{"content": t["content"]} for t in v[:50]]
+        cfg["additional_vocab"] = v
     return cfg
 
 

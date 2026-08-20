@@ -1,0 +1,920 @@
+{
+ "arm": "Sbat_ja_full",
+ "file": "sakai05__N3.wav",
+ "audio_s": 29.853,
+ "transcript": "菅原神社の椿の井戸。ザビエル公園を出て、紀州街道沿いに南へ向かう。その途中にある菅原神社にも立ち寄ってみよう。ここには千利休の師匠、武野紹鷗が愛したと伝えられる椿の井戸がある。わびさびという言葉を聞いたことがあるだろうか。 元は和の文化ということでした。",
+ "words": [
+  {
+   "text": "菅",
+   "start": 0.579,
+   "end": 0.639,
+   "type": "word",
+   "logprob": -0.0003357561945449561
+  },
+  {
+   "text": "原",
+   "start": 0.639,
+   "end": 1.139,
+   "type": "word",
+   "logprob": -4.1126360883936286e-05
+  },
+  {
+   "text": "神",
+   "start": 1.139,
+   "end": 1.279,
+   "type": "word",
+   "logprob": -0.0006603206275030971
+  },
+  {
+   "text": "社",
+   "start": 1.279,
+   "end": 1.699,
+   "type": "word",
+   "logprob": -2.825220326485578e-05
+  },
+  {
+   "text": "の",
+   "start": 1.699,
+   "end": 1.879,
+   "type": "word",
+   "logprob": -2.825220326485578e-05
+  },
+  {
+   "text": "椿",
+   "start": 1.879,
+   "end": 3.46,
+   "type": "word",
+   "logprob": -0.0030467540491372347
+  },
+  {
+   "text": "の",
+   "start": 3.46,
+   "end": 3.48,
+   "type": "word",
+   "logprob": -0.02340860851109028
+  },
+  {
+   "text": "井",
+   "start": 3.48,
+   "end": 3.599,
+   "type": "word",
+   "logprob": -6.103329360485077e-05
+  },
+  {
+   "text": "戸",
+   "start": 3.599,
+   "end": 3.699,
+   "type": "word",
+   "logprob": -7.390948667307384e-06
+  },
+  {
+   "text": "。",
+   "start": 3.699,
+   "end": 3.699,
+   "type": "word",
+   "logprob": -0.0001833270798670128
+  },
+  {
+   "text": "ザ",
+   "start": 5.94,
+   "end": 6.079,
+   "type": "word",
+   "logprob": -0.0006740205571986735
+  },
+  {
+   "text": "ビ",
+   "start": 6.079,
+   "end": 6.179,
+   "type": "word",
+   "logprob": -0.0004024887748528272
+  },
+  {
+   "text": "エ",
+   "start": 6.179,
+   "end": 6.279,
+   "type": "word",
+   "logprob": -0.00527146365493536
+  },
+  {
+   "text": "ル",
+   "start": 6.279,
+   "end": 6.599,
+   "type": "word",
+   "logprob": -0.00527146365493536
+  },
+  {
+   "text": "公",
+   "start": 6.599,
+   "end": 6.659,
+   "type": "word",
+   "logprob": -0.000577402301132679
+  },
+  {
+   "text": "園",
+   "start": 6.659,
+   "end": 6.859,
+   "type": "word",
+   "logprob": -0.000577402301132679
+  },
+  {
+   "text": "を",
+   "start": 6.859,
+   "end": 7.039,
+   "type": "word",
+   "logprob": -0.0032528128940612078
+  },
+  {
+   "text": "出",
+   "start": 7.039,
+   "end": 7.159,
+   "type": "word",
+   "logprob": -0.0032528128940612078
+  },
+  {
+   "text": "て",
+   "start": 7.159,
+   "end": 7.699,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "、",
+   "start": 7.699,
+   "end": 7.699,
+   "type": "word",
+   "logprob": -0.012712747789919376
+  },
+  {
+   "text": "紀",
+   "start": 7.779,
+   "end": 7.96,
+   "type": "word",
+   "logprob": -0.013349909335374832
+  },
+  {
+   "text": "州",
+   "start": 7.96,
+   "end": 8.139,
+   "type": "word",
+   "logprob": -0.0003626880934461951
+  },
+  {
+   "text": "街",
+   "start": 8.139,
+   "end": 8.379,
+   "type": "word",
+   "logprob": -0.0006644901586696506
+  },
+  {
+   "text": "道",
+   "start": 8.38,
+   "end": 8.399,
+   "type": "word",
+   "logprob": -0.0006644901586696506
+  },
+  {
+   "text": "沿",
+   "start": 8.399,
+   "end": 8.579,
+   "type": "word",
+   "logprob": -0.00014697425649501383
+  },
+  {
+   "text": "い",
+   "start": 8.579,
+   "end": 8.739,
+   "type": "word",
+   "logprob": -4.327203714638017e-05
+  },
+  {
+   "text": "に",
+   "start": 8.739,
+   "end": 8.979,
+   "type": "word",
+   "logprob": -4.327203714638017e-05
+  },
+  {
+   "text": "南",
+   "start": 8.979,
+   "end": 9.199,
+   "type": "word",
+   "logprob": -1.311301275563892e-06
+  },
+  {
+   "text": "へ",
+   "start": 9.199,
+   "end": 9.34,
+   "type": "word",
+   "logprob": -0.0015404274454340339
+  },
+  {
+   "text": "向",
+   "start": 9.34,
+   "end": 9.519,
+   "type": "word",
+   "logprob": -0.0005055579822510481
+  },
+  {
+   "text": "か",
+   "start": 9.519,
+   "end": 9.659,
+   "type": "word",
+   "logprob": -0.05572071671485901
+  },
+  {
+   "text": "う",
+   "start": 9.659,
+   "end": 9.84,
+   "type": "word",
+   "logprob": -0.05572071671485901
+  },
+  {
+   "text": "。",
+   "start": 9.84,
+   "end": 9.84,
+   "type": "word",
+   "logprob": -2.622600959512056e-06
+  },
+  {
+   "text": "そ",
+   "start": 10.92,
+   "end": 11.059,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "の",
+   "start": 11.059,
+   "end": 11.279,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "途",
+   "start": 11.279,
+   "end": 11.38,
+   "type": "word",
+   "logprob": -3.731181277544238e-05
+  },
+  {
+   "text": "中",
+   "start": 11.38,
+   "end": 11.559,
+   "type": "word",
+   "logprob": -3.731181277544238e-05
+  },
+  {
+   "text": "に",
+   "start": 11.559,
+   "end": 11.639,
+   "type": "word",
+   "logprob": -5.960462772236497e-07
+  },
+  {
+   "text": "あ",
+   "start": 11.639,
+   "end": 11.799,
+   "type": "word",
+   "logprob": -5.960462772236497e-07
+  },
+  {
+   "text": "る",
+   "start": 11.8,
+   "end": 12.119,
+   "type": "word",
+   "logprob": -5.960462772236497e-07
+  },
+  {
+   "text": "菅",
+   "start": 12.119,
+   "end": 12.219,
+   "type": "word",
+   "logprob": -4.434487345861271e-05
+  },
+  {
+   "text": "原",
+   "start": 12.219,
+   "end": 12.559,
+   "type": "word",
+   "logprob": -1.2397689715726301e-05
+  },
+  {
+   "text": "神",
+   "start": 12.559,
+   "end": 12.659,
+   "type": "word",
+   "logprob": -1.1920922133867862e-06
+  },
+  {
+   "text": "社",
+   "start": 12.659,
+   "end": 12.799,
+   "type": "word",
+   "logprob": -1.1920922133867862e-06
+  },
+  {
+   "text": "に",
+   "start": 12.799,
+   "end": 12.899,
+   "type": "word",
+   "logprob": -2.0265373677830212e-05
+  },
+  {
+   "text": "も",
+   "start": 12.899,
+   "end": 13.019,
+   "type": "word",
+   "logprob": -2.0265373677830212e-05
+  },
+  {
+   "text": "立",
+   "start": 13.019,
+   "end": 13.199,
+   "type": "word",
+   "logprob": -3.0397906812140718e-05
+  },
+  {
+   "text": "ち",
+   "start": 13.199,
+   "end": 13.259,
+   "type": "word",
+   "logprob": -3.0397906812140718e-05
+  },
+  {
+   "text": "寄",
+   "start": 13.259,
+   "end": 13.359,
+   "type": "word",
+   "logprob": -1.9550132492440753e-05
+  },
+  {
+   "text": "っ",
+   "start": 13.359,
+   "end": 13.439,
+   "type": "word",
+   "logprob": -0.0003582789213396609
+  },
+  {
+   "text": "て",
+   "start": 13.439,
+   "end": 13.539,
+   "type": "word",
+   "logprob": -0.0003582789213396609
+  },
+  {
+   "text": "み",
+   "start": 13.539,
+   "end": 13.699,
+   "type": "word",
+   "logprob": -0.0003582789213396609
+  },
+  {
+   "text": "よ",
+   "start": 13.699,
+   "end": 13.719,
+   "type": "word",
+   "logprob": -3.659658250398934e-05
+  },
+  {
+   "text": "う",
+   "start": 13.719,
+   "end": 13.899,
+   "type": "word",
+   "logprob": -3.659658250398934e-05
+  },
+  {
+   "text": "。",
+   "start": 13.899,
+   "end": 13.899,
+   "type": "word",
+   "logprob": -1.5497195136049413e-06
+  },
+  {
+   "text": "こ",
+   "start": 15.0,
+   "end": 15.099,
+   "type": "word",
+   "logprob": -1.9788545614574105e-05
+  },
+  {
+   "text": "こ",
+   "start": 15.099,
+   "end": 15.259,
+   "type": "word",
+   "logprob": -1.9788545614574105e-05
+  },
+  {
+   "text": "に",
+   "start": 15.259,
+   "end": 15.419,
+   "type": "word",
+   "logprob": -2.145764938177308e-06
+  },
+  {
+   "text": "は",
+   "start": 15.42,
+   "end": 16.18,
+   "type": "word",
+   "logprob": -2.145764938177308e-06
+  },
+  {
+   "text": "千",
+   "start": 16.18,
+   "end": 16.34,
+   "type": "word",
+   "logprob": -0.01624372974038124
+  },
+  {
+   "text": "利",
+   "start": 16.34,
+   "end": 16.619,
+   "type": "word",
+   "logprob": -9.524368942948058e-05
+  },
+  {
+   "text": "休",
+   "start": 16.619,
+   "end": 16.819,
+   "type": "word",
+   "logprob": -0.00010859376925509423
+  },
+  {
+   "text": "の",
+   "start": 16.819,
+   "end": 17.079,
+   "type": "word",
+   "logprob": -5.245195097813848e-06
+  },
+  {
+   "text": "師",
+   "start": 17.079,
+   "end": 17.219,
+   "type": "word",
+   "logprob": -0.00044526674901135266
+  },
+  {
+   "text": "匠",
+   "start": 17.219,
+   "end": 17.899,
+   "type": "word",
+   "logprob": -3.361645576660521e-05
+  },
+  {
+   "text": "、",
+   "start": 17.899,
+   "end": 17.899,
+   "type": "word",
+   "logprob": -0.16090808808803558
+  },
+  {
+   "text": "武",
+   "start": 18.059,
+   "end": 18.359,
+   "type": "word",
+   "logprob": -0.005259368102997541
+  },
+  {
+   "text": "野",
+   "start": 18.359,
+   "end": 18.5,
+   "type": "word",
+   "logprob": -0.00041083001997321844
+  },
+  {
+   "text": "紹",
+   "start": 18.5,
+   "end": 18.639,
+   "type": "word",
+   "logprob": -0.000758955895435065
+  },
+  {
+   "text": "鷗",
+   "start": 18.639,
+   "end": 18.819,
+   "type": "word",
+   "logprob": -0.0438842810690403
+  },
+  {
+   "text": "が",
+   "start": 18.819,
+   "end": 18.939,
+   "type": "word",
+   "logprob": -2.074220174108632e-05
+  },
+  {
+   "text": "愛",
+   "start": 18.939,
+   "end": 19.079,
+   "type": "word",
+   "logprob": -0.00020597243565134704
+  },
+  {
+   "text": "し",
+   "start": 19.079,
+   "end": 19.18,
+   "type": "word",
+   "logprob": -0.000311802898067981
+  },
+  {
+   "text": "た",
+   "start": 19.18,
+   "end": 19.279,
+   "type": "word",
+   "logprob": -0.000311802898067981
+  },
+  {
+   "text": "と",
+   "start": 19.279,
+   "end": 19.559,
+   "type": "word",
+   "logprob": -0.00017569905321579427
+  },
+  {
+   "text": "伝",
+   "start": 19.559,
+   "end": 19.639,
+   "type": "word",
+   "logprob": -0.00342996115796268
+  },
+  {
+   "text": "え",
+   "start": 19.639,
+   "end": 19.76,
+   "type": "word",
+   "logprob": -0.00342996115796268
+  },
+  {
+   "text": "ら",
+   "start": 19.76,
+   "end": 19.879,
+   "type": "word",
+   "logprob": -0.0002759314374998212
+  },
+  {
+   "text": "れ",
+   "start": 19.879,
+   "end": 20.039,
+   "type": "word",
+   "logprob": -0.0002759314374998212
+  },
+  {
+   "text": "る",
+   "start": 20.039,
+   "end": 20.519,
+   "type": "word",
+   "logprob": -0.0002759314374998212
+  },
+  {
+   "text": "椿",
+   "start": 20.52,
+   "end": 20.899,
+   "type": "word",
+   "logprob": -0.0007022537174634635
+  },
+  {
+   "text": "の",
+   "start": 20.899,
+   "end": 21.039,
+   "type": "word",
+   "logprob": -1.7881377516459906e-06
+  },
+  {
+   "text": "井",
+   "start": 21.039,
+   "end": 21.199,
+   "type": "word",
+   "logprob": -6.6756979322235566e-06
+  },
+  {
+   "text": "戸",
+   "start": 21.199,
+   "end": 21.239,
+   "type": "word",
+   "logprob": -5.364403477869928e-06
+  },
+  {
+   "text": "が",
+   "start": 21.239,
+   "end": 21.399,
+   "type": "word",
+   "logprob": -0.00010573305189609528
+  },
+  {
+   "text": "あ",
+   "start": 21.399,
+   "end": 21.5,
+   "type": "word",
+   "logprob": -0.00010573305189609528
+  },
+  {
+   "text": "る",
+   "start": 21.5,
+   "end": 21.779,
+   "type": "word",
+   "logprob": -0.00010573305189609528
+  },
+  {
+   "text": "。",
+   "start": 21.779,
+   "end": 21.779,
+   "type": "word",
+   "logprob": -0.00026925752172246575
+  },
+  {
+   "text": "わ",
+   "start": 23.0,
+   "end": 23.139,
+   "type": "word",
+   "logprob": -0.07740911841392517
+  },
+  {
+   "text": "び",
+   "start": 23.139,
+   "end": 23.379,
+   "type": "word",
+   "logprob": -1.0728830375228426e-06
+  },
+  {
+   "text": "さ",
+   "start": 23.379,
+   "end": 23.579,
+   "type": "word",
+   "logprob": -0.03601592406630516
+  },
+  {
+   "text": "び",
+   "start": 23.579,
+   "end": 24.159,
+   "type": "word",
+   "logprob": -5.507317473529838e-05
+  },
+  {
+   "text": "と",
+   "start": 24.159,
+   "end": 24.219,
+   "type": "word",
+   "logprob": -0.0005465444410219789
+  },
+  {
+   "text": "い",
+   "start": 24.219,
+   "end": 24.359,
+   "type": "word",
+   "logprob": -0.0005465444410219789
+  },
+  {
+   "text": "う",
+   "start": 24.359,
+   "end": 24.599,
+   "type": "word",
+   "logprob": -0.0005465444410219789
+  },
+  {
+   "text": "言",
+   "start": 24.6,
+   "end": 24.699,
+   "type": "word",
+   "logprob": -2.3841855067985307e-07
+  },
+  {
+   "text": "葉",
+   "start": 24.699,
+   "end": 24.799,
+   "type": "word",
+   "logprob": -2.3841855067985307e-07
+  },
+  {
+   "text": "を",
+   "start": 24.799,
+   "end": 24.939,
+   "type": "word",
+   "logprob": -1.1086402082582936e-05
+  },
+  {
+   "text": "聞",
+   "start": 24.939,
+   "end": 25.019,
+   "type": "word",
+   "logprob": -1.1086402082582936e-05
+  },
+  {
+   "text": "い",
+   "start": 25.019,
+   "end": 25.119,
+   "type": "word",
+   "logprob": -6.711257447022945e-05
+  },
+  {
+   "text": "た",
+   "start": 25.119,
+   "end": 25.219,
+   "type": "word",
+   "logprob": -6.711257447022945e-05
+  },
+  {
+   "text": "こ",
+   "start": 25.219,
+   "end": 25.34,
+   "type": "word",
+   "logprob": -0.0009016501135192811
+  },
+  {
+   "text": "と",
+   "start": 25.34,
+   "end": 25.479,
+   "type": "word",
+   "logprob": -0.0009016501135192811
+  },
+  {
+   "text": "が",
+   "start": 25.479,
+   "end": 25.559,
+   "type": "word",
+   "logprob": -0.0009016501135192811
+  },
+  {
+   "text": "あ",
+   "start": 25.559,
+   "end": 25.719,
+   "type": "word",
+   "logprob": -0.0009016501135192811
+  },
+  {
+   "text": "る",
+   "start": 25.719,
+   "end": 25.84,
+   "type": "word",
+   "logprob": -0.0009016501135192811
+  },
+  {
+   "text": "だ",
+   "start": 25.84,
+   "end": 25.899,
+   "type": "word",
+   "logprob": -0.001303419005125761
+  },
+  {
+   "text": "ろ",
+   "start": 25.899,
+   "end": 26.039,
+   "type": "word",
+   "logprob": -0.001303419005125761
+  },
+  {
+   "text": "う",
+   "start": 26.039,
+   "end": 26.179,
+   "type": "word",
+   "logprob": -0.001303419005125761
+  },
+  {
+   "text": "か",
+   "start": 26.18,
+   "end": 26.68,
+   "type": "word",
+   "logprob": -9.536738616588991e-07
+  },
+  {
+   "text": "。",
+   "start": 26.68,
+   "end": 26.68,
+   "type": "word",
+   "logprob": -0.0005286726518534124
+  },
+  {
+   "text": " ",
+   "start": 26.68,
+   "end": 26.68,
+   "type": "spacing",
+   "logprob": 0.0
+  },
+  {
+   "text": "元",
+   "start": 27.979,
+   "end": 28.099,
+   "type": "word",
+   "logprob": -0.1998380720615387
+  },
+  {
+   "text": "は",
+   "start": 28.099,
+   "end": 28.199,
+   "type": "word",
+   "logprob": -0.0004349001101218164
+  },
+  {
+   "text": "和",
+   "start": 28.199,
+   "end": 28.419,
+   "type": "word",
+   "logprob": -0.24637369811534882
+  },
+  {
+   "text": "の",
+   "start": 28.42,
+   "end": 29.039,
+   "type": "word",
+   "logprob": -1.769672155380249
+  },
+  {
+   "text": "文",
+   "start": 29.039,
+   "end": 29.159,
+   "type": "word",
+   "logprob": -1.6712965965270996
+  },
+  {
+   "text": "化",
+   "start": 29.159,
+   "end": 29.299,
+   "type": "word",
+   "logprob": -1.6712965965270996
+  },
+  {
+   "text": "と",
+   "start": 29.299,
+   "end": 29.319,
+   "type": "word",
+   "logprob": -1.6881771087646484
+  },
+  {
+   "text": "い",
+   "start": 29.319,
+   "end": 29.34,
+   "type": "word",
+   "logprob": -1.6881771087646484
+  },
+  {
+   "text": "う",
+   "start": 29.34,
+   "end": 29.519,
+   "type": "word",
+   "logprob": -1.6881771087646484
+  },
+  {
+   "text": "こ",
+   "start": 29.519,
+   "end": 29.539,
+   "type": "word",
+   "logprob": -1.6881771087646484
+  },
+  {
+   "text": "と",
+   "start": 29.539,
+   "end": 29.539,
+   "type": "word",
+   "logprob": -1.6881771087646484
+  },
+  {
+   "text": "で",
+   "start": 29.539,
+   "end": 29.539,
+   "type": "word",
+   "logprob": -1.7091549634933472
+  },
+  {
+   "text": "し",
+   "start": 29.539,
+   "end": 29.539,
+   "type": "word",
+   "logprob": -1.7091549634933472
+  },
+  {
+   "text": "た",
+   "start": 29.539,
+   "end": 29.679,
+   "type": "word",
+   "logprob": -1.7091549634933472
+  },
+  {
+   "text": "。",
+   "start": 29.679,
+   "end": 29.679,
+   "type": "word",
+   "logprob": -0.1624506711959839
+  }
+ ],
+ "meta": {
+  "arm": "Sbat_ja_full",
+  "engine": "ElevenLabs Scribe",
+  "model_id": "scribe_v2",
+  "api": "https://api.elevenlabs.io/v1/speech-to-text",
+  "language_code": "ja",
+  "keyterms": true,
+  "keyterm_cap": "全部",
+  "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
+  "diarize": false,
+  "corpus": "exp1",
+  "rate_usd_per_hour": {
+   "base": 0.22,
+   "keyterms": 0.05
+  },
+  "rate_checked": "2026-08-20",
+  "n_keyterms": 166,
+  "elapsed_sec": 1.9,
+  "language_detected": "jpn",
+  "language_probability": 1.0,
+  "transcription_id": "OTC5BwgZNZ1m66rPr0mu",
+  "audio_sha256": "571ea8aa33301763559f6a21b10b67d165c5ba0b0e9cd10e4183f63b1991a412"
+ }
+}

@@ -431,6 +431,54 @@
    "window": "T3_200s",
    "cer": 0.3034,
    "len_ratio": 1.045
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_30s",
+   "cer": 0.2574,
+   "len_ratio": 1.198
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_135s",
+   "cer": 0.1375,
+   "len_ratio": 1.087
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_155s",
+   "cer": 0.3039,
+   "len_ratio": 1.284
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_175s",
+   "cer": 0.2371,
+   "len_ratio": 1.175
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_220s",
+   "cer": 0.8205,
+   "len_ratio": 1.744
+  },
+  {
+   "arm": "Zsc",
+   "window": "T2_275s",
+   "cer": 0.163,
+   "len_ratio": 1.141
+  },
+  {
+   "arm": "Zsc",
+   "window": "T3_155s",
+   "cer": 0.3367,
+   "len_ratio": 1.224
+  },
+  {
+   "arm": "Zsc",
+   "window": "T3_200s",
+   "cer": 0.4045,
+   "len_ratio": 1.292
   }
  ],
  "summary": {
@@ -496,6 +544,13 @@
    "cer_mean": 0.1978,
    "cer_max": 0.6282,
    "len_ratio_mean": 1.058
+  },
+  "Zsc": {
+   "label": "ElevenLabs Scribe v2",
+   "n": 8,
+   "cer_mean": 0.3326,
+   "cer_max": 0.8205,
+   "len_ratio_mean": 1.268
   }
  }
 }
