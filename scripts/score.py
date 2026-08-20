@@ -57,6 +57,9 @@ ARMS_JA = {
     "Sbat_ja": "transcript",
     "Sbat_ja_nokt": "transcript",
     "Sbat_ja_full": "transcript",
+    # exp1 追加:Scribe v2 Realtime 與 SM 即時的詞表對齊控制組(handoff-v10 S4)
+    "Srt_ja": "transcript",
+    "Cplus50": "transcript",
     # exp1 追加:SM 批次 + **只給 50 條、且無讀音**的詞表(handoff-v10 S5 詞表對齊控制組)
     "Cbplus50": "transcript",
     "C": "transcript",
@@ -193,7 +196,7 @@ def main():
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
                 # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
-                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50"):
+                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja"):
                     zh = None
                 elif arm == "A":
                     zh = d.get("translation", "")

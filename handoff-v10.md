@@ -173,6 +173,28 @@ probe 時發現兩件 Scribe 獨有的輸出特性,計分方式必須先決定,�
 - [ ] 偏離任務書之處寫進本檔末尾
 - [ ] 報告、`stt-matrix.md`、README 同步更新;數字對得上 `results/`
 
+## 4c. S4 的延遲指標:有一項與 SM 不可直接比(probe 後、跑之前寫死)
+
+probe 確認 Scribe v2 Realtime 的協定與 SM 有一個關鍵差異:
+
+| | Speechmatics | Scribe v2 Realtime |
+|---|---|---|
+| 暫定訊息 | `AddPartialTranscript`,**帶 `end_time`** | `partial_transcript`,**只有 `text`,沒有時間戳** |
+| 定稿訊息 | `AddTranscript`,帶 `end_time` | `committed_transcript_with_timestamps`,**帶詞級 `start`/`end`** ✅ |
+
+**所以:**
+
+- **定稿延遲可以直接比**(兩邊都能算「音訊推到第 X 秒」到「涵蓋第 X 秒的定稿送達」)。
+  對照 `Cplus` 的 **final p50 2.27s**。
+- **暫定延遲不可直接比。** SM 的 partial p50 0.37s 是「涵蓋到音訊第 X 秒的暫定何時到」,
+  而 Scribe 的暫定沒有時間戳,算不出同一個量。
+  **不硬湊一個看起來像的數字**——改記兩個明確標示的替代量:
+  **暫定訊息的更新間隔**、以及**首個暫定的抵達時間**。
+  報告裡一律標「與 SM 的 partial p50 不可直接比較」。
+- **改寫率可以比**:兩邊都是逐次暫定文字的回退字數 / 定稿字數,不需要時間戳。
+
+原始 log 逐訊息落檔,之後要換算法可以重算,不必重跑。
+
 ## 5b. 驗收(S1/S2/S3/S5,2026-08-20 完成;S4 未做)
 
 - [x] 每個 arm 的 `_meta.json` 記下 model_id、`language_code`、keyterms 條數、
