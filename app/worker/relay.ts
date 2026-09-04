@@ -28,6 +28,16 @@ import type { Usage } from './quota';
 const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 /** WS 靜默 30 秒自動收斂(PRD §5 熔斷) */
 const IDLE_MS = 30_000;
+/** 同一個帳號同時進行中的 session 上限。這是 PTT 型產品,一次只會講一句;
+ *  留 2 是為了容忍「斷線重連時舊連線還沒收掉」的短暫重疊。 */
+const MAX_LIVE_SESSIONS = 2;
+/** 靜音熔斷:有在送音框(所以 IDLE_MS 不會觸發)但伺服器端 RMS 一直接近 0。
+ *  手機放口袋忘了停、或腳本直接送靜音 PCM 都是這樣,而 Speechmatics 是按
+ *  連線秒數計費的,不會因為沒有語音就不收錢。
+ *  取 5 分鐘是刻意偏寬:導覽中走路換場的沉默不該被打斷,而多算的那幾分鐘
+ *  遠比「誤殺正在用的人」便宜。真的要更省再往下調。 */
+const SILENCE_MS = 300_000;
+const SILENCE_RMS = 50;
 /** 句尾標點:定稿句切分依據(逐句觸發翻譯,非整場重譯) */
 const SENT_END = /(?<=[。!?!?])/;
 /** 同一句最多重試幾次(每次都是一筆付費呼叫) */
@@ -38,9 +48,27 @@ const MAX_RETRY_PER_SEQ = 3;
 const MAX_PENDING_CHARS = 48;
 const PENDING_STALE_MS = 6_000;
 
+/** 一場進行中的 session。chargeStart 是它已經燒掉、但還沒寫回 QuotaCounter 的起點 */
+type LiveSession = { chargeStart: number };
+
 export class SessionRelay {
   // DO 介面要求 (state, env);本 DO 無持久狀態(配額在 QuotaCounter),state 不用
   constructor(_state: DurableObjectState, private env: Env) {}
+
+  /* 進行中的 session。DO 是 per-email 的,但 pipe() 是 fire-and-forget,
+     所以同一個實例可以同時掛著任意多條 WS —— 這個 Set 就是把「進行中」
+     這件事變成可以判斷的狀態。只存在記憶體:DO 被回收代表沒有連線在跑,
+     一起消失是對的。 */
+  private live = new Set<LiveSession>();
+
+  /** 進行中的 session 已經燒掉、但還沒寫回 QuotaCounter 的秒數總和。
+   *  少了這一項,額度檢查看到的永遠是「上一場結束時」的數字。 */
+  private liveSeconds(): number {
+    const now = Date.now();
+    let s = 0;
+    for (const e of this.live) if (e.chargeStart) s += (now - e.chargeStart) / 1000;
+    return s;
+  }
 
   private quotaStub(email: string) {
     return this.env.QUOTA.get(this.env.QUOTA.idFromName(email));
@@ -63,11 +91,22 @@ export class SessionRelay {
     const pack = url.searchParams.get('pack') || '';
     const lang = url.searchParams.get('lang') || 'ja';
 
-    // 配額保險絲:進門先擋(0 = 無上限);session 中另有 watchdog 逐秒檢查
-    const used = await this.usedToday(email);
-    if (limit > 0 && used >= limit) {
+    // 併發閘門。扣款要等 session 結束才寫回 QuotaCounter,所以同一個 cookie
+    // 同時開 N 條時,每條進門讀到的 used 都是同一個舊值 —— 沒有這一段,
+    // 每日額度實際上等於「額度 × 並行數」。
+    if (this.live.size >= MAX_LIVE_SESSIONS) {
       return Response.json(
-        { error: 'quota_exceeded', usedSeconds: used, limitSeconds: limit },
+        { error: 'too_many_sessions', liveSessions: this.live.size },
+        { status: 429 },
+      );
+    }
+
+    // 配額保險絲:進門先擋(0 = 無上限);session 中另有 watchdog 逐秒檢查。
+    // 已寫回的 used 之外,還要加上進行中 session 尚未結算的秒數。
+    const used = await this.usedToday(email);
+    if (limit > 0 && used + this.liveSeconds() >= limit) {
+      return Response.json(
+        { error: 'quota_exceeded', usedSeconds: Math.round(used + this.liveSeconds()), limitSeconds: limit },
         { status: 429 },
       );
     }
@@ -78,7 +117,13 @@ export class SessionRelay {
     // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
     // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
     server.binaryType = 'arraybuffer';
-    this.pipe(server, { email, limit, used, pack, lang }).catch(e => {
+    // 從這一刻起算「進行中」。pipe() 設定完就 resolve(session 之後靠事件推進),
+    // 所以不能用 .finally() 移除 —— 正常路徑一律由 finish() 負責移除,
+    // 這裡的 catch 只處理「還沒接上 finish 就拋錯」的設定期失敗。
+    const entry: LiveSession = { chargeStart: 0 };
+    this.live.add(entry);
+    this.pipe(server, { email, limit, used, pack, lang, entry }).catch(e => {
+      this.live.delete(entry);
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
         server.close();
@@ -89,7 +134,21 @@ export class SessionRelay {
 
   private async pipe(
     client: WebSocket,
-    { email, limit, used, pack, lang }: { email: string; limit: number; used: number; pack: string; lang: string },
+    {
+      email,
+      limit,
+      used,
+      pack,
+      lang,
+      entry,
+    }: {
+      email: string;
+      limit: number;
+      used: number;
+      pack: string;
+      lang: string;
+      entry: LiveSession;
+    },
   ) {
     // fail-closed:金鑰缺就明講,不連上游、不計費
     if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
@@ -120,6 +179,7 @@ export class SessionRelay {
     let ended = false; // 收到 client {type:"end"} 之後只等 SM 收尾
     let lastFrameAt = Date.now();
     let audioSeq = 0;
+    let lastVoicedAt = Date.now(); // 最後一次伺服器端 RMS 高過門檻的時刻
     let rmsSum = 0; // 伺服器端實收音量的滑動平均(近 30 框)
     let rmsN = 0;
     let sentSeq = 0;
@@ -203,14 +263,32 @@ export class SessionRelay {
       if (closed) return;
       closed = true;
       clearInterval(watchdog);
+      try {
+        await settle(reason, charge);
+      } finally {
+        // 一定要等結算完才退出「進行中」:下面等譯文收尾最多 8 秒、還要寫回
+        // QuotaCounter,這段期間這一場的秒數還沒落地,得繼續被 liveSeconds()
+        // 算進去,不然同時間進來的另一場會少看到它。放 finally 是為了
+        // 「結算途中拋錯也不會留下永遠佔著名額的殭屍」。
+        this.live.delete(entry);
+      }
+    };
+
+    const settle = async (reason: string, charge: boolean) => {
       flushPending();
       // 給未落地的譯文最多 5 秒收尾(逐句 hop 通常 1–2 秒)
       const grace = Date.now() + 8000; // 長句翻譯可能要 5 秒以上
       while (inflight > 0 && Date.now() < grace) await new Promise(r => setTimeout(r, 100));
-      // 計費:SM 連線中的秒數;整場連一句定稿都沒有的失敗 session 不扣額度
+      // 計費:SM 連線中的秒數。
+      // ⚠ 這裡原本還要求 gotFinal(整場至少切出一句定稿)才計費。那個豁免的本意是
+      // 「上游自己失敗的那一場不該算在使用者頭上」,但它被套到了**所有**結束原因,
+      // 於是 idle / hard-cap / 使用者關頁面 只要沒講出一句話就完全不計費 ——
+      // 而 Speechmatics 是按連線秒數收費的,靜音一樣要付錢。結果是一個免額度、
+      // 可無限重複的迴圈(送靜音 PCM 撐到 hard cap,當日帳面永遠是 0)。
+      // 豁免現在只留給真正的上游失敗:finish('sm-error', gotFinal) 用 charge 參數帶進來。
       const seconds = chargeStart ? (Date.now() - chargeStart) / 1000 : 0;
-      const charged = charge && chargeStart > 0 && gotFinal;
-      // token 用量與秒數分開判斷:就算這場不計秒(沒有任何定稿),
+      const charged = charge && chargeStart > 0;
+      // token 用量與秒數分開判斷:就算這場不計秒(上游失敗,或還沒開始計費),
       // 已經打出去的翻譯呼叫還是花了錢,一定要記進當日帳
       if (charged || spentTokens) {
         await this.quotaStub(email)
@@ -240,15 +318,32 @@ export class SessionRelay {
     // 熔斷 watchdog:hard cap 60 分鐘、WS 靜默 30 秒收斂、額度用盡即斷。
     // 順帶每秒回報伺服器端實收音訊統計:客戶端音量條會動、但這裡 rms≈0,
     // 就代表傳輸把音訊弄壞了(而不是麥克風沒收到)——沒這個數字分不出來。
+    let tick = 0;
     const watchdog = setInterval(() => {
       if (audioSeq) send({ type: 'stat', frames: audioSeq, rms: Math.round(rmsSum / Math.max(rmsN, 1)) });
       // 殘句擱太久就切(無標點語言的第二道保險)
       if (pendingSince && Date.now() - pendingSince > PENDING_STALE_MS) flushPending();
       if (Date.now() - t0 > hardCapMs) return void finish('hard-cap');
       if (!ended && Date.now() - lastFrameAt > IDLE_MS) return void finish('idle');
-      if (chargeStart && limit > 0 && used + (Date.now() - chargeStart) / 1000 >= limit) {
+      // 靜音熔斷:框一直在來(所以 idle 不會觸發)但伺服器端量到的一直是靜音。
+      // RMS 本來就算好了(下面 pushAudio),原本只拿來顯示,沒有拿來熔斷。
+      if (chargeStart && !ended && Date.now() - lastVoicedAt > SILENCE_MS) {
+        send({ type: 'error', message: '偵測不到聲音,已自動結束這一場' });
+        return void finish('silence');
+      }
+      // 額度檢查要含**所有**進行中 session 的未結算秒數,不能只看自己這一場
+      if (chargeStart && limit > 0 && used + this.liveSeconds() >= limit) {
         send({ type: 'error', message: '今日聽譯額度已用完,台灣時間早上 8 點重置' });
         return void finish('quota');
+      }
+      // 每 30 秒重讀當日累計:同帳號的另一場結束後會寫回 QuotaCounter,
+      // 只靠進門那一次的快照會少算。
+      if (++tick % 30 === 0) {
+        void this.usedToday(email)
+          .then(v => {
+            used = v;
+          })
+          .catch(() => {});
       }
     }, 1000);
 
@@ -263,6 +358,7 @@ export class SessionRelay {
       switch (msg.message) {
         case 'RecognitionStarted':
           chargeStart = Date.now(); // 連線即計(PRD §5);Error 情境見 finish
+          entry.chargeStart = chargeStart; // 讓其他並行 session 的額度檢查看得到這一場
           send({ type: 'ready', pack: vocabPack ? pack : null, packName: vocabPack?.name ?? null, vocabCount: vocab.length });
           return;
         case 'AddPartialTranscript':
@@ -334,6 +430,7 @@ export class SessionRelay {
         const n = bytes.byteLength >> 1;
         for (let i = 0; i < n; i += 4) s += dv.getInt16(i * 2, true) ** 2; // 每 4 個樣本取一個
         const r = Math.sqrt(s / Math.max(Math.ceil(n / 4), 1));
+        if (r >= SILENCE_RMS) lastVoicedAt = Date.now();
         rmsSum = rmsN >= 30 ? rmsSum * (29 / 30) + r : rmsSum + r;
         rmsN = Math.min(rmsN + 1, 30);
       }
