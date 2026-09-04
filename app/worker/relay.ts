@@ -25,6 +25,13 @@ import { readPack } from './vocab';
 import { resolveLang } from './langs';
 import type { Usage } from './quota';
 
+/** `clarence.chien@gmail.com` → `cla…@gmail.com`。日誌裡夠用來辨識,又不是完整 PII。 */
+export const maskEmail = (e: string) => {
+  const at = e.indexOf('@');
+  if (at < 1) return '???';
+  return `${e.slice(0, Math.min(3, at))}…${e.slice(at)}`;
+};
+
 const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 /** WS 靜默 30 秒自動收斂(PRD §5 熔斷) */
 const IDLE_MS = 30_000;
@@ -298,7 +305,11 @@ export class SessionRelay {
           })
           .catch(() => {});
       }
-      console.log(`[relay] ${email} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
+      // email 遮罩。observability.enabled 是 true,所以這一行會進 Cloudflare
+      // Workers Logs(預設保留數日)。這與「內容零留存」不衝突(沒有字幕內容),
+      // 但完整 email 是 PII,而這行的用途只是「哪一個使用者、燒了多少」——
+      // 前三碼加網域就足以在幾個受邀使用者裡辨識,不需要留完整地址。
+      console.log(`[relay] ${maskEmail(email)} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
       send({
         type: 'done',
         reason,

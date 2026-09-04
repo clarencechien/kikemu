@@ -1,8 +1,16 @@
 # Audio files are NOT redistributed (handoff §2 授權): keep them out of git.
+#
+# ⚠️ 2026-09-04:這一行從一開始就寫著,但 corpus/conditions_pp/ 底下 72 個 wav
+# 與 exp5/corpus/zh_windows/ 底下 8 個(合計約 190 MB)實際上是 tracked 的 ——
+# 而這個 repo 是公開的。兩批都是同一批不可散布音訊的衍生切片,而且都能用
+# scripts/preprocess.py 與 exp5 的切片腳本完整重現,沒有留在版控的理由。
+# 已 git rm --cached。**歷史裡還在**,清歷史要 filter-repo,見 README「音檔與授權」。
 corpus/raw/
 corpus/wav/
 corpus/conditions/*.wav
+corpus/conditions_pp/*.wav
 corpus/noise_src/
+exp5/corpus/zh_windows/*.wav
 corpus/pages/
 __pycache__/
 exp2/corpus/raw/
