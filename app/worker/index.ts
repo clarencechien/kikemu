@@ -71,8 +71,14 @@ const SEC_HEADERS: Record<string, string> = {
   'x-frame-options': 'DENY',
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'strict-origin-when-cross-origin',
+  // zone 層可能也開了,但 repo 裡沒有任何東西證明那件事,而 dashboard 的設定
+  // 改掉不會有人發現。自己送一份當縱深。
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
 };
 const withSec = (res: Response, req?: Request) => {
+  // WebSocket upgrade 不能重包:new Response(...) 會把 webSocket 那一半丟掉,
+  // /ws 會變成一個 101 但沒有連線的空殼。
+  if (res.status === 101 || (res as unknown as { webSocket?: unknown }).webSocket) return res;
   const r = new Response(res.body, res);
   for (const [k, v] of Object.entries(SEC_HEADERS)) r.headers.set(k, v);
   // connect-src 的 'self' 對 wss:// 的涵蓋範圍各家瀏覽器不一致(Safari 尤其),
@@ -104,14 +110,16 @@ const readUsage = async (env: Env, email: string): Promise<Usage> =>
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
-      return await route(req, env, ctx);
+      // 安全標頭在出口統一套。先前只包 env.ASSETS.fetch(),所以 /api/* 的 JSON、
+      // /auth/* 的 302 與 canonical 的 301 一條標頭都沒有。
+      return withSec(await route(req, env, ctx), req);
     } catch (err) {
       // 登入流程的例外要導回登入頁(手機上停在裸 500 等於死路),其餘回 JSON
       console.error('[fetch]', err);
       if (new URL(req.url).pathname.startsWith('/auth/')) {
-        return new Response(null, { status: 302, headers: { location: '/?err=auth' } });
+        return withSec(new Response(null, { status: 302, headers: { location: '/?err=auth' } }), req);
       }
-      return bad('伺服器錯誤', 500);
+      return withSec(bad('伺服器錯誤', 500), req);
     }
   },
 } satisfies ExportedHandler<Env>;
@@ -258,11 +266,15 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     try {
       return await api(req, env, p, session.email, user);
     } catch (err) {
-      return bad(err instanceof Error ? err.message : '伺服器錯誤', 500);
+      // 上游的錯誤原文不回給瀏覽器。Gemini 的錯誤 body 會被 gemini.ts 塞進
+      // message,而那個格式是 Google 說了算的 —— 今天沒有金鑰,不表示明天也沒有。
+      // 詳細內容留在 console.error(Workers Logs 看得到),對外只給固定字串。
+      console.error('[api]', p, err);
+      return bad('伺服器錯誤,請稍後再試', 500);
     }
   }
 
-  return withSec(await env.ASSETS.fetch(req), req);
+  return env.ASSETS.fetch(req); // 標頭由出口的 withSec 統一套
 }
 
 async function api(req: Request, env: Env, path: string, email: string, user: UserInfo): Promise<Response> {

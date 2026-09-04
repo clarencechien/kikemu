@@ -11,7 +11,10 @@
       → WS /ws?lang=ja&pack=<id> ────────┐
                                           ▼
 Cloudflare Worker(worker/index.ts)
-  ├─ 靜態資產(Workers Assets ./dist,run_worker_first:安全 headers 全覆蓋)
+  ├─ 靜態資產(Workers Assets ./dist)
+  ├─ 安全 headers:在 fetch() 出口統一套,涵蓋所有回應
+  │   (2026-09-04 修正——先前只包 ASSETS.fetch(),/api/* 的 JSON、
+  │    /auth/* 的 302 與 canonical 的 301 一條標頭都沒有)
   ├─ Google OIDC 全 server-side(worker/auth.ts,kk_session HMAC cookie)
   ├─ R2 CONFIG bucket:config/allowlist.json・config/waitlist.json・vocab/{id}.json
   ├─ QUOTA DO(worker/quota.ts):每人每日聽譯秒數,UTC 00:00 = 台灣 08:00 重置
@@ -32,6 +35,17 @@ Cloudflare Worker(worker/index.ts)
 與停滯(6 秒)兩個 flush 條件,否則整場會累積成一句才吐出來。
 
 內容零留存:音訊不落地、字幕只在使用者裝置的 IndexedDB;R2 只有名單與詞表。
+
+
+## 安全標頭
+
+在 `worker/index.ts` 的 `fetch()` 出口統一套(`withSec`),所以**每一個回應**都有 ——
+靜態頁、`/api/*` 的 JSON、`/auth/*` 的 302、canonical 的 301 都一樣。
+WebSocket 的 101 升級回應例外:重包會把 `webSocket` 那一半丟掉,`/ws` 會變成空殼。
+
+`Strict-Transport-Security` 也由 Worker 送一份。zone 層可能已經開了,
+但 **repo 裡沒有任何東西證明那件事**,而 dashboard 的設定改掉不會有人發現 ——
+自己送一份是零成本的縱深。要確認 zone 那一份:Cloudflare → SSL/TLS → Edge Certificates → HSTS。
 
 ## 本機開發
 

@@ -109,7 +109,22 @@ async function generate(env: Env, body: any, opts: { think?: boolean } = {}): Pr
     console.warn('[gemini] thinkingConfig 被拒,退回不設思考重試');
     r = await post(env, body);
   }
-  if (!r.ok) throw new Error(`gemini ${r.status}: ${(await r.text()).slice(0, 200)}`);
+  if (!r.ok) {
+    // 只帶 status 與 Google 自己的 error.message 欄位,不塞原始 body。
+    // 原本是把回應前 200 字整段接進 message,而 api() 的 catch 又把 message
+    // 回給瀏覽器 —— 上游的錯誤格式一改(例如哪天把送出的請求回顯進錯誤裡),
+    // 那條路就成了外洩通道。完整內容留在 console.error。
+    const raw = await r.text();
+    console.error('[gemini]', r.status, raw.slice(0, 800));
+    let detail = '';
+    try {
+      const j = JSON.parse(raw) as { error?: { message?: string } };
+      if (typeof j.error?.message === 'string') detail = `: ${j.error.message.slice(0, 120)}`;
+    } catch {
+      /* 不是 JSON 就不帶細節 */
+    }
+    throw new Error(`gemini ${r.status}${detail}`);
+  }
   return r.json();
 }
 

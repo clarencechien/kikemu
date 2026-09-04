@@ -10,6 +10,20 @@ import { PACK_LANGS } from './langs';
 import type { Usage } from './quota';
 import type { Env } from './index';
 
+/** grounding 來源:只留 http(s) 的,最多 10 筆。uri 是模型控制的資料。 */
+function safeSources(v: unknown): { title: string; uri: string }[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .filter((s): s is { uri: string; title?: unknown } =>
+      !!s && typeof s === 'object' && typeof (s as { uri?: unknown }).uri === 'string' &&
+      /^https?:\/\//i.test((s as { uri: string }).uri.trim()))
+    .map(s => ({
+      uri: s.uri.trim(),
+      title: typeof s.title === 'string' ? s.title.slice(0, 300) : '',
+    }))
+    .slice(0, 10);
+}
+
 const bad = (msg: string, status = 400) => Response.json({ ok: false, error: msg }, { status });
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** 場景包來源文字上限 64KB(PRD §6 body 上限) */
@@ -150,7 +164,10 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
 
     await savePack(env, packId, {
       name: packName, alias, lang: packLang, entries,
-      source: { kind: 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: (body.sources ?? []).slice(0, 10), at: new Date().toISOString() },
+      // sources 的 uri 來自模型的 grounding metadata。在**存檔時**就過濾,
+      // 不要只擋在顯示層 —— 存進去的東西之後會被別的地方讀,而那些地方不會
+      // 記得要再過濾一次。
+      source: { kind: 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: safeSources(body.sources), at: new Date().toISOString() },
     });
     return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings, issues, stats });
   }
