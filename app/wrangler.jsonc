@@ -38,10 +38,17 @@
     "SESSION_HARD_CAP_S": "3600",
     // 正式網域(如 kikemu.ai-apps.work):設了之後其他 host 一律 301/403;留空 = 不檢查
     "CANONICAL_HOST": "kikemu.ai-apps.work",
-    // Turnstile site key 是公開值(可放 vars);TURNSTILE_SECRET 走 secret。
-    // **兩者都設齊才會啟用**——只設一半會讓前端渲染不出元件、後端卻要求 token,
-    // 每次登入必定 403(sukemu 實測踩過,見 worker/index.ts turnstileOn)。
-    "TURNSTILE_SITE_KEY": ""
+    // Turnstile site key 是公開值(本來就會出現在前端 HTML),所以放這裡而不是 secret。
+    // **一定要放在這個檔案裡**:填在 dashboard 的純文字 Variable 會被下一次部署用
+    // 這個 vars 區塊蓋回去,挑戰就會悄悄消失(ytplayer / sukemu 都實測踩過)。
+    // **兩者都設齊才會啟用**(worker/index.ts 的 turnstileOn):只設一半 = 挑戰靜靜關著,
+    // 不會變成「前端渲染不出元件、後端卻要 token」的死路——那個坑 sukemu 踩過,這裡已擋掉。
+    // 與 sukemu / manemu 共用同一個 widget,所以:
+    //   1. 該 widget 的 hostname 清單必須含 kikemu.ai-apps.work
+    //   2. TURNSTILE_SECRET 要用**同一把**(不是新產一把)
+    // 共用的代價:siteverify 沒有比對回傳的 hostname,在其中一站解出的 token 另一站也會收
+    //(單次有效,影響小)。要斷開就各站開自己的 widget。
+    "TURNSTILE_SITE_KEY": "0x4AAAAAAEBVTLYxe23qYu09"
     // 秘密(SPEECHMATICS_API_KEY / GEMINI_API_KEY / GOOGLE_CLIENT_ID /
     // GOOGLE_CLIENT_SECRET / SESSION_SECRET / TURNSTILE_SECRET)
     // 一律 wrangler secret put,絕不進 repo。
