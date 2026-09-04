@@ -41,11 +41,20 @@ npm run dev:worker   # wrangler dev(:8787,API/WS/DO)
 npm run dev          # vite dev(:5173,/api 與 /ws 轉給 8787)
 ```
 
-未設 `GOOGLE_CLIENT_ID` 時登入頁自動退回「開發用 Email 直登」(比對 R2 白名單;
-bucket 不存在時預設放行 `clarence.chien@gmail.com`)。本機 secrets 放 `.dev.vars`
-(已在 .gitignore):
+「開發用 Email 直登」(`POST /api/login`,比對 R2 白名單;bucket 不存在時預設放行
+`clarence.chien@gmail.com`)要**兩道閘門同時成立**才會開:`.dev.vars` 裡設了
+`DEV_LOGIN=1`,而且 host 是 `localhost` / `127.0.0.1`。
+
+> ⚠️ 這裡刻意**不**用「有沒有設 `GOOGLE_CLIENT_ID`」當判準。舊版是那樣寫的,
+> 結果「兩把都沒設」這個組合沒被涵蓋:`/api/login` 開著、session 又用公開的
+> `dev-insecure-secret` 簽章,任何人送一個 email 就是 admin —— 而 `ADMIN_EMAILS`
+> 那個地址還寫在公開 repo 裡。正式站在 2026-09-04 被實測就是這個狀態。
+> 判準必須由開發環境自己舉手,不能綁在另一個也可能忘記設的 secret 上。
+
+本機 secrets 放 `.dev.vars`(已在 .gitignore):
 
 ```
+DEV_LOGIN=1
 SPEECHMATICS_API_KEY=...
 GEMINI_API_KEY=...
 ```
@@ -66,9 +75,9 @@ GEMINI_API_KEY=...
    |---|---|
    | `SPEECHMATICS_API_KEY` | 聽(RT WS;只存在 RELAY DO) |
    | `GEMINI_API_KEY` | 譯 + 場景包詞條抽取 |
-   | `GOOGLE_CLIENT_ID` | OIDC(設了即停用 Email 直登) |
+   | `GOOGLE_CLIENT_ID` | OIDC。**正式站必設**;沒設 = `/auth/login` 回 404,站台鎖住 |
    | `GOOGLE_CLIENT_SECRET` | OIDC token 交換 |
-   | `SESSION_SECRET` | session HMAC。**fail-closed**:已設 OIDC 但缺它 → 全站鎖死 |
+   | `SESSION_SECRET` | session HMAC。**fail-closed**:非本機開發環境缺它 → 全站鎖死 |
    | `TURNSTILE_SECRET` | 與 vars 的 `TURNSTILE_SITE_KEY` **成對**設定才啟用 |
 
 3. **種子場景包**(exp1 語料的東大阪詞表,80 詞條;探針複驗時要用):

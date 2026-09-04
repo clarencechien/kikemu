@@ -4,7 +4,8 @@
        ["a@x.com", "b@x.com"]                  → 全部套 DEFAULT_TIER
        {"a@x.com": "admin", "b@x.com": 1200}   → 逐人分級;數字 = 自訂每日秒數
    - 級別對應秒數在 var QUOTA_TIERS(0 = 無上限);ADMIN_EMAILS 一律 admin 級
-   - 未設 GOOGLE_CLIENT_ID 時保留開發用 Email 直登(/api/login),部署 OIDC 後自動停用 */
+   - 開發用 Email 直登(/api/login)只在 DEV_LOGIN=1 且 host 是本機時開放;
+     DEV_LOGIN 只放 .dev.vars(已 gitignore、不會被部署),正式站永遠關著 */
 
 import type { Env } from './index';
 
@@ -20,14 +21,23 @@ export const b64u = {
 
 /* SESSION_SECRET 沒設就退回這把眾所皆知的字串——夠開發用,但正式環境用它
    等於把 session 簽章的鑰匙公開:任何人都能偽造 kk_session(含 admin 帳號
-   一路進 /admin)。所以「正式環境=已設 OIDC」時,缺 secret 或還在用這把
-   dev 值一律「關門」:sign 直接報錯、verify 一律當未登入。
-   寧可全站登入失敗、逼運維補上 secret,也不要靜默放行偽造 session。 */
+   一路進 /admin)。所以只要不是開發環境,缺 secret 或還在用這把 dev 值一律
+   「關門」:sign 直接報錯、verify 一律當未登入。
+   寧可全站登入失敗、逼運維補上 secret,也不要靜默放行偽造 session。
+
+   ⚠ 2026-09-04 的教訓:這裡原本用「有沒有設 GOOGLE_CLIENT_ID」當正式環境的判準,
+   於是「兩把都沒設」這個組合完全沒被涵蓋——/api/login 開著、session 又用公開的
+   dev 值簽章,任何人送一個 email 就是 admin(ADMIN_EMAILS 那個地址還寫在公開 repo)。
+   正式站實際上就是這個狀態。判準不能綁在「另一個也可能忘記設的 secret」上,
+   所以改成:開發環境必須自己明確舉手,其餘一律當正式環境。 */
 const DEV_SECRET = 'dev-insecure-secret';
 const secret = (env: Env) => env.SESSION_SECRET || DEV_SECRET;
-/** 正式環境(已設 GOOGLE_CLIENT_ID)卻缺少獨立 SESSION_SECRET → 危險組態 */
+/** 開發環境的唯一判準:DEV_LOGIN=1。它只放 .dev.vars(已 gitignore,
+ *  `wrangler deploy` 不會帶上去),所以正式部署不可能意外變成開發環境。 */
+export const devEnv = (env: Env) => env.DEV_LOGIN === '1';
+/** 非開發環境卻缺少獨立 SESSION_SECRET → 危險組態,關門 */
 const prodSecretMissing = (env: Env) =>
-  !!env.GOOGLE_CLIENT_ID && (!env.SESSION_SECRET || env.SESSION_SECRET === DEV_SECRET);
+  !devEnv(env) && (!env.SESSION_SECRET || env.SESSION_SECRET === DEV_SECRET);
 
 function hmacKey(s: string) {
   return crypto.subtle.importKey('raw', enc.encode(s), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);

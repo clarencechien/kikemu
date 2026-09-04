@@ -9,6 +9,7 @@ import {
   addToWaitlist,
   cookieGet,
   cookieSet,
+  devEnv,
   randomHex,
   resolveUser,
   sessionFrom,
@@ -32,7 +33,7 @@ export interface Env {
   // 秘密(wrangler secret put,絕不進 repo)
   SPEECHMATICS_API_KEY: string;
   GEMINI_API_KEY: string;
-  // OIDC(未設 GOOGLE_CLIENT_ID → 開發用 Email 直登)
+  // OIDC(正式站必設;沒設 = /auth/login 回 404,站台等於鎖住)
   GOOGLE_CLIENT_ID?: string;
   GOOGLE_CLIENT_SECRET?: string;
   SESSION_SECRET?: string;
@@ -51,7 +52,13 @@ export interface Env {
   SESSION_TOKEN_CAP?: string;
   // 安全
   CANONICAL_HOST?: string;
+  /** 開發用 Email 直登的總開關。**只放 .dev.vars**(已 gitignore、不會被部署);
+   *  設成 '1' 且 host 是本機時,/api/login 才開放。正式站絕不要設。 */
+  DEV_LOGIN?: string;
 }
+
+/** 本機開發的 host(wrangler dev / vite dev);canonical-host 檢查也豁免 localhost */
+const isLocalHost = (url: URL) => url.hostname === 'localhost' || url.hostname === '127.0.0.1';
 
 const json = (data: unknown, init?: ResponseInit) => Response.json(data, init);
 const bad = (msg: string, status = 400) => json({ ok: false, error: msg }, { status });
@@ -133,7 +140,9 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
       console.warn('[turnstile] 設了 TURNSTILE_SECRET 但沒設 TURNSTILE_SITE_KEY,已停用挑戰');
     }
     return json({
-      mode: env.GOOGLE_CLIENT_ID ? 'oidc' : 'dev',
+      // 'dev' 只代表「本機直登真的開著」;正式站一律 'oidc'(即使 OIDC 還沒設好,
+      // 那種情況是 /auth/login 回 404 的鎖住狀態,不是可以用 Email 直登的狀態)
+      mode: devEnv(env) ? 'dev' : 'oidc',
       turnstileSiteKey: turnstileOn(env) ? env.TURNSTILE_SITE_KEY : null,
       // 語言清單由伺服器給:加語言只改 worker/langs.ts 一處
       langs: LANGS.map(l => ({ code: l.code, label: l.label })),
@@ -145,7 +154,7 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
 
   /* ---------- OAuth(仿 sukemu/manemu) ---------- */
   if (p === '/auth/login') {
-    if (!env.GOOGLE_CLIENT_ID) return bad('尚未設定 Google OIDC,開發模式請用 Email 登入', 404);
+    if (!env.GOOGLE_CLIENT_ID) return bad('尚未設定 Google OIDC:請 wrangler secret put GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET', 404);
     // Turnstile:site key + secret 都設好才強制驗(POST + token);否則直通。
     // 驗證失敗一律導回登入頁帶 err,讓使用者看得到訊息也能重試——
     // 不要回裸 403 文字頁,手機上等於死路(sukemu 實測回報)。
@@ -219,9 +228,11 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     return new Response(null, { status: 302, headers: { location: '/', 'set-cookie': cookieSet('kk_session', '', 0) } });
   }
 
-  // 開發用 Email 直登:只在未設定 OIDC 時開放
+  // 開發用 Email 直登:兩道閘門都成立才開——DEV_LOGIN=1(只放 .dev.vars,
+  // 不會被部署)且 host 是本機。**不要**拿「有沒有設 OIDC」當判準:那會讓
+  // 「忘了設 OIDC」等於把零憑證的 admin 登入開給全世界(2026-09-04 實際發生)。
   if (p === '/api/login' && req.method === 'POST') {
-    if (env.GOOGLE_CLIENT_ID) return bad('已啟用 Google 登入,請走 /auth/login', 403);
+    if (!devEnv(env) || !isLocalHost(url)) return bad('此端點僅供本機開發使用', 403);
     const { email: raw } = (await req.json().catch(() => ({}))) as { email?: string };
     const email = (raw ?? '').trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return bad('Email 格式不正確');

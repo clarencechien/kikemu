@@ -203,8 +203,9 @@ Modal CLI 查不到費用,權威在 dashboard)。另有先前**白燒的 $1.26**
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
-| Google OIDC(目前是開發用 Email 直登) | ⬜ 未設定 |
-| Turnstile、CANONICAL_HOST | ⬜ 未設定 |
+| Google OIDC | ⬜ **未設定 —— 正式站目前是鎖住的** |
+| Turnstile | ⬜ 未設定 |
+| CANONICAL_HOST | ✅ 已設 `kikemu.ai-apps.work`(`app/wrangler.jsonc`) |
 | iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |
 | 正式站詞包 | ✅ 大阪城 149 詞(已逐條複驗並重驗修正) |
 
