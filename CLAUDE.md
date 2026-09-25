@@ -76,7 +76,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | 路徑 | 是什麼 |
 |---|---|
-| `app/worker/` | relay DO(Speechmatics)、quota DO、admin、場景包、Gemini |
+| `app/worker/` | relay DO(Speechmatics)、quota DO、admin、場景包、Gemini(含 `GeminiProxy`:區域封鎖的代打 DO) |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
 | `scripts/` | exp1/3/4 的實驗腳本;`run_*_modal.py` = Modal 上的 GPU arm |
@@ -108,3 +108,15 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   → `results/diarization_support.json`。**「我們沒測」「我們沒開」「它沒有」是三件事。**
 - 自架開源模型前先看 `generation_config.json`:Gemma 4 三個型號都預設
   `do_sample: true, temperature: 1.0`,不指定就是隨機取樣,同一個檔重跑會不一樣。
+- **合了 `main` 進分支之後,先 `npm run build` 再合 PR。** 自動合併沒有文字衝突
+  不代表結果是對的:PR #73 就這樣吃掉 `main` 三處(併發閘門的 `entry` → production
+  build 失敗;PR #72 的錯誤邊界 → 上游原始 body 又送到瀏覽器;log 的 email 遮罩),
+  沒有一處在合併時出聲。分支從舊基底分出來、`main` 又動過同一個函式,就要當作會壞。
+- **`gemini.ts` 的 `if (!r.ok)` 是唯一能碰上游原始 body 的地方。** 丟出去的 Error
+  只能帶 status + Google 自己的 `error.message`(≤120 字),因為 `relay.ts` 會把它
+  當 `zhError.reason` 送到手機、`api()` 的 catch 會回給瀏覽器。原文只進 `console.error`。
+- **Gemini 的子請求從「DO 所在機房」出去,而 DO 建在叫醒它的請求所在機房。**
+  台灣行動網路會被路由到 HKG,Google 不服務香港 → 400 `User location is not supported`。
+  已有代打(`GeminiProxy`,`GEMINI_PROXY_REGION` 預設 `wnam`);**別把地區改成 `apac`**,
+  可能又落回 HKG。接任何有地區政策的新上游,先問「執行位置跟著使用者走」這一題。
+  付費方案(Workers Paid / Pro)**不改變**執行機房,對這件事沒幫助。

@@ -13,6 +13,31 @@
 
 ---
 
+## TL;DR — 2026-09-25:iOS 沒譯文 → 不是 iOS,是香港
+
+**同一個帳號,iOS 只有原文、Android 兩行都有。** 查到的是路徑問題,不是作業系統問題:
+
+- 翻譯是從 `SessionRelay` 這個 per-email 的 DO 打出去的,DO 建在**叫醒它的那個請求**
+  所在的 Cloudflare 機房;台灣部分行動網路的出口被路由到 **HKG**,而 Google 不在香港
+  提供 Gemini API → 整場 `gemini 400: User location is not supported for the API use.`
+- **修法:代打 DO。** 第一次收到區域 400,那個機房的 isolate 就改走一顆釘在 `wnam` 的
+  `GeminiProxy`(DO `locationHint` 是 Cloudflare 上唯一能選機房的原語)。正常路徑一個字不動;
+  代價只落在被封鎖的那些場,每句約 +150~250ms(牌價級估計,未量測)。
+  設定進 `wrangler.jsonc`(鐵律 1),**地區別選 `apac`**。
+- **查得到是因為先把失敗變可見**:卡片會直接寫出 `譯文暫缺(原因)`,Logs 帶 `colo=`。
+  改之前 relay 把任何翻譯失敗縮成一個光禿禿的 `zhError`,dashboard 裡什麼都沒有。
+- **付費 Workers / Cloudflare Pro 對這件事沒幫助**——方案不改變執行機房,也不改變
+  電信業者跟 Cloudflare 的對接。
+
+**順帶一次事故:PR #73 自動合併把 `main` 的東西吃掉三處**(沒有文字衝突,git 就選了分支版):
+併發閘門的 `entry`(→ production build 失敗)、**PR #72 的錯誤邊界**(原始 body 不進
+瀏覽器——而 #73 又把錯誤訊息送到手機,等於把剛關掉的洩漏通道重新打開)、log 的 email 遮罩。
+三處都接回,而且**「合了 main 之後要先 build 再合 PR」**寫進 `CLAUDE.md`。
+
+細節:[`app/README.md`](app/README.md) 診斷章節「原文有、譯文沒有」。
+
+---
+
 ## TL;DR — 2026-08-20:ElevenLabs Scribe 補測(即時 + 非即時 × 三種語言)
 
 **不到 $1 測完做字幕的業界預設引擎。結論是:非即時線換人,即時線不動。**
@@ -180,13 +205,14 @@ Modal CLI 查不到費用,權威在 dashboard)。另有先前**白燒的 $1.26**
 
 ---
 
-## 現況(2026-08-19)
+## 現況(2026-09-25)
 
 **端到端跑通,正式站可用。** 日文與中英夾雜兩條路徑都以評測語料實測驗證過。
 
 | 項目 | 狀態 |
 |---|---|
 | 聽譯管線(mic → WS → Speechmatics → Gemini 譯) | ✅ 正式站實測通過 |
+| **Gemini 區域封鎖的代打**(`GeminiProxy` DO,釘在 `wnam`) | ✅ iOS 行動網路(HKG 出口)實機證實 400 → 代打後有譯文。失敗原因現在會寫在卡片上、Logs 帶 `colo=` |
 | 語言:日本語 / 한국어 / English / 中文・English(夾雜) | ✅ 四種皆驗證,預設日文 |
 | **場景包:輸入關鍵字自動生成**(Gemini 搜尋接地) | ✅ 正式站日文 149 詞;韓文流程實測 113 詞 |
 | 詞條驗證 pipeline(trim → content → reading → dedupe) | ✅ 含既有詞包「重驗」 |
@@ -307,11 +333,12 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 
 | 待辦 | 誰做 |
 |---|---|
-| 部署最新版(`cd app && npm run deploy`) | 你 |
+| 部署最新版(`cd app && npm run deploy`;production 從 `main` 建,合 PR 後看 CF build 過了才算) | 你 |
 | Google OIDC、Turnstile、CANONICAL_HOST | 你(Cloudflare / Google Console) |
-| iOS 真機連續收音驗證 | 你(需要實機) |
+| iOS 真機**長時間**連續收音驗證(短場已跑通:原文與譯文都出得來;60 分鐘與背景回收未驗) | 你(需要實機) |
 | AI Studio Spend 頁的供應商端上限 | 你(程式管不到,見 `docs/gemini-api-lessons.md` §保險絲) |
-| 把這條分支併回 `main`(目前領先 108 個 commit) | 你決定要不要開 PR |
+| **給 PR 加 build check**(GitHub Actions 跑 `npm run build`)——PR #73 自動合併吃掉 `main` 三處、production build 才發現 | 你決定要不要 |
+| 確認 Workers 方案(Free/Paid)與一場 60 分鐘的請求數是否碰限額 | 你(dashboard → Plans / Metrics);要算的話我從 `relay.ts` 框率估 |
 
 ### 場景包:輸入「大阪城」就出一包
 
