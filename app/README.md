@@ -113,6 +113,11 @@ GEMINI_API_KEY=...
    綁自訂網域後把 `wrangler.jsonc` 的 `CANONICAL_HOST` 填上再部署一次——**只填 hostname**(`kikemu.ai-apps.work`),不要含 `https://` 或尾斜線(程式會自動剝,但別依賴它)
    (`workers_dev`/`preview_urls` 已在設定碼層級關死)。
 
+   DO migration 由 `wrangler.jsonc` 的 `migrations` 帶著走,部署時自動套用
+   (v1:`QuotaCounter`/`SessionRelay`;v2:`GeminiProxy`,Gemini 區域封鎖的代打)。
+   `GEMINI_PROXY_REGION`(預設 `wnam`)也在 vars 裡——改地區會在新地區建一顆新 DO,
+   舊的閒置後自然回收;**別選 `apac`**,可能又落在 HKG。
+
 5. **名單**:首次登入的訪客自動進等候名單,`/admin` 一鍵核准(級別
    trial 15 分/beta 60 分/pro 180 分,或自訂每日秒數)。
 
@@ -199,6 +204,9 @@ npx wrangler r2 object get kikemu-config/vocab/<id>.json --remote --pipe | jq .
   可能被系統回收(manemu 踩過全套坑)——需要真機驗證與背景保活策略。
 - **iOS 關閉瀏覽器降噪的實際效果**:`echoCancellation/noiseSuppression/autoGainControl:false`
   的 constraint 支援不完整,可能拿到處理過的音訊;上線前用 exp3 方法做一次 A/B。
+- ~~**行動網路出口被路由到 HKG,Gemini 整場被拒**~~ → **已修**(2026-09-25,`GeminiProxy` 代打,
+  見下方診斷章節)。殘餘風險:DO `locationHint` 是 best-effort 不是保證——若代打也被拒,
+  卡片會寫出原因、Logs 看得到,不會靜默。
 
 ## 診斷:出不來字的時候怎麼查
 
