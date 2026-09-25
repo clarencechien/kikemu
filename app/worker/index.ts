@@ -310,6 +310,10 @@ async function api(req: Request, env: Env, path: string, email: string, user: Us
     wsUrl.searchParams.set('limit', String(user.limitSeconds));
     wsUrl.searchParams.set('email', email);
     wsUrl.searchParams.set('lang', new URL(req.url).searchParams.get('lang') || DEFAULT_LANG);
+    // 這條連線進來的 Cloudflare 機房。DO 是 per-email 的,會在「把它叫醒的那個請求」
+    // 所在機房建立,之後 Gemini 的子請求就從那裡出去——若被路由到 Gemini 不服務的
+    // 地區(香港是已知案例),翻譯會整場失敗而原文正常。記進 log 才分得出來。
+    wsUrl.searchParams.set('colo', String((req as Request & { cf?: { colo?: string } }).cf?.colo ?? '?'));
     return stub.fetch(new Request(wsUrl, req));
   }
 

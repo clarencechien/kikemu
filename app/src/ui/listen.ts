@@ -250,9 +250,13 @@ export function initListen(onPreviewStart: () => void): Listen {
         setZh(msg.forSeq, msg.text);
         return;
       case 'zhError':
-        setZhError(msg.forSeq, seq => {
-          if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'retryZh', seq }));
-        });
+        setZhError(
+          msg.forSeq,
+          seq => {
+            if (ws?.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'retryZh', seq }));
+          },
+          msg.reason,
+        );
         return;
       case 'stat':
         srvFrames = msg.frames;

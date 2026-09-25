@@ -234,3 +234,41 @@ App 內另有兩個對照數字:狀態列的**本地音量條**(worklet 算的 R
 回報的**伺服器實收 RMS**。本地會動、伺服器接近零 = 音訊在傳輸中損壞;
 兩邊都有值卻沒有字 = 真的是辨識問題(對照 exp1:8dB 人聲下 SM 仍有 0.627,
 所以「完全零字」通常不是噪音,要先懷疑語言設定)。
+
+### 原文有、譯文沒有(而且只有某一台手機這樣)
+
+這是第四種,跟上面三種不同:**Speechmatics 那一跳是好的,壞的是 Gemini 那一跳。**
+2026-09 實際發生過:同一個帳號,iOS 只有原文、Android 兩行都有。
+
+**先看卡片上寫什麼。** 譯文那一行不是空的,而是三種之一:
+
+| 卡片上的字 | 意思 |
+|---|---|
+| `…`(灰色,一直不變) | 翻譯呼叫**沒回來**——伺服器端還在等,或 WebSocket 已經斷了但畫面沒察覺 |
+| `譯文暫缺(gemini 400: User location is not supported…)・點擊重試` | **區域封鎖**。見下 |
+| `譯文暫缺(gemini 429…)` / `(gemini 5xx…)` | 額度或上游故障,與手機無關 |
+
+括號裡那段是伺服器端失敗原因的前 120 字(`relay.ts` 的 `zhError.reason`),
+**現場在手機上就看得到,不用開 dashboard。**
+
+**區域封鎖的機制**(為什麼會「一台好、一台壞」):
+
+翻譯呼叫是從 `SessionRelay` 這個 Durable Object 打出去的,而 DO 是 **per-email**
+(`idFromName(email)`),會在「把它叫醒的那個請求」所在的 Cloudflare 機房建立、
+閒置回收之後又在下一個叫醒它的機房重建。之後 Gemini 的子請求就從 DO 所在機房出去。
+Google 的 Gemini API **不服務香港**(回 400 `FAILED_PRECONDITION`,
+`User location is not supported for the API use`)。台灣有些行動網路的出口
+會被路由到 **HKG** 機房,Wi-Fi 通常落在 TPE——所以同一個帳號、
+**手機走行動網路壞、換 Wi-Fi 就好**,看起來像 iOS/Android 的差別,其實是路徑的差別。
+
+**怎麼確認:** Cloudflare dashboard → Workers & Pages → kikemu → **Logs**
+(`observability` 已開),搜 `[relay]`——每一場結束都會印 `colo=XXX`;
+搜 `[relay][zh]` 看逐句失敗原因;搜 `[gemini]` 看 HTTP 狀態與正文前 200 字。
+**colo=HKG 且 reason 是 location is not supported → 就是這個。**
+
+**現場解法:** 關行動數據改連 Wi-Fi、或反過來,**重新開一場**(DO 要被重建才會換機房;
+同一場裡點「重試」沒用,它還在同一個 DO)。
+
+**根治(未做):** 讓 Gemini 子請求不從 DO 所在機房出去——例如把翻譯呼叫改走
+Cloudflare AI Gateway,或在 400 區域錯誤時改由另一個固定在 `wnam`/`enam` 的
+DO 代打。兩者都是新工作,先確認 colo 真的是 HKG 再動。

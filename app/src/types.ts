@@ -22,7 +22,9 @@ export type RelayMsg =
   | { type: 'partial'; t: number; text: string }
   | { type: 'final'; seq: number; t: number; text: string }
   | { type: 'zh'; forSeq: number; text: string }
-  | { type: 'zhError'; forSeq: number }
+  /** reason:伺服器端失敗原因的前段(例如 `gemini 400: User location is not supported`),
+   *  讓現場直接在手機上看得到是哪一種失敗,不用開 dashboard */
+  | { type: 'zhError'; forSeq: number; reason?: string }
   | { type: 'error'; message: string }
   /** 伺服器實收音訊統計:與客戶端音量條對照,可分辨「麥克風沒收到」與「傳輸弄壞了」 */
   | { type: 'stat'; frames: number; rms: number }

@@ -97,6 +97,7 @@ export class SessionRelay {
     const limit = Number(url.searchParams.get('limit') || 0);
     const pack = url.searchParams.get('pack') || '';
     const lang = url.searchParams.get('lang') || 'ja';
+    const colo = url.searchParams.get('colo') || '?';
 
     // 併發閘門。扣款要等 session 結束才寫回 QuotaCounter,所以同一個 cookie
     // 同時開 N 條時,每條進門讀到的 used 都是同一個舊值 —— 沒有這一段,
@@ -124,13 +125,7 @@ export class SessionRelay {
     // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
     // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
     server.binaryType = 'arraybuffer';
-    // 從這一刻起算「進行中」。pipe() 設定完就 resolve(session 之後靠事件推進),
-    // 所以不能用 .finally() 移除 —— 正常路徑一律由 finish() 負責移除,
-    // 這裡的 catch 只處理「還沒接上 finish 就拋錯」的設定期失敗。
-    const entry: LiveSession = { chargeStart: 0 };
-    this.live.add(entry);
-    this.pipe(server, { email, limit, used, pack, lang, entry }).catch(e => {
-      this.live.delete(entry);
+    this.pipe(server, { email, limit, used, pack, lang, colo }).catch(e => {
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
         server.close();
@@ -141,21 +136,7 @@ export class SessionRelay {
 
   private async pipe(
     client: WebSocket,
-    {
-      email,
-      limit,
-      used,
-      pack,
-      lang,
-      entry,
-    }: {
-      email: string;
-      limit: number;
-      used: number;
-      pack: string;
-      lang: string;
-      entry: LiveSession;
-    },
+    { email, limit, used, pack, lang, colo }: { email: string; limit: number; used: number; pack: string; lang: string; colo: string },
   ) {
     // fail-closed:金鑰缺就明講,不連上游、不計費
     if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
@@ -224,7 +205,13 @@ export class SessionRelay {
           }
           send({ type: 'zh', forSeq: seq, text: zh });
         })
-        .catch(() => send({ type: 'zhError', forSeq: seq }))
+        .catch((e: unknown) => {
+          // 失敗不可見 = 查不到。原因落 log(dashboard Logs 搜 [relay][zh]),
+          // 前段也帶給前端,現場就分得出「區域封鎖 / 額度 / 上游掛了」是哪一種。
+          const reason = String((e as Error)?.message ?? e).slice(0, 120);
+          console.warn(`[relay][zh] ${email} colo=${colo} seq=${seq} ${reason}`);
+          send({ type: 'zhError', forSeq: seq, reason });
+        })
         .finally(() => inflight--);
     };
 
@@ -305,11 +292,7 @@ export class SessionRelay {
           })
           .catch(() => {});
       }
-      // email 遮罩。observability.enabled 是 true,所以這一行會進 Cloudflare
-      // Workers Logs(預設保留數日)。這與「內容零留存」不衝突(沒有字幕內容),
-      // 但完整 email 是 PII,而這行的用途只是「哪一個使用者、燒了多少」——
-      // 前三碼加網域就足以在幾個受邀使用者裡辨識,不需要留完整地址。
-      console.log(`[relay] ${maskEmail(email)} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
+      console.log(`[relay] ${email} colo=${colo} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
       send({
         type: 'done',
         reason,
