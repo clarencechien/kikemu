@@ -9,6 +9,7 @@ import {
   addToWaitlist,
   cookieGet,
   cookieSet,
+  devEnv,
   randomHex,
   resolveUser,
   sessionFrom,
@@ -32,7 +33,7 @@ export interface Env {
   // 秘密(wrangler secret put,絕不進 repo)
   SPEECHMATICS_API_KEY: string;
   GEMINI_API_KEY: string;
-  // OIDC(未設 GOOGLE_CLIENT_ID → 開發用 Email 直登)
+  // OIDC(正式站必設;沒設 = /auth/login 回 404,站台等於鎖住)
   GOOGLE_CLIENT_ID?: string;
   GOOGLE_CLIENT_SECRET?: string;
   SESSION_SECRET?: string;
@@ -51,7 +52,13 @@ export interface Env {
   SESSION_TOKEN_CAP?: string;
   // 安全
   CANONICAL_HOST?: string;
+  /** 開發用 Email 直登的總開關。**只放 .dev.vars**(已 gitignore、不會被部署);
+   *  設成 '1' 且 host 是本機時,/api/login 才開放。正式站絕不要設。 */
+  DEV_LOGIN?: string;
 }
+
+/** 本機開發的 host(wrangler dev / vite dev);canonical-host 檢查也豁免 localhost */
+const isLocalHost = (url: URL) => url.hostname === 'localhost' || url.hostname === '127.0.0.1';
 
 const json = (data: unknown, init?: ResponseInit) => Response.json(data, init);
 const bad = (msg: string, status = 400) => json({ ok: false, error: msg }, { status });
@@ -64,8 +71,14 @@ const SEC_HEADERS: Record<string, string> = {
   'x-frame-options': 'DENY',
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'strict-origin-when-cross-origin',
+  // zone 層可能也開了,但 repo 裡沒有任何東西證明那件事,而 dashboard 的設定
+  // 改掉不會有人發現。自己送一份當縱深。
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
 };
 const withSec = (res: Response, req?: Request) => {
+  // WebSocket upgrade 不能重包:new Response(...) 會把 webSocket 那一半丟掉,
+  // /ws 會變成一個 101 但沒有連線的空殼。
+  if (res.status === 101 || (res as unknown as { webSocket?: unknown }).webSocket) return res;
   const r = new Response(res.body, res);
   for (const [k, v] of Object.entries(SEC_HEADERS)) r.headers.set(k, v);
   // connect-src 的 'self' 對 wss:// 的涵蓋範圍各家瀏覽器不一致(Safari 尤其),
@@ -97,14 +110,16 @@ const readUsage = async (env: Env, email: string): Promise<Usage> =>
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
-      return await route(req, env, ctx);
+      // 安全標頭在出口統一套。先前只包 env.ASSETS.fetch(),所以 /api/* 的 JSON、
+      // /auth/* 的 302 與 canonical 的 301 一條標頭都沒有。
+      return withSec(await route(req, env, ctx), req);
     } catch (err) {
       // 登入流程的例外要導回登入頁(手機上停在裸 500 等於死路),其餘回 JSON
       console.error('[fetch]', err);
       if (new URL(req.url).pathname.startsWith('/auth/')) {
-        return new Response(null, { status: 302, headers: { location: '/?err=auth' } });
+        return withSec(new Response(null, { status: 302, headers: { location: '/?err=auth' } }), req);
       }
-      return bad('伺服器錯誤', 500);
+      return withSec(bad('伺服器錯誤', 500), req);
     }
   },
 } satisfies ExportedHandler<Env>;
@@ -133,7 +148,9 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
       console.warn('[turnstile] 設了 TURNSTILE_SECRET 但沒設 TURNSTILE_SITE_KEY,已停用挑戰');
     }
     return json({
-      mode: env.GOOGLE_CLIENT_ID ? 'oidc' : 'dev',
+      // 'dev' 只代表「本機直登真的開著」;正式站一律 'oidc'(即使 OIDC 還沒設好,
+      // 那種情況是 /auth/login 回 404 的鎖住狀態,不是可以用 Email 直登的狀態)
+      mode: devEnv(env) ? 'dev' : 'oidc',
       turnstileSiteKey: turnstileOn(env) ? env.TURNSTILE_SITE_KEY : null,
       // 語言清單由伺服器給:加語言只改 worker/langs.ts 一處
       langs: LANGS.map(l => ({ code: l.code, label: l.label })),
@@ -145,7 +162,7 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
 
   /* ---------- OAuth(仿 sukemu/manemu) ---------- */
   if (p === '/auth/login') {
-    if (!env.GOOGLE_CLIENT_ID) return bad('尚未設定 Google OIDC,開發模式請用 Email 登入', 404);
+    if (!env.GOOGLE_CLIENT_ID) return bad('尚未設定 Google OIDC:請 wrangler secret put GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET', 404);
     // Turnstile:site key + secret 都設好才強制驗(POST + token);否則直通。
     // 驗證失敗一律導回登入頁帶 err,讓使用者看得到訊息也能重試——
     // 不要回裸 403 文字頁,手機上等於死路(sukemu 實測回報)。
@@ -219,9 +236,11 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     return new Response(null, { status: 302, headers: { location: '/', 'set-cookie': cookieSet('kk_session', '', 0) } });
   }
 
-  // 開發用 Email 直登:只在未設定 OIDC 時開放
+  // 開發用 Email 直登:兩道閘門都成立才開——DEV_LOGIN=1(只放 .dev.vars,
+  // 不會被部署)且 host 是本機。**不要**拿「有沒有設 OIDC」當判準:那會讓
+  // 「忘了設 OIDC」等於把零憑證的 admin 登入開給全世界(2026-09-04 實際發生)。
   if (p === '/api/login' && req.method === 'POST') {
-    if (env.GOOGLE_CLIENT_ID) return bad('已啟用 Google 登入,請走 /auth/login', 403);
+    if (!devEnv(env) || !isLocalHost(url)) return bad('此端點僅供本機開發使用', 403);
     const { email: raw } = (await req.json().catch(() => ({}))) as { email?: string };
     const email = (raw ?? '').trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return bad('Email 格式不正確');
@@ -247,11 +266,15 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
     try {
       return await api(req, env, p, session.email, user);
     } catch (err) {
-      return bad(err instanceof Error ? err.message : '伺服器錯誤', 500);
+      // 上游的錯誤原文不回給瀏覽器。Gemini 的錯誤 body 會被 gemini.ts 塞進
+      // message,而那個格式是 Google 說了算的 —— 今天沒有金鑰,不表示明天也沒有。
+      // 詳細內容留在 console.error(Workers Logs 看得到),對外只給固定字串。
+      console.error('[api]', p, err);
+      return bad('伺服器錯誤,請稍後再試', 500);
     }
   }
 
-  return withSec(await env.ASSETS.fetch(req), req);
+  return env.ASSETS.fetch(req); // 標頭由出口的 withSec 統一套
 }
 
 async function api(req: Request, env: Env, path: string, email: string, user: UserInfo): Promise<Response> {

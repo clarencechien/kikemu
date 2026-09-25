@@ -11,7 +11,10 @@
       → WS /ws?lang=ja&pack=<id> ────────┐
                                           ▼
 Cloudflare Worker(worker/index.ts)
-  ├─ 靜態資產(Workers Assets ./dist,run_worker_first:安全 headers 全覆蓋)
+  ├─ 靜態資產(Workers Assets ./dist)
+  ├─ 安全 headers:在 fetch() 出口統一套,涵蓋所有回應
+  │   (2026-09-04 修正——先前只包 ASSETS.fetch(),/api/* 的 JSON、
+  │    /auth/* 的 302 與 canonical 的 301 一條標頭都沒有)
   ├─ Google OIDC 全 server-side(worker/auth.ts,kk_session HMAC cookie)
   ├─ R2 CONFIG bucket:config/allowlist.json・config/waitlist.json・vocab/{id}.json
   ├─ QUOTA DO(worker/quota.ts):每人每日聽譯秒數,UTC 00:00 = 台灣 08:00 重置
@@ -33,6 +36,17 @@ Cloudflare Worker(worker/index.ts)
 
 內容零留存:音訊不落地、字幕只在使用者裝置的 IndexedDB;R2 只有名單與詞表。
 
+
+## 安全標頭
+
+在 `worker/index.ts` 的 `fetch()` 出口統一套(`withSec`),所以**每一個回應**都有 ——
+靜態頁、`/api/*` 的 JSON、`/auth/*` 的 302、canonical 的 301 都一樣。
+WebSocket 的 101 升級回應例外:重包會把 `webSocket` 那一半丟掉,`/ws` 會變成空殼。
+
+`Strict-Transport-Security` 也由 Worker 送一份。zone 層可能已經開了,
+但 **repo 裡沒有任何東西證明那件事**,而 dashboard 的設定改掉不會有人發現 ——
+自己送一份是零成本的縱深。要確認 zone 那一份:Cloudflare → SSL/TLS → Edge Certificates → HSTS。
+
 ## 本機開發
 
 ```sh
@@ -41,11 +55,20 @@ npm run dev:worker   # wrangler dev(:8787,API/WS/DO)
 npm run dev          # vite dev(:5173,/api 與 /ws 轉給 8787)
 ```
 
-未設 `GOOGLE_CLIENT_ID` 時登入頁自動退回「開發用 Email 直登」(比對 R2 白名單;
-bucket 不存在時預設放行 `clarence.chien@gmail.com`)。本機 secrets 放 `.dev.vars`
-(已在 .gitignore):
+「開發用 Email 直登」(`POST /api/login`,比對 R2 白名單;bucket 不存在時預設放行
+`clarence.chien@gmail.com`)要**兩道閘門同時成立**才會開:`.dev.vars` 裡設了
+`DEV_LOGIN=1`,而且 host 是 `localhost` / `127.0.0.1`。
+
+> ⚠️ 這裡刻意**不**用「有沒有設 `GOOGLE_CLIENT_ID`」當判準。舊版是那樣寫的,
+> 結果「兩把都沒設」這個組合沒被涵蓋:`/api/login` 開著、session 又用公開的
+> `dev-insecure-secret` 簽章,任何人送一個 email 就是 admin —— 而 `ADMIN_EMAILS`
+> 那個地址還寫在公開 repo 裡。正式站在 2026-09-04 被實測就是這個狀態。
+> 判準必須由開發環境自己舉手,不能綁在另一個也可能忘記設的 secret 上。
+
+本機 secrets 放 `.dev.vars`(已在 .gitignore):
 
 ```
+DEV_LOGIN=1
 SPEECHMATICS_API_KEY=...
 GEMINI_API_KEY=...
 ```
@@ -66,9 +89,9 @@ GEMINI_API_KEY=...
    |---|---|
    | `SPEECHMATICS_API_KEY` | 聽(RT WS;只存在 RELAY DO) |
    | `GEMINI_API_KEY` | 譯 + 場景包詞條抽取 |
-   | `GOOGLE_CLIENT_ID` | OIDC(設了即停用 Email 直登) |
+   | `GOOGLE_CLIENT_ID` | OIDC。**正式站必設**;沒設 = `/auth/login` 回 404,站台鎖住 |
    | `GOOGLE_CLIENT_SECRET` | OIDC token 交換 |
-   | `SESSION_SECRET` | session HMAC。**fail-closed**:已設 OIDC 但缺它 → 全站鎖死 |
+   | `SESSION_SECRET` | session HMAC。**fail-closed**:非本機開發環境缺它 → 全站鎖死 |
    | `TURNSTILE_SECRET` | 與 vars 的 `TURNSTILE_SITE_KEY` **成對**設定才啟用 |
 
 3. **種子場景包**(exp1 語料的東大阪詞表,80 詞條;探針複驗時要用):

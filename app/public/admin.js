@@ -21,7 +21,15 @@ const api = async (path, body) => {
   if (!r.ok) throw new Error(d.error || `HTTP ${r.status}`);
   return d;
 };
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// 單引號也要跳:esc() 有時候會填進以單引號括起來的屬性,而漏掉 ' 的逃逸
+// 在那種位置等於沒逃。
+const esc = (s) =>
+  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// grounding 回來的 uri 是**模型與第三方控制的資料**。esc() 讓它進不了屬性外,
+// 但擋不掉 javascript: —— 那不是逃逸問題,是協定問題。目前 CSP(script-src 'self')
+// 會擋掉 javascript: 導航,所以不可利用,但那是零層次防禦:靠的是別的東西。
+const safeHttpUrl = (u) => (/^https?:\/\//i.test(String(u ?? "").trim()) ? String(u).trim() : null);
 const mins = (n) => (Number(n) === 0 ? "無上限" : `${Math.round(Number(n) / 60)} 分/日`);
 
 function tierLabel(value) {
@@ -273,8 +281,14 @@ $("packSearchForm").addEventListener("submit", async (e) => {
     // 存檔時直接送回這批詞條,不重跑搜尋(省 100 秒,也保證存的就是看到的)
     SKW = { id, alias, name: keyword, lang: d.lang, keyword,
             entries: d.entries, sources: d.sources, queries: d.queries };
-    const src = (d.sources || []).map(s =>
-      `<li><a href="${esc(s.uri)}" target="_blank" rel="noopener">${esc(s.title || s.uri)}</a></li>`).join("");
+    const src = (d.sources || []).map(s => {
+      const href = safeHttpUrl(s.uri);
+      const label = esc(s.title || s.uri || "");
+      // 不是 http(s) 就不給連結,文字照樣顯示 —— 使用者看得到它回了什麼。
+      return href
+        ? `<li><a href="${esc(href)}" target="_blank" rel="noopener">${label}</a></li>`
+        : `<li>${label} <small>(來源網址格式不明,未連結)</small></li>`;
+    }).join("");
     const terms = (d.entries || []).map(en =>
       `<code>${esc(en.content)}</code>${en.sounds_like?.length ? `<small>(${esc(en.sounds_like[0])})</small>` : ""}`
     ).join("、");

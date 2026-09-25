@@ -203,8 +203,9 @@ Modal CLI 查不到費用,權威在 dashboard)。另有先前**白燒的 $1.26**
 | 管線狀態列(音量條、計時、逐段診斷) | ✅ |
 | 登入、白名單、每日配額、`/admin` | ✅ |
 | 本機歷史(IndexedDB)、逐場匯出 MD/TXT/CSV、PWA 安裝、登入前預覽 | ✅ |
-| Google OIDC(目前是開發用 Email 直登) | ⬜ 未設定 |
-| Turnstile、CANONICAL_HOST | ⬜ 未設定 |
+| Google OIDC | ✅ 已啟用(2026-09-04 設定並實測登入成功) |
+| Turnstile | ✅ 已啟用(沿用 sukemu / manemu 的 widget;site key 在 `app/wrangler.jsonc`,secret 走 `wrangler secret`) |
+| CANONICAL_HOST | ✅ 已設 `kikemu.ai-apps.work`(`app/wrangler.jsonc`) |
 | iOS 真機連續收音驗證 | ⬜ 未做(PRD §8 已列風險) |
 | 正式站詞包 | ✅ 大阪城 149 詞(已逐條複驗並重驗修正) |
 
@@ -502,3 +503,40 @@ notebooks/          需要 GPU 的 arm(Breeze ASR 25,Colab)
 ```
 
 音檔依授權不重新散布(`.gitignore`),但抓取與切片腳本可完整重現。
+
+### 音檔與授權(2026-09-04 更正)
+
+`.gitignore` 第一行從一開始就寫著音檔不散布,但實際上有兩批 wav 是 **tracked** 的:
+
+| 路徑 | 檔數 | 來源 |
+|---|---|---|
+| `corpus/conditions_pp/*.wav` | 72 | `scripts/preprocess.py` 對 `corpus/conditions/` 的降噪衍生版 |
+| `exp5/corpus/zh_windows/*.wav` | 8 | exp5 音訊的純中文視窗切片 |
+
+合計約 190 MB。**這個 repo 是公開的,所以現況與自述的授權承諾矛盾。**
+兩批都是同一批不可散布音訊的衍生物,而且都能用腳本完整重現,沒有留在版控的理由。
+
+已經做的:`git rm --cached` 把它們移出索引,`.gitignore` 補上兩條路徑。
+本機檔案沒有動,`scripts/run_live_pp.py` 與 `run_batch_pp.py` 照常讀得到。
+
+**還沒做的:清歷史。** `git rm --cached` 只讓它們從此不再被追蹤,
+**過去的 commit 裡還在**,任何人 clone 下來都拿得到。要真的移除必須改寫歷史:
+
+```bash
+# 1. 先備份(改寫不可逆)
+git clone --mirror https://github.com/clarencechien/kikemu kikemu-backup.git
+
+# 2. 用 git-filter-repo(不要用已棄用的 filter-branch)
+pip install git-filter-repo
+git filter-repo --path corpus/conditions_pp --path exp5/corpus/zh_windows --invert-paths
+
+# 3. 強制推上去
+git push --force --all && git push --force --tags
+```
+
+**代價要先知道**:所有既有的 clone 與 fork 都會對不上,必須重新 clone;
+所有 commit SHA 從那個點之後全部改變,任何引用舊 SHA 的連結(包括這個 repo 的
+文件、PR 討論、外部連結)都會失效;開著的 PR 要重開。GitHub 那一側的舊物件
+還會在快取裡留一段時間,要另外開 support ticket 才會真的消失。
+
+**這一步刻意留給人決定** —— 它不可逆,而且影響的是別人手上的 clone。
