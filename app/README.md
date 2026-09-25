@@ -266,9 +266,14 @@ Google 的 Gemini API **不服務香港**(回 400 `FAILED_PRECONDITION`,
 搜 `[relay][zh]` 看逐句失敗原因;搜 `[gemini]` 看 HTTP 狀態與正文前 200 字。
 **colo=HKG 且 reason 是 location is not supported → 就是這個。**
 
-**現場解法:** 關行動數據改連 Wi-Fi、或反過來,**重新開一場**(DO 要被重建才會換機房;
+**現場解法(舊版):** 關行動數據改連 Wi-Fi、或反過來,**重新開一場**(DO 要被重建才會換機房;
 同一場裡點「重試」沒用,它還在同一個 DO)。
 
-**根治(未做):** 讓 Gemini 子請求不從 DO 所在機房出去——例如把翻譯呼叫改走
-Cloudflare AI Gateway,或在 400 區域錯誤時改由另一個固定在 `wnam`/`enam` 的
-DO 代打。兩者都是新工作,先確認 colo 真的是 HKG 再動。
+**根治(2026-09-25 已做,`gemini.ts` GeminiProxy):** Cloudflare 沒有「指定 fetch 出口地區」
+這種東西,唯一能選機房的原語是 DO 的 `locationHint`(只在建立時生效)。所以:
+正常路徑不動、直打 Google;**第一次收到區域 400,那個機房的 isolate 就記住,
+之後一律改走一顆釘在 `GEMINI_PROXY_REGION`(預設 `wnam`)的小 DO 代打**,
+那句話當場重打一次。代價只落在被封鎖的那些場(多一跳到美西,每句約 +150~250ms);
+TPE 的 isolate 永遠不會切。翻譯與場景包生成都走同一個 `post()`,一併受惠。
+Logs 搜 `[gemini] 本機房被 Google 以區域理由拒絕` 就看得到切換發生。
+⚠️ 地區別選 `apac`——可能又落在 HKG。
