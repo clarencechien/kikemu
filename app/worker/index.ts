@@ -24,12 +24,17 @@ import { DEFAULT_LANG, LANGS, PACK_LANGS, packLangLabel } from './langs';
 import type { Usage } from './quota';
 export { QuotaCounter } from './quota';
 export { SessionRelay } from './relay';
+export { GeminiProxy } from './gemini';
 
 export interface Env {
   ASSETS: Fetcher;
   CONFIG: R2Bucket;
   QUOTA: DurableObjectNamespace;
   RELAY: DurableObjectNamespace;
+  /** Gemini 區域封鎖的代打 DO(gemini.ts);釘在 GEMINI_PROXY_REGION */
+  GEMINI_PROXY: DurableObjectNamespace;
+  /** 代打 DO 的 locationHint(wnam/enam/weur…),預設 wnam。改了會在新地區建新 DO */
+  GEMINI_PROXY_REGION?: string;
   // 秘密(wrangler secret put,絕不進 repo)
   SPEECHMATICS_API_KEY: string;
   GEMINI_API_KEY: string;

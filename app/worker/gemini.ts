@@ -85,7 +85,42 @@ const readUsage = (resp: any): Usage => {
   return { prompt, output, thoughts, total: prompt + output + thoughts };
 };
 
-async function post(env: Env, body: unknown): Promise<Response> {
+/* ── 區域封鎖的代打 ──────────────────────────────────────────
+   Google 不在香港提供 Gemini API(400 FAILED_PRECONDITION
+   "User location is not supported for the API use.")。Workers 的子請求從
+   **執行它的機房**出去,而 SessionRelay DO 又是在「叫醒它的那個請求」所在機房建立
+   ——台灣部分行動網路的出口被路由到 HKG,結果是同一個帳號 Wi-Fi 有譯文、
+   行動網路整場「譯文暫缺(gemini 400: User location is not supported…)」
+   (2026-09-25 iOS 實機證實)。
+
+   Cloudflare 沒有「指定 fetch 出口地區」這種東西;唯一能選機房的原語是
+   DO 的 locationHint(只在**建立時**生效)。所以:
+
+     · 正常路徑不動:直接打 Google(TPE 等機房 0 額外延遲)
+     · 第一次收到區域 400 → 這個 isolate 記住,之後一律改走一個釘在
+       GEMINI_PROXY_REGION(預設 wnam)的小 DO 代打;那句話當場重打一次
+     · 代打 DO 只做 directPost,不會再遞迴代打
+
+   代價只落在被封鎖的那些場:多一跳到美西,每句約 +150~250ms。
+   translate / extractVocab / researchTerms 全走 post(),所以場景包生成一併受惠。
+   DO 名稱含地區,改 var 就會在新地區建一顆新的(舊的閒置後自然回收)。 */
+const REGION_BLOCKED = /location is not supported/i;
+/** 這個 isolate 有沒有被 Google 以區域理由拒絕過。isolate 是 per-機房的,
+ *  TPE 的永遠不會被設成 true;HKG 的設一次就夠。 */
+let preferProxy = false;
+
+const proxyRegion = (env: Env) => (env.GEMINI_PROXY_REGION || 'wnam') as DurableObjectLocationHint;
+const viaProxy = (env: Env, body: unknown): Promise<Response> => {
+  const region = proxyRegion(env);
+  const stub = env.GEMINI_PROXY.get(env.GEMINI_PROXY.idFromName(`gemini-${region}`), { locationHint: region });
+  return stub.fetch('https://do/generate', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+};
+
+async function directPost(env: Env, body: unknown): Promise<Response> {
   return fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model(env)}:generateContent`,
     {
@@ -94,6 +129,34 @@ async function post(env: Env, body: unknown): Promise<Response> {
       body: JSON.stringify(body),
     },
   );
+}
+
+async function post(env: Env, body: unknown): Promise<Response> {
+  if (preferProxy && env.GEMINI_PROXY) return viaProxy(env, body);
+  const r = await directPost(env, body);
+  if (r.status === 400 && env.GEMINI_PROXY && REGION_BLOCKED.test(await r.clone().text())) {
+    preferProxy = true;
+    console.warn(`[gemini] 本機房被 Google 以區域理由拒絕,此 isolate 之後改走代打 DO(${proxyRegion(env)})`);
+    return viaProxy(env, body);
+  }
+  return r;
+}
+
+/** 代打 DO:釘在 Google 服務的地區,把同一個 generateContent 請求原樣轉出去、
+ *  原樣轉回(status + body 不動,generate() 的判斷邏輯完全不用改)。
+ *  只有 Worker 內部透過 binding 打得到,沒有對外入口。 */
+export class GeminiProxy {
+  constructor(_state: DurableObjectState, private env: Env) {}
+
+  async fetch(req: Request): Promise<Response> {
+    if (req.method !== 'POST') return new Response('POST only', { status: 405 });
+    const body = await req.json();
+    const r = await directPost(this.env, body); // 直打,絕不再代打(避免遞迴)
+    return new Response(await r.text(), {
+      status: r.status,
+      headers: { 'content-type': r.headers.get('content-type') ?? 'application/json' },
+    });
+  }
 }
 
 /** think=false:reasoning-shaped 的呼叫(如搜尋接地)不套用 minimal */

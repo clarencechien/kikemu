@@ -20,11 +20,14 @@
   "durable_objects": {
     "bindings": [
       { "name": "QUOTA", "class_name": "QuotaCounter" },
-      { "name": "RELAY", "class_name": "SessionRelay" }
+      { "name": "RELAY", "class_name": "SessionRelay" },
+      // Gemini 區域封鎖的代打(gemini.ts GeminiProxy):釘在 GEMINI_PROXY_REGION
+      { "name": "GEMINI_PROXY", "class_name": "GeminiProxy" }
     ]
   },
   "migrations": [
-    { "tag": "v1", "new_sqlite_classes": ["QuotaCounter", "SessionRelay"] }
+    { "tag": "v1", "new_sqlite_classes": ["QuotaCounter", "SessionRelay"] },
+    { "tag": "v2", "new_sqlite_classes": ["GeminiProxy"] }
   ],
   "vars": {
     // 額度分級:每日「聽譯秒數」,0 = 無上限(PRD §7;trial 15 分鐘夠一場短導覽)
@@ -34,6 +37,10 @@
     "ADMIN_EMAILS": "clarence.chien@gmail.com",
     // 翻譯 hop 模型(exp1 定案:台灣用語 0 失誤、adequacy 4.71)
     "TRANSLATE_MODEL": "gemini-3.5-flash",
+    // Gemini 代打 DO 的地區(DO locationHint:wnam/enam/weur/eeur/apac/oc/sam/afr/me)。
+    // Google 不服務香港;台灣部分行動網路出口會被路由到 HKG,第一次被拒之後
+    // 該機房的 isolate 就改走這顆 DO。**不要選 apac**(可能又落在 HKG)。
+    "GEMINI_PROXY_REGION": "wnam",
     // 單場 hard cap(秒):導覽是連續旁白,60 分鐘為熔斷上限(PRD §5)
     "SESSION_HARD_CAP_S": "3600",
     // 正式網域(如 kikemu.ai-apps.work):設了之後其他 host 一律 301/403;留空 = 不檢查
