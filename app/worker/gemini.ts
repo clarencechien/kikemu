@@ -110,13 +110,25 @@ async function generate(env: Env, body: any, opts: { think?: boolean } = {}): Pr
     r = await post(env, body);
   }
   if (!r.ok) {
-    // 要看得見:relay 端只把失敗縮成 zhError,原因若不在這裡落 log 就永遠查不到
-    //(iOS/Android 一台有譯文一台沒有那次,dashboard 的 Logs 裡什麼都沒有)。
-    // 區域封鎖(例如從香港 colo 出去)會回 400 FAILED_PRECONDITION
-    // "User location is not supported",正文前 200 字就看得到。
-    const snippet = (await r.text()).slice(0, 200);
-    console.warn(`[gemini] ${r.status} ${snippet}`);
-    throw new Error(`gemini ${r.status}: ${snippet}`);
+    // 只帶 status 與 Google 自己的 error.message 欄位,不塞原始 body。
+    // 原本是把回應前 200 字整段接進 message,而 api() 的 catch 又把 message
+    // 回給瀏覽器 —— 上游的錯誤格式一改(例如哪天把送出的請求回顯進錯誤裡),
+    // 那條路就成了外洩通道。完整內容留在 console.error。
+    // (PR #73 的自動合併曾把這段換回「前 200 字進 message」的舊版,而 relay 又把
+    //  message 前 120 字當 zhError.reason 送到手機——等於把 PR #72 關掉的洩漏通道
+    //  重新打開。這裡是唯一該碰原始 body 的地方,之後改動要保住這個邊界。)
+    // 區域封鎖(例如從 HKG 機房出去)在這裡長這樣:
+    //   gemini 400: User location is not supported for the API use.
+    const raw = await r.text();
+    console.error('[gemini]', r.status, raw.slice(0, 800));
+    let detail = '';
+    try {
+      const j = JSON.parse(raw) as { error?: { message?: string } };
+      if (typeof j.error?.message === 'string') detail = `: ${j.error.message.slice(0, 120)}`;
+    } catch {
+      /* 不是 JSON 就不帶細節 */
+    }
+    throw new Error(`gemini ${r.status}${detail}`);
   }
   return r.json();
 }
