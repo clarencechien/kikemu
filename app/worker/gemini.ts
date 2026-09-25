@@ -109,7 +109,15 @@ async function generate(env: Env, body: any, opts: { think?: boolean } = {}): Pr
     console.warn('[gemini] thinkingConfig 被拒,退回不設思考重試');
     r = await post(env, body);
   }
-  if (!r.ok) throw new Error(`gemini ${r.status}: ${(await r.text()).slice(0, 200)}`);
+  if (!r.ok) {
+    // 要看得見:relay 端只把失敗縮成 zhError,原因若不在這裡落 log 就永遠查不到
+    //(iOS/Android 一台有譯文一台沒有那次,dashboard 的 Logs 裡什麼都沒有)。
+    // 區域封鎖(例如從香港 colo 出去)會回 400 FAILED_PRECONDITION
+    // "User location is not supported",正文前 200 字就看得到。
+    const snippet = (await r.text()).slice(0, 200);
+    console.warn(`[gemini] ${r.status} ${snippet}`);
+    throw new Error(`gemini ${r.status}: ${snippet}`);
+  }
   return r.json();
 }
 

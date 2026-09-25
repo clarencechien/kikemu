@@ -65,13 +65,15 @@ export function setZh(seq: number, text: string) {
   scrollDown();
 }
 
-/** 翻譯失敗:明講「譯文暫缺・點擊重試」(不假裝成功);onRetry 為 null 時只顯示暫缺 */
-export function setZhError(seq: number, onRetry: ((seq: number) => void) | null) {
+/** 翻譯失敗:明講「譯文暫缺・點擊重試」(不假裝成功);onRetry 為 null 時只顯示暫缺。
+ *  reason 有的話一併顯示——現場分得出「額度/區域/上游掛了」,不用開 dashboard */
+export function setZhError(seq: number, onRetry: ((seq: number) => void) | null, reason?: string) {
   const el = cardOf(seq);
   if (!el) return;
   el.classList.remove('pending');
   el.classList.add('zh-err');
-  el.textContent = onRetry ? '譯文暫缺・點擊重試' : '譯文暫缺';
+  const why = reason ? `(${reason})` : '';
+  el.textContent = onRetry ? `譯文暫缺${why}・點擊重試` : `譯文暫缺${why}`;
   el.onclick = onRetry ? () => onRetry(seq) : null;
 }
 

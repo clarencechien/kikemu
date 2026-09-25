@@ -62,6 +62,7 @@ export class SessionRelay {
     const limit = Number(url.searchParams.get('limit') || 0);
     const pack = url.searchParams.get('pack') || '';
     const lang = url.searchParams.get('lang') || 'ja';
+    const colo = url.searchParams.get('colo') || '?';
 
     // 配額保險絲:進門先擋(0 = 無上限);session 中另有 watchdog 逐秒檢查
     const used = await this.usedToday(email);
@@ -78,7 +79,7 @@ export class SessionRelay {
     // 關鍵:不設的話 Workers 會把二進位訊息以 Blob 交付,型別檢查全部落空、
     // 每一框音訊被靜靜丟掉(SM 連得上、收得到 EndOfStream,就是一個字都沒有)。
     server.binaryType = 'arraybuffer';
-    this.pipe(server, { email, limit, used, pack, lang }).catch(e => {
+    this.pipe(server, { email, limit, used, pack, lang, colo }).catch(e => {
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
         server.close();
@@ -89,7 +90,7 @@ export class SessionRelay {
 
   private async pipe(
     client: WebSocket,
-    { email, limit, used, pack, lang }: { email: string; limit: number; used: number; pack: string; lang: string },
+    { email, limit, used, pack, lang, colo }: { email: string; limit: number; used: number; pack: string; lang: string; colo: string },
   ) {
     // fail-closed:金鑰缺就明講,不連上游、不計費
     if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
@@ -157,7 +158,13 @@ export class SessionRelay {
           }
           send({ type: 'zh', forSeq: seq, text: zh });
         })
-        .catch(() => send({ type: 'zhError', forSeq: seq }))
+        .catch((e: unknown) => {
+          // 失敗不可見 = 查不到。原因落 log(dashboard Logs 搜 [relay][zh]),
+          // 前段也帶給前端,現場就分得出「區域封鎖 / 額度 / 上游掛了」是哪一種。
+          const reason = String((e as Error)?.message ?? e).slice(0, 120);
+          console.warn(`[relay][zh] ${email} colo=${colo} seq=${seq} ${reason}`);
+          send({ type: 'zhError', forSeq: seq, reason });
+        })
         .finally(() => inflight--);
     };
 
@@ -220,7 +227,7 @@ export class SessionRelay {
           })
           .catch(() => {});
       }
-      console.log(`[relay] ${email} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
+      console.log(`[relay] ${email} colo=${colo} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
       send({
         type: 'done',
         reason,
