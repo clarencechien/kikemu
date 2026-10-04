@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "cell": "S-def", "judge": "gemini-flash-lite-latest", "adequacy": 2, "tw_locale": 3, "reason": "語音辨識錯誤導致後半段翻譯嚴重偏離原文事實，出現健康檢查等荒謬誤譯。", "modelVersion": "gemini-3.5-flash-lite"}

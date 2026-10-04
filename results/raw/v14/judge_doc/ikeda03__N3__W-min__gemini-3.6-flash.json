@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "cell": "W-min", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 4, "reason": "譯文含有大量的語音辨識錯誤與嚴重幻覺（如出現大正天皇、三刀屋百貨、女兒態度等原文沒有的內容），訊息傳達極不準確，唯字體與基本用語符合台灣正體。", "modelVersion": "gemini-3.6-flash"}

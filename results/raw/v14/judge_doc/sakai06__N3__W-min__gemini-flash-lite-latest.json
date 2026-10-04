@@ -1,0 +1,1 @@
+{"file": "sakai06__N3", "cell": "W-min", "judge": "gemini-flash-lite-latest", "adequacy": 4, "tw_locale": 5, "reason": "「宿院」被誤辨識為「聚光院」，導致地名有誤，其餘翻譯流暢且符合台灣用語習慣。", "modelVersion": "gemini-3.5-flash-lite"}

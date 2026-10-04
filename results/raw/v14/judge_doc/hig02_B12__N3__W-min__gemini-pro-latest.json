@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "cell": "W-min", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文受語音辨識錯誤影響，包含大量漏譯與嚴重誤譯（如將神話譯為比賣神、20分譯為30分、宮司譯為12位神職人員等），嚴重扭曲原文資訊，但整體用語符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview"}

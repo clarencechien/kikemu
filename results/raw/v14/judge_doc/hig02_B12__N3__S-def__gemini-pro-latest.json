@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "cell": "S-def", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文受語音辨識錯誤影響極大（如將「進行神事」譯為「接受健康檢查」、「20分鐘」變成「30分鐘」等），導致原文資訊嚴重扭曲與錯漏，但整體文字仍符合台灣繁體中文的書寫習慣。", "modelVersion": "gemini-3.1-pro-preview"}

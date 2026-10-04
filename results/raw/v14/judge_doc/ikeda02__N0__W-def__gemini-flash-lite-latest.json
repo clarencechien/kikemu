@@ -1,0 +1,1 @@
+{"file": "ikeda02__N0", "cell": "W-def", "judge": "gemini-flash-lite-latest", "adequacy": 4, "tw_locale": 5, "reason": "譯文流暢道地且大致正確，但語音辨識誤將「池田」辨識為「生田」導致部分專有名詞有誤。", "modelVersion": "gemini-3.5-flash-lite"}

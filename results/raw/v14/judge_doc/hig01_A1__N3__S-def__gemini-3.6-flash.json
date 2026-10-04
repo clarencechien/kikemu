@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "cell": "S-def", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 2, "reason": "語音辨識嚴重失誤導致譯文出現大量幻覺與語無倫次的錯譯（如「物理神社」、殘留日文等），完全未能傳達原文內容。", "modelVersion": "gemini-3.6-flash"}

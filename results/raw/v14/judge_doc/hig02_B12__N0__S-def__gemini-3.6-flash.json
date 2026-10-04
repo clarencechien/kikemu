@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N0", "cell": "S-def", "judge": "gemini-3.6-flash", "adequacy": 3, "tw_locale": 4, "reason": "譯文整體符合台灣用語，但結尾混入「Option 1:」等機器產生殘留物，且部分日語詞彙未翻譯、句構過於切割影響完整性。", "modelVersion": "gemini-3.6-flash"}

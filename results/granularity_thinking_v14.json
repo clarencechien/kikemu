@@ -1,0 +1,104 @@
+{
+ "handoff": "handoff-v14.md",
+ "files": 12,
+ "judges": [
+  "gemini-3.6-flash",
+  "gemini-pro-latest",
+  "gemini-flash-lite-latest"
+ ],
+ "parse_errors": [
+  [
+   "sakai06__N3",
+   "S-def",
+   "gemini-flash-lite-latest"
+  ],
+  [
+   "ikeda03__N0",
+   "S-min",
+   "gemini-flash-lite-latest"
+  ]
+ ],
+ "cells": {
+  "W-def": 3.75,
+  "W-min": 3.528,
+  "S-def": 2.972,
+  "S-min": 2.958
+ },
+ "by_condition": {
+  "N0": {
+   "W-def": 4.556,
+   "W-min": 4.722,
+   "S-def": 4.056,
+   "S-min": 3.972,
+   "exp1-aug": 4.722
+  },
+  "N3": {
+   "W-def": 2.944,
+   "W-min": 2.333,
+   "S-def": 1.889,
+   "S-min": 1.944,
+   "exp1-aug": 2.333
+  }
+ },
+ "effects": {
+  "granularity": {
+   "point": 0.674,
+   "ci95": [
+    0.368,
+    1.021
+   ]
+  },
+  "thinking": {
+   "point": 0.118,
+   "ci95": [
+    -0.097,
+    0.326
+   ]
+  },
+  "interaction": {
+   "point": 0.208,
+   "ci95": [
+    -0.347,
+    0.736
+   ]
+  },
+  "total_gap": {
+   "point": 0.792,
+   "ci95": [
+    0.361,
+    1.278
+   ]
+  }
+ },
+ "share_of_gap": {
+  "granularity": 0.85,
+  "thinking": 0.15
+ },
+ "R0_drift": {
+  "W-def_today": 3.75,
+  "exp1_aug": 3.528,
+  "diff": 0.222
+ },
+ "per_sentence_cost": {
+  "S-def": {
+   "n": 165,
+   "latency_p50": 3.326,
+   "latency_p90": 7.254,
+   "thoughts_mean": 694.1,
+   "output_mean": 17.0,
+   "usd_per_sentence": 0.00667
+  },
+  "S-min": {
+   "n": 165,
+   "latency_p50": 1.049,
+   "latency_p90": 1.182,
+   "thoughts_mean": 0,
+   "output_mean": 17.5,
+   "usd_per_sentence": 0.000428
+  }
+ },
+ "ledger": {
+  "spent_usd": 2.164603,
+  "calls": 297
+ }
+}

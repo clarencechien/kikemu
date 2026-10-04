@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "cell": "S-def", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 3, "reason": "因語音辨識錯誤導致產生大量嚴重錯譯與文理不通的胡亂翻譯，雖然使用正體中文但無法傳達原文資訊。", "modelVersion": "gemini-3.6-flash"}

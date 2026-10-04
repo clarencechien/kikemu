@@ -2201,6 +2201,9 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
    **(2026-10-04 handoff-v13 量到大小:同一批評審同一天評,N0 整段 4.72 vs 產品逐句 4.06;
    N3 2.33 vs 1.94。混了「整段 vs 逐句」與「thinking 預設 vs minimal」兩個變因,尚未拆開。
    帶上一句當上下文補不回來(4.00)。`results/context_v13.json`)**
+   **(handoff-v14 拆開了:2×2 顆粒度 × thinking,顆粒度 +0.674 [+0.368, +1.021] 占落差約 85%;
+   thinking +0.118 [−0.097, +0.326] 量不出作用。另:同一做法重翻一次整段分數就差 0.22(N3 差 0.6),
+   exp1 的單一 adequacy 數字帶著這個量級的隨機性。`results/granularity_thinking_v14.json`)**
 9. manemu 原版 systemInstruction 與五廠評審面板原設定不可得,均為重寫版
 
 **exp2:**
