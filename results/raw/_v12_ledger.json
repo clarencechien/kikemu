@@ -804,7 +804,12 @@
    "arm": "G38",
    "file": "sakai06__N4",
    "usd": 0.00308
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai06__N4",
+   "usd": 0.00764
   }
  ],
- "total_usd": 5.0854
+ "total_usd": 5.093
 }
