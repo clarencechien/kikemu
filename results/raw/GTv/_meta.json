@@ -1,0 +1,10 @@
+{
+ "arm": "GTv",
+ "model": "gemini-3.5-transcribe-live",
+ "handoff": "v12",
+ "chunk_s": 0.5,
+ "realtime": "1x",
+ "price_checked": "2026-10-04",
+ "price_page_updated": "2026-10-01",
+ "note": "ja-JP + 場景包全部詞條(content,無讀音)"
+}

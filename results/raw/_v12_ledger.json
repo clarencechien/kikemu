@@ -1,0 +1,555 @@
+{
+ "entries": [
+  {
+   "arm": "GT",
+   "file": "sakai06__N0",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G31",
+   "file": "hig01_A1__N1",
+   "usd": 0.00109
+  },
+  {
+   "arm": "G31",
+   "file": "hig01_A1__N0",
+   "usd": 0.00529
+  },
+  {
+   "arm": "G38",
+   "file": "hig01_A1__N0",
+   "usd": 0.08171
+  },
+  {
+   "arm": "G38",
+   "file": "hig01_A1__N1",
+   "usd": 0.07094
+  },
+  {
+   "arm": "GT",
+   "file": "hig01_A1__N1",
+   "usd": 0.01671
+  },
+  {
+   "arm": "GT",
+   "file": "hig01_A1__N0",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38T",
+   "file": "hig01_A1__N1",
+   "usd": 0.10432
+  },
+  {
+   "arm": "G38T",
+   "file": "hig01_A1__N0",
+   "usd": 0.1026
+  },
+  {
+   "arm": "GTv",
+   "file": "hig01_A1__N0",
+   "usd": 0.01671
+  },
+  {
+   "arm": "GTv",
+   "file": "hig01_A1__N1",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G31",
+   "file": "hig01_A1__N2",
+   "usd": 0.04269
+  },
+  {
+   "arm": "G31",
+   "file": "hig01_A1__N3",
+   "usd": 0.00248
+  },
+  {
+   "arm": "G38",
+   "file": "hig01_A1__N3",
+   "usd": 0.01134
+  },
+  {
+   "arm": "GT",
+   "file": "hig01_A1__N3",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38T",
+   "file": "hig01_A1__N3",
+   "usd": 0.01288
+  },
+  {
+   "arm": "GX",
+   "file": "hig01_A1__N0",
+   "usd": 0.06737
+  },
+  {
+   "arm": "GX",
+   "file": "hig01_A1__N1",
+   "usd": 0.06737
+  },
+  {
+   "arm": "GTv",
+   "file": "hig01_A1__N3",
+   "usd": 0.01671
+  },
+  {
+   "arm": "GT",
+   "file": "hig01_A1__N2",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38",
+   "file": "hig01_A1__N2",
+   "usd": 0.05534
+  },
+  {
+   "arm": "GTv",
+   "file": "hig01_A1__N2",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38T",
+   "file": "hig01_A1__N2",
+   "usd": 0.09037
+  },
+  {
+   "arm": "G31",
+   "file": "hig02_B12__N0",
+   "usd": 0.0044
+  },
+  {
+   "arm": "G31",
+   "file": "hig01_A1__N4",
+   "usd": 0.00467
+  },
+  {
+   "arm": "GT",
+   "file": "hig02_B12__N0",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GT",
+   "file": "hig01_A1__N4",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38",
+   "file": "hig01_A1__N4",
+   "usd": 0.06892
+  },
+  {
+   "arm": "GTv",
+   "file": "hig02_B12__N0",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GTv",
+   "file": "hig01_A1__N4",
+   "usd": 0.01671
+  },
+  {
+   "arm": "G38T",
+   "file": "hig01_A1__N4",
+   "usd": 0.09715
+  },
+  {
+   "arm": "G38",
+   "file": "hig02_B12__N0",
+   "usd": 0.04494
+  },
+  {
+   "arm": "G38T",
+   "file": "hig02_B12__N0",
+   "usd": 0.04817
+  },
+  {
+   "arm": "G31",
+   "file": "hig02_B12__N1",
+   "usd": 0.00566
+  },
+  {
+   "arm": "G31",
+   "file": "hig02_B12__N2",
+   "usd": 0.00051
+  },
+  {
+   "arm": "GX",
+   "file": "hig01_A1__N2",
+   "usd": 0.06737
+  },
+  {
+   "arm": "GX",
+   "file": "hig01_A1__N3",
+   "usd": 0.06799
+  },
+  {
+   "arm": "GT",
+   "file": "hig02_B12__N1",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GT",
+   "file": "hig02_B12__N2",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GTv",
+   "file": "hig02_B12__N1",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GTv",
+   "file": "hig02_B12__N2",
+   "usd": 0.01525
+  },
+  {
+   "arm": "G38",
+   "file": "hig02_B12__N1",
+   "usd": 0.05474
+  },
+  {
+   "arm": "G38",
+   "file": "hig02_B12__N2",
+   "usd": 0.02863
+  },
+  {
+   "arm": "G38T",
+   "file": "hig02_B12__N1",
+   "usd": 0.07555
+  },
+  {
+   "arm": "G38T",
+   "file": "hig02_B12__N2",
+   "usd": 0.05271
+  },
+  {
+   "arm": "G31",
+   "file": "hig02_B12__N4",
+   "usd": 0.03641
+  },
+  {
+   "arm": "G31",
+   "file": "hig02_B12__N3",
+   "usd": 0.01346
+  },
+  {
+   "arm": "GT",
+   "file": "hig02_B12__N3",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GTv",
+   "file": "hig02_B12__N3",
+   "usd": 0.01525
+  },
+  {
+   "arm": "GT",
+   "file": "hig02_B12__N4",
+   "usd": 0.01525
+  },
+  {
+   "arm": "G38",
+   "file": "hig02_B12__N3",
+   "usd": 0.02594
+  },
+  {
+   "arm": "GTv",
+   "file": "hig02_B12__N4",
+   "usd": 0.01525
+  },
+  {
+   "arm": "G38T",
+   "file": "hig02_B12__N3",
+   "usd": 0.02973
+  },
+  {
+   "arm": "G38",
+   "file": "hig02_B12__N4",
+   "usd": 0.03551
+  },
+  {
+   "arm": "G38T",
+   "file": "hig02_B12__N4",
+   "usd": 0.07107
+  },
+  {
+   "arm": "GX",
+   "file": "hig02_B12__N0",
+   "usd": 0.06186
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda02__N1",
+   "usd": 0.10142
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda02__N0",
+   "usd": 0.10355
+  },
+  {
+   "arm": "GX",
+   "file": "hig01_A1__N4",
+   "usd": 0.06737
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda02__N0",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda02__N0",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda02__N1",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda02__N1",
+   "usd": 0.02368
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda02__N0",
+   "usd": 0.09663
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda02__N0",
+   "usd": 0.11002
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda02__N1",
+   "usd": 0.15891
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda02__N1",
+   "usd": 0.17859
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda02__N3",
+   "usd": 0.06053
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda02__N2",
+   "usd": 0.0736
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda02__N3",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda02__N3",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda02__N2",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda02__N2",
+   "usd": 0.02368
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda02__N3",
+   "usd": 0.00571
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda02__N2",
+   "usd": 0.03573
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda02__N2",
+   "usd": 0.0527
+  },
+  {
+   "arm": "GX",
+   "file": "hig02_B12__N1",
+   "usd": 0.06186
+  },
+  {
+   "arm": "GX",
+   "file": "hig02_B12__N2",
+   "usd": 0.06186
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda02__N3",
+   "usd": 0.007
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda03__N0",
+   "usd": 0.04876
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda03__N0",
+   "usd": 0.01457
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda03__N0",
+   "usd": 0.01457
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda03__N0",
+   "usd": 0.02179
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda02__N4",
+   "usd": 0.14511
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda02__N4",
+   "usd": 0.02368
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda02__N4",
+   "usd": 0.02368
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda03__N0",
+   "usd": 0.04081
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda03__N1",
+   "usd": 0.04612
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda03__N1",
+   "usd": 0.04255
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda03__N1",
+   "usd": 0.01457
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda02__N4",
+   "usd": 0.13862
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda03__N1",
+   "usd": 0.01457
+  },
+  {
+   "arm": "GX",
+   "file": "hig02_B12__N3",
+   "usd": 0.06186
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda03__N2",
+   "usd": 0.05985
+  },
+  {
+   "arm": "GX",
+   "file": "hig02_B12__N4",
+   "usd": 0.06186
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda02__N4",
+   "usd": 0.04845
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda03__N2",
+   "usd": 0.01457
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda03__N1",
+   "usd": 0.05123
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda03__N2",
+   "usd": 0.01457
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda03__N3",
+   "usd": 0.00093
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda03__N3",
+   "usd": 0.01457
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda03__N3",
+   "usd": 0.01457
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda03__N2",
+   "usd": 0.04606
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda03__N2",
+   "usd": 0.06524
+  },
+  {
+   "arm": "G31",
+   "file": "sakai05__N0",
+   "usd": 0.00897
+  },
+  {
+   "arm": "GT",
+   "file": "sakai05__N0",
+   "usd": 0.00448
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai05__N0",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda03__N3",
+   "usd": 0.00366
+  },
+  {
+   "arm": "G31",
+   "file": "ikeda03__N4",
+   "usd": 0.04652
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda03__N3",
+   "usd": 0.00382
+  }
+ ],
+ "total_usd": 4.415
+}

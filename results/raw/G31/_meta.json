@@ -1,0 +1,10 @@
+{
+ "arm": "G31",
+ "model": "gemini-3.1-flash-live-preview",
+ "handoff": "v12",
+ "chunk_s": 0.5,
+ "realtime": "1x",
+ "price_checked": "2026-10-04",
+ "price_page_updated": "2026-10-01",
+ "note": "exp1 arm A 原樣,同日對照組"
+}
