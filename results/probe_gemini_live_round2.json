@@ -1,0 +1,459 @@
+{
+ "clip": "hig01_A1__N0.wav",
+ "clip_s": 20.0,
+ "checked": "2026-10-04",
+ "results": [
+  {
+   "model": "gemini-3.5-transcribe-live",
+   "setup": "T_ja",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "voiceActivity": 6,
+    "interimInputTranscription": 24,
+    "inputTranscription": 3,
+    "generationComplete": 3
+   },
+   "input_transcription": "石切劔箭神社絵馬殿雨に降られたら、まずは屋根を見上げてみよう。立派な剣と弓を見つけることができる。神社名 の",
+   "n_interim": 24,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.63,
+   "usage_last": null,
+   "messages_head": [
+    {
+     "t": 1.45,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 2.53,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "意識"
+      }
+     }
+    },
+    {
+     "t": 3.05,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一切り 剣屋"
+      }
+     }
+    },
+    {
+     "t": 3.58,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一期一会や神社"
+      }
+     }
+    },
+    {
+     "t": 3.79,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一期一会や神社"
+      }
+     }
+    },
+    {
+     "t": 4.11,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一期一会や神社"
+      }
+     }
+    },
+    {
+     "t": 4.62,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一期一会や神社 エマデン"
+      }
+     }
+    },
+    {
+     "t": 5.12,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "一期一会や神社 エマデン"
+      }
+     }
+    },
+    {
+     "t": 5.63,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "石切劔箭神社絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.63,
+     "serverContent": {
+      "generationComplete": true
+     }
+    },
+    {
+     "t": 5.63,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.640s"
+     }
+    },
+    {
+     "t": 8.91,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "8.240s"
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.5-transcribe-live",
+   "setup": "T_ja_vocab",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "voiceActivity": 6,
+    "interimInputTranscription": 24,
+    "inputTranscription": 3,
+    "generationComplete": 3
+   },
+   "input_transcription": "石切劔箭神社 絵馬殿屋根については、まずは屋根を見上げてみよう。立派な剣と矢を見つけることができる。神社 名 の",
+   "n_interim": 24,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.22,
+   "usage_last": null,
+   "messages_head": [
+    {
+     "t": 1.06,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 2.18,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切"
+      }
+     }
+    },
+    {
+     "t": 2.67,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社"
+      }
+     }
+    },
+    {
+     "t": 3.15,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社"
+      }
+     }
+    },
+    {
+     "t": 3.33,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社"
+      }
+     }
+    },
+    {
+     "t": 3.75,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社"
+      }
+     }
+    },
+    {
+     "t": 4.25,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社 絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 4.72,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切劔箭神社 絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.22,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "石切劔箭神社 絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.22,
+     "serverContent": {
+      "generationComplete": true
+     }
+    },
+    {
+     "t": 5.22,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.640s"
+     }
+    },
+    {
+     "t": 8.5,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "8.240s"
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.5-live-translate-preview",
+   "setup": "X_zhHant",
+   "closed": {
+    "code": 1007,
+    "reason": "Invalid JSON payload received. Unknown name \"translationConfig\" at 'setup': Cannot find field."
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "n_interim": 0,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.5-live-translate-preview",
+   "setup": "X_zhHant_gc",
+   "closed": {
+    "code": 1007,
+    "reason": "Invalid JSON payload received. Unknown name \"inputAudioTranscription\" at 'setup.generation_config': Cannot find field.\nInva"
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "n_interim": 0,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.8-live",
+   "setup": "A_think_minimal",
+   "closed": {
+    "code": 1007,
+    "reason": "Thinking level is not supported for this model."
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "n_interim": 0,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.8-live-extended-thinking",
+   "setup": "A_think_minimal",
+   "closed": {
+    "code": 1007,
+    "reason": "Thinking level MINIMAL is not supported for this model. Please retry with other thinking level."
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "n_interim": 0,
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.8-live-extended-thinking",
+   "setup": "A_think_low",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "sessionResumptionUpdate": 1,
+    "voiceActivity": 7,
+    "inputTranscription": 3,
+    "modelTurn": 13,
+    "outputTranscription": 2,
+    "generationComplete": 1,
+    "interactionStatus": 3,
+    "turnComplete": 3,
+    "usageMetadata": 3,
+    "interrupted": 2
+   },
+   "input_transcription": "이시키츠루기야 신사 에마덴今までに着いたら、まずは屋根を見上げてみよう。立派な剣と弓を見つけることができる。",
+   "n_interim": 0,
+   "output_transcription": "伊勢石寸神社繪馬殿到達繪馬殿後，首先抬頭看看屋頂吧，可以發現威風凜凜的劍與弓。",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.04,
+   "usage_last": {
+    "promptTokenCount": 3449,
+    "responseTokenCount": 60,
+    "totalTokenCount": 3509,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 2789
+     },
+     {
+      "modality": "AUDIO",
+      "tokenCount": 531
+     }
+    ],
+    "responseTokensDetails": [
+     {
+      "modality": "AUDIO",
+      "tokenCount": 60
+     }
+    ],
+    "thoughtsTokenCount": 157
+   },
+   "messages_head": [
+    {
+     "t": 0.44,
+     "sessionResumptionUpdate": {
+      "newHandle": "a9fcc9e2-0cb7-48cc-850d-fa794e9e3ead",
+      "resumable": true
+     }
+    },
+    {
+     "t": 1.1,
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 5.04,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "이시키츠루기야 신사 에마덴"
+      }
+     }
+    },
+    {
+     "t": 5.04,
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.640s"
+     }
+    },
+    {
+     "t": 5.44
+    },
+    {
+     "t": 5.44,
+     "serverContent": {}
+    },
+    {
+     "t": 5.71
+    },
+    {
+     "t": 5.72,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 21120
+         }
+        }
+       ],
+       "role": "model"
+      },
+      "outputTranscription": {
+       "text": "伊勢石寸神社繪馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.94
+    },
+    {
+     "t": 5.95,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 20480
+         }
+        }
+       ],
+       "role": "model"
+      }
+     }
+    },
+    {
+     "t": 6.26
+    },
+    {
+     "t": 6.27,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 20480
+         }
+        }
+       ],
+       "role": "model"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
