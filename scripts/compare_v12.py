@@ -14,11 +14,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
-NEW = ["G31", "G38", "G38T", "GX", "GT", "GTv"]
+NEW = ["G31", "G31c", "G38", "G38T", "GX", "GT", "GTv"]
 BASE = ["A", "C", "Cplus", "Cplus50"]
 LABEL = {
     "A": "舊 Live 3.1(8 月)", "C": "SM 即時 無詞表", "Cplus": "SM 即時 +詞表+假名",
-    "Cplus50": "SM 即時 +50詞無讀音", "G31": "3.1 Live(同日對照)", "G38": "3.8 Live",
+    "Cplus50": "SM 即時 +50詞無讀音", "G31": "3.1 Live 同日(含中斷)", "G31c": "3.1 Live 同日(取代 6 檔)", "G38": "3.8 Live",
     "G38T": "3.8 Live ET(low)", "GX": "3.5 Live Translate", "GT": "3.5 Transcribe 無詞表",
     "GTv": "3.5 Transcribe +詞表",
 }
@@ -67,9 +67,28 @@ def raw(arm):
     return [json.loads(f.read_text()) for f in sorted(d.glob("*__N*.json"))] if d.exists() else []
 
 
+# handoff-v12 §6 偏離 2:G31 有 6 檔在 12 條併發下靜默中斷,併發 1 重跑(G31r)0/6 中斷
+# → 依先寫死的規則判為測試假象。G31c = G31 以 G31r 取代那 6 檔;R1 與所有「− G31」的比較用 G31c。
+REPLACED = {("hig01_A1", c) for c in ("N0", "N1", "N2")} | {("hig02_B12", c) for c in ("N0", "N1", "N2")}
+
+
+def add_g31c(rows, outcomes):
+    if not any(r["arm"] == "G31r" for r in rows):
+        return
+    for src, tgt in ((rows, rows), (outcomes, outcomes)):
+        extra = []
+        for r in src:
+            if r["arm"] == "G31" and (r["seg"], r["cond"]) not in REPLACED:
+                extra.append({**r, "arm": "G31c"})
+            if r["arm"] == "G31r":
+                extra.append({**r, "arm": "G31c"})
+        tgt.extend(extra)
+
+
 def main():
     rows = json.loads((ROOT / "results" / "scores.json").read_text())
     outcomes = json.loads((ROOT / "results" / "noun_outcomes.json").read_text())
+    add_g31c(rows, outcomes)
     out = {"note": "handoff-v12 step 2。純計算。", "arms": {}, "diffs": {}, "rules": {}}
 
     print(f"{'arm':<6}{'說明':<20}{'檔':>4}{'全部':>8}" + "".join(c.rjust(7) for c in CONDS)
@@ -82,7 +101,7 @@ def main():
         rs = [r for r in rows if r["arm"] == arm]
         rec["tw_bad"] = sum(r.get("tw_bad_hits") or 0 for r in rs) if any(r.get("tw_bad_hits") is not None for r in rs) else None
         rec["simplified"] = sum(r.get("simplified_chars") or 0 for r in rs) if any(r.get("simplified_chars") is not None for r in rs) else None
-        files = raw(arm)
+        files = raw(arm) if arm != "G31c" else []
         n3 = [f for f in files if f["file"].endswith("__N3.wav")]
         key = "input_transcription" if arm in NEW + ["A"] else "transcript"
         rec["n3_empty"] = sum(1 for f in n3 if len((f.get(key) or "").strip()) < 20)
@@ -108,8 +127,11 @@ def main():
     print()
     pairs = [("GT", "C", "引擎(兩邊都無詞表)← 乾淨"), ("GTv", "Cplus", "引擎+讀音 ← 混變因"),
              ("GTv", "Cplus50", "Gemini 全詞表無讀音 vs SM 50 詞無讀音"), ("GTv", "GT", "Gemini 詞表的價值"),
-             ("G31", "A", "同一顆 3.1,8 月 → 今天(漂移)"), ("G38", "G31", "3.8 vs 3.1(同日)"),
-             ("G38T", "G31", "3.8 ET vs 3.1(同日)"), ("GX", "G31", "Live Translate vs 3.1(同日)")]
+             ("G31", "A", "同一顆 3.1,8 月 → 今天(含中斷,僅供對照)"),
+             ("G31c", "A", "同一顆 3.1,8 月 → 今天(R1 用這個)"),
+             ("G38", "G31c", "3.8 vs 3.1(同日)"), ("G38T", "G31c", "3.8 ET vs 3.1(同日)"),
+             ("GX", "G31c", "Live Translate vs 3.1(同日)"), ("GT", "G31c", "Transcribe vs 3.1(同日)"),
+             ("GTv", "G31c", "Transcribe+詞表 vs 3.1(同日)")]
     for a, b, why in pairs:
         if a in out["arms"] and b in out["arms"]:
             bd = boot_diff(outcomes, a, b)
@@ -121,11 +143,12 @@ def main():
     g = lambda k: A.get(k, {}).get("recall")
     gn3 = lambda k: A.get(k, {}).get("by_cond", {}).get("N3")
     print("\n── 判讀(handoff-v12 §3,先寫死)──")
-    if g("G31") is not None:
-        drift = g("G31") - 0.439
+    r1arm = "G31c" if g("G31c") is not None else "G31"
+    if g(r1arm) is not None:
+        drift = g(r1arm) - 0.439
         r1 = "8 月數字仍可當基準" if abs(drift) <= 0.05 else "有漂移:只用同日 G31 比"
-        out["rules"]["R1"] = {"G31": g("G31"), "drift": round(drift, 4), "verdict": r1}
-        print(f"R1 漂移:G31 {g('G31'):.3f} − 0.439 = {drift:+.3f} → {r1}")
+        out["rules"]["R1"] = {"arm": r1arm, "recall": g(r1arm), "raw_G31": g("G31"), "drift": round(drift, 4), "verdict": r1}
+        print(f"R1 漂移:{r1arm} {g(r1arm):.3f} − 0.439 = {drift:+.3f} → {r1}(未取代的 G31 {g('G31'):.3f})")
     if g("GT") is not None and g("GTv") is not None:
         best = "GTv" if g("GTv") >= g("GT") else "GT"
         if g("GTv") >= 0.741 and (gn3("GTv") or 0) >= 0.50:
@@ -143,14 +166,15 @@ def main():
         r3 = "加入選單(第四個選項)" if ok else "不加,只記錄"
         out["rules"]["R3"] = {"best": top, "recall": g(top), "N3": gn3(top), "verdict": r3}
         print(f"R3 一體式:最佳 {top} {g(top):.3f}(N3 {gn3(top):.3f})→ {r3}")
-    cand = [k for k in NEW if g(k) is not None]
+    cand = [k for k in NEW if g(k) is not None and k != "G31"]
     if cand and g("Cplus") is not None:
         top = max(cand, key=g)
         hit = g(top) - g("Cplus") >= 0.05 and (gn3(top) or 0) >= (gn3("Cplus") or 0)
         r4 = "建議另開任務重評主線" if hit else "主線不動"
         out["rules"]["R4"] = {"best": top, "diff_vs_Cplus": round(g(top) - g("Cplus"), 4), "verdict": r4}
         print(f"R4 主線:最佳 {top} − Cplus = {g(top) - g('Cplus'):+.3f} → {r4}")
-    tot = sum(A[k]["usd"] for k in NEW if k in A and A[k].get("usd") is not None)
+    tot = sum(A[k]["usd"] for k in NEW if k in A and A[k].get("usd") is not None and k != "G31c")
+    tot += sum(f.get("usd_est", 0) for f in raw("G31r"))
     out["total_usd_est"] = round(tot, 3)
     print(f"\n牌價估計合計 ${tot:.2f}(保險絲 $8)")
     (ROOT / "results" / "v12_compare.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))

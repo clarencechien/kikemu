@@ -904,7 +904,32 @@
    "arm": "G31r",
    "file": "hig01_A1__N0",
    "usd": 0.08403
+  },
+  {
+   "arm": "G31r",
+   "file": "hig01_A1__N1",
+   "usd": 0.07679
+  },
+  {
+   "arm": "G31r",
+   "file": "hig01_A1__N2",
+   "usd": 0.06298
+  },
+  {
+   "arm": "G31r",
+   "file": "hig02_B12__N0",
+   "usd": 0.04466
+  },
+  {
+   "arm": "G31r",
+   "file": "hig02_B12__N1",
+   "usd": 0.04813
+  },
+  {
+   "arm": "G31r",
+   "file": "hig02_B12__N2",
+   "usd": 0.03405
   }
  ],
- "total_usd": 5.9298
+ "total_usd": 6.1964
 }
