@@ -239,6 +239,10 @@ npx wrangler r2 object get kikemu-config/vocab/<id>.json --remote --pipe | jq .
 
 - **iOS 長時間連續收音**:kikemu 是連續 60 分鐘而非 PTT 短句,AudioContext
   可能被系統回收(manemu 踩過全套坑)——需要真機驗證與背景保活策略。
+  **已加螢幕常亮**(`src/ui/wakelock.ts`,Screen Wake Lock API):按開始時取得、
+  切 App 回來自動重新取得、停止或任何失敗路徑都會放掉;拿不到會明講,狀態列持續提醒。
+  邏輯在 Chromium 用可控的假 wakeLock 驗過(取得 / 切背景被收回 / 回前景重取 / 重入不疊監聽 /
+  停止後不再要 / 被拒只提示一次);**iOS 真機(尤其加入主畫面模式)未驗**。
 - **iOS 關閉瀏覽器降噪的實際效果**:`echoCancellation/noiseSuppression/autoGainControl:false`
   的 constraint 支援不完整,可能拿到處理過的音訊;上線前用 exp3 方法做一次 A/B。
 - ~~**行動網路出口被路由到 HKG,Gemini 整場被拒**~~ → **已修**(2026-09-25,`GeminiProxy` 代打,

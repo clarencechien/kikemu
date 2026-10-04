@@ -9,6 +9,7 @@ import { api } from '../api';
 import { sessionStore } from '../db';
 import type { Me, Mode, Pack, RelayMsg } from '../types';
 import { addFinal, addNote, clearStream, collectLines, setPartial, setZh, setZhError, toast } from './cards';
+import { keepScreenOn, releaseScreen, screenKeptOn } from './wakelock';
 
 const $ = (id: string) => document.getElementById(id)!;
 
@@ -97,10 +98,10 @@ export function initListen(onPreviewStart: () => void): Listen {
           ? `伺服器收到 ${srvFrames} 框但音量近乎零——音訊在傳輸中損壞`
           : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是${langSel.selectedOptions[0]?.textContent ?? '所選語言'}`,
       );
-    } else if (lastFinalAt && lastFinalAt > lastPartialAt) {
-      setStat('ok', '聽寫中・翻譯中');
     } else {
-      setStat('ok', '聽寫中');
+      // 拿不到螢幕常亮時一直掛著提醒:螢幕一鎖這一場就斷,這不是一次性提示能交代的事
+      const awake = screenKeptOn() ? '' : '・螢幕可能會自動鎖定';
+      setStat('ok', (lastFinalAt && lastFinalAt > lastPartialAt ? '聽寫中・翻譯中' : '聽寫中') + awake);
     }
   }
 
@@ -218,6 +219,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   }
 
   function cleanupAudio() {
+    releaseScreen(); // 麥克風停了就不必再撐著螢幕;所有失敗與收尾路徑都會經過這裡
     mediaStream?.getTracks().forEach(t => t.stop());
     mediaStream = null;
     audioCtx?.close().catch(() => {});
@@ -360,6 +362,9 @@ export function initListen(onPreviewStart: () => void): Listen {
     // AudioWorklet 的 process() 從頭到尾不會被呼叫:沒有錯誤、沒有權限提示、
     // 音量恆為零。這是實際踩到的 bug,不是理論風險。
     let resumeP: Promise<void> | undefined;
+    // 螢幕常亮也在手勢的同步階段要(有些瀏覽器要求頁面在前景、剛有使用者互動)。
+    // 連續收音一鎖屏就斷(PRD §8 風險 1),這是最直接的防線;拿不到會明講,不擋聽譯。
+    keepScreenOn(text => addNote('info', text));
     try {
       audioCtx = new AudioContext();
       resumeP = audioCtx.resume();

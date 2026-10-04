@@ -254,6 +254,7 @@ Modal CLI 查不到費用,權威在 dashboard)。另有先前**白燒的 $1.26**
 | 項目 | 狀態 |
 |---|---|
 | 聽譯管線(mic → WS → Speechmatics → Gemini 譯) | ✅ 正式站實測通過 |
+| **聽譯中保持螢幕常亮**(Screen Wake Lock) | ✅ build 通過、Chromium 邏輯測試通過;切 App 回來自動重新取得,拿不到會明講。**iOS 真機未驗**(PRD §8 風險 1 降低、未解除) |
 | **模式選單**(導覽 / 對話 / Gemini 對照,handoff-v12) | ✅ build 通過、本機三模式端到端驗證(含代打路徑)。**待部署**。對話模式的語者分離準確度未量測;Gemini 對照僅 admin、標「僅供對照」 |
 | 新一代 Gemini Live × exp1(handoff-v12) | ✅ 3.8 Live 與 3.1 打平;**3.5 Transcribe Live 安靜時與 SM+詞表同級,人聲背景下崩**;主線不動 |
 | **Gemini 區域封鎖的代打**(`GeminiProxy` DO,釘在 `wnam`) | ✅ iOS 行動網路(HKG 出口)實機證實 400 → 代打後有譯文。失敗原因現在會寫在卡片上、Logs 帶 `colo=` |
@@ -379,7 +380,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 |---|---|
 | 部署最新版(`cd app && npm run deploy`;production 從 `main` 建,合 PR 後看 CF build 過了才算) | 你 |
 | Google OIDC、Turnstile、CANONICAL_HOST | 你(Cloudflare / Google Console) |
-| iOS 真機**長時間**連續收音驗證(短場已跑通:原文與譯文都出得來;60 分鐘與背景回收未驗) | 你(需要實機) |
+| iOS 真機**長時間**連續收音驗證(短場已跑通:原文與譯文都出得來;60 分鐘與背景回收未驗)。**順便看螢幕常亮**:聽譯中螢幕不該自己暗掉;狀態列若出現「螢幕可能會自動鎖定」就是沒拿到 | 你(需要實機) |
 | AI Studio Spend 頁的供應商端上限 | 你(程式管不到,見 `docs/gemini-api-lessons.md` §保險絲) |
 | **給 PR 加 build check**(GitHub Actions 跑 `npm run build`)——PR #73 自動合併吃掉 `main` 三處、production build 才發現 | 你決定要不要 |
 | 確認 Workers 方案(Free/Paid)與一場 60 分鐘的請求數是否碰限額 | 你(dashboard → Plans / Metrics);要算的話我從 `relay.ts` 框率估 |
