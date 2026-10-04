@@ -809,7 +809,17 @@
    "arm": "G38T",
    "file": "sakai06__N4",
    "usd": 0.00764
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda02__N2",
+   "usd": 0.09616
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda02__N3",
+   "usd": 0.09616
   }
  ],
- "total_usd": 5.093
+ "total_usd": 5.2853
 }
