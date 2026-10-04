@@ -1,0 +1,1720 @@
+{
+ "source": "results/raw/Cplus(exp1 C+ = SM enhanced + 詞表,1× 即時推流),30 檔 = 6 段 × N0–N4",
+ "relay_constants": {
+  "MAX_PENDING_CHARS": 48,
+  "PENDING_STALE_S": 6.0
+ },
+ "rules": {
+  "old": "2026-10-04 之前的導覽模式:48 字整段硬切;6 秒從殘句開始累積起算",
+  "soft": "48 字切在最後一個軟斷點,找不到等到 96 字",
+  "idle": "6 秒從最後一則定稿起算",
+  "new": "soft + idle"
+ },
+ "pooled": {
+  "old": {
+   "sentences": 538,
+   "frag_le4": 53,
+   "open_end": 164,
+   "frag_rate": 0.099,
+   "open_rate": 0.305,
+   "len_median": 20.0,
+   "wait_p50_s": 3.63,
+   "wait_p90_s": 6.56,
+   "wait_max_s": 7.0
+  },
+  "soft": {
+   "sentences": 538,
+   "frag_le4": 53,
+   "open_end": 164,
+   "frag_rate": 0.099,
+   "open_rate": 0.305,
+   "len_median": 20.0,
+   "wait_p50_s": 3.63,
+   "wait_p90_s": 6.56,
+   "wait_max_s": 7.0
+  },
+  "idle": {
+   "sentences": 401,
+   "frag_le4": 14,
+   "open_end": 35,
+   "frag_rate": 0.035,
+   "open_rate": 0.087,
+   "len_median": 24,
+   "wait_p50_s": 4.93,
+   "wait_p90_s": 9.53,
+   "wait_max_s": 15.49
+  },
+  "new": {
+   "sentences": 408,
+   "frag_le4": 3,
+   "open_end": 0,
+   "frag_rate": 0.007,
+   "open_rate": 0.0,
+   "len_median": 24.0,
+   "wait_p50_s": 4.59,
+   "wait_p90_s": 9.53,
+   "wait_max_s": 15.49
+  }
+ },
+ "by_condition": {
+  "N0": {
+   "old": {
+    "sentences": 102,
+    "frag_le4": 8,
+    "open_end": 32,
+    "frag_rate": 0.078,
+    "open_rate": 0.314,
+    "len_median": 23.0,
+    "wait_p50_s": 4.06,
+    "wait_p90_s": 6.86,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 102,
+    "frag_le4": 8,
+    "open_end": 32,
+    "frag_rate": 0.078,
+    "open_rate": 0.314,
+    "len_median": 23.0,
+    "wait_p50_s": 4.06,
+    "wait_p90_s": 6.86,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 77,
+    "frag_le4": 3,
+    "open_end": 9,
+    "frag_rate": 0.039,
+    "open_rate": 0.117,
+    "len_median": 26,
+    "wait_p50_s": 4.99,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 15.05
+   },
+   "new": {
+    "sentences": 79,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.013,
+    "open_rate": 0.0,
+    "len_median": 26,
+    "wait_p50_s": 4.94,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 15.05
+   }
+  },
+  "N1": {
+   "old": {
+    "sentences": 107,
+    "frag_le4": 10,
+    "open_end": 30,
+    "frag_rate": 0.093,
+    "open_rate": 0.28,
+    "len_median": 20,
+    "wait_p50_s": 3.54,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 6.99
+   },
+   "soft": {
+    "sentences": 107,
+    "frag_le4": 10,
+    "open_end": 30,
+    "frag_rate": 0.093,
+    "open_rate": 0.28,
+    "len_median": 20,
+    "wait_p50_s": 3.54,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 6.99
+   },
+   "idle": {
+    "sentences": 83,
+    "frag_le4": 4,
+    "open_end": 7,
+    "frag_rate": 0.048,
+    "open_rate": 0.084,
+    "len_median": 24,
+    "wait_p50_s": 4.58,
+    "wait_p90_s": 9.48,
+    "wait_max_s": 12.51
+   },
+   "new": {
+    "sentences": 85,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.012,
+    "open_rate": 0.0,
+    "len_median": 23,
+    "wait_p50_s": 4.49,
+    "wait_p90_s": 9.48,
+    "wait_max_s": 12.51
+   }
+  },
+  "N2": {
+   "old": {
+    "sentences": 106,
+    "frag_le4": 11,
+    "open_end": 36,
+    "frag_rate": 0.104,
+    "open_rate": 0.34,
+    "len_median": 22.0,
+    "wait_p50_s": 4.02,
+    "wait_p90_s": 6.89,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 106,
+    "frag_le4": 11,
+    "open_end": 36,
+    "frag_rate": 0.104,
+    "open_rate": 0.34,
+    "len_median": 22.0,
+    "wait_p50_s": 4.02,
+    "wait_p90_s": 6.89,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 78,
+    "frag_le4": 4,
+    "open_end": 10,
+    "frag_rate": 0.051,
+    "open_rate": 0.128,
+    "len_median": 25.0,
+    "wait_p50_s": 4.96,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 13.97
+   },
+   "new": {
+    "sentences": 79,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 25,
+    "wait_p50_s": 4.95,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 13.97
+   }
+  },
+  "N3": {
+   "old": {
+    "sentences": 117,
+    "frag_le4": 15,
+    "open_end": 33,
+    "frag_rate": 0.128,
+    "open_rate": 0.282,
+    "len_median": 16,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 117,
+    "frag_le4": 15,
+    "open_end": 33,
+    "frag_rate": 0.128,
+    "open_rate": 0.282,
+    "len_median": 16,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 86,
+    "frag_le4": 0,
+    "open_end": 2,
+    "frag_rate": 0.0,
+    "open_rate": 0.023,
+    "len_median": 22.0,
+    "wait_p50_s": 4.4,
+    "wait_p90_s": 8.83,
+    "wait_max_s": 15.49
+   },
+   "new": {
+    "sentences": 86,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.0,
+    "wait_p50_s": 4.4,
+    "wait_p90_s": 8.83,
+    "wait_max_s": 15.49
+   }
+  },
+  "N4": {
+   "old": {
+    "sentences": 106,
+    "frag_le4": 9,
+    "open_end": 33,
+    "frag_rate": 0.085,
+    "open_rate": 0.311,
+    "len_median": 22.0,
+    "wait_p50_s": 3.96,
+    "wait_p90_s": 6.53,
+    "wait_max_s": 6.97
+   },
+   "soft": {
+    "sentences": 106,
+    "frag_le4": 9,
+    "open_end": 33,
+    "frag_rate": 0.085,
+    "open_rate": 0.311,
+    "len_median": 22.0,
+    "wait_p50_s": 3.96,
+    "wait_p90_s": 6.53,
+    "wait_max_s": 6.97
+   },
+   "idle": {
+    "sentences": 77,
+    "frag_le4": 3,
+    "open_end": 7,
+    "frag_rate": 0.039,
+    "open_rate": 0.091,
+    "len_median": 26,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 9.99,
+    "wait_max_s": 12.53
+   },
+   "new": {
+    "sentences": 79,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.013,
+    "open_rate": 0.0,
+    "len_median": 25,
+    "wait_p50_s": 4.96,
+    "wait_p90_s": 9.99,
+    "wait_max_s": 12.53
+   }
+  }
+ },
+ "examples_N0_bad": {
+  "old": [
+   "神社名の石切剣はは強固な岩をも切り裂き、貫くほど",
+   "遥か昔、記紀神話時代、天照大御神からとくさの神田空を",
+   "この地に降り立ち、先住していた一族の長長髄彦の妹と結ばれ生まれた",
+   "広場には揚巻むすびという特殊なカタチの注連縄が結ばれている",
+   "。",
+   "枚岡神社の主宰神は天児屋根命といい、神事を司る",
+   "室町住宅旧生田新市街ニュータウンの事始め",
+   "時は、明治現在の生田駅の西側、呉服神社の鳥居の奥に",
+   "そんな時代に郊外にマイホームを持とうという提案をしたのが、阪急電鉄の生みの親",
+   "1。",
+   "小林一三",
+   "が室町住宅を作るよりずっと昔、生田は城下町として栄えてい",
+   "ここには千利休の師匠、武野紹鷗が愛したと伝えられる椿の"
+  ],
+  "soft": [
+   "神社名の石切剣はは強固な岩をも切り裂き、貫くほど",
+   "遥か昔、記紀神話時代、天照大御神からとくさの神田空を",
+   "この地に降り立ち、先住していた一族の長長髄彦の妹と結ばれ生まれた",
+   "広場には揚巻むすびという特殊なカタチの注連縄が結ばれている",
+   "。",
+   "枚岡神社の主宰神は天児屋根命といい、神事を司る",
+   "室町住宅旧生田新市街ニュータウンの事始め",
+   "時は、明治現在の生田駅の西側、呉服神社の鳥居の奥に",
+   "そんな時代に郊外にマイホームを持とうという提案をしたのが、阪急電鉄の生みの親",
+   "1。",
+   "小林一三",
+   "が室町住宅を作るよりずっと昔、生田は城下町として栄えてい",
+   "ここには千利休の師匠、武野紹鷗が愛したと伝えられる椿の"
+  ],
+  "idle": [
+   "突然現れた神武天皇に長髄彦は激しく抵抗したが、尊と神武天皇が天孫の証である天の母親を互いに示し合うこと",
+   "枚岡神社の主宰神は天児屋根命といい、神事を司る神様注連縄を用いた神話に深い関わりをもつ神様でもある",
+   "。",
+   "そんな神様にちなんで、枚岡神社では、毎年12月にしめ縄を新しくかけかえる注連縄掛神事という祭りが",
+   "室町住宅旧生田新市街ニュータウンの事始め時は、明治現在の生田駅の西側、呉服神社の鳥居の奥に、ニュータウンの",
+   "明治時代は鉄道建設ラッシュが起こり、各地で民営の鉄道会社が立ち上がった後に阪急電鉄となる箕面有馬電気軌道",
+   "こうして富裕層だけでなく、いちサラリーマンでも郊外に家をもてるようになり、郊外から電車に乗って会社",
+   "1。",
+   "商店街の先には、丹波地方から生田を経て大阪へと向かう能勢街道が走っており、大阪へ農産物や物産品がさかん",
+   "昭和初期には北摂初の百貨店糸屋百貨店が誕生し、いち早く近代的な洋風形態を取り入れ作られた3階建て"
+  ],
+  "new": [
+   "1。"
+  ]
+ },
+ "per_file": {
+  "hig01_A1__N0": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 0,
+    "open_end": 8,
+    "frag_rate": 0.0,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 4.05,
+    "wait_p90_s": 6.85,
+    "wait_max_s": 6.94
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 0,
+    "open_end": 8,
+    "frag_rate": 0.0,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 4.05,
+    "wait_p90_s": 6.85,
+    "wait_max_s": 6.94
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.071,
+    "len_median": 27.5,
+    "wait_p50_s": 5.53,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 11.05
+   },
+   "new": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 26,
+    "wait_p50_s": 4.59,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 11.05
+   }
+  },
+  "hig01_A1__N1": {
+   "old": {
+    "sentences": 24,
+    "frag_le4": 3,
+    "open_end": 7,
+    "frag_rate": 0.125,
+    "open_rate": 0.292,
+    "len_median": 16.5,
+    "wait_p50_s": 3.45,
+    "wait_p90_s": 6.34,
+    "wait_max_s": 6.84
+   },
+   "soft": {
+    "sentences": 24,
+    "frag_le4": 3,
+    "open_end": 7,
+    "frag_rate": 0.125,
+    "open_rate": 0.292,
+    "len_median": 16.5,
+    "wait_p50_s": 3.45,
+    "wait_p90_s": 6.34,
+    "wait_max_s": 6.84
+   },
+   "idle": {
+    "sentences": 18,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.056,
+    "len_median": 20.5,
+    "wait_p50_s": 4.02,
+    "wait_p90_s": 9.0,
+    "wait_max_s": 10.09
+   },
+   "new": {
+    "sentences": 19,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22,
+    "wait_p50_s": 3.99,
+    "wait_p90_s": 9.0,
+    "wait_max_s": 10.09
+   }
+  },
+  "hig01_A1__N2": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 2,
+    "open_end": 8,
+    "frag_rate": 0.095,
+    "open_rate": 0.381,
+    "len_median": 23,
+    "wait_p50_s": 4.45,
+    "wait_p90_s": 6.92,
+    "wait_max_s": 6.97
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 2,
+    "open_end": 8,
+    "frag_rate": 0.095,
+    "open_rate": 0.381,
+    "len_median": 23,
+    "wait_p50_s": 4.45,
+    "wait_p90_s": 6.92,
+    "wait_max_s": 6.97
+   },
+   "idle": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 2,
+    "frag_rate": 0.0,
+    "open_rate": 0.133,
+    "len_median": 26,
+    "wait_p50_s": 4.79,
+    "wait_p90_s": 9.97,
+    "wait_max_s": 12.51
+   },
+   "new": {
+    "sentences": 16,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 24.5,
+    "wait_p50_s": 4.45,
+    "wait_p90_s": 9.97,
+    "wait_max_s": 12.51
+   }
+  },
+  "hig01_A1__N3": {
+   "old": {
+    "sentences": 26,
+    "frag_le4": 2,
+    "open_end": 7,
+    "frag_rate": 0.077,
+    "open_rate": 0.269,
+    "len_median": 14.5,
+    "wait_p50_s": 3.47,
+    "wait_p90_s": 6.29,
+    "wait_max_s": 6.4
+   },
+   "soft": {
+    "sentences": 26,
+    "frag_le4": 2,
+    "open_end": 7,
+    "frag_rate": 0.077,
+    "open_rate": 0.269,
+    "len_median": 14.5,
+    "wait_p50_s": 3.47,
+    "wait_p90_s": 6.29,
+    "wait_max_s": 6.4
+   },
+   "idle": {
+    "sentences": 18,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 19.0,
+    "wait_p50_s": 4.34,
+    "wait_p90_s": 10.83,
+    "wait_max_s": 11.98
+   },
+   "new": {
+    "sentences": 18,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 19.0,
+    "wait_p50_s": 4.34,
+    "wait_p90_s": 10.83,
+    "wait_max_s": 11.98
+   }
+  },
+  "hig01_A1__N4": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 0,
+    "open_end": 8,
+    "frag_rate": 0.0,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 4.13,
+    "wait_p90_s": 6.49,
+    "wait_max_s": 6.97
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 0,
+    "open_end": 8,
+    "frag_rate": 0.0,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 4.13,
+    "wait_p90_s": 6.49,
+    "wait_max_s": 6.97
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.071,
+    "len_median": 28.0,
+    "wait_p50_s": 5.57,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 11.01
+   },
+   "new": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 27,
+    "wait_p50_s": 4.92,
+    "wait_p90_s": 10.08,
+    "wait_max_s": 11.01
+   }
+  },
+  "hig02_B12__N0": {
+   "old": {
+    "sentences": 18,
+    "frag_le4": 1,
+    "open_end": 5,
+    "frag_rate": 0.056,
+    "open_rate": 0.278,
+    "len_median": 25.0,
+    "wait_p50_s": 5.09,
+    "wait_p90_s": 6.86,
+    "wait_max_s": 6.9
+   },
+   "soft": {
+    "sentences": 18,
+    "frag_le4": 1,
+    "open_end": 5,
+    "frag_rate": 0.056,
+    "open_rate": 0.278,
+    "len_median": 25.0,
+    "wait_p50_s": 5.09,
+    "wait_p90_s": 6.86,
+    "wait_max_s": 6.9
+   },
+   "idle": {
+    "sentences": 15,
+    "frag_le4": 2,
+    "open_end": 3,
+    "frag_rate": 0.133,
+    "open_rate": 0.2,
+    "len_median": 29,
+    "wait_p50_s": 5.09,
+    "wait_p90_s": 9.53,
+    "wait_max_s": 11.38
+   },
+   "new": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 30,
+    "wait_p50_s": 5.09,
+    "wait_p90_s": 9.53,
+    "wait_max_s": 11.38
+   }
+  },
+  "hig02_B12__N1": {
+   "old": {
+    "sentences": 20,
+    "frag_le4": 2,
+    "open_end": 7,
+    "frag_rate": 0.1,
+    "open_rate": 0.35,
+    "len_median": 23.0,
+    "wait_p50_s": 4.96,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 6.99
+   },
+   "soft": {
+    "sentences": 20,
+    "frag_le4": 2,
+    "open_end": 7,
+    "frag_rate": 0.1,
+    "open_rate": 0.35,
+    "len_median": 23.0,
+    "wait_p50_s": 4.96,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 6.99
+   },
+   "idle": {
+    "sentences": 15,
+    "frag_le4": 2,
+    "open_end": 2,
+    "frag_rate": 0.133,
+    "open_rate": 0.133,
+    "len_median": 27,
+    "wait_p50_s": 5.08,
+    "wait_p90_s": 9.49,
+    "wait_max_s": 11.43
+   },
+   "new": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 27,
+    "wait_p50_s": 5.08,
+    "wait_p90_s": 9.49,
+    "wait_max_s": 11.43
+   }
+  },
+  "hig02_B12__N2": {
+   "old": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 8,
+    "frag_rate": 0.15,
+    "open_rate": 0.4,
+    "len_median": 20.0,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 6.96,
+    "wait_max_s": 6.98
+   },
+   "soft": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 8,
+    "frag_rate": 0.15,
+    "open_rate": 0.4,
+    "len_median": 20.0,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 6.96,
+    "wait_max_s": 6.98
+   },
+   "idle": {
+    "sentences": 15,
+    "frag_le4": 3,
+    "open_end": 4,
+    "frag_rate": 0.2,
+    "open_rate": 0.267,
+    "len_median": 27,
+    "wait_p50_s": 5.0,
+    "wait_p90_s": 10.94,
+    "wait_max_s": 11.32
+   },
+   "new": {
+    "sentences": 15,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 27,
+    "wait_p50_s": 5.0,
+    "wait_p90_s": 10.94,
+    "wait_max_s": 11.32
+   }
+  },
+  "hig02_B12__N3": {
+   "old": {
+    "sentences": 26,
+    "frag_le4": 4,
+    "open_end": 6,
+    "frag_rate": 0.154,
+    "open_rate": 0.231,
+    "len_median": 13.5,
+    "wait_p50_s": 2.41,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 6.96
+   },
+   "soft": {
+    "sentences": 26,
+    "frag_le4": 4,
+    "open_end": 6,
+    "frag_rate": 0.154,
+    "open_rate": 0.231,
+    "len_median": 13.5,
+    "wait_p50_s": 2.41,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 6.96
+   },
+   "idle": {
+    "sentences": 20,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 16.5,
+    "wait_p50_s": 3.4,
+    "wait_p90_s": 7.39,
+    "wait_max_s": 11.96
+   },
+   "new": {
+    "sentences": 20,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 16.5,
+    "wait_p50_s": 3.4,
+    "wait_p90_s": 7.39,
+    "wait_max_s": 11.96
+   }
+  },
+  "hig02_B12__N4": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 3,
+    "open_end": 7,
+    "frag_rate": 0.143,
+    "open_rate": 0.333,
+    "len_median": 23,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 6.6,
+    "wait_max_s": 6.93
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 3,
+    "open_end": 7,
+    "frag_rate": 0.143,
+    "open_rate": 0.333,
+    "len_median": 23,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 6.6,
+    "wait_max_s": 6.93
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 1,
+    "frag_rate": 0.071,
+    "open_rate": 0.071,
+    "len_median": 28.5,
+    "wait_p50_s": 6.97,
+    "wait_p90_s": 10.01,
+    "wait_max_s": 11.4
+   },
+   "new": {
+    "sentences": 14,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 28.5,
+    "wait_p50_s": 6.97,
+    "wait_p90_s": 10.01,
+    "wait_max_s": 11.4
+   }
+  },
+  "ikeda02__N0": {
+   "old": {
+    "sentences": 29,
+    "frag_le4": 3,
+    "open_end": 11,
+    "frag_rate": 0.103,
+    "open_rate": 0.379,
+    "len_median": 25,
+    "wait_p50_s": 4.94,
+    "wait_p90_s": 6.97,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 29,
+    "frag_le4": 3,
+    "open_end": 11,
+    "frag_rate": 0.103,
+    "open_rate": 0.379,
+    "len_median": 25,
+    "wait_p50_s": 4.94,
+    "wait_p90_s": 6.97,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 21,
+    "frag_le4": 0,
+    "open_end": 3,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 31,
+    "wait_p50_s": 5.0,
+    "wait_p90_s": 11.0,
+    "wait_max_s": 15.05
+   },
+   "new": {
+    "sentences": 22,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 29.0,
+    "wait_p50_s": 4.99,
+    "wait_p90_s": 11.0,
+    "wait_max_s": 15.05
+   }
+  },
+  "ikeda02__N1": {
+   "old": {
+    "sentences": 28,
+    "frag_le4": 1,
+    "open_end": 9,
+    "frag_rate": 0.036,
+    "open_rate": 0.321,
+    "len_median": 25.5,
+    "wait_p50_s": 4.93,
+    "wait_p90_s": 6.64,
+    "wait_max_s": 6.71
+   },
+   "soft": {
+    "sentences": 28,
+    "frag_le4": 1,
+    "open_end": 9,
+    "frag_rate": 0.036,
+    "open_rate": 0.321,
+    "len_median": 25.5,
+    "wait_p50_s": 4.93,
+    "wait_p90_s": 6.64,
+    "wait_max_s": 6.71
+   },
+   "idle": {
+    "sentences": 22,
+    "frag_le4": 1,
+    "open_end": 3,
+    "frag_rate": 0.045,
+    "open_rate": 0.136,
+    "len_median": 30.0,
+    "wait_p50_s": 4.94,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 12.51
+   },
+   "new": {
+    "sentences": 23,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 27,
+    "wait_p50_s": 4.94,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 12.51
+   }
+  },
+  "ikeda02__N2": {
+   "old": {
+    "sentences": 31,
+    "frag_le4": 2,
+    "open_end": 11,
+    "frag_rate": 0.065,
+    "open_rate": 0.355,
+    "len_median": 23,
+    "wait_p50_s": 4.46,
+    "wait_p90_s": 6.52,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 31,
+    "frag_le4": 2,
+    "open_end": 11,
+    "frag_rate": 0.065,
+    "open_rate": 0.355,
+    "len_median": 23,
+    "wait_p50_s": 4.46,
+    "wait_p90_s": 6.52,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 23,
+    "frag_le4": 1,
+    "open_end": 3,
+    "frag_rate": 0.043,
+    "open_rate": 0.13,
+    "len_median": 29,
+    "wait_p50_s": 5.08,
+    "wait_p90_s": 9.38,
+    "wait_max_s": 13.97
+   },
+   "new": {
+    "sentences": 23,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 31,
+    "wait_p50_s": 5.08,
+    "wait_p90_s": 9.38,
+    "wait_max_s": 13.97
+   }
+  },
+  "ikeda02__N3": {
+   "old": {
+    "sentences": 31,
+    "frag_le4": 5,
+    "open_end": 11,
+    "frag_rate": 0.161,
+    "open_rate": 0.355,
+    "len_median": 24,
+    "wait_p50_s": 4.62,
+    "wait_p90_s": 6.8,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 31,
+    "frag_le4": 5,
+    "open_end": 11,
+    "frag_rate": 0.161,
+    "open_rate": 0.355,
+    "len_median": 24,
+    "wait_p50_s": 4.62,
+    "wait_p90_s": 6.8,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 22,
+    "frag_le4": 0,
+    "open_end": 2,
+    "frag_rate": 0.0,
+    "open_rate": 0.091,
+    "len_median": 30.0,
+    "wait_p50_s": 5.06,
+    "wait_p90_s": 8.83,
+    "wait_max_s": 15.49
+   },
+   "new": {
+    "sentences": 22,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 31.5,
+    "wait_p50_s": 5.06,
+    "wait_p90_s": 8.83,
+    "wait_max_s": 15.49
+   }
+  },
+  "ikeda02__N4": {
+   "old": {
+    "sentences": 30,
+    "frag_le4": 3,
+    "open_end": 11,
+    "frag_rate": 0.1,
+    "open_rate": 0.367,
+    "len_median": 24.5,
+    "wait_p50_s": 4.92,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 6.94
+   },
+   "soft": {
+    "sentences": 30,
+    "frag_le4": 3,
+    "open_end": 11,
+    "frag_rate": 0.1,
+    "open_rate": 0.367,
+    "len_median": 24.5,
+    "wait_p50_s": 4.92,
+    "wait_p90_s": 6.55,
+    "wait_max_s": 6.94
+   },
+   "idle": {
+    "sentences": 22,
+    "frag_le4": 1,
+    "open_end": 3,
+    "frag_rate": 0.045,
+    "open_rate": 0.136,
+    "len_median": 30.0,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 9.9,
+    "wait_max_s": 12.53
+   },
+   "new": {
+    "sentences": 23,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 29,
+    "wait_p50_s": 4.98,
+    "wait_p90_s": 9.9,
+    "wait_max_s": 12.53
+   }
+  },
+  "ikeda03__N0": {
+   "old": {
+    "sentences": 20,
+    "frag_le4": 4,
+    "open_end": 7,
+    "frag_rate": 0.2,
+    "open_rate": 0.35,
+    "len_median": 22.5,
+    "wait_p50_s": 4.44,
+    "wait_p90_s": 6.88,
+    "wait_max_s": 6.91
+   },
+   "soft": {
+    "sentences": 20,
+    "frag_le4": 4,
+    "open_end": 7,
+    "frag_rate": 0.2,
+    "open_rate": 0.35,
+    "len_median": 22.5,
+    "wait_p50_s": 4.44,
+    "wait_p90_s": 6.88,
+    "wait_max_s": 6.91
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 2,
+    "frag_rate": 0.071,
+    "open_rate": 0.143,
+    "len_median": 27.0,
+    "wait_p50_s": 5.98,
+    "wait_p90_s": 10.5,
+    "wait_max_s": 10.52
+   },
+   "new": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.071,
+    "open_rate": 0.0,
+    "len_median": 27.0,
+    "wait_p50_s": 5.98,
+    "wait_p90_s": 10.5,
+    "wait_max_s": 10.52
+   }
+  },
+  "ikeda03__N1": {
+   "old": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 6,
+    "frag_rate": 0.15,
+    "open_rate": 0.3,
+    "len_median": 20.5,
+    "wait_p50_s": 3.55,
+    "wait_p90_s": 6.53,
+    "wait_max_s": 6.59
+   },
+   "soft": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 6,
+    "frag_rate": 0.15,
+    "open_rate": 0.3,
+    "len_median": 20.5,
+    "wait_p50_s": 3.55,
+    "wait_p90_s": 6.53,
+    "wait_max_s": 6.59
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 1,
+    "frag_rate": 0.071,
+    "open_rate": 0.071,
+    "len_median": 28.0,
+    "wait_p50_s": 6.01,
+    "wait_p90_s": 9.95,
+    "wait_max_s": 10.01
+   },
+   "new": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.071,
+    "open_rate": 0.0,
+    "len_median": 28.0,
+    "wait_p50_s": 6.01,
+    "wait_p90_s": 9.95,
+    "wait_max_s": 10.01
+   }
+  },
+  "ikeda03__N2": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 4,
+    "open_end": 8,
+    "frag_rate": 0.19,
+    "open_rate": 0.381,
+    "len_median": 22,
+    "wait_p50_s": 4.42,
+    "wait_p90_s": 6.87,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 4,
+    "open_end": 8,
+    "frag_rate": 0.19,
+    "open_rate": 0.381,
+    "len_median": 22,
+    "wait_p50_s": 4.42,
+    "wait_p90_s": 6.87,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 13,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.077,
+    "len_median": 31,
+    "wait_p50_s": 6.01,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 9.99
+   },
+   "new": {
+    "sentences": 13,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 31,
+    "wait_p50_s": 6.01,
+    "wait_p90_s": 9.96,
+    "wait_max_s": 9.99
+   }
+  },
+  "ikeda03__N3": {
+   "old": {
+    "sentences": 21,
+    "frag_le4": 4,
+    "open_end": 8,
+    "frag_rate": 0.19,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 3.44,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 7.0
+   },
+   "soft": {
+    "sentences": 21,
+    "frag_le4": 4,
+    "open_end": 8,
+    "frag_rate": 0.19,
+    "open_rate": 0.381,
+    "len_median": 17,
+    "wait_p50_s": 3.44,
+    "wait_p90_s": 6.54,
+    "wait_max_s": 7.0
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 23.0,
+    "wait_p50_s": 5.1,
+    "wait_p90_s": 9.37,
+    "wait_max_s": 11.1
+   },
+   "new": {
+    "sentences": 14,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 23.0,
+    "wait_p50_s": 5.1,
+    "wait_p90_s": 9.37,
+    "wait_max_s": 11.1
+   }
+  },
+  "ikeda03__N4": {
+   "old": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 6,
+    "frag_rate": 0.15,
+    "open_rate": 0.3,
+    "len_median": 20.5,
+    "wait_p50_s": 3.58,
+    "wait_p90_s": 6.51,
+    "wait_max_s": 6.54
+   },
+   "soft": {
+    "sentences": 20,
+    "frag_le4": 3,
+    "open_end": 6,
+    "frag_rate": 0.15,
+    "open_rate": 0.3,
+    "len_median": 20.5,
+    "wait_p50_s": 3.58,
+    "wait_p90_s": 6.51,
+    "wait_max_s": 6.54
+   },
+   "idle": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 2,
+    "frag_rate": 0.071,
+    "open_rate": 0.143,
+    "len_median": 28.0,
+    "wait_p50_s": 5.99,
+    "wait_p90_s": 9.99,
+    "wait_max_s": 10.51
+   },
+   "new": {
+    "sentences": 14,
+    "frag_le4": 1,
+    "open_end": 0,
+    "frag_rate": 0.071,
+    "open_rate": 0.0,
+    "len_median": 28.0,
+    "wait_p50_s": 5.99,
+    "wait_p90_s": 9.99,
+    "wait_max_s": 10.51
+   }
+  },
+  "sakai05__N0": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.24,
+    "wait_max_s": 6.24
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.24,
+    "wait_max_s": 6.24
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.85,
+    "wait_max_s": 6.85
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.85,
+    "wait_max_s": 6.85
+   }
+  },
+  "sakai05__N1": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 1,
+    "open_end": 1,
+    "frag_rate": 0.143,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.42,
+    "wait_max_s": 6.42
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 1,
+    "open_end": 1,
+    "frag_rate": 0.143,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.42,
+    "wait_max_s": 6.42
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.95,
+    "wait_max_s": 6.95
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.95,
+    "wait_max_s": 6.95
+   }
+  },
+  "sakai05__N2": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 6.36,
+    "wait_max_s": 6.36
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 6.36,
+    "wait_max_s": 6.36
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 6.96,
+    "wait_max_s": 6.96
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 6.96,
+    "wait_max_s": 6.96
+   }
+  },
+  "sakai05__N3": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.34,
+    "wait_max_s": 6.34
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.34,
+    "wait_max_s": 6.34
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.92,
+    "wait_max_s": 6.92
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.96,
+    "wait_p90_s": 6.92,
+    "wait_max_s": 6.92
+   }
+  },
+  "sakai05__N4": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.97,
+    "wait_p90_s": 6.44,
+    "wait_max_s": 6.44
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 1,
+    "frag_rate": 0.0,
+    "open_rate": 0.143,
+    "len_median": 22,
+    "wait_p50_s": 2.97,
+    "wait_p90_s": 6.44,
+    "wait_max_s": 6.44
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.97,
+    "wait_p90_s": 6.98,
+    "wait_max_s": 6.98
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 22.5,
+    "wait_p50_s": 2.97,
+    "wait_p90_s": 6.98,
+    "wait_max_s": 6.98
+   }
+  },
+  "sakai06__N0": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 2.53,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 2.53,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "idle": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 2.53,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "new": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 2.53,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   }
+  },
+  "sakai06__N1": {
+   "old": {
+    "sentences": 8,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 11.5,
+    "wait_p50_s": 2.01,
+    "wait_p90_s": 3.63,
+    "wait_max_s": 3.63
+   },
+   "soft": {
+    "sentences": 8,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 11.5,
+    "wait_p50_s": 2.01,
+    "wait_p90_s": 3.63,
+    "wait_max_s": 3.63
+   },
+   "idle": {
+    "sentences": 8,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 11.5,
+    "wait_p50_s": 2.01,
+    "wait_p90_s": 3.63,
+    "wait_max_s": 3.63
+   },
+   "new": {
+    "sentences": 8,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 11.5,
+    "wait_p50_s": 2.01,
+    "wait_p90_s": 3.63,
+    "wait_max_s": 3.63
+   }
+  },
+  "sakai06__N2": {
+   "old": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 18.0,
+    "wait_p50_s": 3.18,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "soft": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 18.0,
+    "wait_p50_s": 3.18,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 18.0,
+    "wait_p50_s": 3.18,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 18.0,
+    "wait_p50_s": 3.18,
+    "wait_p90_s": 4.5,
+    "wait_max_s": 4.5
+   }
+  },
+  "sakai06__N3": {
+   "old": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 17.0,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 4.47,
+    "wait_max_s": 4.47
+   },
+   "soft": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 17.0,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 4.47,
+    "wait_max_s": 4.47
+   },
+   "idle": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 17.0,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 4.47,
+    "wait_max_s": 4.47
+   },
+   "new": {
+    "sentences": 6,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 17.0,
+    "wait_p50_s": 3.43,
+    "wait_p90_s": 4.47,
+    "wait_max_s": 4.47
+   }
+  },
+  "sakai06__N4": {
+   "old": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 4.59,
+    "wait_max_s": 4.59
+   },
+   "soft": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 4.59,
+    "wait_max_s": 4.59
+   },
+   "idle": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 4.59,
+    "wait_max_s": 4.59
+   },
+   "new": {
+    "sentences": 7,
+    "frag_le4": 0,
+    "open_end": 0,
+    "frag_rate": 0.0,
+    "open_rate": 0.0,
+    "len_median": 12,
+    "wait_p50_s": 3.01,
+    "wait_p90_s": 4.59,
+    "wait_max_s": 4.59
+   }
+  }
+ }
+}

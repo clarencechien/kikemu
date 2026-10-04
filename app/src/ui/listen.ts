@@ -96,7 +96,11 @@ export function initListen(onPreviewStart: () => void): Listen {
         'warn',
         srvFrames && srvRms < 50
           ? `伺服器收到 ${srvFrames} 框但音量近乎零——音訊在傳輸中損壞`
-          : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是${langSel.selectedOptions[0]?.textContent ?? '所選語言'}`,
+          : curMode === 'gemini'
+            ? // handoff-v12 實測:人聲背景(N3)下 Gemini 每 100 秒只吐 3~57 字,等於不出聲。
+              // 這是量過的失效模式,不是連線壞掉——要講清楚,不然看起來像當機
+              `有收到聲音(伺服器 RMS ${srvRms}),但 Gemini 沒有出字——背景有人聲時它常整段不出字(實測),請改用導覽模式`
+            : `有收到聲音(伺服器 RMS ${srvRms}),但引擎還沒認出字——可能太吵、或講的不是${langSel.selectedOptions[0]?.textContent ?? '所選語言'}`,
       );
     } else {
       // 拿不到螢幕常亮時一直掛著提醒:螢幕一鎖這一場就斷,這不是一次性提示能交代的事

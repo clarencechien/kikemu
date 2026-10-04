@@ -1,0 +1,95 @@
+{
+ "source": "results/raw/{GTv,Cplus},30 檔 = 6 段 × N0–N4,1× 即時推流",
+ "arms": {
+  "GTv": {
+   "label": "gemini-3.5-transcribe-live + 詞表(handoff-v12)",
+   "by_condition": {
+    "N0": {
+     "finals": 60,
+     "gap_p50_s": 7.6,
+     "gap_p90_s": 16.8,
+     "gap_max_s": 28.3,
+     "first_final_median_s": 5.1,
+     "first_final_max_s": 5.8
+    },
+    "N1": {
+     "finals": 91,
+     "gap_p50_s": 5.5,
+     "gap_p90_s": 8.5,
+     "gap_max_s": 18.5,
+     "first_final_median_s": 4.4,
+     "first_final_max_s": 5.4
+    },
+    "N2": {
+     "finals": 54,
+     "gap_p50_s": 6.9,
+     "gap_p90_s": 18.0,
+     "gap_max_s": 49.8,
+     "first_final_median_s": 5.4,
+     "first_final_max_s": 49.8
+    },
+    "N3": {
+     "finals": 17,
+     "gap_p50_s": 13.4,
+     "gap_p90_s": 62.8,
+     "gap_max_s": 72.1,
+     "first_final_median_s": 30.2,
+     "first_final_max_s": 62.8
+    },
+    "N4": {
+     "finals": 66,
+     "gap_p50_s": 7.0,
+     "gap_p90_s": 12.5,
+     "gap_max_s": 22.6,
+     "first_final_median_s": 5.1,
+     "first_final_max_s": 5.8
+    }
+   }
+  },
+  "Cplus": {
+   "label": "Speechmatics enhanced + 詞表(exp1 C+,產品導覽模式的耳朵)",
+   "by_condition": {
+    "N0": {
+     "finals": 850,
+     "gap_p50_s": 0.5,
+     "gap_p90_s": 1.0,
+     "gap_max_s": 7.6,
+     "first_final_median_s": 3.7,
+     "first_final_max_s": 7.6
+    },
+    "N1": {
+     "finals": 841,
+     "gap_p50_s": 0.5,
+     "gap_p90_s": 1.0,
+     "gap_max_s": 8.5,
+     "first_final_median_s": 3.5,
+     "first_final_max_s": 8.5
+    },
+    "N2": {
+     "finals": 853,
+     "gap_p50_s": 0.5,
+     "gap_p90_s": 1.1,
+     "gap_max_s": 4.7,
+     "first_final_median_s": 3.5,
+     "first_final_max_s": 4.7
+    },
+    "N3": {
+     "finals": 816,
+     "gap_p50_s": 0.5,
+     "gap_p90_s": 1.5,
+     "gap_max_s": 4.2,
+     "first_final_median_s": 3.5,
+     "first_final_max_s": 4.2
+    },
+    "N4": {
+     "finals": 847,
+     "gap_p50_s": 0.5,
+     "gap_p90_s": 1.1,
+     "gap_max_s": 4.7,
+     "first_final_median_s": 3.5,
+     "first_final_max_s": 4.7
+    }
+   }
+  }
+ }
+}
