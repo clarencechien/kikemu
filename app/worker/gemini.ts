@@ -241,8 +241,14 @@ export type LiveHandlers = {
   onClose: (code: number, reason: string) => void;
 };
 
+/** setupComplete 最多等多久。handoff-v12 探針實測 setup 往返在 1 秒內;
+ *  沒有這道,Google 若收了 setup 卻不回也不關,session 會永遠停在「連線中」——
+ *  沒有錯誤、沒有字,正是最難查的那一種。 */
+const LIVE_SETUP_TIMEOUT_MS = 10_000;
+
 /** 開一條 Live session,等到 setupComplete 才 resolve。setup 失敗(含區域封鎖)會 reject;
- *  區域封鎖時自動改走代打再試一次。之後的下行訊息依序交給 onMessage。 */
+ *  區域封鎖、或直連等不到 setupComplete 時,自動改走代打再試一次。
+ *  之後的下行訊息依序交給 onMessage。 */
 export async function openGeminiLive(env: Env, setup: unknown, h: LiveHandlers): Promise<WebSocket> {
   const attempt = async (proxied: boolean): Promise<WebSocket> => {
     const ws = proxied ? await proxyLiveSocket(env) : await directLiveSocket(env);
@@ -250,14 +256,25 @@ export async function openGeminiLive(env: Env, setup: unknown, h: LiveHandlers):
     ws.binaryType = 'arraybuffer';
     return new Promise<WebSocket>((resolve, reject) => {
       let ready = false;
+      let timedOut = false; // 逾時被我們自己關掉的 socket:之後的事件一律不理
       let chain: Promise<void> = Promise.resolve();
+      const timer = setTimeout(() => {
+        if (ready) return;
+        ready = timedOut = true; // 只 reject 一次
+        try {
+          ws.close(1000, 'setup timeout');
+        } catch {}
+        reject(Object.assign(new Error(`gemini live ${LIVE_SETUP_TIMEOUT_MS / 1000} 秒內沒有回 setupComplete${proxied ? '(代打)' : ''}`), { timeout: true }));
+      }, LIVE_SETUP_TIMEOUT_MS);
       ws.addEventListener('message', ev => {
         chain = chain.then(async () => {
+          if (timedOut) return;
           const m = await decodeFrame(ev.data);
           if (!m) return;
           if (!ready) {
             if (m.setupComplete) {
               ready = true;
+              clearTimeout(timer);
               resolve(ws);
             }
             return;
@@ -267,8 +284,10 @@ export async function openGeminiLive(env: Env, setup: unknown, h: LiveHandlers):
       });
       ws.addEventListener('close', ev => {
         chain = chain.then(() => {
+          if (timedOut) return;
           if (!ready) {
             ready = true; // 只 reject 一次
+            clearTimeout(timer);
             reject(Object.assign(new Error(`gemini live ${ev.code}: ${String(ev.reason).slice(0, 160)}`), { reason: ev.reason }));
           } else h.onClose(ev.code, ev.reason);
         });
@@ -284,6 +303,12 @@ export async function openGeminiLive(env: Env, setup: unknown, h: LiveHandlers):
     if (env.GEMINI_PROXY && REGION_BLOCKED.test(why)) {
       preferProxy = true;
       console.warn(`[gemini] Live 在本機房被 Google 以區域理由拒絕,此 isolate 之後改走代打 DO(${proxyRegion(env)})`);
+      return attempt(true);
+    }
+    // 直連等不到 setupComplete:原因未知(區域政策的形狀之一也可能是這樣),
+    // 代打 DO 在固定機房,換條路再試一次。不設 preferProxy——沒證據是區域問題
+    if (env.GEMINI_PROXY && (e as { timeout?: boolean }).timeout) {
+      console.warn(`[gemini] Live 直連 setup 逾時,改走代打 DO(${proxyRegion(env)})再試一次`);
       return attempt(true);
     }
     throw e;

@@ -129,5 +129,10 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   他會以為自己在比 Gemini,其實聽到的是 SM。
 - **全域花費保險絲的估價規則,先用一檔對官方牌價驗證再放大跑。** handoff-v12 的
   live-translate 第一版把不計費的 TEXT 明細也算錢,估高 9 倍,差點把其他五個 arm 一起餓死。
+- **斷句的時間保險要從「最後一次長出新字」起算,不是從「殘句開始累積」起算。**
+  後者會把每一個講超過 6 秒的句子攔腰切斷(重播 exp1:30% 收在字中間),看起來像「SM 斷句爛」。
+  改斷句前後都跑 `analysis/segmentation_replay.py`,它用的是 `relay.ts` 的同一組常數。
+- **等上游握手的地方都要有逾時**(Gemini Live 的 setupComplete 等 10 秒)。沒有逾時的等待,
+  失敗起來就是「一直連線中、沒有錯誤」——那是最難從使用者回報查出來的形狀。
 - **重開 `wrangler dev` 要確認舊的 `workerd` 子行程真的死了。** 只 kill 外層 `npx` 會留下
   `workerd` 佔著埠,新的綁不上,探針悄悄打到舊程式——看起來測過了,其實沒有。
