@@ -549,7 +549,227 @@
    "arm": "G38T",
    "file": "ikeda03__N3",
    "usd": 0.00382
+  },
+  {
+   "arm": "GT",
+   "file": "ikeda03__N4",
+   "usd": 0.01457
+  },
+  {
+   "arm": "GTv",
+   "file": "ikeda03__N4",
+   "usd": 0.01457
+  },
+  {
+   "arm": "GT",
+   "file": "sakai05__N1",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G31",
+   "file": "sakai05__N1",
+   "usd": 0.01317
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai05__N1",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G38",
+   "file": "sakai05__N0",
+   "usd": 0.00919
+  },
+  {
+   "arm": "G31",
+   "file": "sakai05__N2",
+   "usd": 0.00786
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai05__N0",
+   "usd": 0.01824
+  },
+  {
+   "arm": "GT",
+   "file": "sakai05__N2",
+   "usd": 0.00448
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai05__N2",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G38",
+   "file": "ikeda03__N4",
+   "usd": 0.03399
+  },
+  {
+   "arm": "G38T",
+   "file": "ikeda03__N4",
+   "usd": 0.0241
+  },
+  {
+   "arm": "G31",
+   "file": "sakai05__N3",
+   "usd": 0.01144
+  },
+  {
+   "arm": "GT",
+   "file": "sakai05__N3",
+   "usd": 0.00448
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai05__N3",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G38",
+   "file": "sakai05__N1",
+   "usd": 0.00601
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai05__N1",
+   "usd": 0.01728
+  },
+  {
+   "arm": "G31",
+   "file": "sakai05__N4",
+   "usd": 0.01041
+  },
+  {
+   "arm": "GT",
+   "file": "sakai05__N4",
+   "usd": 0.00448
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai05__N4",
+   "usd": 0.00448
+  },
+  {
+   "arm": "G38",
+   "file": "sakai05__N2",
+   "usd": 0.01332
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai05__N2",
+   "usd": 0.01926
+  },
+  {
+   "arm": "GT",
+   "file": "sakai06__N1",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G31",
+   "file": "sakai06__N0",
+   "usd": 0.01023
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai06__N0",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G38",
+   "file": "sakai05__N3",
+   "usd": 0.00229
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai05__N3",
+   "usd": 0.00375
+  },
+  {
+   "arm": "G31",
+   "file": "sakai06__N1",
+   "usd": 0.0088
+  },
+  {
+   "arm": "GT",
+   "file": "sakai06__N2",
+   "usd": 0.00418
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai06__N1",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G38",
+   "file": "sakai05__N4",
+   "usd": 0.01172
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai05__N4",
+   "usd": 0.01747
+  },
+  {
+   "arm": "GT",
+   "file": "sakai06__N3",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G38",
+   "file": "sakai06__N0",
+   "usd": 0.00403
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai06__N2",
+   "usd": 0.00418
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda02__N0",
+   "usd": 0.09555
+  },
+  {
+   "arm": "G31",
+   "file": "sakai06__N2",
+   "usd": 0.01234
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai06__N0",
+   "usd": 0.0089
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda02__N1",
+   "usd": 0.09555
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai06__N3",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G31",
+   "file": "sakai06__N3",
+   "usd": 0.0068
+  },
+  {
+   "arm": "GT",
+   "file": "sakai06__N4",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G38",
+   "file": "sakai06__N1",
+   "usd": 0.01111
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai06__N1",
+   "usd": 0.01456
   }
  ],
- "total_usd": 4.415
+ "total_usd": 5.0008
 }
