@@ -16,7 +16,7 @@
 |---|---|
 | 聽 = **Speechmatics 即時**,不用一體式 | exp1:人聲背景 8dB 下 Gemini Live 崩潰(0.030),SM+詞表 0.627;差距隨噪音單調放大 |
 | **地點詞表是核心資產**,隨 session 載入 | exp1:C+−C 全條件 +0.12~0.19、CI 排除 0;成本 $0.14/景點、延遲零代價 |
-| 譯 = **Gemini 3.5 Flash**,共用口譯 systemInstruction | exp1:台灣用語 0 失誤、adequacy 4.71;prompt 已解決在地化與不譯規則(exp2 P1 零增量) |
+| 譯 = **Gemini 3.5 Flash**,共用口譯 systemInstruction | exp1:台灣用語 0 失誤、adequacy 4.71(**整段翻譯**的數字;產品逐句翻譯同批量到 4.06,handoff-v13);prompt 已解決在地化與不譯規則(exp2 P1 零增量) |
 | **不做**前端降噪 | exp3:外掛 DSP 對兩引擎都是零到負,WebRTC NS 還傷乾淨音源 |
 | 拾音指引進 UI(貼近音源提示) | exp4:指向性紅利歸 SM(+0.19),領夾麥/近講讓 SM 貼到天花板 |
 | 詞表中途不換,換地點 = 重連 | Speechmatics 限制:additional_vocab 隨 session config 送出 |

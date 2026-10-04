@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N0", "arm": "X", "judge": "gemini-pro-latest", "adequacy": 4, "tw_locale": 5, "reason": "譯文大致通順且符合台灣用語習慣，但漏譯了神社名稱中的「箭」字，且將「御神威」誤譯為「護身神衣」，影響部分資訊正確性。", "modelVersion": "gemini-3.1-pro-preview"}

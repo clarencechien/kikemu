@@ -1,0 +1,1 @@
+{"file": "sakai05__N3", "arm": "X", "judge": "gemini-pro-latest", "adequacy": 4, "tw_locale": 5, "reason": "譯文大致準確且用語道地，但最後一句將「和歌に関する言葉」誤譯為「首先是日式風格」，造成明顯的資訊錯誤。", "modelVersion": "gemini-3.1-pro-preview"}

@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "B", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文包含大量語音辨識錯誤導致的無意義內容與嚴重錯漏（如「連結1與6」、「大約90日圓」等），但整體用語符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview"}

@@ -1,0 +1,1 @@
+{"file": "sakai06__N3", "arm": "exp1C+", "judge": "gemini-flash-lite-latest", "adequacy": 4, "tw_locale": 5, "reason": "語音辨識產生的「聚光院」應為「宿院」的誤聽，但譯文整體流暢且符合台灣用語習慣。", "modelVersion": "gemini-3.5-flash-lite"}

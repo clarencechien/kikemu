@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N3#015", "identical": false, "x_first": true, "winner": "X", "leakB": false, "leakX": false, "reason": "兩譯文皆受語音辨識誤字影響，但譯文1將「普及」譯為「推廣」在中文表達上較譯文2直譯「普及」稍微通順，且均未包含上一句內容。", "raw": "{\"better\": \"1\", \"leak1\": false, \"leak2\": false, \"reason\": \"兩譯文皆受語音辨識誤字影響，但譯文1將「普及」譯為「推廣」在中文表達上較譯文2直譯「普及」稍微通順，且均未包含上一句內容。\"}"}

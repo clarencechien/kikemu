@@ -2198,6 +2198,9 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
    但 A 與 C/C+ 的翻譯**都**出自 Gemini,此偏差對相對比較大致抵銷
 8. **C/C+ 的翻譯 hop 是對定稿逐字稿整段翻譯,A 是增量口譯**——adequacy 比較對 C/C+ 有利;
    產品化後 C 的增量翻譯 adequacy 會低於本測數字
+   **(2026-10-04 handoff-v13 量到大小:同一批評審同一天評,N0 整段 4.72 vs 產品逐句 4.06;
+   N3 2.33 vs 1.94。混了「整段 vs 逐句」與「thinking 預設 vs minimal」兩個變因,尚未拆開。
+   帶上一句當上下文補不回來(4.00)。`results/context_v13.json`)**
 9. manemu 原版 systemInstruction 與五廠評審面板原設定不可得,均為重寫版
 
 **exp2:**

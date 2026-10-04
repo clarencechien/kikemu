@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N0", "arm": "B", "judge": "gemini-pro-latest", "adequacy": 3, "tw_locale": 5, "reason": "譯文符合台灣繁體中文習慣，但存在「護身衣」、「現行」等明顯誤譯與錯別字，且漏翻了「箭」字並多出了原文沒有的「步靫」，影響資訊正確性。", "modelVersion": "gemini-3.1-pro-preview"}

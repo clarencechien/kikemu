@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "B", "judge": "gemini-flash-lite-latest", "parse_error": "Extra data: line 1 column 88 (char 87)", "raw": "{\"adequacy\": 4, \"tw_locale\": 5, \"reason\": \"譯文大致傳達原文意涵且符合台灣用語，但語音辨識誤將池田辨識為生田，且夾雜了英文單字。\"}}"}

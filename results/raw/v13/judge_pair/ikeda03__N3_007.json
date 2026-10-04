@@ -1,0 +1,1 @@
+{"id": "ikeda03__N3#007", "identical": false, "x_first": false, "winner": "X", "leakB": false, "leakX": false, "reason": "譯文2符合原文句法結構，譯文1將「田中」誤切為獨立名詞，導致語意斷裂。", "raw": "{\n  \"better\": \"2\",\n  \"leak1\": false,\n  \"leak2\": false,\n  \"reason\": \"譯文2符合原文句法結構，譯文1將「田中」誤切為獨立名詞，導致語意斷裂。\"\n}"}

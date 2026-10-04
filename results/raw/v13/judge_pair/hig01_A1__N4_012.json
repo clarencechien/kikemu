@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N4#012", "identical": false, "x_first": true, "winner": "X", "leakB": false, "leakX": false, "reason": "譯文1將「わかった」精準翻譯為「得知」，比譯文2改用被動語態「被證實」更符合原文動詞語氣。", "raw": "{\n  \"better\": \"1\",\n  \"leak1\": false,\n  \"leak2\": false,\n  \"reason\": \"譯文1將「わかった」精準翻譯為「得知」，比譯文2改用被動語態「被證實」更符合原文動詞語氣。\"\n}"}

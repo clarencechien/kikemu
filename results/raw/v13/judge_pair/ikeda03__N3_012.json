@@ -1,0 +1,1 @@
+{"id": "ikeda03__N3#012", "identical": false, "x_first": false, "winner": "X", "leakB": false, "leakX": false, "reason": "譯文2成功根據語境修復語音辨識誤字（將デメリット合理還原為百貨），比譯文1更符合上下文意，且兩者皆未包含上一句的內容。", "raw": "{\n  \"better\": \"2\",\n  \"leak1\": false,\n  \"leak2\": false,\n  \"reason\": \"譯文2成功根據語境修復語音辨識誤字（將デメリット合理還原為百貨），比譯文1更符合上下文意，且兩者皆未包含上一句的內容。\"\n}"}

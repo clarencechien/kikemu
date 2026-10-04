@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "B", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 3, "reason": "候選譯文因語音辨識錯誤產生大量幻覺與嚴重錯譯（如將「北摂初」錯譯為「世界首創」、「壁面のタイル」錯譯為「女兒的態度」），傳達資訊嚴重失真。", "modelVersion": "gemini-3.6-flash"}

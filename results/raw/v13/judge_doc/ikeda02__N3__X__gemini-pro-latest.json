@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "X", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文雖使用道地的台灣繁體中文，但因嚴重的語音辨識錯誤產生大量荒謬錯譯（如將「郊外」翻成「福岡」、「住まう」翻成「智慧型手機」），完全偏離原文原意。", "modelVersion": "gemini-3.1-pro-preview"}

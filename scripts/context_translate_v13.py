@@ -314,6 +314,42 @@ def stage_judge_doc(items: list[dict]):
         out.write_text(json.dumps(rec, ensure_ascii=False))
 
 
+# ── 附加:exp1 C+ 整段譯文用「今天這組評審」重評(偏離紀錄 §7:非事先登記)──────────
+# 為什麼:B(產品逐句)N0 整段 4.06,exp1 C+(整段一次翻)當時 4.71。但評審是 *-latest 別名,
+# 8 月到今天可能已換型號,跨時間比不乾淨。同一批評審、同一天重評 exp1 的譯文才能比。
+
+def stage_judge_exp1(items: list[dict]):
+    from judge import PROMPT
+
+    files = sorted({it["file"] for it in items if it["set"] == "main" and it["file"].split("__")[1] in DOC_CONDS})
+    outdir = RAW / "judge_doc_exp1"
+    outdir.mkdir(parents=True, exist_ok=True)
+    todo = []
+    for f in files:
+        zh = json.loads((ROOT / "results" / "raw" / "Cplus_translate" / f"{f}.json").read_text())["translation"]
+        ref = (ROOT / "corpus" / "reference" / f"{f.split('__')[0]}.txt").read_text()
+        for m in DOC_JUDGES:
+            out = outdir / f"{f}__exp1C+__{m}.json"
+            if not out.exists():
+                todo.append((f, m, ref, zh, out))
+    est = len(todo) * EST_USD["doc"]
+    print(f"judge_exp1:{len(todo)} 次待評,估 ${est:.2f};帳本 ${ledger()['spent_usd']:.3f}")
+    if DRY_RUN or ledger()["spent_usd"] + est > BUDGET_USD:
+        sys.exit(0 if DRY_RUN else "ABORT:估價超過保險絲")
+    for f, m, ref, zh, out in todo:
+        resp, _ = call(m, {"contents": [{"parts": [{"text": PROMPT.format(ref=ref, zh=zh)}]}],
+                           "generationConfig": {"temperature": 0, "responseMimeType": "application/json"}})
+        charge(m, resp)
+        raw = text_of(resp)
+        try:
+            j = json.loads(raw[raw.index("{"): raw.rindex("}") + 1])
+            rec = {"file": f, "arm": "exp1C+", "judge": m, "adequacy": int(j["adequacy"]),
+                   "tw_locale": int(j["tw_locale"]), "reason": j.get("reason"), "modelVersion": resp.get("modelVersion")}
+        except Exception as e:  # noqa: BLE001
+            rec = {"file": f, "arm": "exp1C+", "judge": m, "parse_error": str(e), "raw": raw}
+        out.write_text(json.dumps(rec, ensure_ascii=False))
+
+
 # ── 階段 4:分析(handoff-v13 §5)──────────────────────────────────
 
 def q(xs: list[float], p: float) -> float:
@@ -400,6 +436,16 @@ def stage_analyze(items: list[dict]):
             "by_judge": {m: {arm: round(statistics.mean(d["adequacy"] for d in docs if d["judge"] == m and d["arm"] == arm), 3)
                              for arm in ("B", "X")} for m in DOC_JUDGES},
         }
+        e1 = [json.loads(Path(f).read_text()) for f in glob.glob(str(RAW / "judge_doc_exp1" / "*.json"))]
+        e1 = [d for d in e1 + docs if "adequacy" in d]
+        res["doc_adequacy"]["by_condition"] = {
+            c: {arm: round(statistics.mean(d["adequacy"] for d in e1 if d["arm"] == arm and d["file"].endswith(c)), 3)
+                for arm in ("B", "X", "exp1C+") if any(d["arm"] == arm and d["file"].endswith(c) for d in e1)}
+            for c in DOC_CONDS
+        }
+        res["doc_adequacy"]["parse_errors"] = [
+            (d["file"], d["arm"], d["judge"]) for d in
+            [json.loads(Path(f).read_text()) for f in glob.glob(str(RAW / "judge_doc*" / "*.json"))] if "adequacy" not in d]
     OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1))
     print(json.dumps({k: v for k, v in res.items() if k != "ledger"}, ensure_ascii=False, indent=1)[:4000])
     print("帳本:", res["ledger"])
@@ -410,7 +456,7 @@ def main():
     items = main_items() + field_items()
     print(f"主集 {sum(1 for i in items if i['set'] == 'main')} 句;副集 {sum(1 for i in items if i['set'] == 'field')} 句")
     {"translate": stage_translate, "judge_pair": stage_judge_pair,
-     "judge_doc": stage_judge_doc, "analyze": stage_analyze}[stage](items)
+     "judge_doc": stage_judge_doc, "judge_exp1": stage_judge_exp1, "analyze": stage_analyze}[stage](items)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "B", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文受語音辨識錯誤影響產生大量錯譯與幻覺，內容完全偏離原文，但繁體中文用語與字體大致符合台灣習慣。", "modelVersion": "gemini-3.1-pro-preview"}

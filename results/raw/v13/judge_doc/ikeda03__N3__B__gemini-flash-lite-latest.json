@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "B", "judge": "gemini-flash-lite-latest", "adequacy": 1, "tw_locale": 2, "reason": "語音辨識錯誤導致譯文嚴重偏離原文，且多處出現不合理內容與簡體字混雜。", "modelVersion": "gemini-3.5-flash-lite"}

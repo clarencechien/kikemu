@@ -1,0 +1,1 @@
+{"id": "sakai06__N1#005", "identical": false, "x_first": true, "winner": "X", "leakB": false, "leakX": true, "reason": "譯文1將專有名詞「幻の」譯為「幻之」比譯文2的「夢幻的」更符合歷史導覽語境，但譯文1包含了上一句的「這一帶」（この辺り一帯）。", "raw": "{\n  \"better\": \"1\",\n  \"leak1\": true,\n  \"leak2\": false,\n  \"reason\": \"譯文1將專有名詞「幻の」譯為「幻之」比譯文2的「夢幻的」更符合歷史導覽語境，但譯文1包含了上一句的「這一帶」（この辺り一帯）。\"\n}"}

@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "B", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 4, "reason": "譯文受語音辨識錯誤影響產生大量荒謬錯漏（如「接受了體檢」、「母音神事」），完全偏離原文原意，但繁體中文用詞尚符台灣習慣。", "modelVersion": "gemini-3.1-pro-preview"}

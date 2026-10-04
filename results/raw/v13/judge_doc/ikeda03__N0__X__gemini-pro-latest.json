@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "X", "judge": "gemini-pro-latest", "adequacy": 3, "tw_locale": 5, "reason": "譯文符合台灣用語習慣，但將地名「池田」多次誤譯為「生田」，且開頭有不明字元與誤譯，影響資訊正確性。", "modelVersion": "gemini-3.1-pro-preview"}

@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "exp1C+", "judge": "gemini-3.6-flash", "adequacy": 2, "tw_locale": 4, "reason": "譯文出現多處幻覺與嚴重誤譯（如將20分鐘誤算為30分鐘、曲解重複三次的意思，並憑空增加「神之愛」、「言靈」等原文沒有的內容），惟台灣繁體用語尚算自然。", "modelVersion": "gemini-3.6-flash"}

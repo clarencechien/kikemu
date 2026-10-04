@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "X", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 4, "reason": "譯文包含大量語音辨識與翻譯產生的嚴重幻覺與錯譯，導致原文資訊幾乎完全失真。", "modelVersion": "gemini-3.6-flash"}

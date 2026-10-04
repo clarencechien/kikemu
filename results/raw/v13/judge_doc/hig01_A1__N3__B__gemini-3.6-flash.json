@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "B", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 3, "reason": "譯文因語音辨識嚴重錯誤而產生大量幻覺與錯譯（如將石切神社誤譯為物理神社、出現拉摩斯、櫻花祭典等無關內容），無法傳達原文資訊。", "modelVersion": "gemini-3.6-flash"}
