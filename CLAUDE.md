@@ -76,7 +76,10 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 
 | 路徑 | 是什麼 |
 |---|---|
-| `app/worker/` | relay DO(Speechmatics)、quota DO、admin、場景包、Gemini(含 `GeminiProxy`:區域封鎖的代打 DO) |
+| `app/worker/` | relay DO、quota DO、admin、場景包、Gemini(含 `GeminiProxy`:區域封鎖的代打 DO,HTTP 與 Live 都代) |
+| `app/worker/modes.ts` | **聽譯模式的唯一定義**(導覽 / 對話 / Gemini 對照);`/api/config` 送前端,加模式只改這裡 |
+| `app/worker/upstream.ts` | 聽寫上游轉接層:SM(導覽與 2026-10 之前逐欄相同)與 Gemini 3.5 Transcribe Live |
+| `handoff-v12.md` | 新一代 Gemini Live × exp1 + 模式選單:判讀規則先寫死、偏離紀錄(含估價錯 9 倍、G31 靜默中斷) |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
 | `scripts/` | exp1/3/4 的實驗腳本;`run_*_modal.py` = Modal 上的 GPU arm |
@@ -120,3 +123,11 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   已有代打(`GeminiProxy`,`GEMINI_PROXY_REGION` 預設 `wnam`);**別把地區改成 `apac`**,
   可能又落回 HKG。接任何有地區政策的新上游,先問「執行位置跟著使用者走」這一題。
   付費方案(Workers Paid / Pro)**不改變**執行機房,對這件事沒幫助。
+- **Gemini Live 的下行是二進位 JSON 框**,不是文字。只處理 `typeof data === 'string'` 的話
+  setupComplete 永遠等不到、一個字都沒有、也沒有錯誤(`openGeminiLive` 一律解碼)。
+- **權限不夠的模式要 403,不要默默降級**。非 admin 要 Gemini 對照卻被悄悄換成導覽,
+  他會以為自己在比 Gemini,其實聽到的是 SM。
+- **全域花費保險絲的估價規則,先用一檔對官方牌價驗證再放大跑。** handoff-v12 的
+  live-translate 第一版把不計費的 TEXT 明細也算錢,估高 9 倍,差點把其他五個 arm 一起餓死。
+- **重開 `wrangler dev` 要確認舊的 `workerd` 子行程真的死了。** 只 kill 外層 `npx` 會留下
+  `workerd` 佔著埠,新的綁不上,探針悄悄打到舊程式——看起來測過了,其實沒有。
