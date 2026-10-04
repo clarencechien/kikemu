@@ -1,0 +1,10 @@
+{
+ "arm": "G38",
+ "model": "gemini-3.8-live",
+ "handoff": "v12",
+ "chunk_s": 0.5,
+ "realtime": "1x",
+ "price_checked": "2026-10-04",
+ "price_page_updated": "2026-10-01",
+ "note": "不接受 thinkingLevel"
+}

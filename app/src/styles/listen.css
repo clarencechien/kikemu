@@ -133,3 +133,11 @@ body[data-listen=live] #toggleBtn { background: var(--paper); color: var(--ink) 
 .histExp { color: var(--ink-2); font-family: var(--data); letter-spacing: .04em; padding: 5px 7px }
 .histExp:hover { color: var(--ink); border-color: var(--ink-2) }
 .histEmpty { padding: 26px 16px; font-size: 13.5px; color: var(--ink-2); text-align: center; line-height: 2 }
+
+/* 對話模式的語者標籤(A/B…):小方塊放在原文前面,不搶原文的視線 */
+.card .ja .spk {
+  display: inline-block; min-width: 1.5em; margin-right: 6px; padding: 0 5px;
+  font-family: var(--data); font-size: 12px; line-height: 1.6; text-align: center;
+  border: 1px solid var(--line); border-radius: 2px; color: var(--ink-2); vertical-align: 2px;
+}
+.card .ja .spk[data-spk="B"] { color: var(--brand); border-color: var(--brand) }

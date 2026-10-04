@@ -19,13 +19,50 @@ Cloudflare Worker(worker/index.ts)
   ├─ R2 CONFIG bucket:config/allowlist.json・config/waitlist.json・vocab/{id}.json
   ├─ QUOTA DO(worker/quota.ts):每人每日聽譯秒數,UTC 00:00 = 台灣 08:00 重置
   └─ RELAY DO(worker/relay.ts,per-email)
-       ├─ 上游:Speechmatics RT WS(enhanced/partials/max_delay 2.0,
-       │        語言取自 worker/langs.ts;金鑰只存在 DO)
-       │        additional_vocab = R2 vocab/{pack}.json,**語言相符才掛**
-       ├─ 下行:{partial|final} + 每秒 {stat}(伺服器實收 RMS)
+       ├─ 上游(worker/upstream.ts,依模式選):
+       │    導覽 → Speechmatics RT WS(enhanced/partials/max_delay 2.0,
+       │           語言取自 worker/langs.ts;金鑰只存在 DO)
+       │           additional_vocab = R2 vocab/{pack}.json,**語言相符才掛**
+       │    對話 → 同上 + diarization: speaker(換人就斷句)
+       │    Gemini 對照(僅 admin)→ gemini-3.5-transcribe-live
+       │           (customVocabulary = 同一包的 content,無讀音)
+       ├─ 下行:{partial|final(+speaker)} + 每秒 {stat}(伺服器實收 RMS)
        └─ 定稿句 → Gemini generateContent(worker/gemini.ts,
                    凍結口譯 systemInstruction = scripts/prompts.py)→ {zh}
+                   ——三個模式都走同一個譯,只有耳朵不同
+  GEMINI_PROXY DO(worker/gemini.ts GeminiProxy,釘在 GEMINI_PROXY_REGION):
+       被 Google 以區域理由拒絕時代打——HTTP 的 generateContent 與 Live 的 WebSocket 都代
 ```
+
+**模式是 `worker/modes.ts` 一處定義**,`/api/config` 送前端。一個選單三個模式,
+不是「單人/多人」×「SM/Gemini」兩個開關:Gemini Transcribe Live 即時**不支援語者分離**
+(官方文件),那個組合不存在。
+
+| 模式 | 聽 | 斷句 | 誰看得到 | 量測狀態 |
+|---|---|---|---|---|
+| **導覽**(預設) | SM 單人 | 句末標點 + 48 字 / 6 秒保險(**與 2026-10 之前相同**) | 所有人 | exp1 主線 |
+| **對話** | SM + 語者分離 | 換人就切;超過 48 字切在最後一個軟斷點(、, 空白),找不到才等到 96 字硬切 | 所有人 | 語者分離準確度**未量測**(侷限 26) |
+| **Gemini 對照** | gemini-3.5-transcribe-live | 每個定稿(講者停頓)即一句 | **只有 admin**(`/ws` 伺服器端擋,不靠前端藏) | handoff-v12 |
+
+**Gemini 對照的工程細節**(都踩過或照官方限制寫的):
+單場上限 10 分鐘 → 9 分鐘主動換線、收到 `goAway` 也換;下行是**二進位** JSON 框(不解碼就一個字都沒有);
+沒有詞級時間戳 → `t` 給 0,前端不算這個模式的延遲;不回 usageMetadata → 收尾 log 用音訊秒數 × 官方
+blended $0.009/min 記帳(`耳朵≈$…`)。
+
+**本機驗證三個模式**(需要 `.dev.vars` 有 SM 與 Gemini 金鑰、`DEV_LOGIN=1`,
+`ADMIN_EMAILS` 設一個測試地址才能開 Gemini 模式;**用 `localhost` 不要用 `127.0.0.1`**——
+canonical-host 檢查只豁免前者):
+
+```bash
+npx wrangler dev --port 8787
+node scripts/probe-ws.mjs --host http://localhost:8787 --email <ADMIN_EMAILS 裡的地址> \
+  --wav ../corpus/conditions/sakai06__N0.wav --lang ja --mode gemini   # guide / dialog / gemini
+```
+
+代打路徑在台灣不會被觸發。要驗證它,`.dev.vars` 加 `GEMINI_FORCE_PROXY=1`,
+wrangler 日誌出現 `[gemini-proxy] 代打一條 Live session` 才算有走到。
+⚠️ 改 `.dev.vars` 要**整個重開** wrangler——直接 kill 外層 `npx` 不會殺掉 `workerd` 子行程,
+新的 wrangler 會綁不到埠,而探針會悄悄打到舊的那一個(實際發生過)。
 
 **語言是 `worker/langs.ts` 一處定義**(日本語 / 한국어 / English / 中文・English 夾雜),
 前端下拉、`/api/config`、relay 的 Speechmatics 設定、場景包驗證字集都讀同一份。

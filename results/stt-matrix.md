@@ -121,7 +121,9 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 
 ② 有人聲背景嗎(SNR < 15dB)?
    有 ─────────► Speechmatics 串流 + 詞表      ← LLM Live 在這裡歸零
-   沒有 ───────► Gemini Live(省一跳)或 SM 串流
+   沒有 ───────► SM 串流;或 Gemini 3.5 Transcribe Live(2026-10 起,安靜/殘響下與 SM+詞表同級,
+                 但貴一倍、定稿每 9 秒一則、即時無語者分離——**沒有理由換**,handoff-v12)
+                 ✗ 對話型 Gemini Live(3.1 / 3.8):殘響下仍掉(3.1 0.612、3.8 0.746)
 
    ⚠️ 即時這條線上 **SM 是「最後一個站著的」,不是贏來的**:
       Gemini Live 噪音下崩潰(日文 N3 0.030、中英夾雜 M3 0.396,**兩種語言複驗**)
@@ -260,6 +262,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 |---|---|---|
 | §3.1 / §3.2 / §3.3 / §3.4 / §3.5 | exp1 日文導覽 | `results/scores.json`、`results/raw/` |
 | §3.1b | exp1 追加 arm `Abat` | `results/raw/Abat/` |
+| §3.1c | handoff-v12 新一代 Gemini Live 六個 arm | `results/v12_compare.json`、`results/raw/G3*/`、`results/raw/G[TX]*/` |
 | §5 | exp2 中英夾雜 | `exp2/results/scores.json` |
 | §6 | exp5 領域外 + Breeze | `exp5/results/scores.json`、`exp5/results/raw/` |
 | 成本速查 | exp5 usage 實測 | `exp5/results/raw/Gbat*/` |
@@ -271,7 +274,7 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 | §6 日文 | exp1 追加 arm `Xbrz_ja`(30 檔) | `results/raw/Xbrz_ja/` |
 | §6 全地端鏈 | exp5 `chain_*`(三條鏈同料) | `exp5/results/chain_scores.json` |
 
-完整報告與 43 條侷限:[`results/report.md`](report.md)。
+完整報告與 48 條侷限:[`results/report.md`](report.md)。
 
 ### 3.1 一體式**即時**在噪音下會崩潰,不是變差
 
@@ -287,6 +290,19 @@ LLM 這條路沒有詞表機制,對應手段是 prompt 給脈絡——**本專�
 - 差距隨噪音**單調放大**,CI 全部排除 0
 - **SNR 8dB 下一體式系統性崩潰**:6 段中 4 段輸出歸零,獨立重跑逐檔重現、字元數一致。這不是抖動,是 VAD/辨識在人聲背景下整段放棄
 - 譯文 adequacy:SM+詞表 4.71 > SM 4.50 > 一體式 3.61(邊聽邊譯會精簡丟細節)
+
+### 3.1c 2026-10 的新模型:殘響不再是門檻,人聲背景仍是(handoff-v12)
+
+| exp1 專名召回 | 全部 | N0 | N1 殘響 | N2 人聲 15dB | N3 人聲 8dB |
+|---|---|---|---|---|---|
+| SM 即時 + 詞表 + 假名 | **0.791** | 0.836 | 0.836 | **0.806** | **0.627** |
+| 3.1 Live(同日重量) | 0.460 | 0.821 | 0.612 | 0.194 | 0.045 |
+| 3.8 Live | 0.454 | 0.761 | 0.746 | 0.119 | 0.000 |
+| **3.5 Transcribe Live + 詞表** | 0.591 | **0.896** | **0.851** | 0.343 | 0.045 |
+
+**對話型 Live 沒有進步(3.8 − 3.1 = −0.006);專用轉寫模型有(+0.131)。**
+「一體式即時的門檻是直接餵訊號」只對對話型 Live 成立;對 3.5 Transcribe Live,
+**門檻是人聲背景**。選型結論不變:遠場有人聲 → SM + 詞表。詳見報告 §2.1f。
 
 ### 3.1b 但那是 Live 的行為,不是模型的能力上限(exp1 追加 arm `Abat`)
 

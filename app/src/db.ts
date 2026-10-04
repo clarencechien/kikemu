@@ -11,6 +11,8 @@ export type SessionRecord = {
   lang?: string;
   pack: string | null;
   packName: string | null;
+  /** 聽譯模式(worker/modes.ts 的 code);舊紀錄沒有這欄 = 導覽 */
+  mode?: string;
   /** 聽譯秒數(顯示用) */
   seconds: number;
   lines: Line[];

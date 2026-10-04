@@ -21,6 +21,7 @@ import {
 import { handleAdmin } from './admin';
 import { listPacks } from './vocab';
 import { DEFAULT_LANG, LANGS, PACK_LANGS, packLangLabel } from './langs';
+import { DEFAULT_MODE, MODES, findMode } from './modes';
 import type { Usage } from './quota';
 export { QuotaCounter } from './quota';
 export { SessionRelay } from './relay';
@@ -35,6 +36,8 @@ export interface Env {
   GEMINI_PROXY: DurableObjectNamespace;
   /** 代打 DO 的 locationHint(wnam/enam/weur…),預設 wnam。改了會在新地區建新 DO */
   GEMINI_PROXY_REGION?: string;
+  /** 測試用:'1' = Gemini 一律走代打 DO(只放 .dev.vars,用來在不會被封鎖的地方驗證代打路徑) */
+  GEMINI_FORCE_PROXY?: string;
   // 秘密(wrangler secret put,絕不進 repo)
   SPEECHMATICS_API_KEY: string;
   GEMINI_API_KEY: string;
@@ -162,6 +165,10 @@ async function route(req: Request, env: Env, _ctx: ExecutionContext): Promise<Re
       defaultLang: DEFAULT_LANG,
       // 哪些語言有場景包(前端據此決定要不要顯示包選單)
       packLangs: PACK_LANGS.map(c => ({ code: c, label: packLangLabel(c) })),
+      // 模式選單由伺服器給:加模式只改 worker/modes.ts。adminOnly 的前端據 /api/me 的 isAdmin 決定顯不顯示,
+      // 真正的權限檢查在 /ws(下面),不靠前端藏
+      modes: MODES,
+      defaultMode: DEFAULT_MODE,
     });
   }
 
@@ -315,6 +322,11 @@ async function api(req: Request, env: Env, path: string, email: string, user: Us
     wsUrl.searchParams.set('limit', String(user.limitSeconds));
     wsUrl.searchParams.set('email', email);
     wsUrl.searchParams.set('lang', new URL(req.url).searchParams.get('lang') || DEFAULT_LANG);
+    // 模式:不認得的值退回預設;adminOnly 的模式(Gemini 對照)非 admin 一律 403,不默默降級——
+    // 默默降級會讓人以為自己在比 Gemini,其實聽到的是 SM
+    const mode = findMode(new URL(req.url).searchParams.get('mode')) ?? findMode(DEFAULT_MODE)!;
+    if (mode.adminOnly && !user.isAdmin) return bad('這個模式目前只開放管理員', 403);
+    wsUrl.searchParams.set('mode', mode.code);
     // 這條連線進來的 Cloudflare 機房。DO 是 per-email 的,會在「把它叫醒的那個請求」
     // 所在機房建立,之後 Gemini 的子請求就從那裡出去——若被路由到 Gemini 不服務的
     // 地區(香港是已知案例),翻譯會整場失敗而原文正常。記進 log 才分得出來。

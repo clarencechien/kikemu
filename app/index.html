@@ -61,6 +61,10 @@
       <!-- 預設值:/api/config 到手後由 listen.ts 換成完整清單。留著才不會出現空選單 -->
       <option value="ja">日本語</option>
     </select>
+    <select class="pick" id="modeSel" title="聽譯模式">
+      <!-- 清單由 /api/config 給(worker/modes.ts);Gemini 對照只有 admin 看得到 -->
+      <option value="guide">導覽</option>
+    </select>
     <div class="spacer"></div>
     <button class="pick" id="histBtn">🕘 歷史</button>
     <button class="pick hidden" id="adminBtn">⚙ 管理</button>

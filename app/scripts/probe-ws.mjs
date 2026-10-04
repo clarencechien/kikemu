@@ -28,6 +28,8 @@ const host = (arg('host') || 'http://localhost:8787').replace(/\/$/, '');
 const wavPath = arg('wav');
 const pack = arg('pack', '');
 const lang = arg('lang', 'ja');
+// 模式:guide(預設)/ dialog / gemini(後者需 admin 帳號)——見 worker/modes.ts
+const mode = arg('mode', 'guide');
 const email = arg('email');
 let cookie = arg('cookie', '');
 
@@ -98,7 +100,7 @@ if (!cookie) {
   process.exit(2);
 }
 
-const q = new URLSearchParams({ lang });
+const q = new URLSearchParams({ lang, mode });
 if (pack) q.set('pack', pack);
 const wsUrl = `${host.replace(/^http/, 'ws')}/ws?${q}`;
 console.log(`連線 ${wsUrl}\n`);
@@ -122,7 +124,7 @@ ws.addEventListener('message', async ev => {
   switch (m.type) {
     case 'ready':
       ready = true;
-      console.log(`${ts()} ready(場景包:${m.packName ?? '無'} / ${m.vocabCount ?? 0} 詞)— 開始送音訊`);
+      console.log(`${ts()} ready(模式:${m.mode ?? 'guide'} / 場景包:${m.packName ?? '無'} / ${m.vocabCount ?? 0} 詞)— 開始送音訊`);
       void feed();
       return;
     case 'partial':
@@ -131,7 +133,7 @@ ws.addEventListener('message', async ev => {
       return;
     case 'final':
       finals++;
-      console.log(`\n${ts()} FINAL #${m.seq} (t=${m.t}) ${m.text}`);
+      console.log(`\n${ts()} FINAL #${m.seq} (t=${m.t})${m.speaker ? ` [${m.speaker}]` : ""} ${m.text}`);
       return;
     case 'zh':
       zhs++;
@@ -185,7 +187,7 @@ async function feed() {
 function report() {
   console.log('\n──────── 判讀 ────────');
   if (finals > 0) {
-    console.log(`✓ relay → Speechmatics 正常(${finals} 句定稿 / ${partials} 次 partial / ${zhs} 句譯文)`);
+    console.log(`✓ relay → ${mode === "gemini" ? "Gemini 3.5 Transcribe Live" : "Speechmatics"} 正常(模式 ${mode})(${finals} 句定稿 / ${partials} 次 partial / ${zhs} 句譯文)`);
     console.log('  → 問題在瀏覽器送出的音訊,或現場講的內容不是日文/太吵。');
     console.log('  → 下一步:用 app 錄同一段話,比較狀態列的音量與這裡的 RMS。');
   } else if (partials > 0) {

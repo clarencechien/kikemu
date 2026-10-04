@@ -1,0 +1,961 @@
+{
+ "clip": "hig01_A1__N0.wav",
+ "clip_s": 20.0,
+ "checked": "2026-10-04",
+ "results": [
+  {
+   "model": "gemini-3.1-flash-live-preview",
+   "setup": "A_exp1",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "voiceActivity": 6,
+    "sessionResumptionUpdate": 15,
+    "inputTranscription": 3,
+    "modelTurn": 61,
+    "outputTranscription": 3,
+    "generationComplete": 3,
+    "turnComplete": 3,
+    "usageMetadata": 3,
+    "interrupted": 1
+   },
+   "input_transcription": "いすきり 剣宮 神社 えま でん今 まで に つい たら 、 まず は 屋根 を 見上げ て みよう 。 立派 な 剣 と 矢 を 見つける こと が できる 。神社 名 の 石",
+   "output_transcription": "石切劍箭神社 繪馬殿到達繪馬殿後，首先抬頭看看屋頂吧。你可以看到雄偉的劍與箭。神社名中的「石」",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.56,
+   "usage_last": {
+    "promptTokenCount": 976,
+    "responseTokenCount": 58,
+    "totalTokenCount": 1034,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 340
+     },
+     {
+      "modality": "AUDIO",
+      "tokenCount": 583
+     }
+    ],
+    "responseTokensDetails": [
+     {
+      "modality": "AUDIO",
+      "tokenCount": 58
+     }
+    ]
+   },
+   "messages_head": [
+    {
+     "t": 1.44,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 1.6,
+     "sessionResumptionUpdate": {
+      "newHandle": "18c68dec-5192-4dac-a8ea-867a7531a62b",
+      "resumable": true
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "いすきり 剣宮 神社 えま でん"
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.600s"
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {}
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      },
+      "outputTranscription": {
+       "text": "石切劍箭神社 繪馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 5.56,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 4
+         }
+        }
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.1-flash-live-preview",
+   "setup": "B_text_min",
+   "closed": {
+    "code": 1007,
+    "reason": "The requested combination of response modalities (TEXT) is not supported by the model. models/gemini-3.1-flash-live-preview"
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.5-transcribe-live",
+   "setup": "A_exp1",
+   "closed": {
+    "code": 1007,
+    "reason": "The requested combination of response modalities (AUDIO) is not supported by the model. models/gemini-3.5-transcribe-live a"
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.5-transcribe-live",
+   "setup": "B_text_min",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "voiceActivity": 6,
+    "interimInputTranscription": 24,
+    "inputTranscription": 3,
+    "generationComplete": 3
+   },
+   "input_transcription": "石切劔箭神社絵馬殿雨漏りについては、まずは屋根を見上げてみよう。立派な剣と弓を見つけることができる。神社 名 の",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.26,
+   "usage_last": null,
+   "messages_head": [
+    {
+     "t": 1.06,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 2.27,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "息率"
+      }
+     }
+    },
+    {
+     "t": 2.78,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "イスキリ剣屋"
+      }
+     }
+    },
+    {
+     "t": 3.29,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切剣箭神社"
+      }
+     }
+    },
+    {
+     "t": 3.57,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切剣箭神社"
+      }
+     }
+    },
+    {
+     "t": 3.85,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切剣箭神社"
+      }
+     }
+    },
+    {
+     "t": 4.36,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切剣箭神社 絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 4.86,
+     "serverContent": {
+      "interimInputTranscription": {
+       "text": "石切剣箭神社 絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.26,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "石切劔箭神社絵馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.26,
+     "serverContent": {
+      "generationComplete": true
+     }
+    },
+    {
+     "t": 5.26,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.640s"
+     }
+    },
+    {
+     "t": 8.52,
+     "serverContent": {},
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "8.240s"
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.5-live-translate-preview",
+   "setup": "A_exp1",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "inputTranscription": 16,
+    "outputTranscription": 16,
+    "modelTurn": 307,
+    "usageMetadata": 16,
+    "sessionResumptionUpdate": 16
+   },
+   "input_transcription": "石切剣箭神社へまでえまでんに着いたらまずは屋根を見上げてみよう。立派な剣を見つけることができる。神社名の",
+   "output_transcription": "Ishikiri Tsurugiya Shrine, to the end. At the main shrine, first, look up at the roof. There's a magnificent sword you can find. The name of the shrine",
+   "model_text": "",
+   "n_input_chunks": 10,
+   "first_input_t": 3.82,
+   "usage_last": {
+    "promptTokenCount": 50,
+    "responseTokenCount": 50,
+    "totalTokenCount": 100,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 883
+     },
+     {
+      "modality": "AUDIO",
+      "tokenCount": 50
+     }
+    ],
+    "responseTokensDetails": [
+     {
+      "modality": "AUDIO",
+      "tokenCount": 50
+     }
+    ]
+   },
+   "messages_head": [
+    {
+     "t": 3.82,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "石切剣箭神社",
+       "languageCode": "ja"
+      }
+     }
+    },
+    {
+     "t": 4.03,
+     "serverContent": {
+      "outputTranscription": {
+       "text": "Ishikiri Tsurugiya",
+       "languageCode": "en"
+      }
+     }
+    },
+    {
+     "t": 4.03,
+     "serverContent": {}
+    },
+    {
+     "t": 4.04,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.04,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.08,
+     "serverContent": {},
+     "usageMetadata": {
+      "promptTokenCount": 50,
+      "responseTokenCount": 50,
+      "totalTokenCount": 100,
+      "promptTokensDetails": [
+       {
+        "modality": "TEXT",
+        "tokenCount": 674
+       },
+       {
+        "modality": "AUDIO",
+        "tokenCount": 50
+       }
+      ],
+      "responseTokensDetails": [
+       {
+        "modality": "AUDIO",
+        "tokenCount": 50
+       }
+      ]
+     }
+    },
+    {
+     "t": 4.2,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.38,
+     "sessionResumptionUpdate": {
+      "newHandle": "a1f5444c-505a-4302-b13d-a951d1f352d1",
+      "resumable": true
+     }
+    },
+    {
+     "t": 4.41,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "へまで",
+       "languageCode": "ja"
+      }
+     }
+    },
+    {
+     "t": 4.45,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.58,
+     "serverContent": {},
+     "usageMetadata": {
+      "promptTokenCount": 25,
+      "responseTokenCount": 25,
+      "totalTokenCount": 50,
+      "promptTokensDetails": [
+       {
+        "modality": "TEXT",
+        "tokenCount": 697
+       },
+       {
+        "modality": "AUDIO",
+        "tokenCount": 25
+       }
+      ],
+      "responseTokensDetails": [
+       {
+        "modality": "AUDIO",
+        "tokenCount": 25
+       }
+      ]
+     }
+    },
+    {
+     "t": 4.72,
+     "serverContent": {
+      "outputTranscription": {
+       "text": " Shrine,",
+       "languageCode": "en"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.5-live-translate-preview",
+   "setup": "B_text_min",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "inputTranscription": 16,
+    "outputTranscription": 16,
+    "usageMetadata": 16,
+    "modelTurn": 307,
+    "sessionResumptionUpdate": 16
+   },
+   "input_transcription": "石切剣矢神社へまでえまでに着いたらまずは屋根を見上げてみよう。立派な剣と矢を見つけることができる。神社名の",
+   "output_transcription": "Ishikiri Tsurugiya Shrine, and then To Ishikiri, once you arrive, first look up at the roof. There's a magnificent sword and arrow you can find. The name of the shrine,",
+   "model_text": "",
+   "n_input_chunks": 10,
+   "first_input_t": 3.69,
+   "usage_last": {
+    "promptTokenCount": 50,
+    "responseTokenCount": 50,
+    "totalTokenCount": 100,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 759
+     },
+     {
+      "modality": "AUDIO",
+      "tokenCount": 50
+     }
+    ],
+    "responseTokensDetails": [
+     {
+      "modality": "AUDIO",
+      "tokenCount": 50
+     }
+    ]
+   },
+   "messages_head": [
+    {
+     "t": 3.69,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "石切剣矢神社",
+       "languageCode": "ja"
+      }
+     }
+    },
+    {
+     "t": 3.91,
+     "serverContent": {
+      "outputTranscription": {
+       "text": "Ishikiri Tsurugiya",
+       "languageCode": "en"
+      }
+     }
+    },
+    {
+     "t": 3.91,
+     "serverContent": {}
+    },
+    {
+     "t": 3.91,
+     "serverContent": {},
+     "usageMetadata": {
+      "promptTokenCount": 50,
+      "responseTokenCount": 50,
+      "totalTokenCount": 100,
+      "promptTokensDetails": [
+       {
+        "modality": "TEXT",
+        "tokenCount": 535
+       },
+       {
+        "modality": "AUDIO",
+        "tokenCount": 50
+       }
+      ],
+      "responseTokensDetails": [
+       {
+        "modality": "AUDIO",
+        "tokenCount": 50
+       }
+      ]
+     }
+    },
+    {
+     "t": 3.91,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 3.91,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.07,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.07,
+     "sessionResumptionUpdate": {
+      "newHandle": "d7456172-178c-49f5-83b0-cb07ea1ab78b",
+      "resumable": true
+     }
+    },
+    {
+     "t": 4.32,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.58,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 16000
+         }
+        }
+       ]
+      }
+     }
+    },
+    {
+     "t": 4.6,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "へまで",
+       "languageCode": "ja"
+      }
+     }
+    },
+    {
+     "t": 4.8,
+     "serverContent": {},
+     "usageMetadata": {
+      "promptTokenCount": 25,
+      "responseTokenCount": 25,
+      "totalTokenCount": 50,
+      "promptTokensDetails": [
+       {
+        "modality": "TEXT",
+        "tokenCount": 558
+       },
+       {
+        "modality": "AUDIO",
+        "tokenCount": 25
+       }
+      ],
+      "responseTokensDetails": [
+       {
+        "modality": "AUDIO",
+        "tokenCount": 25
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.8-live",
+   "setup": "A_exp1",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "ok": true,
+   "message_kinds": {
+    "sessionResumptionUpdate": 1,
+    "voiceActivity": 7,
+    "inputTranscription": 3,
+    "modelTurn": 17,
+    "outputTranscription": 3,
+    "generationComplete": 2,
+    "turnComplete": 3,
+    "usageMetadata": 3,
+    "interrupted": 2
+   },
+   "input_transcription": "이시키츠루기야 신사 에마덴今までに着いたら、まずは屋根を見上げてみよう。立派な剣と弓を見つけることができる。",
+   "output_transcription": "伊射奈岐劍神社繪馬殿抵達繪馬殿後，首先抬頭看看屋頂吧。可以發現威武的劍與弓。",
+   "model_text": "",
+   "n_input_chunks": 3,
+   "first_input_t": 5.09,
+   "usage_last": {
+    "promptTokenCount": 1110,
+    "responseTokenCount": 69,
+    "totalTokenCount": 1179,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 497
+     },
+     {
+      "modality": "AUDIO",
+      "tokenCount": 558
+     }
+    ],
+    "responseTokensDetails": [
+     {
+      "modality": "AUDIO",
+      "tokenCount": 69
+     }
+    ],
+    "thoughtsTokenCount": 125
+   },
+   "messages_head": [
+    {
+     "t": 0.51,
+     "sessionResumptionUpdate": {
+      "newHandle": "a3dc7209-b98d-463a-ac5a-ab10d7f1bd45",
+      "resumable": true
+     }
+    },
+    {
+     "t": 1.15,
+     "voiceActivity": {
+      "type": "ACTIVITY_START",
+      "audioOffset": "0.920s"
+     }
+    },
+    {
+     "t": 5.09,
+     "serverContent": {
+      "inputTranscription": {
+       "text": "이시키츠루기야 신사 에마덴"
+      }
+     }
+    },
+    {
+     "t": 5.09,
+     "voiceActivity": {
+      "type": "ACTIVITY_END",
+      "audioOffset": "4.640s"
+     }
+    },
+    {
+     "t": 5.13
+    },
+    {
+     "t": 5.13,
+     "serverContent": {}
+    },
+    {
+     "t": 5.36
+    },
+    {
+     "t": 5.37,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 9600
+         }
+        }
+       ],
+       "role": "model"
+      },
+      "outputTranscription": {
+       "text": "伊射奈岐劍神社繪馬殿"
+      }
+     }
+    },
+    {
+     "t": 5.4
+    },
+    {
+     "t": 5.41,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 23040
+         }
+        }
+       ],
+       "role": "model"
+      }
+     }
+    },
+    {
+     "t": 5.52
+    },
+    {
+     "t": 5.52,
+     "serverContent": {
+      "modelTurn": {
+       "parts": [
+        {
+         "inlineData": {
+          "mimeType": "audio/pcm;rate=24000",
+          "bytes_b64": 35840
+         }
+        }
+       ],
+       "role": "model"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.8-live",
+   "setup": "B_text_min",
+   "setup_reply": {
+    "setupComplete": {}
+   },
+   "closed": {
+    "code": 1007,
+    "reason": "The requested combination of response modalities (TEXT) is not supported by the model. models/gemini_api_beyond_live_rev25_"
+   },
+   "ok": true,
+   "message_kinds": {
+    "sessionResumptionUpdate": 1
+   },
+   "input_transcription": "",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": [
+    {
+     "t": 0.46,
+     "sessionResumptionUpdate": {
+      "newHandle": "49ce12a4-5ac4-4f87-b05b-388b7a8d6c29",
+      "resumable": true
+     }
+    }
+   ]
+  },
+  {
+   "model": "gemini-3.8-live-extended-thinking",
+   "setup": "A_exp1",
+   "closed": {
+    "code": 1007,
+    "reason": "Thinking level must be specified for this model."
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  },
+  {
+   "model": "gemini-3.8-live-extended-thinking",
+   "setup": "B_text_min",
+   "closed": {
+    "code": 1007,
+    "reason": "Thinking level must be specified for this model."
+   },
+   "ok": false,
+   "message_kinds": {},
+   "input_transcription": "",
+   "output_transcription": "",
+   "model_text": "",
+   "n_input_chunks": 0,
+   "first_input_t": null,
+   "usage_last": null,
+   "messages_head": []
+  }
+ ]
+}

@@ -1,17 +1,19 @@
-/* SessionRelay(Durable Object):瀏覽器 WS ↔ Speechmatics RT WS 的中繼。
+/* SessionRelay(Durable Object):瀏覽器 WS ↔ 聽寫上游 WS 的中繼。
    模式沿 manemu app/src/relay.mjs:per-email DO(同用戶天然序列化)、
    金鑰只存在 DO、靜默收斂與計費保險絲。kikemu 差異:
-   - 上游是 Speechmatics(ja / enhanced / partials / max_delay 2.0,
-     additional_vocab = R2 vocab/{pack}.json;exp1 定案),不是 Gemini Live
+   - 上游預設是 Speechmatics(ja / enhanced / partials / max_delay 2.0,
+     additional_vocab = R2 vocab/{pack}.json;exp1 定案),不是 Gemini Live。
+     模式選單(worker/modes.ts)可換成「對話」(SM + 語者分離)或
+     「Gemini 對照」(gemini-3.5-transcribe-live,僅 admin);上游差異收在 upstream.ts
    - 瀏覽器二進位 PCM 框「原樣」轉發(SM 收 raw binary = AddAudio)
-   - 定稿句在 DO 內逐句呼叫 Gemini 翻譯 hop(gemini.ts,凍結口譯 prompt)
-   - 配額計「聽譯秒數」:RecognitionStarted 起錶、斷線停錶;
-     SM Error 且整場沒有任何定稿 → 不計費(不假裝成功也不收錢)
+   - 定稿句在 DO 內逐句呼叫 Gemini 翻譯 hop(gemini.ts,凍結口譯 prompt)——三個模式都一樣
+   - 配額計「聽譯秒數」:上游開始收音起錶、斷線停錶;
+     上游 Error 且整場沒有任何定稿 → 不計費(不假裝成功也不收錢)
 
    下行協定(JSON):
-     {type:"ready", pack, packName, vocabCount}
-     {type:"partial", t, text}            t = SM 音訊時間軸秒數(端到端延遲用)
-     {type:"final", seq, t, text}         一句定稿
+     {type:"ready", pack, packName, vocabCount, mode}
+     {type:"partial", t, text}            t = SM 音訊時間軸秒數(端到端延遲用;Gemini 給 0)
+     {type:"final", seq, t, text, speaker?}  一句定稿;speaker 只在對話模式(S1/S2…)
      {type:"zh", forSeq, text}            該句譯文
      {type:"zhError", forSeq}             翻譯失敗(前端顯示「譯文暫缺・點擊重試」)
      {type:"error", message}              SM/系統錯誤(4xx 不重試,明講原因)
@@ -22,7 +24,9 @@
 import type { Env } from './index';
 import { translateSentence } from './gemini';
 import { readPack } from './vocab';
-import { resolveLang } from './langs';
+import { NO_SPACE_LANGS, resolveLang } from './langs';
+import { findMode, DEFAULT_MODE, type ModeCode } from './modes';
+import { openGeminiTranscribe, openSpeechmatics, type Upstream } from './upstream';
 import type { Usage } from './quota';
 
 /** `clarence.chien@gmail.com` → `cla…@gmail.com`。日誌裡夠用來辨識,又不是完整 PII。 */
@@ -32,7 +36,6 @@ export const maskEmail = (e: string) => {
   return `${e.slice(0, Math.min(3, at))}…${e.slice(at)}`;
 };
 
-const SM_URL = 'https://eu2.rt.speechmatics.com/v2';
 /** WS 靜默 30 秒自動收斂(PRD §5 熔斷) */
 const IDLE_MS = 30_000;
 /** 同一個帳號同時進行中的 session 上限。這是 PTT 型產品,一次只會講一句;
@@ -54,6 +57,12 @@ const MAX_RETRY_PER_SEQ = 3;
    兩道保險:超過字數、或殘句擱太久,就當一句切出去。 */
 const MAX_PENDING_CHARS = 48;
 const PENDING_STALE_MS = 6_000;
+/** 對話/Gemini 模式的「軟斷點」:殘句超過字數上限時,切在最後一個軟斷點之後,
+ *  不切在字中間(街訪逐字稿 #62 被從「選ばはっ|たんですか」中間切開的那種)。
+ *  找不到軟斷點就等到 2 倍上限才硬切。導覽模式不套用——維持 2026-10 之前的行為。 */
+const SOFT_BREAK = /[、,,;;:: ]/g;
+/** Gemini 3.5 Transcribe Live 的官方 blended 牌價(pricing 頁 2026-10-01 更新,10-04 查) */
+const GEMINI_EAR_USD_PER_MIN = 0.009;
 
 /** 一場進行中的 session。chargeStart 是它已經燒掉、但還沒寫回 QuotaCounter 的起點 */
 type LiveSession = { chargeStart: number };
@@ -98,6 +107,8 @@ export class SessionRelay {
     const pack = url.searchParams.get('pack') || '';
     const lang = url.searchParams.get('lang') || 'ja';
     const colo = url.searchParams.get('colo') || '?';
+    // 權限(Gemini 對照僅限 admin)由 Worker 在轉進來之前就擋掉;這裡只認得合法值
+    const mode: ModeCode = findMode(url.searchParams.get('mode'))?.code ?? DEFAULT_MODE;
 
     // 併發閘門。扣款要等 session 結束才寫回 QuotaCounter,所以同一個 cookie
     // 同時開 N 條時,每條進門讀到的 used 都是同一個舊值 —— 沒有這一段,
@@ -132,7 +143,7 @@ export class SessionRelay {
     //  finish() 與 RecognitionStarted 那兩處的 entry 變成懸空,production build 失敗。)
     const entry: LiveSession = { chargeStart: 0 };
     this.live.add(entry);
-    this.pipe(server, { email, limit, used, pack, lang, colo, entry }).catch(e => {
+    this.pipe(server, { email, limit, used, pack, lang, colo, mode, entry }).catch(e => {
       this.live.delete(entry);
       try {
         server.send(JSON.stringify({ type: 'error', message: String(e?.message ?? e).slice(0, 200) }));
@@ -151,6 +162,7 @@ export class SessionRelay {
       pack,
       lang,
       colo,
+      mode,
       entry,
     }: {
       email: string;
@@ -159,29 +171,25 @@ export class SessionRelay {
       pack: string;
       lang: string;
       colo: string;
+      mode: ModeCode;
       entry: LiveSession;
     },
   ) {
+    const isGemini = mode === 'gemini';
+    const diarize = mode === 'dialog';
+    const softCut = mode !== 'guide'; // 導覽模式維持原本的斷句行為
     // fail-closed:金鑰缺就明講,不連上游、不計費
-    if (!this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
+    if (!isGemini && !this.env.SPEECHMATICS_API_KEY) throw new Error('SPEECHMATICS_API_KEY 未設定(wrangler secret put)');
     if (!this.env.GEMINI_API_KEY) throw new Error('GEMINI_API_KEY 未設定(wrangler secret put)');
 
     // 場景包隨 session config 送出(Speechmatics 限制:中途不可換,換包 = 重連)
-    const smLang = resolveLang(lang).code;
+    const L = resolveLang(lang);
+    const smLang = L.code;
+    const noSpace = NO_SPACE_LANGS.includes(smLang);
     // 包的語言必須與本場語言相符才掛——把日文假名詞條餵給韓文模型只會添亂
     const loaded = pack ? await readPack(this.env, pack) : null;
     const vocabPack = loaded && (loaded.lang || 'ja') === smLang ? loaded : null;
     const vocab = (vocabPack?.entries ?? []).slice(0, 1000);
-
-    // 上游:Speechmatics RT。需要 Authorization header → 走 fetch-upgrade
-    //(Workers 原生 new WebSocket() 不能帶自訂 header)。
-    const resp = await fetch(SM_URL, {
-      headers: { Upgrade: 'websocket', Authorization: `Bearer ${this.env.SPEECHMATICS_API_KEY}` },
-    });
-    const upstream = resp.webSocket;
-    if (!upstream) throw new Error(`Speechmatics 連線失敗(HTTP ${resp.status})`);
-    const up: WebSocket = upstream; // pushAudio 是函式宣告,拿不到上面的 narrowing
-    upstream.accept();
 
     const hardCapMs = Number(this.env.SESSION_HARD_CAP_S || 3600) * 1000;
     const t0 = Date.now();
@@ -239,8 +247,24 @@ export class SessionRelay {
         .finally(() => inflight--);
     };
 
+    /** 一句定稿:編號、送前端、送翻譯。speaker 只在對話模式帶 */
+    const emitSentence = (sentence: string, t: number) => {
+      gotFinal = true;
+      const seq = ++sentSeq;
+      sentences.set(seq, sentence);
+      send({ type: 'final', seq, t, text: sentence, ...(diarize && curSpeaker ? { speaker: curSpeaker } : {}) });
+      translate(seq, sentence);
+    };
+
+    let curSpeaker: string | undefined; // 對話模式:目前殘句屬於誰
+
     /** 定稿累積 → 完整句切出去翻譯,殘句留在 pending */
-    const onFinal = (text: string, t: number) => {
+    const onFinal = (text: string, t: number, speaker?: string) => {
+      // 對話模式:換人就先把前一個人的殘句送出去——不讓兩個人黏成一句
+      if (speaker && speaker !== curSpeaker) {
+        if (pending.trim()) flushPending();
+        curSpeaker = speaker;
+      }
       pending += text;
       pendingT = t;
       const parts = pending.split(SENT_END);
@@ -248,21 +272,28 @@ export class SessionRelay {
       for (const s of parts) {
         const sentence = s.trim();
         if (!sentence) continue;
-        gotFinal = true;
-        const seq = ++sentSeq;
-        sentences.set(seq, sentence);
-        send({ type: 'final', seq, t, text: sentence });
-        translate(seq, sentence);
+        emitSentence(sentence, t);
       }
+      // Gemini 的定稿是「講者停頓」才出現的一整段,本身就是自然斷點
+      if (isGemini && pending.trim()) return void flushPending();
       // 無標點語言:字數到了就切,不然永遠等不到句號
       if (pending.length >= MAX_PENDING_CHARS) {
-        flushPending();
-      } else {
-        if (pending && !pendingSince) pendingSince = Date.now();
-        if (!pending) pendingSince = 0;
-        // 殘句仍以 partial 樣式顯示,不留白
-        send({ type: 'partial', t, text: pending });
+        if (!softCut) return void flushPending();
+        // 切在最後一個軟斷點之後,不切在字中間;沒有軟斷點就等到 2 倍上限才硬切
+        let cut = -1;
+        for (const m of pending.matchAll(SOFT_BREAK)) if ((m.index ?? 0) >= 8) cut = m.index ?? -1;
+        if (cut >= 0) {
+          const head = pending.slice(0, cut + 1).trim();
+          pending = pending.slice(cut + 1);
+          if (head) emitSentence(head, t);
+        } else if (pending.length >= MAX_PENDING_CHARS * 2) {
+          return void flushPending();
+        }
       }
+      if (pending && !pendingSince) pendingSince = Date.now();
+      if (!pending) pendingSince = 0;
+      // 殘句仍以 partial 樣式顯示,不留白
+      send({ type: 'partial', t, text: pending });
     };
 
     const flushPending = () => {
@@ -270,11 +301,7 @@ export class SessionRelay {
       pending = '';
       pendingSince = 0;
       if (!sentence) return;
-      gotFinal = true;
-      const seq = ++sentSeq;
-      sentences.set(seq, sentence);
-      send({ type: 'final', seq, t: pendingT, text: sentence });
-      translate(seq, sentence);
+      emitSentence(sentence, pendingT);
     };
 
     const finish = async (reason: string, charge = true) => {
@@ -316,7 +343,11 @@ export class SessionRelay {
           })
           .catch(() => {});
       }
-      console.log(`[relay] ${maskEmail(email)} colo=${colo} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens`);
+      const earUsd = isGemini ? (seconds / 60) * GEMINI_EAR_USD_PER_MIN : 0;
+      console.log(
+        `[relay] ${maskEmail(email)} colo=${colo} mode=${mode} ${reason} ${Math.round(seconds)}s 翻譯 ${spentCalls} 句 / ${spentTokens} tokens` +
+          (isGemini ? ` 耳朵≈$${earUsd.toFixed(4)}` : ''),
+      );
       send({
         type: 'done',
         reason,
@@ -325,9 +356,7 @@ export class SessionRelay {
         limitSeconds: limit,
         charged,
       });
-      try {
-        upstream.close();
-      } catch {}
+      up.close();
       try {
         client.close();
       } catch {}
@@ -365,38 +394,28 @@ export class SessionRelay {
       }
     }, 1000);
 
-    upstream.addEventListener('message', ev => {
-      if (typeof ev.data !== 'string') return; // SM 下行皆為 JSON 文字
-      let msg: any;
-      try {
-        msg = JSON.parse(ev.data);
-      } catch {
-        return;
-      }
-      switch (msg.message) {
-        case 'RecognitionStarted':
-          chargeStart = Date.now(); // 連線即計(PRD §5);Error 情境見 finish
-          entry.chargeStart = chargeStart; // 讓其他並行 session 的額度檢查看得到這一場
-          send({ type: 'ready', pack: vocabPack ? pack : null, packName: vocabPack?.name ?? null, vocabCount: vocab.length });
-          return;
-        case 'AddPartialTranscript':
-          send({ type: 'partial', t: msg.metadata?.end_time ?? 0, text: pending + (msg.metadata?.transcript ?? '') });
-          return;
-        case 'AddTranscript':
-          onFinal(msg.metadata?.transcript ?? '', msg.metadata?.end_time ?? 0);
-          return;
-        case 'EndOfTranscript':
-          void finish('end-of-transcript');
-          return;
-        case 'Error':
-          // SM 4xx 直接回報不重試(PRD §5);整場沒定稿就不計費
-          send({ type: 'error', message: `Speechmatics:${msg.type ?? ''} ${msg.reason ?? ''}`.trim().slice(0, 200) });
-          void finish('sm-error', gotFinal);
-          return;
-      }
-    });
-    upstream.addEventListener('close', () => void finish('upstream-closed'));
-    upstream.addEventListener('error', () => void finish('upstream-error'));
+    // 上游:依模式選轉接器(upstream.ts)。事件語意與原本 SM 的 switch 一一對應:
+    // RecognitionStarted→ready、AddPartialTranscript→partial、AddTranscript→final、
+    // EndOfTranscript→ended、Error→error。導覽模式的行為與 2026-10 之前相同。
+    const events = {
+      ready: () => {
+        chargeStart = Date.now(); // 連線即計(PRD §5);Error 情境見 finish
+        entry.chargeStart = chargeStart; // 讓其他並行 session 的額度檢查看得到這一場
+        send({ type: 'ready', pack: vocabPack ? pack : null, packName: vocabPack?.name ?? null, vocabCount: vocab.length, mode });
+      },
+      partial: (text: string, t: number) => send({ type: 'partial', t, text: pending + text }),
+      final: (text: string, t: number, speaker?: string) => onFinal(text, t, speaker),
+      ended: () => void finish('end-of-transcript'),
+      error: (message: string) => {
+        // 4xx 直接回報不重試(PRD §5);整場沒定稿就不計費
+        send({ type: 'error', message });
+        void finish(isGemini ? 'gemini-error' : 'sm-error', gotFinal);
+      },
+      closed: (why: string) => void finish(why),
+    };
+    const up: Upstream = isGemini
+      ? await openGeminiTranscribe(this.env, { codes: L.geminiCodes, vocab: vocab.map(v => v.content), noSpace }, events)
+      : await openSpeechmatics(this.env, { lang: smLang, vocab, diarize, noSpace }, events);
 
     client.addEventListener('message', ev => {
       if (typeof ev.data === 'string') {
@@ -404,7 +423,7 @@ export class SessionRelay {
           const m = JSON.parse(ev.data);
           if (m.type === 'end' && !ended) {
             ended = true;
-            upstream.send(JSON.stringify({ message: 'EndOfStream', last_seq_no: audioSeq }));
+            up.end(audioSeq);
           } else if (m.type === 'retryZh' && sentences.has(Number(m.seq))) {
             // 每句重試上限:點一次算一次錢,不設限等於把保險絲交給使用者的手指
             const seq = Number(m.seq);
@@ -452,9 +471,7 @@ export class SessionRelay {
         rmsSum = rmsN >= 30 ? rmsSum * (29 / 30) + r : rmsSum + r;
         rmsN = Math.min(rmsN + 1, 30);
       }
-      try {
-        up.send(bytes);
-      } catch {}
+      up.push(bytes);
     }
     client.addEventListener('close', () => {
       if (!ended) void finish('client-closed');
@@ -462,19 +479,7 @@ export class SessionRelay {
     });
     client.addEventListener('error', () => void finish('client-error'));
 
-    // 監聽都掛好後才送 StartRecognition(exp1 run_speechmatics_rt.py 同款 config)
-    upstream.send(
-      JSON.stringify({
-        message: 'StartRecognition',
-        audio_format: { type: 'raw', encoding: 'pcm_s16le', sample_rate: 16000 },
-        transcription_config: {
-          language: smLang,
-          operating_point: 'enhanced',
-          enable_partials: true,
-          max_delay: 2.0,
-          ...(vocab.length ? { additional_vocab: vocab } : {}),
-        },
-      }),
-    );
+    // 監聽都掛好後才啟動上游(SM:送 StartRecognition,exp1 run_speechmatics_rt.py 同款 config)
+    up.start();
   }
 }

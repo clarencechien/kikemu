@@ -14,6 +14,13 @@ const LANG_NAME: Record<string, string> = {
   cmn_en: '中文・English',
 };
 
+/** 紀錄存在裝置上、可能比目前的模式清單更舊,所以顯示名稱留一份在這裡(對應 worker/modes.ts) */
+const MODE_NAME: Record<string, string> = {
+  guide: '導覽',
+  dialog: '對話(語者分離)',
+  gemini: 'Gemini 對照(gemini-3.5-transcribe-live 聽)',
+};
+
 const stamp = (iso: string) => {
   const d = new Date(iso);
   const p = (n: number) => String(n).padStart(2, '0');
@@ -29,12 +36,15 @@ function toTxt(rec: SessionRecord): string {
     // 舊紀錄沒存語言,就別硬掰一個
     ...(src ? [`語言:${src} → 台灣正體中文`] : []),
     `場景包:${rec.packName ?? '(未使用)'}`,
+    ...(rec.mode ? [`模式:${MODE_NAME[rec.mode] ?? rec.mode}`] : []),
     `長度:${Math.round(rec.seconds)} 秒・${rec.lines.length} 句`,
     '',
     '────────────────────────────',
     '',
   ];
-  const body = rec.lines.map((l, i) => `[${i + 1}]\n原文  ${l.ja}\n譯文  ${l.zh ?? '(未翻出)'}\n`);
+  const body = rec.lines.map(
+    (l, i) => `[${i + 1}]${l.speaker ? ` 講者 ${l.speaker}` : ''}\n原文  ${l.ja}\n譯文  ${l.zh ?? '(未翻出)'}\n`,
+  );
   return head.concat(body).join('\n');
 }
 
@@ -45,6 +55,7 @@ function toMd(rec: SessionRecord): string {
   const src = rec.lang ? LANG_NAME[rec.lang] ?? rec.lang : null;
   // 表格欄位裡的 | 會拆欄、換行會斷表,先中和掉
   const cell = (s: string) => s.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ').trim();
+  const spk = rec.lines.some(l => l.speaker);
   const when = new Date(rec.at);
   const head = [
     `# kikemu 聽譯紀錄 ${when.toLocaleString('zh-TW')}`,
@@ -53,24 +64,33 @@ function toMd(rec: SessionRecord): string {
     ...(src ? [`- 來源語言:${src}(\`${rec.lang}\`)`] : []),
     '- 譯文語言:台灣正體中文',
     `- 場景包:${rec.packName ?? '(未使用)'}`,
+    ...(rec.mode ? [`- 模式:${MODE_NAME[rec.mode] ?? rec.mode}(\`${rec.mode}\`)`] : []),
     `- 長度:${Math.round(rec.seconds)} 秒・${rec.lines.length} 句`,
     '',
     '> 逐句字幕。原文為語音辨識結果(可能有錯字),譯文由 LLM 逐句翻譯;',
     '> `(未翻出)` 表示該句翻譯失敗,不是原文沒有內容。',
     '',
-    `| # | 原文${src ? `(${src})` : ''} | 譯文(台灣正體) |`,
-    '|---:|---|---|',
+    // 對話模式才多一欄講者;沒有語者的紀錄維持原本三欄,舊匯出格式不變
+    ...(spk
+      ? [`| # | 講者 | 原文${src ? `(${src})` : ''} | 譯文(台灣正體) |`, '|---:|:---:|---|---|']
+      : [`| # | 原文${src ? `(${src})` : ''} | 譯文(台灣正體) |`, '|---:|---|---|']),
   ];
-  const rows = rec.lines.map((l, i) => `| ${i + 1} | ${cell(l.ja)} | ${l.zh ? cell(l.zh) : '(未翻出)'} |`);
+  const rows = rec.lines.map(
+    (l, i) =>
+      `| ${i + 1} | ${spk ? `${l.speaker ?? ''} | ` : ''}${cell(l.ja)} | ${l.zh ? cell(l.zh) : '(未翻出)'} |`,
+  );
   return head.concat(rows, ['']).join('\n');
 }
 
 /** CSV:給要進試算表校對的人。BOM + CRLF,Excel 才不會把中日文吃成亂碼 */
 function toCsv(rec: SessionRecord): string {
   const q = (s: string) => `"${s.replace(/"/g, '""')}"`;
+  const spk = rec.lines.some(l => l.speaker);
   const rows = [
-    ['#', '原文', '譯文'],
-    ...rec.lines.map((l, i) => [String(i + 1), l.ja, l.zh ?? '']),
+    spk ? ['#', '講者', '原文', '譯文'] : ['#', '原文', '譯文'],
+    ...rec.lines.map((l, i) =>
+      spk ? [String(i + 1), l.speaker ?? '', l.ja, l.zh ?? ''] : [String(i + 1), l.ja, l.zh ?? ''],
+    ),
   ];
   return '\ufeff' + rows.map(r => r.map(q).join(',')).join('\r\n') + '\r\n';
 }
