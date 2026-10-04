@@ -769,7 +769,42 @@
    "arm": "G38T",
    "file": "sakai06__N1",
    "usd": 0.01456
+  },
+  {
+   "arm": "G38",
+   "file": "sakai06__N2",
+   "usd": 0.01695
+  },
+  {
+   "arm": "GTv",
+   "file": "sakai06__N4",
+   "usd": 0.00418
+  },
+  {
+   "arm": "G31",
+   "file": "sakai06__N4",
+   "usd": 0.00998
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai06__N2",
+   "usd": 0.03096
+  },
+  {
+   "arm": "G38",
+   "file": "sakai06__N3",
+   "usd": 0.00691
+  },
+  {
+   "arm": "G38T",
+   "file": "sakai06__N3",
+   "usd": 0.01254
+  },
+  {
+   "arm": "G38",
+   "file": "sakai06__N4",
+   "usd": 0.00308
   }
  ],
- "total_usd": 5.0008
+ "total_usd": 5.0854
 }
