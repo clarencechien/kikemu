@@ -889,7 +889,22 @@
    "arm": "GX",
    "file": "sakai06__N2",
    "usd": 0.01592
+  },
+  {
+   "arm": "GX",
+   "file": "sakai06__N3",
+   "usd": 0.01654
+  },
+  {
+   "arm": "GX",
+   "file": "sakai06__N4",
+   "usd": 0.01654
+  },
+  {
+   "arm": "G31r",
+   "file": "hig01_A1__N0",
+   "usd": 0.08403
   }
  ],
- "total_usd": 5.8127
+ "total_usd": 5.9298
 }

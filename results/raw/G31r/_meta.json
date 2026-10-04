@@ -1,0 +1,10 @@
+{
+ "arm": "G31r",
+ "model": "gemini-3.1-flash-live-preview",
+ "handoff": "v12",
+ "chunk_s": 0.5,
+ "realtime": "1x",
+ "price_checked": "2026-10-04",
+ "price_page_updated": "2026-10-01",
+ "note": "G31 靜默中斷那 6 檔以併發 1 重跑(handoff-v12 §6 偏離 2)"
+}

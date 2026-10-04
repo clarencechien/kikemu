@@ -16,7 +16,10 @@ export type Mode = { code: ModeCode; label: string; adminOnly: boolean; hint: st
 export const MODES: Mode[] = [
   { code: 'guide', label: '導覽', adminOnly: false, hint: '一位講者・Speechmatics(實測主線)' },
   { code: 'dialog', label: '對話', adminOnly: false, hint: '多人・換人就斷句(語者分離未量測)' },
-  { code: 'gemini', label: 'Gemini 對照', adminOnly: true, hint: 'Gemini 3.5 Transcribe Live 聽・譯不變' },
+  // R2(handoff-v12,先寫死)的判定:整體 0.591 < 0.741、無詞表 0.525 < 0.639 →「僅供對照,實用不建議」。
+  // hint 只陳述逐條件數字:安靜/殘響時與 SM+詞表同級(N0 0.896 vs 0.836、N1 0.851 vs 0.836),
+  // 人聲背景會崩(N2 0.343 vs 0.806、N3 0.045 vs 0.627)。定稿約每 9 秒一則(SM 0.6 秒)。
+  { code: 'gemini', label: 'Gemini 對照', adminOnly: true, hint: '僅供對照:安靜時與 SM 同級,有人聲背景會崩・Gemini 3.5 Transcribe Live 聽、譯不變' },
 ];
 
 export const DEFAULT_MODE: ModeCode = 'guide';
