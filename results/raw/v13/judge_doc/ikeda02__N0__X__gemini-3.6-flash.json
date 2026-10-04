@@ -1,0 +1,1 @@
+{"file": "ikeda02__N0", "arm": "X", "judge": "gemini-3.6-flash", "adequacy": 3, "tw_locale": 5, "reason": "地名「池田」開頭被誤譯為「生田」，且結尾混入非原文的英文單字「distribution」，但其餘譯文完整順暢且完全符合台灣用語習慣。", "modelVersion": "gemini-3.6-flash"}

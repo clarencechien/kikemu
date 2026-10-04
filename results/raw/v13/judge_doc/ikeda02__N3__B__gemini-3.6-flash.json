@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "B", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 2, "reason": "語音辨識與翻譯品質極差，出現大量嚴重錯譯與語意幻覺（如將箕面有馬譯為無能和阿爾、郊外譯為福岡），並夾雜不相關英文單字。", "modelVersion": "gemini-3.6-flash"}

@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "cell": "W-min", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文因語音辨識錯誤產生大量無中生有的幻覺與嚴重錯譯，完全偏離原文資訊，但使用的繁體中文與詞彙尚符合台灣用語習慣。", "modelVersion": "gemini-3.1-pro-preview"}

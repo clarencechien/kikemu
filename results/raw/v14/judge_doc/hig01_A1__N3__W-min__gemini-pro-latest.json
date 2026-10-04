@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "cell": "W-min", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 4, "reason": "譯文因語音辨識錯誤產生大量無中生有的內容與嚴重誤譯，完全無法傳達原文資訊，但繁體中文用詞尚符台灣習慣。", "modelVersion": "gemini-3.1-pro-preview"}

@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "cell": "W-def", "judge": "gemini-3.6-flash", "adequacy": 3, "tw_locale": 4, "reason": "核心地名「池田」全數誤譯為「生田」，且內文混入多餘數字「1。」與日本漢字「摂」。", "modelVersion": "gemini-3.6-flash"}

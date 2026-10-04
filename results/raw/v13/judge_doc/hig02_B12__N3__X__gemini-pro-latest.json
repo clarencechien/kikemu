@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "X", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 4, "reason": "譯文受語音辨識錯誤影響，出現大量嚴重誤譯與漏譯（如將「神事」譯為「檢診」、「神話」譯為「姬神」等），完全扭曲原文原意，但繁體中文用字尚符台灣習慣。", "modelVersion": "gemini-3.1-pro-preview"}

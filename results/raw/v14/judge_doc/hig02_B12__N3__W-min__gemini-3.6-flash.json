@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "cell": "W-min", "judge": "gemini-3.6-flash", "adequacy": 2, "tw_locale": 5, "reason": "譯文存在多處嚴重錯譯與幻覺（如將20分鐘誤譯為30分鐘、宮司誤譯為12位神職人員、語音與比賣神等錯譯），但字元與語感符合台灣繁體習慣。", "modelVersion": "gemini-3.6-flash"}

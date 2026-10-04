@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "X", "judge": "gemini-flash-lite-latest", "adequacy": 2, "tw_locale": 3, "reason": "語音辨識錯誤將「池田車站」誤辨為「生田車站」，導致多處地名翻譯錯誤，但繁體中文在地化表現尚可。", "modelVersion": "gemini-3.5-flash-lite"}

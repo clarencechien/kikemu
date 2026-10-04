@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "cell": "S-def", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 4, "reason": "譯文受到嚴重的語音辨識錯誤影響（如將「住まう」辨識為「智慧型手機」、「郊外」辨識為「福岡」等），導致內容荒謬且完全偏離原文，但整體用字與詞彙仍符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview"}

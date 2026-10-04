@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N2#001", "identical": false, "x_first": false, "winner": "X", "leakB": false, "leakX": false, "reason": "譯文 2 合理修正了語音辨識誤字並符合導覽情境，而譯文 1 將「繪馬殿」誤譯為「寫完繪馬」。", "raw": "{\n  \"better\": \"2\",\n  \"leak1\": false,\n  \"leak2\": false,\n  \"reason\": \"譯文 2 合理修正了語音辨識誤字並符合導覽情境，而譯文 1 將「繪馬殿」誤譯為「寫完繪馬」。\"\n}"}

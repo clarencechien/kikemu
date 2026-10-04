@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "B", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 3, "reason": "譯文包含大量因語音辨識與錯譯導致的嚴重幻覺與語意扭曲（如將神事誤譯為母音/普及/體檢、20分鐘誤譯為30分鐘等），幾乎無法傳達原文正確資訊。", "modelVersion": "gemini-3.6-flash"}

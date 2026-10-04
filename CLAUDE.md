@@ -18,7 +18,9 @@
 3. **口譯 prompt 是凍結的。**
    `app/worker/gemini.ts` 的 `INTERPRETER_SYSTEM` 與 `scripts/prompts.py` **逐字相同**。
    exp1 量到的 adequacy 4.71 / 台灣用語 0 失誤是在那份字串上量的——改了字串,
-   報告裡的數字就不再適用。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
+   報告裡的數字就不再適用。⚠️ 4.71 是**整段一次翻**的數字;產品是逐句翻,
+   同一批音檔同一批評審量到 **4.06**(handoff-v13)。引用時別把 4.71 說成產品的翻譯品質。
+   差距約 85% 來自「逐句」本身,不是 thinking(handoff-v14);逐句開 thinking 慢 3 倍、貴 15 倍、換不到品質。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
 
 4. **機械性任務一律 `thinkingLevel: "minimal"`。**
    thinking token 以輸出價計費,實測逐句翻譯 thoughts/output **29×**。
@@ -80,6 +82,8 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/worker/modes.ts` | **聽譯模式的唯一定義**(導覽 / 對話 / Gemini 對照);`/api/config` 送前端,加模式只改這裡 |
 | `app/worker/upstream.ts` | 聽寫上游轉接層:SM(導覽與 2026-10 之前逐欄相同)與 Gemini 3.5 Transcribe Live |
 | `handoff-v12.md` | 新一代 Gemini Live × exp1 + 模式選單:判讀規則先寫死、偏離紀錄(含估價錯 9 倍、G31 靜默中斷) |
+| `handoff-v13.md` | 逐句翻譯帶上一句當上下文:不變慢、規則上可採用但現場溢出 8.4% 未上線;附帶量到產品逐句 adequacy 4.06 |
+| `handoff-v14.md` | 拆解逐句 4.06 vs 整段 4.72:2×2 顆粒度 × thinking,顆粒度占 85%、thinking 量不出;同做法重翻差 0.2 |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
 | `scripts/` | exp1/3/4 的實驗腳本;`run_*_modal.py` = Modal 上的 GPU arm |

@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "X", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 4, "reason": "譯文因語音辨識錯誤而產生大量嚴重的錯譯與語意不連貫（如時間錯譯、神事錯譯為檢診等），完全無法正確傳達原文資訊。", "modelVersion": "gemini-3.6-flash"}

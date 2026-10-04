@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "B", "judge": "gemini-3.6-flash", "adequacy": 3, "tw_locale": 5, "reason": "地名專有名詞「池田」多次誤譯為「生田」，且夾雜「1。」與「investigation」等字詞雜訊，但整體台灣用語表達自然且使用正體字。", "modelVersion": "gemini-3.6-flash"}

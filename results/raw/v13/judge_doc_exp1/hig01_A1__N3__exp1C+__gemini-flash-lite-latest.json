@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "exp1C+", "judge": "gemini-flash-lite-latest", "adequacy": 1, "tw_locale": 2, "reason": "語音辨識錯誤導致譯文嚴重偏離原文，幾乎無法傳達正確資訊。", "modelVersion": "gemini-3.5-flash-lite"}

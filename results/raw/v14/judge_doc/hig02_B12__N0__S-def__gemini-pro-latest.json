@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N0", "cell": "S-def", "judge": "gemini-pro-latest", "adequacy": 3, "tw_locale": 4, "reason": "譯文出現明顯的斷句誤譯（「這就躲進了岩戶之中」），且結尾殘留了AI生成的選項文字（「Option 1:」），影響了資訊傳達的正確性與閱讀體驗。", "modelVersion": "gemini-3.1-pro-preview"}

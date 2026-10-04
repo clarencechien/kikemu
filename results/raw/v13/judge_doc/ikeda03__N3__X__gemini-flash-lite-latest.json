@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "X", "judge": "gemini-flash-lite-latest", "adequacy": 1, "tw_locale": 2, "reason": "候選譯文受語音辨識影響嚴重失真，產生大量幻覺與錯誤資訊，且部分用語不符台灣口語習慣。", "modelVersion": "gemini-3.5-flash-lite"}

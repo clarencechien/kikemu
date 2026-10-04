@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "X", "judge": "gemini-flash-lite-latest", "adequacy": 1, "tw_locale": 2, "reason": "由於語音辨識錯誤嚴重，導致譯文出現大量幻覺與錯漏，且地名與人名多處誤譯。", "modelVersion": "gemini-3.5-flash-lite"}

@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "exp1C+", "judge": "gemini-3.6-flash", "adequacy": 1, "tw_locale": 3, "reason": "譯文包含大量嚴重的語音辨識/翻譯幻覺與錯譯（如丹波變關西、北摂初變世界首創等），完全無法傳達原文正確資訊。", "modelVersion": "gemini-3.6-flash"}

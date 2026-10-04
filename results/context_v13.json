@@ -1,0 +1,162 @@
+{
+ "handoff": "handoff-v13.md",
+ "translator": "gemini-3.5-flash",
+ "pair_judge": "gemini-3.6-flash",
+ "doc_judges": [
+  "gemini-3.6-flash",
+  "gemini-pro-latest",
+  "gemini-flash-lite-latest"
+ ],
+ "ledger": {
+  "spent_usd": 2.193613,
+  "calls": 1513
+ },
+ "main": {
+  "sentences": 408,
+  "latency": {
+   "B_p50": 1.049,
+   "B_p90": 1.207,
+   "X_p50": 1.045,
+   "X_p90": 1.211,
+   "diff_p50": -0.004,
+   "diff_p90": 0.181,
+   "p90_diff_of_quantiles": 0.004,
+   "retried_calls": 0
+  },
+  "tokens_mean": {
+   "B": {
+    "promptTokenCount": 180.9,
+    "candidatesTokenCount": 17.9,
+    "thoughtsTokenCount": 0
+   },
+   "X": {
+    "promptTokenCount": 214.2,
+    "candidatesTokenCount": 18.2,
+    "thoughtsTokenCount": 0
+   }
+  },
+  "output_chars_mean": {
+   "B": 22.6,
+   "X": 23.0
+  },
+  "pairwise": {
+   "compared": 378,
+   "identical_outputs": 89,
+   "X_wins": 72,
+   "B_wins": 29,
+   "ties": 277,
+   "net": 0.1138,
+   "net_ci95": [
+    0.0763,
+    0.1547
+   ],
+   "clusters": 30,
+   "leak_flag_X": 4,
+   "leak_flag_B": 0,
+   "leak_flag_X_ids": [
+    "hig02_B12__N1#014",
+    "ikeda02__N4#013",
+    "ikeda03__N3#010",
+    "sakai06__N1#005"
+   ],
+   "leak_flag_B_ids": []
+  }
+ },
+ "field": {
+  "sentences": 111,
+  "latency": {
+   "B_p50": 1.03,
+   "B_p90": 1.198,
+   "X_p50": 1.034,
+   "X_p90": 1.193,
+   "diff_p50": 0.012,
+   "diff_p90": 0.204,
+   "p90_diff_of_quantiles": -0.005,
+   "retried_calls": 0
+  },
+  "tokens_mean": {
+   "B": {
+    "promptTokenCount": 175.3,
+    "candidatesTokenCount": 13.5,
+    "thoughtsTokenCount": 0
+   },
+   "X": {
+    "promptTokenCount": 204.7,
+    "candidatesTokenCount": 14.6,
+    "thoughtsTokenCount": 0
+   }
+  },
+  "output_chars_mean": {
+   "B": 17.5,
+   "X": 18.6
+  },
+  "pairwise": {
+   "compared": 107,
+   "identical_outputs": 29,
+   "X_wins": 23,
+   "B_wins": 17,
+   "ties": 67,
+   "net": 0.0561,
+   "net_ci95": [
+    0.0,
+    0.18
+   ],
+   "clusters": 4,
+   "leak_flag_X": 9,
+   "leak_flag_B": 0,
+   "leak_flag_X_ids": [
+    "field-20261004-2142#004",
+    "field-20261004-2142#017",
+    "field-20260925-1806#007",
+    "field-20261004-2158#003",
+    "field-20261004-2158#014",
+    "field-20261004-2051#005",
+    "field-20261004-2051#014",
+    "field-20261004-2051#029",
+    "field-20261004-2051#031"
+   ],
+   "leak_flag_B_ids": []
+  }
+ },
+ "doc_adequacy": {
+  "n_per_arm": 35,
+  "B": 2.971,
+  "X": 3,
+  "diff": 0.029,
+  "tw_locale_B": 4.314,
+  "tw_locale_X": 4.444,
+  "by_judge": {
+   "gemini-3.6-flash": {
+    "B": 2.833,
+    "X": 2.917
+   },
+   "gemini-pro-latest": {
+    "B": 2.917,
+    "X": 3
+   },
+   "gemini-flash-lite-latest": {
+    "B": 3.182,
+    "X": 3.083
+   }
+  },
+  "by_condition": {
+   "N0": {
+    "B": 4.059,
+    "X": 4,
+    "exp1C+": 4.722
+   },
+   "N3": {
+    "B": 1.944,
+    "X": 2,
+    "exp1C+": 2.333
+   }
+  },
+  "parse_errors": [
+   [
+    "ikeda03__N0",
+    "B",
+    "gemini-flash-lite-latest"
+   ]
+  ]
+ }
+}

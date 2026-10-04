@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "cell": "W-def", "judge": "gemini-pro-latest", "adequacy": 2, "tw_locale": 5, "reason": "譯文包含多處語音辨識錯誤導致的嚴重誤譯與漏譯（如無中生有的「比賣神」、20分變30分、神明的笑變成神明之愛等），但整體用語符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview"}

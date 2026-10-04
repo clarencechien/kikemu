@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "cell": "S-def", "judge": "gemini-pro-latest", "adequacy": 1, "tw_locale": 5, "reason": "譯文包含大量語音辨識錯誤導致的無中生有與錯漏（如「大正天皇」、「人偶的髮型」等），完全偏離原文，但繁體中文與台灣用語尚屬自然。", "modelVersion": "gemini-3.1-pro-preview"}

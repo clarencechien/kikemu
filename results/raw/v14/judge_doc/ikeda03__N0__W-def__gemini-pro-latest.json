@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "cell": "W-def", "judge": "gemini-pro-latest", "adequacy": 3, "tw_locale": 5, "reason": "譯文流暢且符合台灣用語習慣，但將重要地名「池田」全數誤譯為「生田」，且漏譯「ことはじめ（發祥/起源）」並產生了「1。」這樣的辨識雜訊。", "modelVersion": "gemini-3.1-pro-preview"}

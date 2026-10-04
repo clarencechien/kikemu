@@ -1,0 +1,1 @@
+{"file": "sakai05__N3", "arm": "exp1C+", "judge": "gemini-pro-latest", "adequacy": 4, "tw_locale": 5, "reason": "譯文大致準確且符合台灣習慣，但最後一句將「原本是與和歌相關的詞語」嚴重誤譯為「首先是和風的」，造成資訊錯誤。", "modelVersion": "gemini-3.1-pro-preview"}

@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "exp1C+", "judge": "gemini-pro-latest", "adequacy": 3, "tw_locale": 5, "reason": "譯文符合台灣用語習慣，但將地名「池田」全數誤譯為「生田」，且帶有語音辨識產生的錯誤字元「1。」。", "modelVersion": "gemini-3.1-pro-preview"}
