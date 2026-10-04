@@ -9,17 +9,27 @@
    srcName 是填進口譯 prompt 的來源語名稱(日文寫法)。ja 走凍結字串、
    一個字都不動——exp1 的 adequacy 4.71 與台灣用語 0 失誤是在那份 prompt 上量到的。 */
 
-export type Lang = { code: string; label: string; srcName: string };
+export type Lang = {
+  code: string;
+  label: string;
+  srcName: string;
+  /** Gemini 3.5 Transcribe Live 的 languageCodes(BCP-47)。空陣列 = 自動偵測。
+   *  官方清單只有簡體 cmn-Hans-CN、沒有台灣華語,中英夾雜交給自動偵測。 */
+  geminiCodes: string[];
+};
 
 export const LANGS: Lang[] = [
-  { code: 'ja', label: '日本語', srcName: '日本語' },
-  { code: 'ko', label: '한국어', srcName: '韓国語' },
-  { code: 'en', label: 'English', srcName: '英語' },
+  { code: 'ja', label: '日本語', srcName: '日本語', geminiCodes: ['ja-JP'] },
+  { code: 'ko', label: '한국어', srcName: '韓国語', geminiCodes: ['ko-KR'] },
+  { code: 'en', label: 'English', srcName: '英語', geminiCodes: ['en-US'] },
   // 中英夾雜用雙語包,不用單語 cmn:exp2 實測術語召回 0.521 → 0.813(+0.23~0.29)。
   // 單語包的病徵是把英文聽成別的英文(COVID-19 → CoffeeNight),詞表補不回來。
   // cmn_en 是 Speechmatics 唯一存在的雙語包(ja_en / en_ja 皆 not supported)。
-  { code: 'cmn_en', label: '中文・English(夾雜)', srcName: '中国語' },
+  { code: 'cmn_en', label: '中文・English(夾雜)', srcName: '中国語', geminiCodes: [] },
 ];
+
+/** 字與字之間不放空白的語言:SM 的語者分段要自己重組文字時用 */
+export const NO_SPACE_LANGS = ['ja'];
 
 export const DEFAULT_LANG = 'ja';
 

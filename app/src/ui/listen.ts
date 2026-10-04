@@ -7,7 +7,7 @@
 
 import { api } from '../api';
 import { sessionStore } from '../db';
-import type { Me, Pack, RelayMsg } from '../types';
+import type { Me, Mode, Pack, RelayMsg } from '../types';
 import { addFinal, addNote, clearStream, collectLines, setPartial, setZh, setZhError, toast } from './cards';
 
 const $ = (id: string) => document.getElementById(id)!;
@@ -25,6 +25,7 @@ export function initListen(onPreviewStart: () => void): Listen {
   const quotaChip = $('quotaChip');
   const packSel = $('packSel') as HTMLSelectElement;
   const langSel = $('langSel') as HTMLSelectElement;
+  const modeSel = $('modeSel') as HTMLSelectElement;
 
   let state: State = 'idle';
   let ws: WebSocket | null = null;
@@ -35,6 +36,9 @@ export function initListen(onPreviewStart: () => void): Listen {
   let lats: number[] = [];
   let curPack: Pack | null = null;
   let curLang = 'ja';
+  let curMode = 'guide';
+  let modes: Mode[] = [];
+  let isAdmin = false;
   let packLangs: { code: string; label: string }[] = [{ code: 'ja', label: '日文' }];
   let guidanceShown = false; // 拾音指引一次就好
   let endFuse: ReturnType<typeof setTimeout> | undefined;
@@ -108,6 +112,7 @@ export function initListen(onPreviewStart: () => void): Listen {
     // 語言與詞表都隨 StartRecognition 送出,中途不可換(Speechmatics 限制)= 聽譯中鎖住
     packSel.disabled = s !== 'idle' || !packLangs.some(l => l.code === curLang);
     langSel.disabled = s !== 'idle';
+    modeSel.disabled = s !== 'idle'; // 模式決定上游與 session config,中途不可換
   };
 
   const p50 = () => {
@@ -147,9 +152,35 @@ export function initListen(onPreviewStart: () => void): Listen {
         void loadPacks(); // 換語言 = 換一組包
       };
       syncPackAvailability();
+      modes = cfg.modes?.length ? cfg.modes : [];
+      renderModes(cfg.defaultMode ?? 'guide');
     } catch {
       /* 拿不到就留預設日文 */
     }
+  }
+
+  /** 模式選單:adminOnly 的(Gemini 對照)只有 admin 看得到;真正的權限檢查在伺服器 /ws。
+   *  記住上次選擇,但記住的若是現在看不到的模式就退回預設——不要讓人以為自己在用某個模式 */
+  function renderModes(def: string) {
+    const visible = modes.filter(m => !m.adminOnly || isAdmin);
+    modeSel.classList.toggle('hidden', visible.length <= 1);
+    modeSel.innerHTML = '';
+    for (const m of visible) {
+      const o = document.createElement('option');
+      o.value = m.code;
+      o.textContent = m.label;
+      o.title = m.hint;
+      modeSel.appendChild(o);
+    }
+    const saved = localStorage.getItem('kk_mode');
+    curMode = visible.some(m => m.code === saved) ? saved! : visible.some(m => m.code === def) ? def : visible[0]?.code ?? 'guide';
+    modeSel.value = curMode;
+    modeSel.title = visible.find(m => m.code === curMode)?.hint ?? '聽譯模式';
+    modeSel.onchange = () => {
+      curMode = modeSel.value;
+      localStorage.setItem('kk_mode', curMode);
+      modeSel.title = visible.find(m => m.code === curMode)?.hint ?? '聽譯模式';
+    };
   }
 
   const packLangLabel = (c: string) => packLangs.find(l => l.code === c)?.label ?? c;
@@ -200,6 +231,7 @@ export function initListen(onPreviewStart: () => void): Listen {
       .save({
         at: new Date().toISOString(),
         lang: curLang,
+        mode: curMode,
         pack: curPack?.id ?? null,
         packName: curPack ? curPack.alias || curPack.name : null, // 別名優先:匯出檔頭給人看的
         seconds,
@@ -213,6 +245,7 @@ export function initListen(onPreviewStart: () => void): Listen {
     idle: '長時間沒有聲音,已自動停止',
     quota: '今日聽譯額度已用完,台灣時間早上 8 點重置',
     'sm-error': '語音引擎回報錯誤,本場已結束',
+    'gemini-error': 'Gemini 聽寫回報錯誤,本場已結束',
     'upstream-closed': '語音引擎連線中斷',
     'upstream-error': '語音引擎連線錯誤',
   };
@@ -228,6 +261,10 @@ export function initListen(onPreviewStart: () => void): Listen {
           toast('離音源越近越清楚——貼近導覽員或喇叭');
         }
         if (msg.packName) addNote('info', `場景包「${msg.packName}」已載入(${msg.vocabCount} 詞)`);
+        if (msg.mode && msg.mode !== 'guide') {
+          const m = modes.find(x => x.code === msg.mode);
+          addNote('info', `模式:${m?.label ?? msg.mode}${m?.hint ? `——${m.hint}` : ''}`);
+        }
         return;
       case 'partial':
         lastPartialAt = performance.now();
@@ -235,7 +272,7 @@ export function initListen(onPreviewStart: () => void): Listen {
         return;
       case 'final': {
         lastPartialAt = lastFinalAt = performance.now();
-        addFinal(msg.seq, msg.text);
+        addFinal(msg.seq, msg.text, msg.speaker);
         // 端到端延遲:牆鐘經過 −(該句在音訊時間軸的位置)
         if (firstFrameAt && msg.t > 0) {
           const lat = (performance.now() - firstFrameAt) / 1000 - msg.t;
@@ -405,7 +442,7 @@ export function initListen(onPreviewStart: () => void): Listen {
     }
 
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-    const q = new URLSearchParams({ lang: curLang });
+    const q = new URLSearchParams({ lang: curLang, mode: curMode });
     if (curPack) q.set('pack', curPack.id);
     ws = new WebSocket(`${proto}://${location.host}/ws?${q}`);
     ws.binaryType = 'arraybuffer';
@@ -460,6 +497,7 @@ export function initListen(onPreviewStart: () => void): Listen {
 
   return {
     onAuthed(me: Me) {
+      isAdmin = me.isAdmin;
       showQuota(me.usedSeconds, me.limitSeconds);
       void loadLangs().then(loadPacks);
     },

@@ -131,8 +131,12 @@ async function directPost(env: Env, body: unknown): Promise<Response> {
   );
 }
 
+/** 測試開關:GEMINI_FORCE_PROXY=1 一律走代打(只放 .dev.vars)。
+ *  台灣的開發環境不會被區域封鎖,沒有這個開關,代打路徑要等真的有人從 HKG 連線才會被執行到。 */
+const useProxy = (env: Env) => !!env.GEMINI_PROXY && (preferProxy || env.GEMINI_FORCE_PROXY === '1');
+
 async function post(env: Env, body: unknown): Promise<Response> {
-  if (preferProxy && env.GEMINI_PROXY) return viaProxy(env, body);
+  if (useProxy(env)) return viaProxy(env, body);
   const r = await directPost(env, body);
   if (r.status === 400 && env.GEMINI_PROXY && REGION_BLOCKED.test(await r.clone().text())) {
     preferProxy = true;
@@ -144,11 +148,14 @@ async function post(env: Env, body: unknown): Promise<Response> {
 
 /** 代打 DO:釘在 Google 服務的地區,把同一個 generateContent 請求原樣轉出去、
  *  原樣轉回(status + body 不動,generate() 的判斷邏輯完全不用改)。
+ *  另外代打 Live 的 WebSocket(`/live`,模式選單的「Gemini 對照」用):
+ *  在這裡開上游、兩邊逐框對接。
  *  只有 Worker 內部透過 binding 打得到,沒有對外入口。 */
 export class GeminiProxy {
   constructor(_state: DurableObjectState, private env: Env) {}
 
   async fetch(req: Request): Promise<Response> {
+    if (req.headers.get('Upgrade') === 'websocket') return this.live();
     if (req.method !== 'POST') return new Response('POST only', { status: 405 });
     const body = await req.json();
     const r = await directPost(this.env, body); // 直打,絕不再代打(避免遞迴)
@@ -157,6 +164,137 @@ export class GeminiProxy {
       headers: { 'content-type': r.headers.get('content-type') ?? 'application/json' },
     });
   }
+
+  private async live(): Promise<Response> {
+    const up = await directLiveSocket(this.env); // 直連,絕不再代打
+    console.log('[gemini-proxy] 代打一條 Live session'); // 看得到代打真的發生(HKG 的場才會有)
+    const pair = new WebSocketPair();
+    const [client, server] = Object.values(pair);
+    server.accept();
+    up.accept();
+    // 兩邊都設 arraybuffer:Google 的下行是**二進位** JSON 框,Blob 會讓轉送變成非同步、可能亂序
+    server.binaryType = 'arraybuffer';
+    up.binaryType = 'arraybuffer';
+    const relay = (from: WebSocket, to: WebSocket) => {
+      from.addEventListener('message', ev => {
+        try {
+          to.send(ev.data as string | ArrayBuffer);
+        } catch {}
+      });
+      from.addEventListener('close', ev => {
+        try {
+          to.close(ev.code === 1005 || ev.code === 1006 ? 1000 : ev.code, ev.reason);
+        } catch {}
+      });
+      from.addEventListener('error', () => {
+        try {
+          to.close(1011, 'proxy peer error');
+        } catch {}
+      });
+    };
+    relay(server, up);
+    relay(up, server);
+    return new Response(null, { status: 101, webSocket: client });
+  }
+}
+
+/* ── Gemini Live(WebSocket)────────────────────────────────────
+   跟上面的 HTTP 一樣會撞區域封鎖:Live 是從**執行它的機房**連出去的長連線。
+   被拒時的形狀是 setup 之後被 close,reason 含 "location is not supported"。
+   處理方式與 post() 同:第一次被拒 → 這個 isolate 改走代打 DO 的 /live。
+
+   兩個實測過、而且都是「沒有錯誤訊息、就是一個字都沒有」那類的坑:
+   · 下行框是**二進位**的 JSON(2026-10-04 探針:Python websockets 收到 bytes)
+     → 一律解碼,不能只處理 string
+   · 驗證用 x-goog-api-key header 可行(同日實測),金鑰不必放進 URL */
+const LIVE_URL =
+  'https://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent';
+
+async function directLiveSocket(env: Env): Promise<WebSocket> {
+  const resp = await fetch(LIVE_URL, { headers: { Upgrade: 'websocket', 'x-goog-api-key': env.GEMINI_API_KEY } });
+  if (!resp.webSocket) throw new Error(`gemini live 連線失敗(HTTP ${resp.status})`);
+  return resp.webSocket;
+}
+
+async function proxyLiveSocket(env: Env): Promise<WebSocket> {
+  const region = proxyRegion(env);
+  const stub = env.GEMINI_PROXY.get(env.GEMINI_PROXY.idFromName(`gemini-${region}`), { locationHint: region });
+  const resp = await stub.fetch('https://do/live', { headers: { Upgrade: 'websocket' } });
+  if (!resp.webSocket) throw new Error(`gemini live 代打連線失敗(HTTP ${resp.status})`);
+  return resp.webSocket;
+}
+
+const td = new TextDecoder();
+/** 把一則下行訊息變成物件;Blob 要等,所以回 Promise(呼叫端用 chain 保序) */
+async function decodeFrame(data: unknown): Promise<any | null> {
+  try {
+    if (typeof data === 'string') return JSON.parse(data);
+    if (data instanceof ArrayBuffer) return JSON.parse(td.decode(data));
+    if (ArrayBuffer.isView(data)) return JSON.parse(td.decode(data as ArrayBufferView));
+    if (data && typeof (data as Blob).text === 'function') return JSON.parse(await (data as Blob).text());
+  } catch {}
+  return null;
+}
+
+export type LiveHandlers = {
+  onMessage: (m: any) => void;
+  onClose: (code: number, reason: string) => void;
+};
+
+/** 開一條 Live session,等到 setupComplete 才 resolve。setup 失敗(含區域封鎖)會 reject;
+ *  區域封鎖時自動改走代打再試一次。之後的下行訊息依序交給 onMessage。 */
+export async function openGeminiLive(env: Env, setup: unknown, h: LiveHandlers): Promise<WebSocket> {
+  const attempt = async (proxied: boolean): Promise<WebSocket> => {
+    const ws = proxied ? await proxyLiveSocket(env) : await directLiveSocket(env);
+    ws.accept();
+    ws.binaryType = 'arraybuffer';
+    return new Promise<WebSocket>((resolve, reject) => {
+      let ready = false;
+      let chain: Promise<void> = Promise.resolve();
+      ws.addEventListener('message', ev => {
+        chain = chain.then(async () => {
+          const m = await decodeFrame(ev.data);
+          if (!m) return;
+          if (!ready) {
+            if (m.setupComplete) {
+              ready = true;
+              resolve(ws);
+            }
+            return;
+          }
+          h.onMessage(m);
+        });
+      });
+      ws.addEventListener('close', ev => {
+        chain = chain.then(() => {
+          if (!ready) {
+            ready = true; // 只 reject 一次
+            reject(Object.assign(new Error(`gemini live ${ev.code}: ${String(ev.reason).slice(0, 160)}`), { reason: ev.reason }));
+          } else h.onClose(ev.code, ev.reason);
+        });
+      });
+      ws.send(JSON.stringify(setup));
+    });
+  };
+  if (useProxy(env)) return attempt(true);
+  try {
+    return await attempt(false);
+  } catch (e) {
+    const why = String((e as { reason?: string }).reason ?? (e as Error).message);
+    if (env.GEMINI_PROXY && REGION_BLOCKED.test(why)) {
+      preferProxy = true;
+      console.warn(`[gemini] Live 在本機房被 Google 以區域理由拒絕,此 isolate 之後改走代打 DO(${proxyRegion(env)})`);
+      return attempt(true);
+    }
+    throw e;
+  }
+}
+
+/** PCM16 位元組 → base64(Live 的 realtimeInput.audio 要 base64) */
+export function b64(bytes: Uint8Array): string {
+  let s = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(s);
 }
 
 /** think=false:reasoning-shaped 的呼叫(如搜尋接地)不套用 minimal */

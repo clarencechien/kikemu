@@ -42,12 +42,30 @@ export function setPartial(text: string) {
 }
 
 /** 一句定稿:插在 partial 卡之前;zh 欄先掛「翻譯中…」佔位 */
-export function addFinal(seq: number, ja: string) {
+/** 對話模式的語者標籤:SM 給 S1/S2…,畫面上顯示成 A/B…(比 S1 好認,也不會被誤認成「第一段」) */
+const speakerLetter = (s: string) => {
+  const m = /^S(\d+)$/.exec(s);
+  const n = m ? Number(m[1]) : NaN;
+  return n >= 1 && n <= 26 ? String.fromCharCode(64 + n) : s;
+};
+
+export function addFinal(seq: number, ja: string, speaker?: string) {
   const card = document.createElement('div');
   card.className = 'card';
   card.dataset.seq = String(seq);
   card.innerHTML = '<p class="ja"></p><p class="zh pending">…</p>';
-  (card.querySelector('.ja') as HTMLElement).textContent = ja;
+  const jaEl = card.querySelector('.ja') as HTMLElement;
+  // 原文另存一份在 dataset:語者標籤是 .ja 裡的子元素,textContent 會把 "A" 黏進原文
+  card.dataset.ja = ja;
+  if (speaker) {
+    card.dataset.spk = speakerLetter(speaker);
+    const tag = document.createElement('span');
+    tag.className = 'spk';
+    tag.dataset.spk = speakerLetter(speaker);
+    tag.textContent = speakerLetter(speaker);
+    jaEl.appendChild(tag);
+  }
+  jaEl.appendChild(document.createTextNode(ja));
   if (partialEl && partialEl.parentElement) stream().insertBefore(card, partialEl);
   else stream().appendChild(card);
   scrollDown();
@@ -93,8 +111,9 @@ export function collectLines(): Line[] {
     const zhEl = card.querySelector('.zh')!;
     const failed = zhEl.classList.contains('pending') || zhEl.classList.contains('zh-err');
     return {
-      ja: card.querySelector('.ja')!.textContent ?? '',
+      ja: card.dataset.ja ?? card.querySelector('.ja')!.textContent ?? '',
       zh: failed ? null : (zhEl.textContent ?? ''),
+      ...(card.dataset.spk ? { speaker: card.dataset.spk } : {}),
     };
   });
 }
@@ -103,7 +122,7 @@ export function collectLines(): Line[] {
 export function showLines(lines: Line[]) {
   clearStream();
   lines.forEach((l, i) => {
-    addFinal(i + 1, l.ja);
+    addFinal(i + 1, l.ja, l.speaker);
     if (l.zh) setZh(i + 1, l.zh);
     else setZhError(i + 1, null);
   });

@@ -79,7 +79,18 @@ ARMS_JA = {
     "Cbplus_dir_lav": "transcript",
     "A_dir_conf": "input_transcription",
     "A_dir_lav": "input_transcription",
+    # handoff-v12:新一代 Gemini Live(2026-10-04)。G31 = 3.1 同日對照組;
+    # G38/G38T/GX 是一體式(有譯文);GT/GTv 是 3.5-transcribe-live,只有耳朵。
+    "G31": "input_transcription",
+    "G31r": "input_transcription",
+    "G38": "input_transcription",
+    "G38T": "input_transcription",
+    "GX": "input_transcription",
+    "GT": "input_transcription",
+    "GTv": "input_transcription",
 }
+# 一體式 Live arm:譯文在 d["translation"],延遲用 a_latency
+LIVE_E2E = ("A", "G31", "G31r", "G38", "G38T", "GX")
 CONDS = ["N0", "N1", "N2", "N3", "N4"]
 
 TW_BAD = ["视频", "視頻", "质量", "質量", "信息", "软件", "軟件", "网络", "網絡", "數據", "数据"]
@@ -196,9 +207,9 @@ def main():
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
                 # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
-                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja"):
+                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja", "GT", "GTv"):
                     zh = None
-                elif arm == "A":
+                elif arm in LIVE_E2E:
                     zh = d.get("translation", "")
                 else:
                     tf = RES / "raw" / f"{arm}_translate" / f"{seg}__{cond}.json"
@@ -219,7 +230,7 @@ def main():
                 if arm in ("C", "Cplus") and d.get("log"):
                     row.update(sm_latency(d["log"]))
                     row["rewrite_rate"] = sm_rewrite_rate(d["log"])
-                elif arm == "A":
+                elif arm in LIVE_E2E:
                     row.update(a_latency(d["log"], d["audio_s"]))
                 rows.append(row)
 

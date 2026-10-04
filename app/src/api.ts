@@ -1,4 +1,4 @@
-import type { Me, Pack } from './types';
+import type { Me, Mode, Pack } from './types';
 
 export class ApiError extends Error {
   constructor(
@@ -30,7 +30,9 @@ export const api = {
   config: (): Promise<{ mode: 'oidc' | 'dev'; turnstileSiteKey: string | null;
   langs: { code: string; label: string }[];
   defaultLang: string;
-  packLangs: { code: string; label: string }[] }> => req('/api/config'),
+  packLangs: { code: string; label: string }[];
+  modes?: Mode[];
+  defaultMode?: string }> => req('/api/config'),
   me: (): Promise<Me> => req('/api/me'),
   login: (email: string): Promise<{ email: string }> => post('/api/login', { email }),
   logout: (): Promise<void> => post('/api/logout', {}),
