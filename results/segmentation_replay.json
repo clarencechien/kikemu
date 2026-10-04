@@ -1716,5 +1716,49 @@
     "wait_max_s": 4.59
    }
   }
+ },
+ "gemini": {
+  "source": "results/raw/GTv(gemini-3.5-transcribe-live + 詞表,1× 即時),30 檔",
+  "note": "wait 從該句第一則 Gemini 定稿起算,不含 Gemini 自己的定稿延遲(那個見 final_cadence.json)",
+  "rules": {
+   "gem_old": "每則定稿直接當一句(PR #78 為止)",
+   "gem_shared": "與 SM 相同的共用規則",
+   "gem_new": "共用規則 + 暫定也重設停頓計時"
+  },
+  "pooled": {
+   "gem_old": {
+    "sentences": 319,
+    "frag_le4": 7,
+    "open_end": 101,
+    "frag_rate": 0.022,
+    "open_rate": 0.317,
+    "len_median": 22,
+    "wait_p50_s": 0.0,
+    "wait_p90_s": 0.0,
+    "wait_max_s": 0.0
+   },
+   "gem_shared": {
+    "sentences": 271,
+    "frag_le4": 3,
+    "open_end": 51,
+    "frag_rate": 0.011,
+    "open_rate": 0.188,
+    "len_median": 25,
+    "wait_p50_s": 0.0,
+    "wait_p90_s": 6.6,
+    "wait_max_s": 14.1
+   },
+   "gem_new": {
+    "sentences": 238,
+    "frag_le4": 3,
+    "open_end": 18,
+    "frag_rate": 0.013,
+    "open_rate": 0.076,
+    "len_median": 26.0,
+    "wait_p50_s": 0.0,
+    "wait_p90_s": 10.03,
+    "wait_max_s": 17.53
+   }
+  }
  }
 }
