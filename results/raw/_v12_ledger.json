@@ -819,7 +819,77 @@
    "arm": "GX",
    "file": "ikeda02__N3",
    "usd": 0.09616
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda03__N0",
+   "usd": 0.0588
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda02__N4",
+   "usd": 0.09555
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda03__N1",
+   "usd": 0.0588
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda03__N2",
+   "usd": 0.05819
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda03__N3",
+   "usd": 0.05941
+  },
+  {
+   "arm": "GX",
+   "file": "ikeda03__N4",
+   "usd": 0.0588
+  },
+  {
+   "arm": "GX",
+   "file": "sakai05__N0",
+   "usd": 0.01776
+  },
+  {
+   "arm": "GX",
+   "file": "sakai05__N1",
+   "usd": 0.01776
+  },
+  {
+   "arm": "GX",
+   "file": "sakai05__N2",
+   "usd": 0.01776
+  },
+  {
+   "arm": "GX",
+   "file": "sakai05__N3",
+   "usd": 0.01776
+  },
+  {
+   "arm": "GX",
+   "file": "sakai05__N4",
+   "usd": 0.01776
+  },
+  {
+   "arm": "GX",
+   "file": "sakai06__N0",
+   "usd": 0.01654
+  },
+  {
+   "arm": "GX",
+   "file": "sakai06__N1",
+   "usd": 0.01654
+  },
+  {
+   "arm": "GX",
+   "file": "sakai06__N2",
+   "usd": 0.01592
   }
  ],
- "total_usd": 5.2853
+ "total_usd": 5.8127
 }
