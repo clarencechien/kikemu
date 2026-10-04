@@ -62,7 +62,7 @@ const MAX_RETRY_PER_SEQ = 3;
      不管講者有沒有停(9/25 試酒紀錄的「純米大吟醸|です。」)。重播:30% 的句子
      收在字中間、10% ≤4 字。改成從「最後一則定稿」起算 = 講者真的停住才切
    · 長度那道原本 48 字整段硬切(「なるん|ですが。」);改成切在最後一個軟斷點
-   兩道一起換之後:收在字中間 30% → 0%、≤4 字 10% → 1%;
+   兩道一起換之後:收在字中間 30% → 0%、≤4 字 10% → 1%(Gemini 模式另加「暫定也重設計時」,見 partial);
    代價是譯文晚出:每句等待 p50 3.6 → 4.6 秒、p90 6.6 → 9.5 秒(灰字照常即時顯示)。
    exp1 的翻譯是整段送(侷限 8),完整句比碎句更接近當時量 adequacy 的條件。 */
 const MAX_PENDING_CHARS = 48;
@@ -285,8 +285,6 @@ export class SessionRelay {
         if (!sentence) continue;
         emitSentence(sentence, t);
       }
-      // Gemini 的定稿是「講者停頓」才出現的一整段,本身就是自然斷點
-      if (isGemini && pending.trim()) return void flushPending();
       // 無標點語言:字數到了就切,不然永遠等不到句號
       if (pending.length >= MAX_PENDING_CHARS) {
         // 切在最後一個軟斷點之後,不切在字中間;沒有軟斷點就等到 2 倍上限才硬切
@@ -417,6 +415,12 @@ export class SessionRelay {
       },
       partial: (text: string, t: number) => {
         upPartials++;
+        // Gemini 的定稿要等講者停頓、間隔中位 7.6 秒(比 6 秒停頓保險還長),
+        // 只看定稿會把「還在講」當成停住。暫定約每 0.5 秒一則,才是還在講的訊號。
+        // (原本每則 Gemini 定稿直接當一句:10-04 試酒紀錄 23 句有 14 句沒收句;
+        //  重播 GTv 30 檔:收在字中間 32% → 8%,analysis/segmentation_replay.py)
+        // SM 不用:它的定稿每 0.5 秒一則,本身就是這個訊號,重播數字也是照「只看定稿」量的
+        if (isGemini && pending) pendingSince = Date.now();
         send({ type: 'partial', t, text: pending + text });
       },
       final: (text: string, t: number, speaker?: string) => {

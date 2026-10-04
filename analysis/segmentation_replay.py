@@ -25,6 +25,14 @@
   open   不是收在句末標點、也不是收在軟斷點的句子(=切在字中間或詞中間)
   wait   這句第一個字定稿 → 這句送出去翻譯的牆鐘秒數(字幕灰字停留多久)
 
+Gemini 對照模式另跑一組(results/raw/GTv,gemini-3.5-transcribe-live + 詞表,同一批 30 檔):
+  gem_old     — 2026-10-04 PR #78 為止:每則 Gemini 定稿直接當一句送出(假設「定稿 = 講者停頓 = 斷點」)
+  gem_shared  — 跟 SM 一樣的共用規則
+  gem_new     — 共用規則 + **暫定也重設停頓計時**(提案,已上線)
+  為什麼要多那一條:Gemini 的定稿間隔中位 7.6 秒(results/final_cadence.json),比 6 秒還長,
+  只看定稿的話「講者還在講」也會被當成停住。暫定約每 0.5 秒一則,才是「還在講」的訊號。
+  使用者 10-04 21:47 的 Gemini 紀錄(試酒影片)23 句有 14 句沒收在句末標點,這組就是為它跑的。
+
 用法:python3 analysis/segmentation_replay.py   → results/segmentation_replay.json
 """
 
@@ -49,8 +57,15 @@ SOFT_BREAK = re.compile(r"[、,,;;:: ]")
 SOFT_END = re.compile(r"[。!?!?、,,;;:: ]$")
 
 
-def replay(events: list[tuple[float, str]], soft: bool, idle: bool) -> list[dict]:
-    """events = [(牆鐘秒, 定稿文字)],依序。回傳每句 {text, first, sent}"""
+def replay(
+    events: list[tuple],
+    soft: bool,
+    idle: bool,
+    flush_each_final: bool = False,
+    partial_resets: bool = False,
+) -> list[dict]:
+    """events = [(牆鐘秒, 定稿文字)] 或 [(牆鐘秒, 定稿文字, 'F'|'P')](P = 暫定,文字不用),依序。
+    回傳每句 {text, first, sent}"""
     out: list[dict] = []
     pending = ""
     pending_since = 0.0  # old: 殘句開始累積的時刻;idle: 最後一則定稿的時刻
@@ -79,6 +94,8 @@ def replay(events: list[tuple[float, str]], soft: bool, idle: bool) -> list[dict
             emit(s, now)
         if pending.strip() == "":
             first = now
+        if flush_each_final and pending.strip():
+            return flush(now)
         if len(pending) >= MAX_PENDING_CHARS:
             if not soft:
                 flush(now)
@@ -107,7 +124,11 @@ def replay(events: list[tuple[float, str]], soft: bool, idle: bool) -> list[dict
     # 依時間交錯處理定稿與 watchdog(每秒一跳)
     while i < len(events) or tick <= end:
         if i < len(events) and events[i][0] <= tick:
-            on_final(events[i][1], events[i][0])
+            e = events[i]
+            if len(e) < 3 or e[2] == "F":
+                on_final(e[1], e[0])
+            elif partial_resets and pending:
+                pending_since = e[0]  # 暫定還在長 = 講者還在講
             i += 1
         else:
             if pending_since and tick - pending_since > PENDING_STALE_S:
@@ -138,6 +159,19 @@ def metrics(sents: list[dict]) -> dict:
 
 
 RULES = {"old": (False, False), "soft": (True, False), "idle": (False, True), "new": (True, True)}
+GEM_RULES = {
+    "gem_old": dict(soft=True, idle=True, flush_each_final=True),
+    "gem_shared": dict(soft=True, idle=True),
+    "gem_new": dict(soft=True, idle=True, partial_resets=True),
+}
+# relay 對日文的 Gemini 輸出先拿掉 CJK 之間的空白(upstream.ts 的 tidy),重播也要
+_tidy = lambda x: re.sub(r"(?<=[^\x00-\x7F])\s+(?=[^\x00-\x7F])", "", x)
+
+
+def gemini_events(path: str) -> list[tuple]:
+    d = json.load(open(path, encoding="utf-8"))
+    kinds = {"inputTranscription": "F", "interimInputTranscription": "P"}
+    return [(e["t"], _tidy(e["text"]), kinds[e["kind"]]) for e in d["log"] if e["kind"] in kinds and e.get("text")]
 
 
 def main():
@@ -173,6 +207,21 @@ def main():
         "examples_N0_bad": examples,
         "per_file": per_file,
     }
+    gem_pooled: dict[str, list[dict]] = {r: [] for r in GEM_RULES}
+    for f in sorted(glob.glob(os.path.join(ROOT, "results", "raw", "GTv", "*__N*.json"))):
+        ev = gemini_events(f)
+        for r, kw in GEM_RULES.items():
+            gem_pooled[r] += replay(ev, **kw)
+    res["gemini"] = {
+        "source": "results/raw/GTv(gemini-3.5-transcribe-live + 詞表,1× 即時),30 檔",
+        "note": "wait 從該句第一則 Gemini 定稿起算,不含 Gemini 自己的定稿延遲(那個見 final_cadence.json)",
+        "rules": {
+            "gem_old": "每則定稿直接當一句(PR #78 為止)",
+            "gem_shared": "與 SM 相同的共用規則",
+            "gem_new": "共用規則 + 暫定也重設停頓計時",
+        },
+        "pooled": {r: metrics(s) for r, s in gem_pooled.items()},
+    }
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(res, fh, ensure_ascii=False, indent=1)
     print(f"{'rule':6} {'句數':>5} {'≤4字':>6} {'切在中間':>8} {'中位長':>6} {'wait p50':>8} {'p90':>6} {'max':>6}")
@@ -184,6 +233,12 @@ def main():
     print("\n各噪音條件(切在中間的比例 old → new):")
     for c, rs in res["by_condition"].items():
         print(f"  {c}: {rs['old']['open_rate']:.0%} → {rs['new']['open_rate']:.0%}   ≤4字 {rs['old']['frag_rate']:.0%} → {rs['new']['frag_rate']:.0%}")
+    print("\nGemini(GTv):")
+    for r, m in res["gemini"]["pooled"].items():
+        print(
+            f"  {r:10} {m['sentences']:>4} 句 收在中間 {m['open_end']:>3}({m['open_rate']:.0%}) ≤4字 {m['frag_le4']}"
+            f" wait p50 {m['wait_p50_s']} p90 {m['wait_p90_s']} max {m['wait_max_s']}"
+        )
     print("\nN0 壞例:")
     for r in ("old", "new"):
         print(" ", r, examples[r][:8])
