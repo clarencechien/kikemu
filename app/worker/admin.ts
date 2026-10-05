@@ -166,9 +166,13 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     if (!entries.length) return bad('驗證後沒有可用的詞條');
     // relay 只送前 1000 條給 Speechmatics(additional_vocab 上限);超過要講,不默默截
     if (entries.length > 1000) warnings.push(`詞條 ${entries.length} 條,超過 1000 條的部分聽譯時不會送出`);
+    // 「注意」欄:驗證 pipeline 只認 content / sounds_like,所以另外帶一份 content → note 的對照
+    // (同音詞:2026-10-05 實地紀錄裡 KANADEL(かなでる)把動詞「奏でる」搶走一次)
+    const notes: Record<string, string> = {};
+    for (const r of parsed.rows) if (r.note && !notes[r.content]) notes[r.content] = r.note;
     return Response.json({
       ok: true, lang: packLang, meta: parsed.meta, count: entries.length,
-      entries, warnings, issues, stats, skipped: parsed.skipped,
+      entries, notes, warnings, issues, stats, skipped: parsed.skipped,
       sources: safeSources(parsed.sources.map(uri => ({ uri, title: '' }))),
     });
   }
