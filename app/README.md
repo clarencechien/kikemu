@@ -200,6 +200,7 @@ GEMINI_API_KEY=...
 |---|---|---|
 | prompt | `public/vocab-prompt.md` | **純 prompt**,最後一行是 `## 主題`;管理頁把關鍵字(與補充資料、韓語註記)接在最下面。要外部模型收商品名與行業術語、讀音不確定就留空、只輸出固定格式 |
 | 複製 | `public/admin.js` `buildPrompt` | 頁面載入時就先抓 prompt——iOS Safari 只允許在點擊當下寫剪貼簿,點了才 fetch 會失去授權;被擋時把 prompt 全選放進唯讀框讓人長按複製 |
+| 同讀音 | `worker/packmd.ts` `findReadingCollisions` | 程式自己抓「讀音相同、表記不同」的詞條(不靠外部模型標):辨識引擎一個讀音只挑一種寫法,兩條同讀音就是自己搶自己。實例:新 prompt 的包裡「真野鶴 / 魔の鶴」都是まのつる。只標不刪——「生酛 / 生モト」這種同一個東西的兩種寫法無害 |
 | 篩選 | `public/admin.js` 預覽 | 每條一個勾選框,只存勾著的。外部模型在「注意」欄標了同音的排最前面、加 ⚠,**預設仍勾**(KANADEL 救對品牌名 2/2、搶過動詞 1/2,收不收由人決定) |
 | 解析 | `worker/packmd.ts` | front matter(lang / name / alias)+ `\| 表記 \| 読み \| 種別 \| 出典 \|` 表格。寬鬆:前面多一句話、包在 ``` 裡、讀音中間有空白都收;**看不懂的列一定列出來**(不默默吞) |
 | 驗證 | `worker/vocab.ts` `validateEntries` | 與關鍵字產包同一條 pipeline(假名字集、混寫正規化、去重) |

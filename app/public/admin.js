@@ -418,21 +418,34 @@ $("impForm").addEventListener("submit", async (e) => {
     // 每條一個勾選框:存檔只存勾著的。外部模型在「注意」欄標了同音的排最前面、加 ⚠,
     // 但**預設照樣勾**——KANADEL 這種詞救對了品牌名(2/2),也搶過一次動詞(1/2),收不收由人決定。
     const notes = d.notes || {};
+    // 同讀音、不同表記(伺服器 findReadingCollisions 算的,不靠外部模型標):
+    // SM 聽到一個讀音只能挑一種寫法——「真野鶴 / 魔の鶴」留著後者,主角就可能被寫錯
+    const clash = {};
+    for (const c of d.collisions || []) {
+      for (const who of c.contents) {
+        const others = c.contents.filter(x => x !== who);
+        (clash[who] ||= []).push(`同讀音 ${c.reading}:${others.join("、")}`);
+      }
+    }
+    const flaggedOf = (en) => notes[en.content] || clash[en.content];
     const item = (en, i) => {
       const read = en.sounds_like?.length
         ? `<small>(${esc(en.sounds_like.join("、"))})</small>`
         : `<small style="color:var(--ink-2)">(無讀音)</small>`;
-      const note = notes[en.content] ? ` <small class="warnList" style="display:inline">⚠ ${esc(notes[en.content])}</small>` : "";
+      const tags = [...(clash[en.content] || []), ...(notes[en.content] ? [notes[en.content]] : [])];
+      const note = tags.length ? ` <small class="warnList" style="display:inline">⚠ ${esc(tags.join(";"))}</small>` : "";
       return `<label style="display:inline-block; max-width:100%; overflow-wrap:anywhere; margin:0 10px 2px 0">` +
         `<input type="checkbox" class="impPick" data-i="${i}" checked> <code>${esc(en.content)}</code>${read}${note}</label>`;
     };
     const idx = d.entries.map((en, i) => [en, i]);
-    const flagged = idx.filter(([en]) => notes[en.content]);
-    const rest = idx.filter(([en]) => !notes[en.content]);
+    const flagged = idx.filter(([en]) => flaggedOf(en));
+    const rest = idx.filter(([en]) => !flaggedOf(en));
     const terms =
       (flagged.length
-        ? `<p style="margin:6px 0 2px"><b>⚠ 和日常詞同音(${flagged.length})</b>
-             <span class="hint">——掛上詞表後,一般詞可能被寫成這些字(10-05 實測 KANADEL 搶走動詞「奏でる」一次)。不需要就取消勾選</span></p>
+        ? `<p style="margin:6px 0 2px"><b>⚠ 同音・同讀音(${flagged.length})</b>
+             <span class="hint">——<b>同讀音</b>的詞條會互搶(辨識引擎一個讀音只挑一種寫法):跟主角撞讀音的一定拿掉,
+             同一個東西的兩種寫法(生酛 / 生モト)留著無妨。<b>和日常詞同音</b>的,一般詞可能被寫成它
+             (10-05 實測 KANADEL 搶走動詞「奏でる」一次)。不需要就取消勾選</span></p>
            <div style="font-size:13px; line-height:2">${flagged.map(([en, i]) => item(en, i)).join("")}</div>
            <p style="margin:8px 0 2px"><b>其他(${rest.length})</b></p>`
         : "") +

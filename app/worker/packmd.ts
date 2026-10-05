@@ -111,3 +111,20 @@ export function parsePackMarkdown(md: string): PackMdResult {
   }
   return { meta, rows, sources, skipped };
 }
+
+/** 同讀音、不同表記的詞條組(程式自己抓,不靠外部模型標)。
+ *  為什麼:Speechmatics 聽到一個讀音只能挑一種寫法,兩條同讀音的詞條就是在跟自己搶——
+ *  2026-10-05 新 prompt 的包裡有「真野鶴 / 魔の鶴」(都是まのつる),後者留著,
+ *  這場的主角真野鶴就可能被寫成魔の鶴;「KANADEL / かなでる」也是同一型。
+ *  有些組合無害(生酛 / 生モト 是同一個東西的兩種寫法),所以只標出來、由人決定,不自動刪。 */
+export function findReadingCollisions(entries: { content: string; sounds_like?: string[] }[]): { reading: string; contents: string[] }[] {
+  const by = new Map<string, string[]>();
+  for (const e of entries) {
+    for (const r of new Set(e.sounds_like ?? [])) {
+      const list = by.get(r) ?? [];
+      if (!list.includes(e.content)) list.push(e.content);
+      by.set(r, list);
+    }
+  }
+  return [...by.entries()].filter(([, c]) => c.length > 1).map(([reading, contents]) => ({ reading, contents }));
+}

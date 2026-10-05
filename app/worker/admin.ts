@@ -7,7 +7,7 @@ import { CONFIG_KEYS, readAllow, readJson, writeJson } from './auth';
 import { extractVocab, researchTerms } from './gemini';
 import { deletePack, listPacks, PACK_ID_RE, readRawPack, savePack, validateEntries } from './vocab';
 import { PACK_LANGS } from './langs';
-import { parsePackMarkdown } from './packmd';
+import { findReadingCollisions, parsePackMarkdown } from './packmd';
 import type { Usage } from './quota';
 import type { Env } from './index';
 
@@ -172,7 +172,7 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     for (const r of parsed.rows) if (r.note && !notes[r.content]) notes[r.content] = r.note;
     return Response.json({
       ok: true, lang: packLang, meta: parsed.meta, count: entries.length,
-      entries, notes, warnings, issues, stats, skipped: parsed.skipped,
+      entries, notes, collisions: findReadingCollisions(entries), warnings, issues, stats, skipped: parsed.skipped,
       sources: safeSources(parsed.sources.map(uri => ({ uri, title: '' }))),
     });
   }
