@@ -335,3 +335,96 @@ $("skwPreview").addEventListener("click", async (e) => {
     }
   }
 });
+
+/* ── md 匯入(外部 LLM 產詞表 → 解析 → 驗證 → 預覽 → 確認存)──
+   prompt 只有一份:public/vocab-prompt.md(這裡抓來複製,repo 裡也看得到)。
+   預覽不花錢(不呼叫模型);存檔走 pack-save,kind = 'import'。 */
+let IMP = null;
+
+$("impPromptBtn").addEventListener("click", async () => {
+  try {
+    const t = await (await fetch("/vocab-prompt.md", { cache: "no-store" })).text();
+    const start = t.indexOf("---- 從這裡開始複製 ----");
+    const prompt = start >= 0 ? t.slice(start + "---- 從這裡開始複製 ----".length).trim() : t;
+    await navigator.clipboard.writeText(prompt);
+    toast("已複製 prompt——記得把 {{主題}} 換掉");
+  } catch (err) {
+    // 剪貼簿被擋(非 https、權限)時至少給連結,不要只說失敗
+    toast("複製失敗,請直接開 /vocab-prompt.md 手動複製:" + (err.message || err));
+  }
+});
+
+$("impFile").addEventListener("change", async () => {
+  const f = $("impFile").files?.[0];
+  if (!f) return;
+  if (f.size > 64 * 1024) { toast("檔案超過 64KB"); return; }
+  $("impMd").value = await f.text();
+});
+
+$("impForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = $("impBtn");
+  const md = $("impMd").value;
+  const id = $("impId").value.trim().toLowerCase();
+  if (!md.trim()) { toast("先上傳或貼上 md"); return; }
+  btn.disabled = true; btn.textContent = "解析中…";
+  try {
+    const d = await api("/api/admin/pack-import", { markdown: md, lang: $("skwLang").value });
+    const alias = $("impAlias").value.trim() || d.meta?.alias || "";
+    if (!$("impAlias").value.trim() && alias) $("impAlias").value = alias;
+    IMP = { id, alias, name: d.meta?.name || alias, lang: d.lang, keyword: "", kind: "import",
+            entries: d.entries, sources: d.sources, queries: [] };
+    const terms = d.entries.map(en =>
+      `<code>${esc(en.content)}</code>${en.sounds_like?.length ? `<small>(${esc(en.sounds_like.join("、"))})</small>` : `<small style="color:var(--ink-2)">(無讀音)</small>`}`
+    ).join("、");
+    const src = (d.sources || []).map(s => {
+      const href = safeHttpUrl(s.uri);
+      return href ? `<li><a href="${esc(href)}" target="_blank" rel="noopener">${esc(s.uri)}</a></li>` : "";
+    }).join("");
+    const skipped = (d.skipped || []).map(k => `<li>第 ${k.line} 行:${esc(k.reason)}<code>${esc(k.text)}</code></li>`).join("");
+    const noRead = d.entries.filter(en => !en.sounds_like?.length).length;
+    $("impPreview").innerHTML = `
+      <div class="card" style="border:1px solid var(--line); border-radius:2px; padding:10px; margin-top:8px">
+        <b>「${esc(d.meta?.name || "(md 沒寫 name)")}」${d.count} 個詞條(${esc(d.lang)})</b>
+        <p class="hint">${d.sources?.length ? `出典 ${d.sources.length} 筆` : "⚠ md 沒有列出典——讀音沒有外部佐證,請自己看一遍"}
+          ${noRead ? `・${noRead} 條沒有讀音(只有表記也有用,但效果較弱)` : ""}</p>
+        ${(d.warnings || []).filter(w => w.includes("1000")).map(w => `<p class="warnList">${esc(w)}</p>`).join("")}
+        <p style="font-size:13px; line-height:2; margin:8px 0">${terms}</p>
+        ${skipped ? `<details open><summary class="hint" style="cursor:pointer">略過 ${d.skipped.length} 行(看得出是表格列、但解析不出詞條)</summary><ul class="hint">${skipped}</ul></details>` : ""}
+        ${src ? `<details><summary class="hint" style="cursor:pointer">出典 ${d.sources.length} 筆</summary><ul class="hint">${src}</ul></details>` : ""}
+        ${issueSummary(d)}
+        <div class="row-actions" style="margin-top:10px">
+          <button class="primary" id="impSave">✓ 存成場景包</button>
+          <button id="impCancel">取消</button>
+        </div>
+      </div>`;
+  } catch (err) {
+    $("impPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;
+  } finally {
+    btn.disabled = false; btn.textContent = "預覽匯入";
+  }
+});
+
+$("impPreview").addEventListener("click", async (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.id === "impCancel") { $("impPreview").innerHTML = ""; return; }
+  if (b.id === "impSave" && IMP) {
+    // 別名與 id 以按下存檔當下的欄位為準(預覽後可能改過)
+    IMP.alias = $("impAlias").value.trim() || IMP.alias;
+    IMP.id = $("impId").value.trim().toLowerCase() || IMP.id;
+    if (!IMP.id) { toast("缺包 id"); return; }
+    if (!IMP.alias) { toast("缺中文別名"); return; }
+    b.disabled = true; b.textContent = "存檔中…";
+    try {
+      const d = await api("/api/admin/pack-save", IMP);
+      $("impPreview").innerHTML =
+        `<p class="hint" style="color:var(--ok)">✓ 已存「${esc(d.alias)}」(${esc(d.lang)}・${d.count} 詞,id=${esc(d.id)})——同 id 會覆蓋舊包,下一場生效</p>`
+        + issueSummary(d);
+      $("impMd").value = ""; $("impFile").value = ""; $("impId").value = ""; $("impAlias").value = "";
+      await reload();
+    } catch (err) {
+      $("impPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;
+    }
+  }
+});

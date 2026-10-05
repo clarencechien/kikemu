@@ -1,5 +1,5 @@
 /* Admin API(沿 sukemu worker/admin.ts):名單/等候名單/額度管理 + 今日用量,
-   加上 kikemu 專屬的場景包管理(pack-search / pack-save / pack-revalidate / pack-delete)。
+   加上 kikemu 專屬的場景包管理(pack-import / pack-search / pack-save / pack-revalidate / pack-delete)。
    僅 ADMIN_EMAILS 內的帳號可用,閘門在 index.ts(session + isAdmin)。
    名單資料就是 R2 的兩個 JSON,想用 wrangler r2 object put 手動改也等價。 */
 
@@ -7,6 +7,7 @@ import { CONFIG_KEYS, readAllow, readJson, writeJson } from './auth';
 import { extractVocab, researchTerms } from './gemini';
 import { deletePack, listPacks, PACK_ID_RE, readRawPack, savePack, validateEntries } from './vocab';
 import { PACK_LANGS } from './langs';
+import { parsePackMarkdown } from './packmd';
 import type { Usage } from './quota';
 import type { Env } from './index';
 
@@ -144,11 +145,39 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
     });
   }
 
+  /* md 匯入(預覽,不存):外部 LLM 照 public/vocab-prompt.md 產的 md → 解析 → 同一條驗證 pipeline。
+     不呼叫任何模型、不花錢;存檔走下面的 pack-save(kind = 'import')。
+     為什麼要有這條路:產品內的關鍵字產包漏掉商品名與行業術語(packmd.ts 開頭的說明)。 */
+  if (path === '/api/admin/pack-import' && req.method === 'POST') {
+    const body = (await req.json()) as { markdown?: string; lang?: string };
+    const md = String(body.markdown || '');
+    if (!md.trim()) return bad('缺少 md 內容');
+    if (md.length > MAX_SOURCE_TEXT) return bad('md 過長(上限 64KB)', 413);
+    const parsed = parsePackMarkdown(md);
+    if (!parsed.rows.length) {
+      return bad('md 裡找不到詞條表格——請確認是照 vocab-prompt.md 的格式(| 表記 | 読み | … |)');
+    }
+    const fromMd = parsed.meta.lang && PACK_LANGS.includes(parsed.meta.lang as any) ? parsed.meta.lang : '';
+    const packLang = fromMd || (PACK_LANGS.includes(body.lang as any) ? String(body.lang) : 'ja');
+    const { entries, warnings, issues, stats } = validateEntries(
+      parsed.rows.map(({ content, sounds_like }) => ({ content, sounds_like })),
+      packLang,
+    );
+    if (!entries.length) return bad('驗證後沒有可用的詞條');
+    // relay 只送前 1000 條給 Speechmatics(additional_vocab 上限);超過要講,不默默截
+    if (entries.length > 1000) warnings.push(`詞條 ${entries.length} 條,超過 1000 條的部分聽譯時不會送出`);
+    return Response.json({
+      ok: true, lang: packLang, meta: parsed.meta, count: entries.length,
+      entries, warnings, issues, stats, skipped: parsed.skipped,
+      sources: safeSources(parsed.sources.map(uri => ({ uri, title: '' }))),
+    });
+  }
+
   /* 存檔:直接收預覽時看到的詞條,不重跑搜尋——
      既省 100 秒等待,也保證「存下去的就是剛才過目的那份」。 */
   if (path === '/api/admin/pack-save' && req.method === 'POST') {
     const body = (await req.json()) as {
-      id?: string; alias?: string; name?: string; lang?: string; keyword?: string;
+      id?: string; alias?: string; name?: string; lang?: string; keyword?: string; kind?: string;
       entries?: { content?: string; sounds_like?: string[] }[];
       sources?: { title: string; uri: string }[]; queries?: string[];
     };
@@ -167,7 +196,7 @@ export async function handleAdmin(req: Request, env: Env, path: string): Promise
       // sources 的 uri 來自模型的 grounding metadata。在**存檔時**就過濾,
       // 不要只擋在顯示層 —— 存進去的東西之後會被別的地方讀,而那些地方不會
       // 記得要再過濾一次。
-      source: { kind: 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: safeSources(body.sources), at: new Date().toISOString() },
+      source: { kind: body.kind === 'import' ? 'import' : 'search', keyword: String(body.keyword || ''), queries: body.queries ?? [], sources: safeSources(body.sources), at: new Date().toISOString() },
     });
     return Response.json({ ok: true, id: packId, alias, name: packName, lang: packLang, count: entries.length, warnings, issues, stats });
   }

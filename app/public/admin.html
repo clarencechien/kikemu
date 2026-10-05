@@ -90,6 +90,26 @@
 
   <h2>場景包<span class="count" id="packCount"></span></h2>
   <div id="packBox"></div>
+  <!-- 主要做法:外部 LLM(搜尋 + 思考)照 vocab-prompt.md 產 md → 這裡匯入。
+       不呼叫任何模型、不花錢;同一條驗證 pipeline,先預覽再存。 -->
+  <form class="add" id="impForm" style="flex-direction:column; align-items:stretch">
+    <p class="hint" style="margin:0">
+      <b>匯入 md(建議)</b>:① <button type="button" id="impPromptBtn">複製 prompt</button>
+      貼給開了搜尋與深度思考的 LLM(ChatGPT / Gemini / Claude),把 <code>{{主題}}</code> 換成要去的地方
+      → ② 把它回的 md 存檔上傳或直接貼在下面 → ③ 預覽、確認後存。
+    </p>
+    <div class="row-actions" style="flex-wrap:wrap">
+      <input type="text" id="impAlias" placeholder="中文別名(md 有 alias 會自動帶入)" size="22">
+      <input type="text" id="impId" placeholder="包 id(小寫英數,如 obata)" size="20" required>
+      <input type="file" id="impFile" accept=".md,.markdown,.txt,text/markdown,text/plain">
+    </div>
+    <textarea id="impMd" placeholder="或把 md 貼在這裡(≤64KB)"></textarea>
+    <div class="row-actions"><button class="primary" type="submit" id="impBtn">預覽匯入</button></div>
+  </form>
+  <div id="impPreview"></div>
+
+  <p class="hint" style="margin-top:14px"><b>或用關鍵字讓 Gemini 自己搜</b>(較快,但會漏商品名與行業術語——
+    2026-10-04 試酒導覽漏了酒款「万穂」與「日本酒度」):</p>
   <!-- 關鍵字產包:輸入「大阪城」就出一包(Gemini 搜尋接地 → 抽詞 → 假名驗證)。
        先預覽再存:讀音錯的詞表會反過來傷辨識,不讓它直接落地。 -->
   <form class="add" id="packSearchForm" style="flex-direction:column; align-items:stretch">
