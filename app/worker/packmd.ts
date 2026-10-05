@@ -11,7 +11,8 @@
    - 但**看不懂的列一定回報**(skipped),不默默吞掉:管理者要知道少了哪幾條 */
 
 export type PackMdMeta = { lang?: string; name?: string; alias?: string };
-export type PackMdRow = { content: string; sounds_like?: string[]; kind?: string; source?: string };
+/** note = 「注意」欄(第 5 欄)。外部模型標「同音:…」的詞,管理頁預覽會特別標出來給人決定要不要收 */
+export type PackMdRow = { content: string; sounds_like?: string[]; kind?: string; source?: string; note?: string };
 export type PackMdResult = {
   meta: PackMdMeta;
   rows: PackMdRow[];
@@ -105,6 +106,7 @@ export function parsePackMarkdown(md: string): PackMdResult {
       row.source = src;
       addUrl(src);
     }
+    if (cells[4]) row.note = cells[4].slice(0, 60);
     rows.push(row);
   }
   return { meta, rows, sources, skipped };

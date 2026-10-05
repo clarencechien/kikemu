@@ -298,7 +298,12 @@ $("packSearchForm").addEventListener("submit", async (e) => {
         <p class="hint">${d.sources?.length
             ? `搜尋詞:${esc((d.queries || []).join(" / "))}`
             : "⚠ 這次沒有引用外部來源(模型憑既有知識回答)——冷門地點請改用貼上官方頁內文,讀音比較可靠。"}</p>
-        <p style="font-size:13px; line-height:2; margin:8px 0">${terms}</p>
+        <div class="row-actions" style="margin:8px 0 4px; flex-wrap:wrap">
+          <span class="hint" id="impPicked"></span>
+          <button type="button" id="impAll">全選</button>
+          <button type="button" id="impNone">全不選</button>
+        </div>
+        ${terms}
         ${src ? `<details><summary class="hint" style="cursor:pointer">來源 ${d.sources.length} 筆</summary><ul class="hint">${src}</ul></details>` : ""}
         ${issueSummary(d)}
         <div class="row-actions" style="margin-top:10px">
@@ -410,9 +415,28 @@ $("impForm").addEventListener("submit", async (e) => {
     if (!$("impAlias").value.trim() && alias) $("impAlias").value = alias;
     IMP = { id, alias, name: d.meta?.name || alias, lang: d.lang, keyword: "", kind: "import",
             entries: d.entries, sources: d.sources, queries: [] };
-    const terms = d.entries.map(en =>
-      `<code>${esc(en.content)}</code>${en.sounds_like?.length ? `<small>(${esc(en.sounds_like.join("、"))})</small>` : `<small style="color:var(--ink-2)">(無讀音)</small>`}`
-    ).join("、");
+    // 每條一個勾選框:存檔只存勾著的。外部模型在「注意」欄標了同音的排最前面、加 ⚠,
+    // 但**預設照樣勾**——KANADEL 這種詞救對了品牌名(2/2),也搶過一次動詞(1/2),收不收由人決定。
+    const notes = d.notes || {};
+    const item = (en, i) => {
+      const read = en.sounds_like?.length
+        ? `<small>(${esc(en.sounds_like.join("、"))})</small>`
+        : `<small style="color:var(--ink-2)">(無讀音)</small>`;
+      const note = notes[en.content] ? ` <small class="warnList" style="display:inline">⚠ ${esc(notes[en.content])}</small>` : "";
+      return `<label style="display:inline-block; max-width:100%; overflow-wrap:anywhere; margin:0 10px 2px 0">` +
+        `<input type="checkbox" class="impPick" data-i="${i}" checked> <code>${esc(en.content)}</code>${read}${note}</label>`;
+    };
+    const idx = d.entries.map((en, i) => [en, i]);
+    const flagged = idx.filter(([en]) => notes[en.content]);
+    const rest = idx.filter(([en]) => !notes[en.content]);
+    const terms =
+      (flagged.length
+        ? `<p style="margin:6px 0 2px"><b>⚠ 和日常詞同音(${flagged.length})</b>
+             <span class="hint">——掛上詞表後,一般詞可能被寫成這些字(10-05 實測 KANADEL 搶走動詞「奏でる」一次)。不需要就取消勾選</span></p>
+           <div style="font-size:13px; line-height:2">${flagged.map(([en, i]) => item(en, i)).join("")}</div>
+           <p style="margin:8px 0 2px"><b>其他(${rest.length})</b></p>`
+        : "") +
+      `<div style="font-size:13px; line-height:2">${rest.map(([en, i]) => item(en, i)).join("")}</div>`;
     const src = (d.sources || []).map(s => {
       const href = safeHttpUrl(s.uri);
       return href ? `<li><a href="${esc(href)}" target="_blank" rel="noopener">${esc(s.uri)}</a></li>` : "";
@@ -425,7 +449,12 @@ $("impForm").addEventListener("submit", async (e) => {
         <p class="hint">${d.sources?.length ? `出典 ${d.sources.length} 筆` : "⚠ md 沒有列出典——讀音沒有外部佐證,請自己看一遍"}
           ${noRead ? `・${noRead} 條沒有讀音(只有表記也有用,但效果較弱)` : ""}</p>
         ${(d.warnings || []).filter(w => w.includes("1000")).map(w => `<p class="warnList">${esc(w)}</p>`).join("")}
-        <p style="font-size:13px; line-height:2; margin:8px 0">${terms}</p>
+        <div class="row-actions" style="margin:8px 0 4px; flex-wrap:wrap">
+          <span class="hint" id="impPicked"></span>
+          <button type="button" id="impAll">全選</button>
+          <button type="button" id="impNone">全不選</button>
+        </div>
+        ${terms}
         ${skipped ? `<details open><summary class="hint" style="cursor:pointer">略過 ${d.skipped.length} 行(看得出是表格列、但解析不出詞條)</summary><ul class="hint">${skipped}</ul></details>` : ""}
         ${src ? `<details><summary class="hint" style="cursor:pointer">出典 ${d.sources.length} 筆</summary><ul class="hint">${src}</ul></details>` : ""}
         ${issueSummary(d)}
@@ -434,6 +463,7 @@ $("impForm").addEventListener("submit", async (e) => {
           <button id="impCancel">取消</button>
         </div>
       </div>`;
+    updatePicked();
   } catch (err) {
     $("impPreview").innerHTML = `<p class="warnList">${esc(String(err.message || err))}</p>`;
   } finally {
@@ -441,11 +471,30 @@ $("impForm").addEventListener("submit", async (e) => {
   }
 });
 
+const pickedEntries = () =>
+  [...document.querySelectorAll(".impPick")].filter(c => c.checked).map(c => IMP.entries[Number(c.dataset.i)]);
+
+function updatePicked() {
+  const el = $("impPicked");
+  if (el && IMP) el.textContent = `已勾 ${pickedEntries().length} / ${IMP.entries.length} 條`;
+}
+
+$("impPreview").addEventListener("change", (e) => {
+  if (e.target.classList?.contains("impPick")) updatePicked();
+});
+
 $("impPreview").addEventListener("click", async (e) => {
   const b = e.target.closest("button");
   if (!b) return;
   if (b.id === "impCancel") { $("impPreview").innerHTML = ""; return; }
+  if (b.id === "impAll" || b.id === "impNone") {
+    document.querySelectorAll(".impPick").forEach(c => { c.checked = b.id === "impAll"; });
+    updatePicked();
+    return;
+  }
   if (b.id === "impSave" && IMP) {
+    const picked = pickedEntries();
+    if (!picked.length) { toast("一條都沒勾"); return; }
     // 別名與 id 以按下存檔當下的欄位為準(預覽後可能改過)
     IMP.alias = $("impAlias").value.trim() || IMP.alias;
     IMP.id = $("impId").value.trim().toLowerCase() || IMP.id;
@@ -453,7 +502,8 @@ $("impPreview").addEventListener("click", async (e) => {
     if (!IMP.alias) { toast("缺中文別名"); return; }
     b.disabled = true; b.textContent = "存檔中…";
     try {
-      const d = await api("/api/admin/pack-save", IMP);
+      // 只存勾著的;伺服器端 pack-save 會再跑一次驗證 pipeline
+      const d = await api("/api/admin/pack-save", { ...IMP, entries: picked });
       $("impPreview").innerHTML =
         `<p class="hint" style="color:var(--ok)">✓ 已存「${esc(d.alias)}」(${esc(d.lang)}・${d.count} 詞,id=${esc(d.id)})——同 id 會覆蓋舊包,下一場生效</p>`
         + issueSummary(d);
