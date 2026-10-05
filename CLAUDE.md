@@ -80,6 +80,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | `app/worker/` | relay DO、quota DO、admin、場景包、Gemini(含 `GeminiProxy`:區域封鎖的代打 DO,HTTP 與 Live 都代) |
 | `app/worker/modes.ts` | **聽譯模式的唯一定義**(導覽 / 對話 / Gemini 對照);`/api/config` 送前端,加模式只改這裡 |
+| `app/worker/packmd.ts` + `app/public/vocab-prompt.md` | 場景包 md 匯入:外部 LLM(搜尋 + 思考)照那份 prompt 產 md → 解析 → 同一條驗證 pipeline。prompt 只有這一份 |
 | `app/worker/upstream.ts` | 聽寫上游轉接層:SM(導覽與 2026-10 之前逐欄相同)與 Gemini 3.5 Transcribe Live |
 | `handoff-v12.md` | 新一代 Gemini Live × exp1 + 模式選單:判讀規則先寫死、偏離紀錄(含估價錯 9 倍、G31 靜默中斷) |
 | `handoff-v13.md` | 逐句翻譯帶上一句當上下文:不變慢、規則上可採用但現場溢出 8.4% 未上線;附帶量到產品逐句 adequacy 4.06 |
