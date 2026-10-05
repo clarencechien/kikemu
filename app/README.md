@@ -192,16 +192,21 @@ GEMINI_API_KEY=...
 但酒款「万穂」與行業術語「日本酒度」沒進包,照樣聽錯(`results/report.md` §2.1g)。
 外部有搜尋與深度思考的模型可以查得更深(官網商品頁、多頁),prompt 也能照主題調。
 
-**流程**:`/admin` →「匯入 md」→ **複製 prompt**(唯一一份在 `public/vocab-prompt.md`)→
-貼給 ChatGPT / Gemini / Claude(開搜尋與深度思考),把 `{{主題}}` 換掉 → 回來的 md 上傳或貼上 →
+**流程**:`/admin` →「匯入 md」→ 輸入**關鍵字**(要去的地方)、選填補充資料 → **複製 prompt** 或手機上
+**分享到 App** → 貼給 ChatGPT / Gemini / Claude(開搜尋與深度思考)→ 回來的 md 貼上或上傳 →
 **預覽**(解析 + 同一條驗證 pipeline,不呼叫任何模型、不花錢)→ 確認後存(`pack-save`,`source.kind = 'import'`)。
 
 | 環節 | 檔案 | 做的事 |
 |---|---|---|
-| prompt | `public/vocab-prompt.md` | 要外部模型收商品名與行業術語、讀音不確定就留空、只輸出固定格式 |
+| prompt | `public/vocab-prompt.md` | **純 prompt**,最後一行是 `## 主題`;管理頁把關鍵字(與補充資料、韓語註記)接在最下面。要外部模型收商品名與行業術語、讀音不確定就留空、只輸出固定格式 |
+| 複製 | `public/admin.js` `buildPrompt` | 頁面載入時就先抓 prompt——iOS Safari 只允許在點擊當下寫剪貼簿,點了才 fetch 會失去授權;被擋時把 prompt 全選放進唯讀框讓人長按複製 |
 | 解析 | `worker/packmd.ts` | front matter(lang / name / alias)+ `\| 表記 \| 読み \| 種別 \| 出典 \|` 表格。寬鬆:前面多一句話、包在 ``` 裡、讀音中間有空白都收;**看不懂的列一定列出來**(不默默吞) |
 | 驗證 | `worker/vocab.ts` `validateEntries` | 與關鍵字產包同一條 pipeline(假名字集、混寫正規化、去重) |
 | 端點 | `POST /api/admin/pack-import` | 只預覽不存;出典網址過 `safeSources`(只收 http(s)) |
+
+第一版的坑(2026-10-05 使用者回報):prompt 檔裡有使用說明,複製時用「從這裡開始複製」的標記去切,
+但說明文字本身也引用了那串標記,結果從說明那裡就開始切,說明被一起複製出去;而且要在手機上手改 `{{主題}}`。
+現在 prompt 檔不放任何說明,關鍵字由管理頁接上。
 
 ⚠️ **匯入版的辨識效果還沒量過**。上面那段只說明「關鍵字版漏了什麼」;
 外部模型產的包是不是真的比較好,要用同一段試酒影片掛兩個包各錄一次比(專名與術語逐一對)。

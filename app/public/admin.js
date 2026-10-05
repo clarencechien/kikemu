@@ -341,17 +341,53 @@ $("skwPreview").addEventListener("click", async (e) => {
    預覽不花錢(不呼叫模型);存檔走 pack-save,kind = 'import'。 */
 let IMP = null;
 
-$("impPromptBtn").addEventListener("click", async () => {
-  try {
-    const t = await (await fetch("/vocab-prompt.md", { cache: "no-store" })).text();
-    const start = t.indexOf("---- 從這裡開始複製 ----");
-    const prompt = start >= 0 ? t.slice(start + "---- 從這裡開始複製 ----".length).trim() : t;
-    await navigator.clipboard.writeText(prompt);
-    toast("已複製 prompt——記得把 {{主題}} 換掉");
-  } catch (err) {
-    // 剪貼簿被擋(非 https、權限)時至少給連結,不要只說失敗
-    toast("複製失敗,請直接開 /vocab-prompt.md 手動複製:" + (err.message || err));
-  }
+/* prompt 組法:檔案本身就是純 prompt、最後一行是「## 主題」,這裡把關鍵字(與補充資料)接在最下面。
+   不再用「從這裡開始複製」的標記去切——說明文字裡也引用了那串標記,
+   第一版從說明那裡就開始切,把說明一起複製出去(2026-10-05 使用者回報)。
+   手機:iOS Safari 只允許在使用者點擊的當下寫剪貼簿,點擊後才 fetch 會失去授權,
+   所以頁面載入時就先把 prompt 抓好;另給「分享」直接送進 ChatGPT 等 App。 */
+let PROMPT_BASE = null;
+fetch("/vocab-prompt.md", { cache: "no-store" })
+  .then(r => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
+  .then(t => { PROMPT_BASE = t.trimEnd(); })
+  .catch(err => toast("prompt 讀取失敗:" + (err.message || err)));
+if (navigator.share) $("impShareBtn").hidden = false;
+
+function buildPrompt() {
+  const kw = $("impKeyword").value.trim();
+  if (!kw) { toast("先輸入關鍵字(要去的地方或要聽的導覽)"); $("impKeyword").focus(); return null; }
+  if (!PROMPT_BASE) { toast("prompt 還沒載入,請稍候再按"); return null; }
+  const notes = $("impNotes").value.trim();
+  const ko = $("skwLang").value === "ko"
+    ? "\n\n※ 這是**韓語**導覽:「読み」欄改填한글讀音,front matter 寫 `lang: ko`。"
+    : "";
+  return `${PROMPT_BASE}\n\n${kw}${notes ? `\n\n## 補充資料(使用者提供,優先採信)\n\n${notes}` : ""}${ko}\n`;
+}
+
+/** 剪貼簿被擋時:把 prompt 放進唯讀框並全選,至少能手動複製 */
+function showPromptForManualCopy(text) {
+  const box = $("impPromptOut");
+  box.hidden = false;
+  box.value = text;
+  box.focus();
+  box.select();
+}
+
+$("impPromptBtn").addEventListener("click", () => {
+  const text = buildPrompt();
+  if (!text) return;
+  // 不 await 任何東西再寫:要留在點擊的同步階段
+  navigator.clipboard.writeText(text)
+    .then(() => { $("impPromptOut").hidden = true; toast("已複製 prompt,貼給 ChatGPT / Gemini / Claude(開搜尋與深度思考)"); })
+    .catch(() => { showPromptForManualCopy(text); toast("瀏覽器不讓自動複製——已選取下方文字,請長按複製"); });
+});
+
+$("impShareBtn").addEventListener("click", () => {
+  const text = buildPrompt();
+  if (!text) return;
+  navigator.share({ text }).catch(err => {
+    if (err?.name !== "AbortError") showPromptForManualCopy(text);
+  });
 });
 
 $("impFile").addEventListener("change", async () => {
