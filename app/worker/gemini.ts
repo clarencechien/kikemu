@@ -371,6 +371,8 @@ export async function translateSentence(
   const resp = await generate(env, {
     systemInstruction: { parts: [{ text: interpreterSystem(lang) }] },
     contents: [{ parts: [{ text: translateUser(lang, sentence) }] }],
+    // ⚠ 換 TRANSLATE_MODEL 時要拿掉:之後的新模型送 temperature 會報錯(Google 2026-10-07 通知)。
+    // 3.5-flash 照收;拿掉等於換了 exp1 / v13 / v14 的量測條件,要重量。docs/gemini-api-lessons.md §5
     generationConfig: { temperature: 0.2 },
   });
   const zh = firstText(resp);
@@ -450,7 +452,7 @@ export async function researchTerms(env: Env, keyword: string, lang = 'ja'): Pro
   const resp = await generate(env, {
     contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword, lang) }] }],
     tools: [{ google_search: {} }],
-    generationConfig: { temperature: 0.0 },
+    generationConfig: { temperature: 0.0 }, // 換模型時拿掉(同上,docs/gemini-api-lessons.md §5)
   }, { think: false });
   const text = firstText(resp) ?? '';
   if (!text) throw new Error('搜尋沒有回結果');
@@ -500,6 +502,7 @@ export async function extractVocab(env: Env, sourceText: string, lang = 'ja'): P
     // 實測(同 prompt,maxOutputTokens 故意設 300):預設思考 → thoughts 287 / output 9
     // / finishReason=MAX_TOKENS(JSON 壞掉);minimal → thoughts 0 / output 206 / STOP。
     // 現在 generate() 一律送 thinkingLevel:minimal,額度才真的都給輸出用。
+    // temperature 換模型時拿掉(docs/gemini-api-lessons.md §5)
     generationConfig: { temperature: 0.0, responseMimeType: 'application/json', maxOutputTokens: 16384 },
   });
   const raw = firstText(resp);

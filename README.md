@@ -59,6 +59,11 @@
 **附帶發現更大**:產品的逐句翻譯在 exp1 同一批音檔上 adequacy 約 **4.06**,不是常被引用的 4.71(那是整段一次翻的數字)。
 差在顆粒度還是 thinking 還沒拆開。細節 [`handoff-v13.md`](handoff-v13.md) §8。
 
+**10-07:Google 參數棄用通知**——之後的新模型送 `thinking_budget` / `temperature` / `top_p` / `top_k` 會報錯。
+產品用 3.5-flash、沒送 `thinking_budget`,**現在不受影響**;但 `gemini.ts` 有三處 `temperature`,**換翻譯模型時要拿掉並重量**。
+另一個影響:評審 `gemini-3.6-flash` 的「temperature 0」其實沒作用,評審有隨機性(報告侷限 32)。
+清單與盤點:[`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) §5。
+
 **10-05:場景包改成「外部 LLM 產 md、管理頁匯入」**——關鍵字產包漏了酒款「万穂」與行業術語「日本酒度」,
 原因在產包 prompt(照寺社觀光寫、不收一般語)。現在 `/admin` 可以複製一份 prompt(`app/public/vocab-prompt.md`)
 貼給開了搜尋與深度思考的模型,回來的 md 直接匯入、跑同一條驗證。
@@ -387,7 +392,7 @@ E4B 的 ASR 劣勢**原樣傳到下游**(0.161 的召回差 → 0.180 的存活�
 
 ### 盤點:哪些解完了,哪些還開著(2026-08-20)
 
-**實驗面已收斂。** 報告的 48 條侷限裡有 8 條被後續實驗解除(原文保留刪節線,
+**實驗面已收斂。** 報告的 49 條侷限裡有 8 條被後續實驗解除(原文保留刪節線,
 看得出結論怎麼演進);其餘 40 條是**已知且已寫明範圍**的限制,不是待辦。
 以下是仍然開著、且**值得再花錢或花時間**的項目:
 
@@ -554,7 +559,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 |---|---|
 | [`docs/PRD.md`](docs/PRD.md) | **產品規格**:畫面、設計系統、音訊管線、安全基線、配額、已知風險 |
 | [`app/README.md`](app/README.md) | **部署 runbook**、架構圖、診斷流程(出不來字時怎麼查) |
-| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**48 條侷限**(8 條已由後續實驗解除,原文保留刪節線) |
+| [`results/report.md`](results/report.md) | **完整評測報告**(五個實驗合併),方法、數據、**49 條侷限**(8 條已由後續實驗解除,原文保留刪節線) |
 | [`results/oracle_report.md`](results/oracle_report.md) | **Oracle 天花板與錯誤互補性**:融合/GER 值不值得做,以及「並排雙跑」怎麼算 |
 | [`results/stt-matrix.md`](results/stt-matrix.md) | 跨專案 **STT 選型決策矩陣**——照情境查該用什麼 |
 | [`docs/related-work.md`](docs/related-work.md) | **同類專案掃描**(2026-08):離線字幕工具的做法,以及「即時場景怎麼改」——多數結論相反。含建議行動順序 |
@@ -594,7 +599,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 - **重現性驗證。** exp1 一體式的崩潰做過獨立重跑確認逐檔重現,
   並在補跑 `generateContent` 後查明那是**串流路徑**的行為而非模型能力上限
 - **正確性檢查。** oracle 分析的每個單一 arm 數字都回頭比對既有報告的召回率,全部相符
-- **誠實記錄。** 48 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
+- **誠實記錄。** 49 條侷限寫進報告,含未執行的 arm 與環境限制造成的替代方案。
   解除的 8 條**不刪掉**,改成刪節線並註明是哪一次實驗解除的——這樣看得出結論怎麼演進的。
   數字對不上就修:exp5 的術語實例數曾誤寫 128,對回 `term_outcomes.json` 是 158,已全面更正
 

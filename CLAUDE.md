@@ -27,6 +27,9 @@
    細節與 A/B 數據見 [`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md)。
    `thinkingBudget: 128` **不等於關閉**(實測仍 12~18×),不要用;
    level 與 budget **永不同時給**(400)。
+   ⚠️ 2026-10-07 Google 通知:之後的新模型送 `thinking_budget` 會 400,`temperature` / `top_p` / `top_k`
+   也會報錯(3.6 Flash 起自訂取樣已經沒作用)。產品現在用 3.5-flash 不受影響,但 `gemini.ts` 有三處
+   `temperature`——**換 `TRANSLATE_MODEL` 時一定要一起拿掉並重量翻譯品質**,清單見 `docs/gemini-api-lessons.md` §5。
 
 5. **會花錢的東西要有保險絲,而且計量單位要對齊計費單位。**
    使用者配額是「秒」,Gemini 是「token」——秒數擋不住 token 花費。
@@ -91,7 +94,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `exp2/` | exp2(中英夾雜) |
 | `exp5/scripts/` | exp5 腳本;`noise_curve.py`、`score_zh.py`、`debug_e2b_empty.py` |
 | `handoff-v8.md` | Modal 補測任務書:判讀規則先寫死 + 驗收 + 偏離紀錄(已全數執行) |
-| `results/report.md` | 五個實驗合併報告 + 48 條侷限(8 條已解除,保留刪節線) |
+| `results/report.md` | 五個實驗合併報告 + 49 條侷限(8 條已解除,保留刪節線) |
 | `results/stt-matrix.md` | 跨專案 STT 選型決策矩陣(照情境查該用什麼) |
 | `results/oracle_report.md` | oracle 天花板:融合/GER 值不值得做(結論:不做) |
 | `analysis/` | oracle 與互補性的純計算腳本,不呼叫任何 API |
@@ -139,5 +142,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
   改斷句前後都跑 `analysis/segmentation_replay.py`,它用的是 `relay.ts` 的同一組常數。
 - **等上游握手的地方都要有逾時**(Gemini Live 的 setupComplete 等 10 秒)。沒有逾時的等待,
   失敗起來就是「一直連線中、沒有錯誤」——那是最難從使用者回報查出來的形狀。
+- **別再把評審寫成「temperature 0、結果固定」。** 對 `gemini-3.6-flash` 起的模型,自訂取樣參數沒有作用
+  (Google 2026-10-07 通知),exp1 / v13 / v14 的評審其實有隨機性(報告侷限 32)。要可重現就評多次取平均。
 - **重開 `wrangler dev` 要確認舊的 `workerd` 子行程真的死了。** 只 kill 外層 `npx` 會留下
   `workerd` 佔著埠,新的綁不上,探針悄悄打到舊程式——看起來測過了,其實沒有。

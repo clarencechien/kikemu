@@ -48,7 +48,8 @@ systemInstruction = 凍結的 `INTERPRETER_SYSTEM`(`scripts/prompts.py`,與 `app
 評審標記的我逐筆讀過再定案,兩個數字都報。
 
 **品質(逐句,主集)**:兩兩盲評,評審看到「上一句原文、本句原文(都是 ASR)、兩份譯文(順序隨機)」,
-回答哪一份較正確傳達本句(1 / 2 / 平手)。評審 `gemini-3.6-flash`,temperature 0,thinking 開(評分是推理型任務,
+回答哪一份較正確傳達本句(1 / 2 / 平手)。評審 `gemini-3.6-flash`,temperature 0
+(**2026-10-07 補:3.6 Flash 起自訂取樣沒有作用,這個 0 被忽略、評審有隨機性**;見 `docs/gemini-api-lessons.md` §5),thinking 開(評分是推理型任務,
 同 exp1 judge.py)。
 
 **品質(整段,主集 N0 + N3 = 12 檔)**:把每檔逐句譯文依序接起來,用 exp1 `scripts/judge.py` 的
