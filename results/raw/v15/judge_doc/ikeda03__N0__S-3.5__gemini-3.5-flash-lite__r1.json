@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "S-3.5", "judge": "gemini-3.5-flash-lite", "rep": 1, "adequacy": 4, "tw_locale": 5, "reason": "譯文用語道地符合台灣習慣，但語音辨識錯誤導致地名「池田」被誤轉為「生田」，且帶有英文雜訊。", "modelVersion": "gemini-3.5-flash-lite", "usd": 0.0003432}

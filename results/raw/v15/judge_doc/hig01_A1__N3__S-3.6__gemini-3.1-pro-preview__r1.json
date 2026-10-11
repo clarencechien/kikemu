@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 5, "reason": "譯文包含大量與原文毫無關聯的錯誤資訊（如物理神社、東大阪市等），幾乎完全偏離原文語意，但使用了標準的台灣繁體中文。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.012286}

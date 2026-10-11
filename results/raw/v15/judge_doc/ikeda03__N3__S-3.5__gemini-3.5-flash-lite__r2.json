@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "S-3.5", "judge": "gemini-3.5-flash-lite", "rep": 2, "parse_error": "Extra data: line 1 column 76 (char 75)", "raw": "{\"adequacy\": 1, \"tw_locale\": 2, \"reason\": \"語音辨識錯誤導致譯文嚴重偏離原文，且多處出現莫名其妙的翻譯。\"}}", "usd": 0.00030369999999999996}

@@ -2405,5 +2405,7 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
     自訂取樣固定為預設值)。exp1 adequacy、handoff-v13 的逐句與整段評審、handoff-v14 的整段評審,
     三位評審裡至少這一位其實是預設取樣,**同一份譯文評兩次不保證同分**;另兩位是 `*-latest` 別名,
     v13 / v14 記下的實際型號是 `gemini-3.1-pro-preview` 與 `gemini-3.5-flash-lite`(都早於 3.6,照通知推定 temperature 有效,未驗證)。
+    handoff-v15 量了評審雜訊(同一份評兩次):3.1-pro 91.7%、3.5-flash-lite 95.7%、3-flash-preview 100% 完全一致——雜訊不大,
+    但 3.1-pro 送 temperature 0 仍有不同,「temperature 0 = 結果固定」即使在 3.6 以前也不完全成立。
     同批評審同時評兩邊的比較(v13 / v14 的主要結論)不受偏差影響,但多了一個雜訊來源;
     小於 0.1~0.2 的 adequacy 差要打折。細節 `docs/gemini-api-lessons.md` §5

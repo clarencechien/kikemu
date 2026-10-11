@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "S-3.6", "judge": "gemini-3-flash-preview", "rep": 1, "adequacy": 1, "tw_locale": 2, "reason": "譯文包含大量語音辨識錯誤導致的嚴重幻覺與誤譯（如將石切神社譯為物理神社、加入東大阪市捷徑等無關內容），完全無法傳達原文的神話歷史資訊。", "modelVersion": "gemini-3-flash-preview", "usd": 0.0030565}

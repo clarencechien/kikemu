@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "S-3.6", "judge": "gemini-3.5-flash-lite", "rep": 1, "adequacy": 1, "tw_locale": 2, "reason": "候選譯文因語音辨識錯誤導致內容嚴重走樣，與原文完全不符。", "modelVersion": "gemini-3.5-flash-lite", "usd": 0.0003117}

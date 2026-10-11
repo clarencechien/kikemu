@@ -1,0 +1,1 @@
+{"file": "sakai05__N3", "arm": "S-3.6", "judge": "gemini-3.5-flash-lite", "rep": 1, "adequacy": 4, "tw_locale": 4, "reason": "譯文大致完整傳達原文意思，唯結尾處「元は和歌關於する」因語音辨識誤判被翻譯成不相關的句子。", "modelVersion": "gemini-3.5-flash-lite", "usd": 0.00024169999999999997}

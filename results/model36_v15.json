@@ -1,0 +1,125 @@
+{
+ "handoff": "handoff-v15.md",
+ "translator": "gemini-3.6-flash",
+ "judges": [
+  "gemini-3.1-pro-preview",
+  "gemini-3.5-flash-lite",
+  "gemini-3-flash-preview"
+ ],
+ "repeats": 2,
+ "files": 12,
+ "parse_errors": [
+  [
+   "ikeda03__N3",
+   "S-3.5",
+   "gemini-3.5-flash-lite",
+   2
+  ]
+ ],
+ "adequacy": {
+  "S-3.5": 3.056,
+  "S-3.6": 3.014,
+  "by_condition": {
+   "N0": {
+    "S-3.5": 4.139,
+    "S-3.6": 4.028
+   },
+   "N3": {
+    "S-3.5": 1.972,
+    "S-3.6": 2
+   }
+  },
+  "by_judge": {
+   "gemini-3.1-pro-preview": {
+    "S-3.5": 2.875,
+    "S-3.6": 2.875
+   },
+   "gemini-3.5-flash-lite": {
+    "S-3.5": 3.304,
+    "S-3.6": 3.167
+   },
+   "gemini-3-flash-preview": {
+    "S-3.5": 3.083,
+    "S-3.6": 3
+   }
+  },
+  "diff": -0.042,
+  "diff_ci95": [
+   -0.153,
+   0.056
+  ]
+ },
+ "judge_noise": {
+  "gemini-3.1-pro-preview": {
+   "pairs": 24,
+   "mean_abs_diff": 0.083,
+   "exact_agree": 0.917
+  },
+  "gemini-3.5-flash-lite": {
+   "pairs": 23,
+   "mean_abs_diff": 0.043,
+   "exact_agree": 0.957
+  },
+  "gemini-3-flash-preview": {
+   "pairs": 24,
+   "mean_abs_diff": 0,
+   "exact_agree": 1.0
+  }
+ },
+ "locale": {
+  "S-3.5": {
+   "sentences": 408,
+   "tw_bad_hits": 0,
+   "simplified_chars": 1,
+   "kana_residue": 10,
+   "latin_bare": 4,
+   "latin_gloss": 10,
+   "examples": [
+    {
+     "id": "ikeda02__N2#019",
+     "zh": "如此一来，不僅是富裕階層，就連一般的上班族也能在郊區擁有自己的房子。",
+     "simplified": [
+      "来"
+     ]
+    }
+   ]
+  },
+  "S-3.6": {
+   "sentences": 408,
+   "tw_bad_hits": 0,
+   "simplified_chars": 0,
+   "kana_residue": 4,
+   "latin_bare": 3,
+   "latin_gloss": 6,
+   "examples": []
+  }
+ },
+ "latency_tokens": {
+  "S-3.5": {
+   "n": 408,
+   "p50": 1.049,
+   "p90": 1.207,
+   "prompt": 180.9,
+   "output": 17.9,
+   "thoughts": 0,
+   "modelVersion": [
+    "gemini-3.5-flash"
+   ]
+  },
+  "S-3.6": {
+   "n": 408,
+   "p50": 1.278,
+   "p90": 1.51,
+   "prompt": 180.9,
+   "output": 17.6,
+   "thoughts": 0,
+   "modelVersion": [
+    "gemini-3.6-flash"
+   ]
+  }
+ },
+ "ledger": {
+  "spent_usd": 1.140162,
+  "calls": 552
+ }
+}

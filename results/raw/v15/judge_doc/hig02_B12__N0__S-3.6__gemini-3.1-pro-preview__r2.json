@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N0", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 3, "tw_locale": 4, "reason": "譯文大致傳達原文，但有嚴重的斷句錯誤（如「這隱藏在了岩戶之中。天照大御神...」）破壞了神話語意，且「笑刷掉」等詞語不符合中文表達習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.02679}

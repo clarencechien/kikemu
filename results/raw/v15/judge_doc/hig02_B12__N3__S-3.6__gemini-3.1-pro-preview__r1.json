@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 3, "reason": "譯文充滿嚴重的語音辨識與翻譯錯誤（如將「神事」譯為「體檢」），且殘留日文漢字與假名，語意支離破碎。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.017582}

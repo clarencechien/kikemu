@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 2, "tw_locale": 5, "reason": "譯文將核心地名「池田」全數誤譯為「生田」，且有部分誤譯與多餘字元，但整體用語符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.014882}

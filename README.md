@@ -65,8 +65,10 @@
 清單與盤點:[`docs/gemini-api-lessons.md`](docs/gemini-api-lessons.md) §5。
 
 **10-11:Gemini 3.5 Flash 停用,自動轉到 3.6 Flash**——實測產品的翻譯呼叫回應的 `modelVersion` 已是 `gemini-3.6-flash`;
-`minimal` 照樣有效(thoughts 0),3.6 比較便宜。**翻譯品質在 3.6 上沒量過**(4.06 / 4.71 都是 3.5 的數字)。
-3.5 flash-lite 沒被轉,產品也沒用它。§5b。
+`minimal` 照樣有效(thoughts 0),3.6 比較便宜。3.5 flash-lite 沒被轉,產品也沒用它。§5b。
+**已改成直接呼叫 3.6、拿掉 `temperature`,並重量(handoff-v15,$1.14)**:整段 adequacy 與 3.5 **量不出差別**
+(Δ −0.042,CI [−0.153, +0.056]),0 PRC 用語、0 簡體;延遲 p50 1.28 秒(3.5 是 1.05,不同日量)。
+評審避開 3.6(會自己評自己);評審雜訊不大(同一份評兩次,91.7~100% 完全一致)。
 
 **10-05:場景包改成「外部 LLM 產 md、管理頁匯入」**——關鍵字產包漏了酒款「万穂」與行業術語「日本酒度」,
 原因在產包 prompt(照寺社觀光寫、不收一般語)。現在 `/admin` 可以複製一份 prompt(`app/public/vocab-prompt.md`)

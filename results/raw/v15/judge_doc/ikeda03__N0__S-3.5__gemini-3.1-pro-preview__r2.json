@@ -1,0 +1,1 @@
+{"file": "ikeda03__N0", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 2, "tw_locale": 4, "reason": "譯文將重要地名「池田」全數誤譯為「生田」，且夾雜「1」、「investigation」等語音辨識錯誤產生的無意義字詞，嚴重影響資訊正確性，但整體用語仍符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.016229999999999998}

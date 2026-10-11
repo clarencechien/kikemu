@@ -21,8 +21,9 @@
    報告裡的數字就不再適用。⚠️ 4.71 是**整段一次翻**的數字;產品是逐句翻,
    同一批音檔同一批評審量到 **4.06**(handoff-v13)。引用時別把 4.71 說成產品的翻譯品質。
    差距約 85% 來自「逐句」本身,不是 thinking(handoff-v14);逐句開 thinking 慢 3 倍、貴 15 倍、換不到品質。
-   ⚠️ 以上全是 **3.5 Flash** 的數字。2026-10-11 起 `gemini-3.5-flash` 被 Google 自動轉到 **3.6 Flash**
-   (實測 `modelVersion` 已是 3.6),產品翻譯在 3.6 上**沒量過**(`docs/gemini-api-lessons.md` §5b)。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
+   ⚠️ 以上全是 **3.5 Flash** 的數字。2026-10-11 起產品直接呼叫 **3.6 Flash**(3.5 已停用),
+   handoff-v15 重量:與 3.5 **量不出差別**(Δ −0.042,CI [−0.153, +0.056]),0 PRC 用語、0 簡體。
+   之後的翻譯實驗,**評審不要用跟翻譯同一個模型**(會自己評自己)。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
 
 4. **機械性任務一律 `thinkingLevel: "minimal"`。**
    thinking token 以輸出價計費,實測逐句翻譯 thoughts/output **29×**。
@@ -30,8 +31,8 @@
    `thinkingBudget: 128` **不等於關閉**(實測仍 12~18×),不要用;
    level 與 budget **永不同時給**(400)。
    ⚠️ 2026-10-07 Google 通知:之後的新模型送 `thinking_budget` 會 400,`temperature` / `top_p` / `top_k`
-   也會報錯(3.6 Flash 起自訂取樣已經沒作用)。產品現在用 3.5-flash 不受影響,但 `gemini.ts` 有三處
-   `temperature`——**換 `TRANSLATE_MODEL` 時一定要一起拿掉並重量翻譯品質**,清單見 `docs/gemini-api-lessons.md` §5。
+   也會報錯(3.6 Flash 起自訂取樣已經沒作用)。`gemini.ts` 原本有三處
+   `temperature`——2026-10-11 已拿掉(handoff-v15),之後也不要再加回去。清單見 `docs/gemini-api-lessons.md` §5。
 
 5. **會花錢的東西要有保險絲,而且計量單位要對齊計費單位。**
    使用者配額是「秒」,Gemini 是「token」——秒數擋不住 token 花費。
@@ -89,6 +90,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `app/worker/upstream.ts` | 聽寫上游轉接層:SM(導覽與 2026-10 之前逐欄相同)與 Gemini 3.5 Transcribe Live |
 | `handoff-v12.md` | 新一代 Gemini Live × exp1 + 模式選單:判讀規則先寫死、偏離紀錄(含估價錯 9 倍、G31 靜默中斷) |
 | `handoff-v13.md` | 逐句翻譯帶上一句當上下文:不變慢、規則上可採用但現場溢出 8.4% 未上線;附帶量到產品逐句 adequacy 4.06 |
+| `handoff-v15.md` | 產品翻譯換到 3.6 Flash 後重量:與 3.5 量不出差別、在地化仍 0 失誤;評審避開 3.6、量了評審雜訊 |
 | `handoff-v14.md` | 拆解逐句 4.06 vs 整段 4.72:2×2 顆粒度 × thinking,顆粒度占 85%、thinking 量不出;同做法重翻差 0.2 |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |
