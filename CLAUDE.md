@@ -20,7 +20,9 @@
    exp1 量到的 adequacy 4.71 / 台灣用語 0 失誤是在那份字串上量的——改了字串,
    報告裡的數字就不再適用。⚠️ 4.71 是**整段一次翻**的數字;產品是逐句翻,
    同一批音檔同一批評審量到 **4.06**(handoff-v13)。引用時別把 4.71 說成產品的翻譯品質。
-   差距約 85% 來自「逐句」本身,不是 thinking(handoff-v14);逐句開 thinking 慢 3 倍、貴 15 倍、換不到品質。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
+   差距約 85% 來自「逐句」本身,不是 thinking(handoff-v14);逐句開 thinking 慢 3 倍、貴 15 倍、換不到品質。
+   ⚠️ 以上全是 **3.5 Flash** 的數字。2026-10-11 起 `gemini-3.5-flash` 被 Google 自動轉到 **3.6 Flash**
+   (實測 `modelVersion` 已是 3.6),產品翻譯在 3.6 上**沒量過**(`docs/gemini-api-lessons.md` §5b)。多語言版只換來源語名稱,`ja` 走原字串一個字不動。
 
 4. **機械性任務一律 `thinkingLevel: "minimal"`。**
    thinking token 以輸出價計費,實測逐句翻譯 thoughts/output **29×**。

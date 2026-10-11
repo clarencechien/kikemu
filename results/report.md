@@ -2403,6 +2403,7 @@ gemini-3.5-flash 以 $1.50/M in、$9.00/M out 計):
     「Gemini 對照」用的 3.5 Transcribe Live 在同樣 12 條併發下沒有非 N3 中斷(30 檔)。
 32. **評審的「temperature 0」對 `gemini-3.6-flash` 沒有作用**(2026-10-07 Google 參數棄用通知:3.6 Flash 起
     自訂取樣固定為預設值)。exp1 adequacy、handoff-v13 的逐句與整段評審、handoff-v14 的整段評審,
-    三位評審裡至少這一位其實是預設取樣,**同一份譯文評兩次不保證同分**;另兩位是 `*-latest` 別名,是否受影響不確定。
+    三位評審裡至少這一位其實是預設取樣,**同一份譯文評兩次不保證同分**;另兩位是 `*-latest` 別名,
+    v13 / v14 記下的實際型號是 `gemini-3.1-pro-preview` 與 `gemini-3.5-flash-lite`(都早於 3.6,照通知推定 temperature 有效,未驗證)。
     同批評審同時評兩邊的比較(v13 / v14 的主要結論)不受偏差影響,但多了一個雜訊來源;
     小於 0.1~0.2 的 adequacy 差要打折。細節 `docs/gemini-api-lessons.md` §5

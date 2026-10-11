@@ -206,3 +206,34 @@ prompt / output / **thoughts** / USD 一張表——數據一直都在,只是以
 - [ ] 用 exp1 30 檔重量翻譯品質——拿掉 `temperature` 等於換了量測條件,exp1 / v13 / v14 的翻譯數字不再直接適用
 - [ ] 實驗腳本的評審呼叫也拿掉 `temperature`,文件不再寫「temperature 0」
 - [ ] (可選,不影響現行行為)`generate()` 的 400 fallback 一併拿掉取樣參數再試,讓意外換模型時不是全滅
+
+### 5b. 追加(2026-10-11):Gemini 3.5 Flash 已停用,呼叫自動轉到 3.6 Flash
+
+**出處**:Google 通知信「Gemini 3.5 Flash has been deprecated and auto-redirected」(使用者 2026-10-11 轉貼),
+加上同日本專案自己打 API 驗證(產品同款呼叫:凍結 prompt、`temperature 0.2`、`thinkingLevel: "minimal"`,一句話):
+
+| 呼叫的模型 | 回應的 `modelVersion` | thoughts | 延遲 |
+|---|---|---|---|
+| `gemini-3.5-flash`(= 產品 `TRANSLATE_MODEL`) | **`gemini-3.6-flash`** | 0 | 1.17 秒 |
+| `gemini-3.6-flash` | `gemini-3.6-flash` | 0 | 1.19 秒 |
+| `gemini-3.5-flash-lite` | `gemini-3.5-flash-lite`(**沒被轉**) | 0 | 0.85 秒 |
+| `gemini-3.5-flash`,**不送** thinkingConfig | `gemini-3.6-flash` | **501** | 3.98 秒 |
+
+`gemini-3.5-flash` 仍出現在模型清單裡,但實際回應的是 3.6。
+
+**對產品的意思**
+- **產品的翻譯現在已經跑在 3.6 Flash 上**,沒有任何程式改動。`minimal` 在 3.6 照樣有效(thoughts 0)——
+  鐵律 4 的保護還在;少了它就是 501 thoughts、慢 3 倍
+- `temperature: 0.2` 對 3.6 **已經沒有作用**(§5)。所以現在把它拿掉**不會改變產品行為**——
+  §5 清單裡「拿掉 temperature 等於換量測條件」那個顧慮,被這次轉址取代了:條件已經換了
+- **翻譯品質沒有在 3.6 上量過**。handoff-v13 / v14 的 1,005 次翻譯呼叫記下的 `modelVersion` 全是 `gemini-3.5-flash`
+  (2026-10-04),所以轉址發生在 10-04 之後;exp1 4.71、產品逐句 4.06 都是 3.5 的數字
+- 牌價(通知):3.6 Flash $1.50 / $7.50 每百萬 in / out,目前促銷 5 折 $0.75 / $3.75(pricing 頁 10-01 版寫促銷到 2026-12-31)。
+  比 3.5 的 $1.50 / $9.00 便宜,PRD 成本表是高估方向
+
+**對已發表數字的意思**
+- `*-latest` 評審別名當時實際對應(v13 / v14 記下的 `modelVersion`):`gemini-pro-latest` → **`gemini-3.1-pro-preview`**、
+  `gemini-flash-lite-latest` → **`gemini-3.5-flash-lite`**。兩者都比 3.6 早,通知沒說它們的取樣參數無效——
+  所以侷限 32「另兩位是否受影響不確定」可以收窄成:**確定無效的只有 3.6-flash 那一位**,另兩位照通知推定有效(未驗證)
+- **之後再做翻譯實驗要注意**:翻譯(3.5 → 3.6)和評審之一(`gemini-3.6-flash`)現在是**同一個模型**,
+  有「自己評自己」的偏誤風險,v13 / v14 沒有這個問題(當時翻譯是 3.5)
