@@ -1,0 +1,1 @@
+{"id": "ikeda03__N4#002", "file": "ikeda03__N4", "i": 2, "text": "生田駅から北にのびる栄町商店街。", "zh": "從生田站向北延伸的榮町商店街。", "latency_s": 1.095, "retries": 0, "usage": {"promptTokenCount": 177, "candidatesTokenCount": 13, "totalTokenCount": 190, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 177}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000363}

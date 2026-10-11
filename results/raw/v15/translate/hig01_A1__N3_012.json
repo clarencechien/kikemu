@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N3#012", "file": "hig01_A1__N3", "i": 12, "text": "あの地に入った時。", "zh": "當進入那個地方的時候。", "latency_s": 1.34, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 6, "totalTokenCount": 176, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00030000000000000003}

@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N2#013", "file": "hig01_A1__N2", "i": 13, "text": "分かった。", "zh": "了解。", "latency_s": 1.084, "retries": 0, "usage": {"promptTokenCount": 167, "candidatesTokenCount": 2, "totalTokenCount": 169, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 167}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00026549999999999995}

@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N4#008", "file": "hig01_A1__N4", "i": 8, "text": "実はこんな物語もある。", "zh": "其實還有這樣的一個故事。", "latency_s": 1.329, "retries": 0, "usage": {"promptTokenCount": 169, "candidatesTokenCount": 6, "totalTokenCount": 175, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 169}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0002985}

@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N3#002", "file": "hig01_A1__N3", "i": 2, "text": "まずは何を投げてみよう。", "zh": "先來扔扔看什麼好呢。", "latency_s": 1.297, "retries": 0, "usage": {"promptTokenCount": 171, "candidatesTokenCount": 9, "totalTokenCount": 180, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 171}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000324}

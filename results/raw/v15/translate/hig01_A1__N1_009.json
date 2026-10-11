@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N1#009", "file": "hig01_A1__N1", "i": 9, "text": "この地に降り立ち。", "zh": "降臨於此地。", "latency_s": 1.243, "retries": 0, "usage": {"promptTokenCount": 169, "candidatesTokenCount": 6, "totalTokenCount": 175, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 169}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0002985}

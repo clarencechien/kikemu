@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N3#001", "file": "hig01_A1__N3", "i": 1, "text": "オバレンの扉。", "zh": "大蓮之門。", "latency_s": 1.225, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 5, "totalTokenCount": 175, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0002925}

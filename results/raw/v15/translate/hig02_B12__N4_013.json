@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N4#013", "file": "hig02_B12__N4", "i": 13, "text": "神事を司る神となったのだ。", "zh": "成為掌管神事之神。", "latency_s": 1.291, "retries": 0, "usage": {"promptTokenCount": 172, "candidatesTokenCount": 8, "totalTokenCount": 180, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 172}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000318}

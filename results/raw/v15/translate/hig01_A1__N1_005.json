@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N1#005", "file": "hig01_A1__N1", "i": 5, "text": "御祭神の力。", "zh": "祭神的力量。", "latency_s": 1.227, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 4, "totalTokenCount": 174, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000285}

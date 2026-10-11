@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N4#002", "file": "hig01_A1__N4", "i": 2, "text": "立派な剣と矢を見つけることができる。", "zh": "可以看到雄偉的劍與箭。", "latency_s": 1.397, "retries": 0, "usage": {"promptTokenCount": 174, "candidatesTokenCount": 8, "totalTokenCount": 182, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 174}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000321}

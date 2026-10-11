@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N3#000", "file": "hig01_A1__N3", "i": 0, "text": "石切劔箭神社絵馬殿。", "zh": "石切劔箭神社繪馬殿。", "latency_s": 1.127, "retries": 0, "usage": {"promptTokenCount": 175, "candidatesTokenCount": 11, "totalTokenCount": 186, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 175}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000345}

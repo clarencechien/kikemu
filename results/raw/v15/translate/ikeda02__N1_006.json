@@ -1,0 +1,1 @@
+{"id": "ikeda02__N1#006", "file": "ikeda02__N1", "i": 6, "text": "明治時代は鉄道建設ラッシュが起こり、", "zh": "明治時代引發了一股鐵路建設熱潮，", "latency_s": 1.225, "retries": 0, "usage": {"promptTokenCount": 175, "candidatesTokenCount": 12, "totalTokenCount": 187, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 175}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003525}

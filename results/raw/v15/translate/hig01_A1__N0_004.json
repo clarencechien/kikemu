@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N0#004", "file": "hig01_A1__N0", "i": 4, "text": "護身衣が偉大である様を表している。", "zh": "展現出護身衣的偉大之處。", "latency_s": 1.182, "retries": 0, "usage": {"promptTokenCount": 175, "candidatesTokenCount": 12, "totalTokenCount": 187, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 175}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003525}

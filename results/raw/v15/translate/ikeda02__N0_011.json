@@ -1,0 +1,1 @@
+{"id": "ikeda02__N0#011", "file": "ikeda02__N0", "i": 11, "text": "小林は沿線となる街を歩き、考えた。", "zh": "小林走在沿線的城鎮上，思考著。", "latency_s": 1.143, "retries": 0, "usage": {"promptTokenCount": 178, "candidatesTokenCount": 14, "totalTokenCount": 192, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 178}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000372}

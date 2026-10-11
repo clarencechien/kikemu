@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N2#009", "file": "hig01_A1__N2", "i": 9, "text": "神の天皇が縁を形成するために東へと進む。", "zh": "神武天皇為締結緣分而東征。", "latency_s": 1.303, "retries": 0, "usage": {"promptTokenCount": 177, "candidatesTokenCount": 12, "totalTokenCount": 189, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 177}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003555}

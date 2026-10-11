@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N4#000", "file": "hig02_B12__N4", "i": 0, "text": "枚岡神社拝殿参道広場。", "zh": "枚岡神社拜殿參道廣場。", "latency_s": 1.223, "retries": 0, "usage": {"promptTokenCount": 174, "candidatesTokenCount": 9, "totalTokenCount": 183, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 174}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003285}

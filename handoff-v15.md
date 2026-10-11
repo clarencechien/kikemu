@@ -69,7 +69,12 @@
 
 ## 7. 偏離紀錄
 
-(執行時填)
+1. **第三位評審換人**:`gemini-2.5-pro` 雖然在模型清單裡,實際呼叫回 404「This model ... is no longer available
+   to new users」(2026-10-11,翻譯跑完、評審對價時才發現;那一筆沒有產生評分)。換成 **`gemini-3-flash-preview`**
+   ——比 3.6 早(照通知推定 temperature 有效)、與翻譯模型不同型號;牌價 $0.50 / $3.00(pricing 頁 2026-10-01 版)。
+   另一個可用的 `gemini-3.1-flash-lite` 較弱,沒選。換人發生在任何評分結果出來之前,不是看了結果才換
+2. **翻譯對價**:兩筆 thoughts 0、$0.00036 / $0.00044(估 $0.0004);408 句全程 $0.16,`modelVersion` 全是 `gemini-3.6-flash`
+3. **評審對價**:`gemini-3.1-pro-preview` 一筆 $0.0177、`gemini-3.5-flash-lite` 一筆 $0.0002,估價規則($0.02 / 次)偏保守,照跑
 
 ## 8. 結果
 
