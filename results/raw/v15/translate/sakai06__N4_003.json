@@ -1,0 +1,1 @@
+{"id": "sakai06__N4#003", "file": "sakai06__N4", "i": 3, "text": "周りを見渡して欲しい。", "zh": "請環顧一下四周。", "latency_s": 1.238, "retries": 0, "usage": {"promptTokenCount": 171, "candidatesTokenCount": 6, "totalTokenCount": 177, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 171}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003015}

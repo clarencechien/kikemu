@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Adequacy judging panel — blind, temperature 0.
+"""Adequacy judging panel — blind, temperature 0 *requested*.
+
+NOTE (2026-10-07): Google's parameter-deprecation notice says custom sampling params
+(temperature / top_p / top_k) have had no effect since Gemini 3.6 Flash — so for the
+gemini-3.6-flash judge the "temperature 0" below is ignored and scores are sampled at the
+model default (not deterministic). Whether the *-latest aliases are affected is unknown.
+See docs/gemini-api-lessons.md §5 and results/report.md limitation 32.
 
 Intended design was manemu's 5-vendor panel via OpenRouter; the OpenRouter
 and OpenAI keys in this environment are invalid (401), so the panel is

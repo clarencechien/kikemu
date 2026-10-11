@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "S-3.5", "judge": "gemini-3-flash-preview", "rep": 2, "adequacy": 1, "tw_locale": 2, "reason": "譯文因語音辨識錯誤產生嚴重幻覺與誤譯（如將石切神社譯為物理神社、神武天皇譯為東大阪市），導致資訊完全錯誤且語意不通。", "modelVersion": "gemini-3-flash-preview", "usd": 0.00292}

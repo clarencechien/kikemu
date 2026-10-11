@@ -1,0 +1,1 @@
+{"id": "ikeda02__N3#009", "file": "ikeda02__N3", "i": 9, "text": "電車に猿でもするのかと。", "zh": "是要搭電車還是怎樣。", "latency_s": 1.023, "retries": 0, "usage": {"promptTokenCount": 172, "candidatesTokenCount": 6, "totalTokenCount": 178, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 172}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000303}

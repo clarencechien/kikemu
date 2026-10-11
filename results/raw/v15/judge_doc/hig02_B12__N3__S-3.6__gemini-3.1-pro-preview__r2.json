@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 1, "tw_locale": 2, "reason": "譯文受語音辨識錯誤影響產生大量荒謬錯譯（如「接受了體檢」），且夾雜日文與破碎句型，完全無法正確傳達原文資訊。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.024518}

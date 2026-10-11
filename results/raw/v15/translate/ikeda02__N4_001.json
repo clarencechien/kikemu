@@ -1,0 +1,1 @@
+{"id": "ikeda02__N4#001", "file": "ikeda02__N4", "i": 1, "text": "1時は明治現在の生田駅の西側、", "zh": "當時位於明治時代現在生田站的西側，", "latency_s": 1.309, "retries": 0, "usage": {"promptTokenCount": 175, "candidatesTokenCount": 12, "totalTokenCount": 187, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 175}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003525}

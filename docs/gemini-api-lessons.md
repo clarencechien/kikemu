@@ -153,3 +153,91 @@ prompt / output / **thoughts** / USD 一張表——數據一直都在,只是以
   Live 的花費要從帳單側驗證,`aggregate.py` 表裡 A 組的 USD 是**下限**。
 - **未知 `generationConfig` 欄位 → 400 → 拿掉該欄位重試** 是通用防禦,
   `generate()` 的 thinking fallback 就是這個形狀。
+
+---
+
+## 5. 參數棄用通知:`thinking_budget` 與 `temperature` / `top_p` / `top_k`(2026-10-07 收到)
+
+**出處**:Google 寄給本專案的通知信「Parameter Deprecation」(使用者 2026-10-07 轉貼;
+內容是 Google 的說法,本專案**沒有實測驗證**)。觸發原因是本專案近期的請求帶了 `temperature`
+(產品的翻譯呼叫、handoff-v13 / v14 的實驗腳本與評審)。
+
+### 通知說了什麼
+
+| 參數 | 現在(3.x) | 之後推出的新模型 |
+|---|---|---|
+| `thinking_budget` | 被轉換成 `thinking_level` 照收 | **400 `INVALID_ARGUMENT`**,不再轉換 |
+| `temperature` / `top_p` / `top_k` | **從 Gemini 3.6 Flash 起就已固定為預設值,自訂值沒有作用** | **送了就報錯** |
+
+建議做法:改用 `thinking_level`(`minimal` / `low` / `medium` / `high`,各型號支援的等級不同)或不送;
+三個取樣參數全部拿掉。通知範例用的是 `gemini-3.8-flash`,但**範圍是「之後推出的新模型」,不是只有 3.8**。
+另提到 Interactions API 已 GA、`generateContent` 改稱 legacy(仍完整支援)——本專案沒有遷移計畫。
+
+### kikemu 的現況(2026-10-07 盤點)
+
+| | 產品 `app/worker/gemini.ts` | 實驗腳本 |
+|---|---|---|
+| `thinking_budget` | **沒送**(鐵律 4 早就規定用 `thinkingLevel`,`thinkingBudget` 只出現在註解的 A/B 表) | 沒有 |
+| `temperature` | **3 處**:逐句翻譯 `0.2`、關鍵字產包 pass A 搜尋 `0.0`、pass B 抽詞 `0.0` | exp1 `translate_c.py` / `judge.py`、v13 / v14 等約 30 個檔 |
+| `top_p` / `top_k` | 沒送 | 沒有 |
+| 翻譯模型 | `TRANSLATE_MODEL = gemini-3.5-flash`(`wrangler.jsonc`) | |
+
+**現在不會壞**:3.5-flash 不在「之後的新模型」裡。**換模型那天會壞**:`generate()` 遇到 400 只會
+拿掉 `thinkingConfig` 重試一次(§4 的通用防禦),`temperature` 照送 → 連兩個 400 → 每句都是「譯文暫缺」。
+
+### 對已發表數字的影響
+
+1. **評審的「temperature 0」對 `gemini-3.6-flash` 沒有作用。** exp1 `scripts/judge.py`、handoff-v13 的逐句
+   兩兩評審與整段評審、handoff-v14 的整段評審,都寫了 `temperature: 0`,文件也描述成「temperature 0」。
+   照通知,3.6 Flash 起自訂取樣無效 → 那一位評審**其實是預設取樣,有隨機性**。另兩位評審
+   `gemini-pro-latest` / `gemini-flash-lite-latest` 是別名,對應哪個型號沒公告,是否受影響**不確定**。
+   - **結論不翻**:v13 / v14 都是同一批評審、同一天評兩邊,評審的隨機性兩邊都有;主要結論的差距
+     (v14 顆粒度 +0.674,CI 下界 +0.368;v13 逐句淨勝 CI [+0.076, +0.155])都在多評審、多檔平均之後仍然成立
+   - **但「同樣的輸入評兩次會得到同樣的分數」這個前提不成立**——小於 0.1~0.2 的整段 adequacy 差,本來就要打折
+     (v14 R0 已記),現在多一個來源:評審本身
+   - exp1 的 adequacy(4.71 等)也是這三位評審評的,同一個保留適用(報告侷限 32)
+2. **翻譯模型 3.5-flash 的 `temperature: 0.2`**:3.5 比 3.6 早,通知沒說它受影響——v14「同一份逐字稿重翻,
+   整段分數差 0.2」的翻譯隨機性說法**照舊**,但這點也是推定,沒有驗證 3.5 是否真的吃這個值
+
+### 換模型時的檢查清單(還沒做)
+
+- [ ] 拿掉 `gemini.ts` 三處 `temperature`(翻譯 / 搜尋 / 抽詞)
+- [ ] 確認新模型支援 `thinkingLevel: "minimal"`(3.8-live-extended-thinking 就拒收 minimal,見 handoff-v12)
+- [ ] 用 exp1 30 檔重量翻譯品質——拿掉 `temperature` 等於換了量測條件,exp1 / v13 / v14 的翻譯數字不再直接適用
+- [ ] 實驗腳本的評審呼叫也拿掉 `temperature`,文件不再寫「temperature 0」
+- [ ] (可選,不影響現行行為)`generate()` 的 400 fallback 一併拿掉取樣參數再試,讓意外換模型時不是全滅
+
+### 5b. 追加(2026-10-11):Gemini 3.5 Flash 已停用,呼叫自動轉到 3.6 Flash
+
+**出處**:Google 通知信「Gemini 3.5 Flash has been deprecated and auto-redirected」(使用者 2026-10-11 轉貼),
+加上同日本專案自己打 API 驗證(產品同款呼叫:凍結 prompt、`temperature 0.2`、`thinkingLevel: "minimal"`,一句話):
+
+| 呼叫的模型 | 回應的 `modelVersion` | thoughts | 延遲 |
+|---|---|---|---|
+| `gemini-3.5-flash`(= 產品 `TRANSLATE_MODEL`) | **`gemini-3.6-flash`** | 0 | 1.17 秒 |
+| `gemini-3.6-flash` | `gemini-3.6-flash` | 0 | 1.19 秒 |
+| `gemini-3.5-flash-lite` | `gemini-3.5-flash-lite`(**沒被轉**) | 0 | 0.85 秒 |
+| `gemini-3.5-flash`,**不送** thinkingConfig | `gemini-3.6-flash` | **501** | 3.98 秒 |
+
+`gemini-3.5-flash` 仍出現在模型清單裡,但實際回應的是 3.6。
+
+**對產品的意思**
+- **產品的翻譯現在已經跑在 3.6 Flash 上**,沒有任何程式改動。`minimal` 在 3.6 照樣有效(thoughts 0)——
+  鐵律 4 的保護還在;少了它就是 501 thoughts、慢 3 倍
+- `temperature: 0.2` 對 3.6 **已經沒有作用**(§5)。所以現在把它拿掉**不會改變產品行為**——
+  §5 清單裡「拿掉 temperature 等於換量測條件」那個顧慮,被這次轉址取代了:條件已經換了
+- **翻譯品質沒有在 3.6 上量過**。handoff-v13 / v14 的 1,005 次翻譯呼叫記下的 `modelVersion` 全是 `gemini-3.5-flash`
+  (2026-10-04),所以轉址發生在 10-04 之後;exp1 4.71、產品逐句 4.06 都是 3.5 的數字
+- 牌價(通知):3.6 Flash $1.50 / $7.50 每百萬 in / out,目前促銷 5 折 $0.75 / $3.75(pricing 頁 10-01 版寫促銷到 2026-12-31)。
+  比 3.5 的 $1.50 / $9.00 便宜,PRD 成本表是高估方向
+
+**對已發表數字的意思**
+- `*-latest` 評審別名當時實際對應(v13 / v14 記下的 `modelVersion`):`gemini-pro-latest` → **`gemini-3.1-pro-preview`**、
+  `gemini-flash-lite-latest` → **`gemini-3.5-flash-lite`**。兩者都比 3.6 早,通知沒說它們的取樣參數無效——
+  所以侷限 32「另兩位是否受影響不確定」可以收窄成:**確定無效的只有 3.6-flash 那一位**,另兩位照通知推定有效(未驗證)
+- **之後再做翻譯實驗要注意**:翻譯(3.5 → 3.6)和評審之一(`gemini-3.6-flash`)現在是**同一個模型**,
+  有「自己評自己」的偏誤風險,v13 / v14 沒有這個問題(當時翻譯是 3.5)
+
+**後續(handoff-v15,2026-10-11)**:產品已改成直接呼叫 `gemini-3.6-flash`、拿掉三處 `temperature`;
+在 3.6 上重量:整段 adequacy 與 3.5 **量不出差別**(Δ −0.042,CI [−0.153, +0.056]),在地化 0 PRC 用語、0 簡體,
+延遲 p50 1.28 秒(3.5 是 1.05,不同日)。評審避開 3.6;`gemini-2.5-pro` 已對新使用者 404,換 `gemini-3-flash-preview`。

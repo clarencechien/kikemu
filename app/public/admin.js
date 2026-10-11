@@ -5,9 +5,10 @@
 const $ = (id) => document.getElementById(id);
 const USD_TWD = 32;
 const SM_USD_PER_MIN = 0.24 / 60;               // Speechmatics 牌價 $0.24/hr
-// gemini-3.5-flash $1.50/M in、$9.00/M out(2026-08-14 官方 pricing 頁;thinking 計輸出價)。
-// 這裡用輸出價當上限估(relay 回報的是 prompt+output+thoughts 總和),寧可高估不要低估。
-const GEMINI_USD_PER_MTOK = 9.00;
+// gemini-3.6-flash 原價 $1.50/M in、$7.50/M out(Google 2026-10-11 通知;thinking 計輸出價)。
+// 目前促銷 5 折($0.75 / $3.75),這裡不算促銷。用輸出價當上限估(relay 回報的是 prompt+output+thoughts 總和),
+// 寧可高估不要低估。(2026-10-11 之前是 3.5-flash 的 $9.00)
+const GEMINI_USD_PER_MTOK = 7.50;
 let DATA = null;
 
 function toast(msg) {

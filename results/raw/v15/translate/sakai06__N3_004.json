@@ -1,0 +1,1 @@
+{"id": "sakai06__N3#004", "file": "sakai06__N3", "i": 4, "text": "少し歴史を振り返ろう。", "zh": "讓我們稍微回顧一下歷史。", "latency_s": 1.327, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 7, "totalTokenCount": 177, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00030750000000000005}

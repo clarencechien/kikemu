@@ -1,0 +1,1 @@
+{"id": "sakai06__N1#004", "file": "sakai06__N1", "i": 4, "text": "この辺り一帯には。", "zh": "這附近一帶。", "latency_s": 1.532, "retries": 0, "usage": {"promptTokenCount": 171, "candidatesTokenCount": 5, "totalTokenCount": 176, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 171}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000294}

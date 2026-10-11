@@ -1,0 +1,1 @@
+{"file": "sakai06__N3", "arm": "S-3.6", "judge": "gemini-3-flash-preview", "rep": 1, "adequacy": 4, "tw_locale": 5, "reason": "地名「宿院」被誤譯為「聚光院」，其餘部分翻譯準確且符合台灣用語習慣。", "modelVersion": "gemini-3-flash-preview", "usd": 0.0023775000000000003}

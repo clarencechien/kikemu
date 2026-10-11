@@ -1,0 +1,1 @@
+{"id": "sakai06__N1#005", "file": "sakai06__N1", "i": 5, "text": "幻の堺幕府があったと言われている。", "zh": "據說此處曾存在過夢幻的堺幕府。", "latency_s": 1.327, "retries": 0, "usage": {"promptTokenCount": 173, "candidatesTokenCount": 14, "totalTokenCount": 187, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 173}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003645}

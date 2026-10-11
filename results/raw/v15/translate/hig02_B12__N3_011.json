@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N3#011", "file": "hig02_B12__N3", "i": 11, "text": "これを3回繰り返します。", "zh": "將這個重複三次。", "latency_s": 1.224, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 5, "totalTokenCount": 175, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0002925}

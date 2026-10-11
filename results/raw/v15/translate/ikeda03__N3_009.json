@@ -1,0 +1,1 @@
+{"id": "ikeda03__N3#009", "file": "ikeda03__N3", "i": 9, "text": "そうしたことから、町の名前は栄町。", "zh": "因此，這座城鎮的名字叫做榮町。", "latency_s": 1.423, "retries": 0, "usage": {"promptTokenCount": 174, "candidatesTokenCount": 11, "totalTokenCount": 185, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 174}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003435}

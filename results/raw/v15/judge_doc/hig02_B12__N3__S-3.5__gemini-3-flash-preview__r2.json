@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "S-3.5", "judge": "gemini-3-flash-preview", "rep": 2, "adequacy": 1, "tw_locale": 3, "reason": "譯文受語音辨識錯誤影響嚴重，出現「神事」變「體檢」、「20分鐘」變「30分鐘」等大量悖離事實的誤譯，導致原意完全喪失。", "modelVersion": "gemini-3-flash-preview", "usd": 0.007247}

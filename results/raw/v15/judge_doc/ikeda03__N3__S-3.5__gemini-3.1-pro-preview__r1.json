@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 4, "reason": "譯文受語音辨識錯誤影響，產生大量無中生有的荒謬內容與嚴重錯漏（如「1與6的逸翁故事」、「女兒的態度」等），完全無法傳達原文資訊，但繁體中文用字尚符台灣習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.02112}

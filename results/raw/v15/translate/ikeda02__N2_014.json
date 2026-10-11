@@ -1,0 +1,1 @@
+{"id": "ikeda02__N2#014", "file": "ikeda02__N2", "i": 14, "text": "箕面や宝塚には遊覧施設をつくる。", "zh": "在箕面和寶塚建造遊覽設施。", "latency_s": 1.42, "retries": 0, "usage": {"promptTokenCount": 176, "candidatesTokenCount": 11, "totalTokenCount": 187, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 176}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003465}

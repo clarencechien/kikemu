@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N0", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 3, "tw_locale": 5, "reason": "譯文符合台灣繁體中文習慣，但受語音辨識影響出現「護身衣」（御神威）、「現行」（現身）及多出「步靫」等明顯誤譯與漏字。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.019361999999999997}

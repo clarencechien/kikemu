@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N0", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 3, "tw_locale": 5, "reason": "譯文符合台灣繁體中文習慣，但存在數處明顯誤譯與語音辨識錯誤（如將「御神威」譯為「護身衣」、無中生有「步靫」、「現行的」等），且漏譯了「箭」字。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.016614}

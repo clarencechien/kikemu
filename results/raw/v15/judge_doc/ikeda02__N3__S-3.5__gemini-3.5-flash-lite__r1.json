@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "S-3.5", "judge": "gemini-3.5-flash-lite", "rep": 1, "adequacy": 1, "tw_locale": 2, "reason": "語音辨識錯誤導致譯文出現大量幻覺與嚴重錯漏，且部分用語不符台灣習慣。", "modelVersion": "gemini-3.5-flash-lite", "usd": 0.0004131}

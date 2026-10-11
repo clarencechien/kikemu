@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N4#004", "file": "hig01_A1__N4", "i": 4, "text": "御真意が偉大である様を表している。", "zh": "象徵著神意極為偉大。", "latency_s": 1.088, "retries": 0, "usage": {"promptTokenCount": 175, "candidatesTokenCount": 10, "totalTokenCount": 185, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 175}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003375}

@@ -1,0 +1,1 @@
+{"id": "ikeda02__N3#010", "file": "ikeda02__N3", "i": 10, "text": "あたかも人の心が。", "zh": "彷彿人的心靈一般。", "latency_s": 0.904, "retries": 0, "usage": {"promptTokenCount": 169, "candidatesTokenCount": 7, "totalTokenCount": 176, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 169}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00030599999999999996}

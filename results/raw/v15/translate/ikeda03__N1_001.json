@@ -1,0 +1,1 @@
+{"id": "ikeda03__N1#001", "file": "ikeda03__N1", "i": 1, "text": "1。", "zh": "1。", "latency_s": 1.246, "retries": 0, "usage": {"promptTokenCount": 166, "candidatesTokenCount": 2, "totalTokenCount": 168, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 166}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00026399999999999997}

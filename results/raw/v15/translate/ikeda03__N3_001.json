@@ -1,0 +1,1 @@
+{"id": "ikeda03__N3#001", "file": "ikeda03__N3", "i": 1, "text": "時代基幹産業という答えが商品。", "zh": "時代核心產業的答案就是商品。", "latency_s": 1.27, "retries": 0, "usage": {"promptTokenCount": 173, "candidatesTokenCount": 8, "totalTokenCount": 181, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 173}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003195}

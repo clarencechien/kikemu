@@ -1,0 +1,1 @@
+{"file": "ikeda03__N3", "arm": "S-3.5", "judge": "gemini-3-flash-preview", "rep": 2, "adequacy": 1, "tw_locale": 2, "reason": "譯文包含大量嚴重的語音辨識錯誤與幻覺（如「女兒的態度」、「90日圓」、「拒絕中央介入」），導致與原文資訊完全脫節。", "modelVersion": "gemini-3-flash-preview", "usd": 0.004881}

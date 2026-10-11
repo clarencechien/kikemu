@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N3", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 5, "reason": "譯文受語音辨識錯誤影響，產生大量與原文完全無關的錯譯與幻覺，但繁體中文的用字與語法大致符合台灣習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.017704}

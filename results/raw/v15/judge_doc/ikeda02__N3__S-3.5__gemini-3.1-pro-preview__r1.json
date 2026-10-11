@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 5, "reason": "譯文因語音辨識錯誤導致大量荒謬錯漏（如將「箕面」翻成「無能」、「住まう」翻成「智慧型手機」），但整體用詞與字體仍符合台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.023051999999999996}

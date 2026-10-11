@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N0", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 3, "tw_locale": 4, "reason": "譯文整體無明顯大陸用語，但存在嚴重的斷句錯誤（如將隱藏在岩戶中獨立成句）與不自然的詞彙（如「笑刷掉」），影響語意連貫與正確性。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.029165999999999997}

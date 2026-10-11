@@ -1,0 +1,1 @@
+{"id": "sakai06__N0#000", "file": "sakai06__N0", "i": 0, "text": "幻の堺幕府。", "zh": "夢幻的堺幕府。", "latency_s": 1.287, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 7, "totalTokenCount": 177, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00030750000000000005}

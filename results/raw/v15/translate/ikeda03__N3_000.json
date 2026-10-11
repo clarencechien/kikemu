@@ -1,0 +1,1 @@
+{"id": "ikeda03__N3#000", "file": "ikeda03__N3", "i": 0, "text": "栄町商店は、旧田中町商店百貨店の1。", "zh": "榮町商店是舊田中町商店百貨店之一。", "latency_s": 1.375, "retries": 0, "usage": {"promptTokenCount": 177, "candidatesTokenCount": 12, "totalTokenCount": 189, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 177}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003555}

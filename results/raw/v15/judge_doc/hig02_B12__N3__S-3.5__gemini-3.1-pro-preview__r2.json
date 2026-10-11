@@ -1,0 +1,1 @@
+{"file": "hig02_B12__N3", "arm": "S-3.5", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 1, "tw_locale": 4, "reason": "譯文受語音辨識錯誤影響產生大量荒謬錯譯（如將神事譯為體檢、母音），嚴重扭曲原文資訊，但繁體中文用字尚符台灣習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.024812}

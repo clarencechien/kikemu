@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N3#001", "file": "hig02_B12__N3", "i": 1, "text": "参道とは。", "zh": "參道是指。", "latency_s": 1.052, "retries": 0, "usage": {"promptTokenCount": 168, "candidatesTokenCount": 4, "totalTokenCount": 172, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 168}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000282}

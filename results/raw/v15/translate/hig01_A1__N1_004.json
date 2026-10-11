@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N1#004", "file": "hig01_A1__N1", "i": 4, "text": "強固な岩をも切り裂き貫くほどに。", "zh": "堅固的岩石也能切開貫穿。", "latency_s": 1.178, "retries": 0, "usage": {"promptTokenCount": 177, "candidatesTokenCount": 11, "totalTokenCount": 188, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 177}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000348}

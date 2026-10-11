@@ -1,0 +1,1 @@
+{"file": "ikeda02__N3", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 1, "adequacy": 1, "tw_locale": 4, "reason": "譯文受語音辨識錯誤影響極深，產生如「智慧型手機」、「無能與阿爾」等大量荒謬錯漏，完全無法傳達原文資訊，但字詞本身尚符台灣繁體中文習慣。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.023638}

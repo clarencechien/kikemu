@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N2#010", "file": "hig02_B12__N2", "i": 10, "text": "これは岩戸の中に隠れてしまった。", "zh": "這躲進了岩戶之中。", "latency_s": 1.151, "retries": 0, "usage": {"promptTokenCount": 172, "candidatesTokenCount": 8, "totalTokenCount": 180, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 172}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.000318}

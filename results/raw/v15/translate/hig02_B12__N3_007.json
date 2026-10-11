@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N3#007", "file": "hig02_B12__N3", "i": 7, "text": "深い関わりを持つ神様です。", "zh": "這是一位關係深神的明。", "latency_s": 1.053, "retries": 0, "usage": {"promptTokenCount": 172, "candidatesTokenCount": 7, "totalTokenCount": 179, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 172}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.0003105}

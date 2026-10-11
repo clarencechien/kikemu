@@ -1,0 +1,1 @@
+{"file": "hig01_A1__N0", "arm": "S-3.6", "judge": "gemini-3.1-pro-preview", "rep": 2, "adequacy": 3, "tw_locale": 5, "reason": "譯文整體通順且符合台灣繁體中文習慣，但因語音辨識錯誤導致部分關鍵字嚴重誤譯（如「御神威」譯為「護身衣」、「饒速日尊」譯為「饒速日命之巫女」），影響資訊正確性。", "modelVersion": "gemini-3.1-pro-preview", "usd": 0.025033999999999997}

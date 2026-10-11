@@ -1,0 +1,1 @@
+{"id": "hig02_B12__N3#008", "file": "hig02_B12__N3", "i": 8, "text": "そんな神様に違いない。", "zh": "那一定就是這樣的一位神明吧。", "latency_s": 1.281, "retries": 0, "usage": {"promptTokenCount": 170, "candidatesTokenCount": 10, "totalTokenCount": 180, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 170}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00033}

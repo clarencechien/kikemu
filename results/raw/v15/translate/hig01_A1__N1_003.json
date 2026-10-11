@@ -1,0 +1,1 @@
+{"id": "hig01_A1__N1#003", "file": "hig01_A1__N1", "i": 3, "text": "神社名の意識に。", "zh": "神社名稱的意識。", "latency_s": 1.369, "retries": 0, "usage": {"promptTokenCount": 169, "candidatesTokenCount": 5, "totalTokenCount": 174, "promptTokensDetails": [{"modality": "TEXT", "tokenCount": 169}], "serviceTier": "standard"}, "modelVersion": "gemini-3.6-flash", "usd": 0.00029099999999999997}
