@@ -51,7 +51,9 @@ const translateUser = (lang: string, sentence: string) => {
   return tpl.replace('{transcript}', sentence);
 };
 
-const model = (env: Env) => env.TRANSLATE_MODEL || 'gemini-3.5-flash';
+/* 2026-10-11 起 gemini-3.5-flash 被 Google 自動轉到 3.6(實測 modelVersion),這裡直接寫 3.6。
+   翻譯品質在 3.6 上的數字見 handoff-v15;exp1 / v13 / v14 的數字是 3.5 的。 */
+const model = (env: Env) => env.TRANSLATE_MODEL || 'gemini-3.6-flash';
 
 /* ── Thinking 稅 ──────────────────────────────────────────────
    thinking token 以**輸出價**計費(官方 pricing 頁明載),而 3.5-flash 預設 medium。
@@ -362,7 +364,7 @@ async function generate(env: Env, body: any, opts: { think?: boolean } = {}): Pr
 const firstText = (resp: any): string | null =>
   resp?.candidates?.[0]?.content?.parts?.map((p: any) => p.text ?? '').join('').trim() || null;
 
-/** 定稿句 → 台灣正體譯文(exp1 同款呼叫:temperature 0.2)+ 這次燒了多少 token */
+/** 定稿句 → 台灣正體譯文(凍結 prompt、thinking minimal、3.6-flash;handoff-v15)+ 這次燒了多少 token */
 export async function translateSentence(
   env: Env,
   sentence: string,
@@ -371,9 +373,8 @@ export async function translateSentence(
   const resp = await generate(env, {
     systemInstruction: { parts: [{ text: interpreterSystem(lang) }] },
     contents: [{ parts: [{ text: translateUser(lang, sentence) }] }],
-    // ⚠ 換 TRANSLATE_MODEL 時要拿掉:之後的新模型送 temperature 會報錯(Google 2026-10-07 通知)。
-    // 3.5-flash 照收;拿掉等於換了 exp1 / v13 / v14 的量測條件,要重量。docs/gemini-api-lessons.md §5
-    generationConfig: { temperature: 0.2 },
+    // 不送 temperature / top_p / top_k:3.6 起自訂取樣沒有作用,之後的新模型送了會報錯
+    // (Google 2026-10-07 通知;exp1 當時是 3.5 + temperature 0.2)。docs/gemini-api-lessons.md §5
   });
   const zh = firstText(resp);
   if (!zh) throw new Error('gemini 沒有回譯文');
@@ -452,7 +453,7 @@ export async function researchTerms(env: Env, keyword: string, lang = 'ja'): Pro
   const resp = await generate(env, {
     contents: [{ parts: [{ text: RESEARCH_PROMPT(keyword, lang) }] }],
     tools: [{ google_search: {} }],
-    generationConfig: { temperature: 0.0 }, // 換模型時拿掉(同上,docs/gemini-api-lessons.md §5)
+    // 不送取樣參數(同上,docs/gemini-api-lessons.md §5)
   }, { think: false });
   const text = firstText(resp) ?? '';
   if (!text) throw new Error('搜尋沒有回結果');
@@ -502,8 +503,8 @@ export async function extractVocab(env: Env, sourceText: string, lang = 'ja'): P
     // 實測(同 prompt,maxOutputTokens 故意設 300):預設思考 → thoughts 287 / output 9
     // / finishReason=MAX_TOKENS(JSON 壞掉);minimal → thoughts 0 / output 206 / STOP。
     // 現在 generate() 一律送 thinkingLevel:minimal,額度才真的都給輸出用。
-    // temperature 換模型時拿掉(docs/gemini-api-lessons.md §5)
-    generationConfig: { temperature: 0.0, responseMimeType: 'application/json', maxOutputTokens: 16384 },
+    // 不送取樣參數(docs/gemini-api-lessons.md §5)
+    generationConfig: { responseMimeType: 'application/json', maxOutputTokens: 16384 },
   });
   const raw = firstText(resp);
   if (!raw) throw new Error('gemini 沒有回詞條');
