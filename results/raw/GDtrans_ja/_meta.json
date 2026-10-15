@@ -1,0 +1,13 @@
+{
+ "arm": "GDtrans_ja",
+ "handoff": "handoff-v16.md",
+ "corpus": "exp1",
+ "path": "直連 Gemini API generateContent",
+ "sent": {
+  "model": "gemini-3.5-transcribe",
+  "languageCodes": [
+   "ja-JP"
+  ]
+ },
+ "note": "只列實際送出的欄位;沒列 = 沒送(zdr、temperature、diarize、prompt、response_format 皆未送)"
+}

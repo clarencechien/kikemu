@@ -4,6 +4,7 @@
 
 最後更新:2026-08-19(exp5 + exp1 追加 arm `Abat`;handoff-v8 A/F/B/C/D/E:
 Breeze 的日文與噪音曲線、全地端聽譯鏈、Gemma 4 型號差異、GPU 成本曲線)
+2026-10-15 補:§6d 新一代批次 STT(handoff-v16,經 OpenRouter 為主;Gate A 不通過,配對不換)
 
 ---
 
@@ -785,6 +786,44 @@ diarization 有成熟的獨立元件,吃音訊、吐「誰在第幾秒到第幾�
 **「第 5 分鐘才發現這是第 3 個人」時前面已經標錯了**。
 kikemu 主線是單一講者旁白,用不到這一格——
 **這一節的影響在跨專案選型,不在 kikemu 產品本身。**
+
+---
+
+## 6d. 2026-10 新一代批次 STT(handoff-v16,**經 OpenRouter** 為主)
+
+全部是**批次**、沒開詞表(exp5)、沒開 diarization。完整矩陣:[`openrouter-arms.md`](openrouter-arms.md);
+偵察(價格、字形、詞表傳不傳得過去):[`openrouter-recon.md`](openrouter-recon.md)。
+
+| 模型 | 路徑 | $/hr(實測) | exp5 晶晶體 `zh` 術語召回 | 對 Scribe(經 OR) |
+|---|---|---|---|---|
+| ElevenLabs Scribe v2 | 經 OR | 0.11 | **0.930** | — |
+| Meta Muse Voice Transcribe 1.0 | 經 OR | 0.18 | 0.924 | −0.006,量不出差別 |
+| Microsoft MAI-Transcribe-2 | 經 OR | 0.10 | 0.918(TER 全場最低 0.139) | −0.013,量不出差別 |
+| OpenAI GPT-Transcribe | 經 OR | 0.27 | 0.889 | −0.041,CI 含 0 |
+| Gemini 3.5 Transcribe | **直連**(經 OR 一律 400) | ≈0.32 | 0.864 | −0.067 |
+| Qwen3-ASR 1.7B(可本機) | 經 OR | 0.027 | 0.817 | −0.114 |
+| AssemblyAI Universal-3.6 Pro | 經 OR | 0.30 | 0.813 | −0.117 |
+| Grok STT(`x-ai/grok-stt-1.0`,**上游版本未定**) | 經 OR | 0.10 | 0.769 | −0.161 |
+| Whisper large-v3 turbo(可本機) | 經 OR | 0.012 | 0.722 | −0.209 |
+| Qwen3-ASR 0.6B(可本機) | 經 OR | 0.012 | 0.649 | −0.282 |
+| Nemotron 3.5 ASR 0.6B(可本機) | 經 OR | 0.012 | 0.104 | −0.826,晶晶體上崩潰 |
+
+**選型上的意思:**
+
+1. **「Gemini 批次 + Scribe」配對不換。** Grok(經 OR,版本未定)在兩個語料的吵雜條件都確定輸 Scribe
+   (exp5 M3 −0.25、exp1 N3 −0.18),配 Gemini 的分歧數約 2 倍、而且多出來的幾乎都是 Gemini 對它錯。
+   便宜一半換不到這個位置——**這是 grok-stt 經 OpenRouter 在中文晶晶體 + 日文導覽上的結論**,不是直連 2.0 的
+2. **經 OpenRouter 用 Scribe = 沒有詞表**(`keyterms` 被丟掉;偵察 §3)。exp1 上直連帶 50 條比經 OR 高 0.057。
+   專名密的場景要詞表就得直連。Grok 的詞表經 OR 傳得過去(上限 100 條)
+3. **可本機化的四個在晶晶體上都輸 Scribe**,最好的是 Qwen3-ASR 1.7B(−0.11,一般字錯打平、輸在英文術語)。
+   訓練資料:Qwen3-ASR 未公開、Nemotron 含專有資料 → 污染無法排除。**這不是「可以做輸入法」的結論**(沒量短句延遲與自發口語)
+4. **Gemini 3.5 Transcribe 要設輸出上限**:沒設語言的一格陷入重複迴圈(20,676 output token,一格 $0.26 ≈ 平常 10 倍),
+   另有 3 格回空輸出(`finishReason: STOP`)。帶詞表時日文 0.806,與 Scribe 直連帶詞表(0.800)同級
+6. **純中文分不開、晶晶體才分得開**(exp5 切出的 8 個純中文 20 秒視窗,去標點 CER):除了 Gemma 4 E2B / 12B,新舊模型全部落在 0.16~0.25(Breeze 0.198),
+   8 個視窗排不出可靠名次。Nemotron 純中文 0.251、晶晶體 0.104——**崩在中英切換,不是中文**。
+   Breeze(地端,**中文**)晶晶體 0.845,贏過所有可本機化的新模型。並列表:[`openrouter-arms.md`](openrouter-arms.md) §4b
+7. **語言設定在這批模型上幾乎沒有槓桿**(auto vs zh 多在 ±0.02 內)——exp2 的 +0.23~0.29 是 SM 雙語 pack 的行為,
+   不要套到這些模型上;反過來,只量了 3 段,也不代表它對這些模型完全無效
 
 ---
 

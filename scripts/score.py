@@ -81,6 +81,8 @@ ARMS_JA = {
     "A_dir_lav": "input_transcription",
     # handoff-v12:新一代 Gemini Live(2026-10-04)。G31 = 3.1 同日對照組;
     # G38/G38T/GX 是一體式(有譯文);GT/GTv 是 3.5-transcribe-live,只有耳朵。
+    # handoff-v16:經 OpenRouter 的批次 STT(Gate A 三個 arm)+ Gemini 3.5 Transcribe 直連(2026-10-15)
+    **{f"{a}_{s}": "transcript" for a in ("ORgrok", "ORscribe", "GDtrans") for s in ("auto", "ja", "ja_kt")},
     "G31": "input_transcription",
     "G31r": "input_transcription",
     "G38": "input_transcription",
@@ -207,7 +209,7 @@ def main():
                     "cer": round(cer(normalize(ref, strip_gloss=False), normalize(hyp_ja, strip_gloss=False)), 4),
                 }
                 # translation text(Abat / Xgma_* 只做聽寫,沒有翻譯層)
-                if arm.startswith(("Xgma", "Xbrz", "Sbat")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja", "GT", "GTv"):
+                if arm.startswith(("Xgma", "Xbrz", "Sbat", "ORgrok", "ORscribe", "GDtrans")) or arm in ("Abat", "Cbplus50", "Cplus50", "Srt_ja", "GT", "GTv"):
                     zh = None
                 elif arm in LIVE_E2E:
                     zh = d.get("translation", "")

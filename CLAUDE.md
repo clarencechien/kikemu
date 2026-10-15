@@ -91,6 +91,7 @@ node scripts/probe-ws.mjs --host https://kikemu.ai-apps.work \
 | `handoff-v12.md` | 新一代 Gemini Live × exp1 + 模式選單:判讀規則先寫死、偏離紀錄(含估價錯 9 倍、G31 靜默中斷) |
 | `handoff-v13.md` | 逐句翻譯帶上一句當上下文:不變慢、規則上可採用但現場溢出 8.4% 未上線;附帶量到產品逐句 adequacy 4.06 |
 | `handoff-v15.md` | 產品翻譯換到 3.6 Flash 後重量:與 3.5 量不出差別、在地化仍 0 失誤;評審避開 3.6、量了評審雜訊 |
+| `handoff-v16.md` | 新一代批次 STT 經 OpenRouter(Grok / Qwen3-ASR / Whisper turbo 等 12 個):Gate A 不通過(配對維持 Scribe);結果 `results/openrouter-arms.md` |
 | `handoff-v14.md` | 拆解逐句 4.06 vs 整段 4.72:2×2 顆粒度 × thinking,顆粒度占 85%、thinking 量不出;同做法重翻差 0.2 |
 | `app/src/` | 單頁 UI(vanilla TS + Vite) |
 | `app/scripts/` | `probe-ws.mjs`(端到端探針)、`make-icons.mjs` |

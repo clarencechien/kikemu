@@ -1,0 +1,54 @@
+[
+ {
+  "arm": "GDtrans_auto",
+  "file": "ikeda02__N3",
+  "exp": "exp1",
+  "status": 200,
+  "error": {
+   "message": "no content; finishReason=STOP",
+   "finishReason": "STOP",
+   "promptFeedback": null
+  },
+  "request": {
+   "contents": "[audio/wav inline]"
+  },
+  "at": "2026-10-15T06:01:35Z"
+ },
+ {
+  "arm": "GDtrans_ja",
+  "file": "ikeda02__N3",
+  "exp": "exp1",
+  "status": 200,
+  "error": {
+   "message": "no content; finishReason=STOP",
+   "finishReason": "STOP",
+   "promptFeedback": null
+  },
+  "request": {
+   "generationConfig": {
+    "audioTranscriptionConfig": {
+     "languageCodes": [
+      "ja-JP"
+     ]
+    }
+   },
+   "contents": "[audio/wav inline]"
+  },
+  "at": "2026-10-15T06:01:38Z"
+ },
+ {
+  "arm": "GDtrans_auto",
+  "file": "ikeda03__N0",
+  "exp": "exp1",
+  "status": 200,
+  "error": {
+   "message": "no content; finishReason=STOP",
+   "finishReason": "STOP",
+   "promptFeedback": null
+  },
+  "request": {
+   "contents": "[audio/wav inline]"
+  },
+  "at": "2026-10-15T06:01:44Z"
+ }
+]

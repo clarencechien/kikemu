@@ -1,0 +1,11 @@
+{
+ "arm": "ZORasm35_zh",
+ "handoff": "handoff-v16.md",
+ "corpus": "exp5_zhwin",
+ "path": "經 OpenRouter /api/v1/audio/transcriptions",
+ "sent": {
+  "model": "assemblyai/universal-3-5-pro",
+  "language": "zh"
+ },
+ "note": "只列實際送出的欄位;沒列 = 沒送(zdr、temperature、diarize、prompt、response_format 皆未送)"
+}

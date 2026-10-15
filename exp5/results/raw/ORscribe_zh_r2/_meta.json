@@ -1,0 +1,12 @@
+{
+ "arm": "ORscribe_zh_r2",
+ "handoff": "handoff-v16.md",
+ "corpus": "exp5",
+ "path": "經 OpenRouter /api/v1/audio/transcriptions",
+ "sent": {
+  "model": "elevenlabs/scribe-v2",
+  "language": "zh"
+ },
+ "note": "只列實際送出的欄位;沒列 = 沒送(zdr、temperature、diarize、prompt、response_format 皆未送)",
+ "note2": "ORscribe_zh 的重跑,用來量雜訊"
+}
