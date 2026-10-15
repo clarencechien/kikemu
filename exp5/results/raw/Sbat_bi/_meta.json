@@ -4,14 +4,11 @@
  "model_id": "scribe_v2",
  "api": "https://api.elevenlabs.io/v1/speech-to-text",
  "language_code": "zh",
- "keyterms": true,
- "keyterm_cap": 50,
- "keyterm_note": "exp1 逐地點詞表取前 50 條;無 sounds_like 讀音欄位",
- "diarize": false,
  "corpus": "exp5",
  "rate_usd_per_hour": {
-  "base": 0.22,
-  "keyterms": 0.05
+  "base": 0.22
  },
- "rate_checked": "2026-08-20"
+ "rate_checked": "2026-08-20",
+ "keyterms_sent": 0,
+ "_correction_2026-10-15": "原本寫 keyterms: true / keyterm_cap: 50 / keyterm_note「exp1 逐地點詞表取前 50 條」/ diarize: false。實際上 run_scribe_batch.py 對 exp5 的詞典是 None,6 個檔的 meta.n_keyterms 全是 0——沒有送任何詞表;diarize 欄位也從未送出(沒送 ≠ false)。依 CLAUDE.md「施測紀錄 ≠ 能力宣稱」更正,見 results/openrouter-recon.md §3。"
 }
