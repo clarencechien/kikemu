@@ -29,7 +29,8 @@
 4. **Gemini 3.5 Transcribe(直連)有兩種失敗形狀**:空輸出(exp1 3 格,`finishReason: STOP`)與
    **重複迴圈**(exp5 一格把「因为他」吐了 10,217 次、20,676 output token,那一格就花 $0.26 ≈ 正常的 10 倍)。
    沒設 `maxOutputTokens` 的話,**輸出 token 沒有上限**——要接它就要有輸出上限(鐵律 5)。
-5. 花費:OpenRouter **$1.86**(含重跑)+ 偵察 ≈ $0.2;Gemini 直連 **$1.19**。保險絲 $5 沒碰到。
+5. 花費:OpenRouter **$1.92**(含重跑與純中文補測)+ 偵察 ≈ $0.2;Gemini 直連 **$1.20**。保險絲 $5 沒碰到。
+6. **純中文上分不開、晶晶體才分得開**(§4b):去標點 CER 大家擠在 0.16~0.25;Breeze(地端)晶晶體 0.845,贏過所有可本機化的新模型。
 
 ---
 
@@ -145,6 +146,75 @@ U-3.6 0.813 > U-3.5 0.791 > Grok 0.769 > **Whisper turbo 0.722** > **Qwen3 0.6B 
   (Proprietary)」→ 專有部分未公開,無法排除污染**([模型卡](https://huggingface.co/nvidia/nemotron-3.5-asr-streaming-0.6b))。
   它在 exp5 上是最低分,污染若有也沒有幫到它
 - 商用模型的訓練資料都未公開(與既有 arm 相同)
+
+## 4b. 補測:純中文 20 秒視窗 + 與既有 arm(Breeze、SM、Gemma 4)並列
+
+使用者問「中文與晶晶體各模型的數字、Breeze 怎麼沒在清單裡」——Breeze 不在 OpenRouter 上,它是 exp5 在 Modal GPU 上跑的既有 arm
+(`Xbrz_auto` / `Zbrz`),本頁前面只比 OpenRouter 這輪的 arm。這裡把兩邊放在同一把尺上。
+
+**晶晶體(exp5 術語召回,每條件 158 實例,同一支 `score.py`)**——既有 arm 的數字與 `results/report.md` §3E.2 相同:
+
+| arm | 路徑 | M0 | M3 | 全部 |
+|---|---|---|---|---|
+| Scribe v2 經 OR(`ORscribe_zh`) | 經 OR | 0.949 | 0.911 | 0.930 |
+| Muse Voice 1.0(`_zh`) | 經 OR | 0.949 | 0.899 | 0.924 |
+| Scribe v2 直連(`Sbat_bi`,2026-08) | 直連 | 0.943 | 0.899 | 0.921 |
+| Gemini 3.7 批次(`Gbat37`) | 直連 | 0.962 | 0.880 | 0.921 |
+| MAI-Transcribe-2(`_zh`) | 經 OR | 0.924 | 0.911 | 0.918 |
+| Gemini 3.5 批次(`Gbat`) | 直連 | 0.987 | 0.816 | 0.902 |
+| GPT-Transcribe(`_zh`) | 經 OR | 0.899 | 0.880 | 0.889 |
+| Gemini 3.5 Transcribe(`_zh`) | 直連 | 0.930 | 0.797 | 0.864 |
+| **Breeze ASR 25**(`Xbrz_auto`,地端) | Modal GPU | 0.880 | 0.810 | **0.845** |
+| Qwen3-ASR 1.7B(`_zh`) | 經 OR | 0.867 | 0.766 | 0.817 |
+| AssemblyAI U-3.6 Pro(`_zh`) | 經 OR | 0.861 | 0.766 | 0.813 |
+| AssemblyAI U-3.5 Pro(`_zh`) | 經 OR | 0.835 | 0.747 | 0.791 |
+| Grok STT(`_zh`,版本未定) | 經 OR | 0.880 | 0.658 | 0.769 |
+| Gemini 3.1 Live(`G`,即時) | 直連 | 0.930 | 0.551 | 0.741 |
+| Whisper large-v3 turbo(`_zh`) | 經 OR | 0.804 | 0.639 | 0.722 |
+| Gemma 4 E4B 貪婪(`Xgma_e4b_greedy`,地端) | Modal GPU | 0.791 | 0.665 | 0.728 |
+| Speechmatics 批次(`Xbat_bi`,`cmn_en`) | 直連 | 0.753 | 0.646 | 0.699 |
+| Gemma 4 E4B(`Xgma_e4b`) | Modal GPU | 0.741 | 0.627 | 0.684 |
+| Qwen3-ASR 0.6B(`_zh`) | 經 OR | 0.715 | 0.582 | 0.649 |
+| Nemotron 3.5 ASR 0.6B(`_zh`) | 經 OR | 0.076 | 0.133 | 0.104 |
+| Gemma 4 12B(`Xgma_12b`) | Modal GPU | 0.044 | 0.013 | 0.028 |
+
+「全部」= M0 與 M3 等權平均(兩條件實例數相同,等於 pooled)。出處:`exp5/results/term_outcomes.json`(`analysis/openrouter_gates.py` 的 `recall`)。
+
+**純中文(exp5 切出來的 20 秒視窗 × 8,M0,token 級 CER,越低越好)**——新跑的 12 個全部 `language=zh`、不開詞表
+(2026-10-15 補測,OpenRouter $0.063 + Gemini 直連 $0.015;視窗音檔依 manifest 重切,sha256 8/8 相符):
+
+| arm | 路徑 | CER(原樣,報告主數字) | **CER(兩邊去標點)** | 長度比 |
+|---|---|---|---|---|
+| Gemini 3.5 批次(`Zg`) | 直連 | 0.263 | **0.160** | 1.21 |
+| GPT-Transcribe | 經 OR | 0.270 | 0.166 | 1.19 |
+| Whisper large-v3 turbo | 經 OR | 0.216 | 0.195 | 1.09 |
+| **Breeze ASR 25**(`Zbrz`) | Modal GPU | **0.198** | 0.198 | 1.06 |
+| Scribe v2 直連(`Zsc`) | 直連 | 0.333 | 0.205 | 1.27 |
+| Scribe v2 經 OR | 經 OR | 0.341 | 0.206 | 1.28 |
+| Speechmatics 批次(`Zsm`) | 直連 | 0.206 | 0.206 | 1.03 |
+| Gemini 3.5 Transcribe | 直連 | 0.290 | 0.207 | 1.19 |
+| Grok STT(版本未定) | 經 OR | 0.257 | 0.208 | 1.13 |
+| Gemma 4 E4B 貪婪 | Modal GPU | 0.295 | 0.213 | 1.17 |
+| Qwen3-ASR 1.7B | 經 OR | 0.342 | 0.222 | 1.26 |
+| MAI-Transcribe-2 | 經 OR | 0.381 | 0.225 | 1.31 |
+| Qwen3-ASR 0.6B | 經 OR | 0.344 | 0.226 | 1.25 |
+| Muse Voice 1.0 | 經 OR | 0.334 | 0.227 | 1.25 |
+| Gemma 4 E4B | Modal GPU | 0.312 | 0.229 | 1.18 |
+| AssemblyAI U-3.6 Pro / 3.5 Pro | 經 OR | 0.340 / 0.333 | 0.230 / 0.232 | 1.25 / 1.24 |
+| Nemotron 3.5 ASR 0.6B | 經 OR | 0.348 | 0.251 | 1.22 |
+| Gemma 4 E2B / 12B | Modal GPU | 0.894 / 2.231 | 0.855 / 2.086 | 0.35 / 2.21 |
+
+出處:`exp5/results/zh_windows_scores.json`(`exp5/scripts/score_zh.py`;既有 arm 的 `cer` 0 變動,`cer_nopunct` 是新加的欄位,
+重現報告 §3E 敏感度表:Gemini 0.1595、Scribe 0.205、E4B 貪婪 0.213)。
+
+**怎麼讀(只記現象):**
+- **純中文上大家擠在一起**:去標點後 Gemma 4 E2B / 12B 以外全部落在 0.16~0.25。只有 8 個 20 秒視窗,**排序不可靠**——
+  例如 Whisper turbo 對 Breeze 逐窗 4 勝 4 負
+- **晶晶體才拉得開**:同一批模型的術語召回從 0.93 到 0.10。**Nemotron 在純中文 0.251(可用的級距),在晶晶體 0.104**——
+  它的崩潰是在中英切換、不是中文本身;Whisper turbo 也一樣(純中文與 Breeze 同級,晶晶體輸 Scribe 0.21)
+- **Breeze 在晶晶體上贏過所有可本機化的新模型**(0.845 vs Qwen3 1.7B 0.817、Whisper turbo 0.722),
+  純中文上與它們同級。但 Breeze 是**中文**微調,日文 0.415(`results/stt-matrix.md` §6),這個比較只限中文
+- 標點:原樣 CER 罰會輸出標點的引擎(侷限 16r),Breeze / SM 不輸出標點所以兩欄相同;**比較請看去標點那欄**
 
 ## 5. Gemini 3.5 Transcribe 的兩種失敗形狀(直連)
 

@@ -258,8 +258,12 @@ OpenRouter 累計 `usage.cost` > **US$5** 即停(帳本 `results/raw/_v16_ledger
 10. **開源模型訓練資料的查詢晚了**:§8.9 寫「跑前查」,實際是 Phase 1 跑完才查。結論不變(Qwen3-ASR 未公開;Nemotron 含專有資料)
 11. **`Sbat_bi/_meta.json` 更正**:舊紀錄寫 `keyterms: true / keyterm_cap: 50`,實際送 0 條(偵察 §3),改成實況並註記
 12. **重跑 score 的副作用**:§8.5 預告既有 arm 可能因 OpenCC 版本變動——實際比對 exp5 157 列、exp1 812 列,**0 變動**
+13. **補測純中文 20 秒視窗**(Phase 1 之後,使用者問「中文各模型的數字」):12 個 arm × exp5 既有 8 個視窗,只跑 `_zh`、不開詞表,
+    OpenRouter $0.063 + Gemini 直連 $0.015,96 次全成功。計分用既有 `score_zh.py`(原樣 CER 為主數字),並把報告 §3E 已有的
+    「兩邊去標點」敏感度算法固定成 `cer_nopunct` 欄位——**算法在看到新 arm 分數之前就定了**(重現既有 0.1595 / 0.205 / 0.213),
+    既有 arm 的 `cer` 0 變動。不進 Gate 判讀,只描述。結果在 `results/openrouter-arms.md` §4b
 
-## 10. 結果(2026-10-15,OpenRouter $1.86 + 偵察 ≈ $0.2、Gemini 直連 $1.19;保險絲 $5 未觸發)
+## 10. 結果(2026-10-15,OpenRouter $1.92 + 偵察 ≈ $0.2、Gemini 直連 $1.20,含 §9-13 補測;保險絲 $5 未觸發)
 
 完整矩陣與判讀:[`results/openrouter-arms.md`](results/openrouter-arms.md);數字出處 `results/openrouter_gates.json`。
 

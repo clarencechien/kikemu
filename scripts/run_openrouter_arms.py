@@ -4,6 +4,7 @@
   python3 scripts/run_openrouter_arms.py --dry-run      # 只列工作與估價
   python3 scripts/run_openrouter_arms.py                # 全跑(已存在的檔跳過;失敗記缺格、不重試)
   python3 scripts/run_openrouter_arms.py --only ORgrok_ja --limit 1
+  python3 scripts/run_openrouter_arms.py --exp exp5_zhwin          # 純中文 20 秒視窗補測
 
 輸出:
   exp5 → exp5/results/raw/<arm>/<seg>__<cond>.json(欄位 transcript)
@@ -86,6 +87,14 @@ def jobs() -> list[dict]:
                                 "seg": seg, "cond": cond, "domain": picks[seg]["domain"],
                                 "wav": ROOT / f"corpus/conditions/{seg}__{cond}.wav",
                                 "out": ROOT / f"results/raw/{arm}_{setting}/{seg}__{cond}.json"})
+    # 補測(2026-10-15,§9 記一筆):exp5 純中文 20 秒視窗 × 8,只跑 _zh(Gate B 的主設定),不開詞表
+    man = json.loads((ROOT / "exp5/corpus/zh_windows/manifest.json").read_text())["windows"]
+    for arm in MODELS:
+        for stem in man:
+            seg, cond = stem.split("_", 1)
+            out.append({"exp": "exp5_zhwin", "arm": f"Z{arm}_zh", "base": arm, "lang": "zh", "kt": False,
+                        "seg": seg, "cond": cond, "wav": ROOT / f"exp5/corpus/zh_windows/{stem}.wav",
+                        "out": ROOT / f"exp5/results/raw_zh/Z{arm}_zh/{stem}.json"})
     return out
 
 
@@ -228,10 +237,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--only", default="")
+    ap.add_argument("--exp", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
-    J = [j for j in jobs() if (not a.only or j["arm"] == a.only)]
+    J = [j for j in jobs() if (not a.only or j["arm"] == a.only) and (not a.exp or j["exp"] == a.exp)]
     todo = [j for j in J if not j["out"].exists()]
     if a.limit:
         todo = todo[: a.limit]
