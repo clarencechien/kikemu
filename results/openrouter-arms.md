@@ -176,7 +176,7 @@ U-3.6 0.813 > U-3.5 0.791 > Grok 0.769 > **Whisper turbo 0.722** > **Qwen3 0.6B 
 1. **Grok 的上游版本**:OpenRouter permaslug 只到 `x-ai/grok-stt-20260723`。要正式結論需要 xAI key 直連 2.0 重跑 Gate A
 2. **Gemini 3.5 Transcribe 的空輸出與迴圈**:原因未查;經 OpenRouter 一律 400 的原因也未查
 3. **Scribe 經 OR 的詞表**:`keyterms` 被白名單丟掉;沒找到其他名稱(偵察 §3)。也沒驗證經 OR 開 `diarize` 的品質
-4. **exp5 參考稿是 `gemini-3.5-flash` 產的**(既有侷限):對 Gemini 系的 arm(`Gbat`、`GDtrans`)可能有利。Gate A 的比較是 Grok vs Scribe,
+4. **exp5 參考稿以兩路 Gemini(`gemini-3.5-flash` / `gemini-3.6-flash`)的一致處為底**、拉丁字母分歧人工裁決(`exp5/scripts/build_reference.py`,既有侷限):對 Gemini 系的 arm(`Gbat`、`GDtrans`)可能有利。Gate A 的比較是 Grok vs Scribe,
    兩邊都非 Gemini,這條不影響方向
 5. **exp5 只有 3 段**:所有 exp5 CI 都是 3 群 bootstrap,很粗
 6. **開源模型的訓練資料**:Qwen3-ASR 未公開、Nemotron 含專有資料 → 污染無法排除
