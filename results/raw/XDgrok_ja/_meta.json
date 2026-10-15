@@ -1,0 +1,12 @@
+{
+ "arm": "XDgrok_ja",
+ "handoff": "handoff-v16.md",
+ "corpus": "exp1",
+ "path": "直連 xAI POST /v1/stt(multipart)",
+ "sent": {
+  "model": "grok-voice-transcribe-2.0",
+  "language": "ja"
+ },
+ "note": "只列實際送出的欄位;沒列 = 沒送(diarize、format、timestamps 皆未送)",
+ "version_note": "明確送 model=grok-voice-transcribe-2.0(伺服器會驗證 model,不存在的 ID 回 404);回應沒有版本欄位,依使用者指示當作 2.0(handoff-v16 §11.2)"
+}

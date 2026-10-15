@@ -284,3 +284,73 @@ Whisper turbo −0.209 [−0.245, −0.130]、Qwen3-ASR 0.6B −0.282 [−0.370,
 
 **一致性**:exp5 經 OR 的 Scribe 比 8 月直連高 0.009(同 arm 重跑雜訊 0.006,同一級);exp1 差 −0.057 混了詞表,不判讀。
 **經 OR 的 Scribe 開不了詞表**,用它就等於沒有詞表。
+
+## 11. 補跑:Grok 直連 xAI(2026-10-15,使用者「先當他是 2.0 補跑」)
+
+**本節在任何直連呼叫之前寫死並 commit**;偏離記在 §11.6。
+
+### 11.1 為什麼
+
+§10 的 Gate A 是 Grok「經 OpenRouter、版本未定」的參考級結論(偵察 §1)。使用者補了 `xai_key`,可以直連 `POST https://api.x.ai/v1/stt`。
+
+### 11.2 版本:明確指定 2.0,但仍無法從回應證明
+
+- 直連回應只有 `text` / `language` / `duration`(另有 `words` 等),header 沒有模型或版本欄位——**直連也看不出實際版本**
+- 但 `model` 欄位**有被伺服器驗證**:不存在的 ID 回 404「does not exist」,`grok-voice-transcribe-2.0` 被接受(1 秒靜音實測,2026-10-15)
+- → 每次呼叫**明確送 `model: grok-voice-transcribe-2.0`**。依使用者指示把結果**當作 2.0**;報告寫「直連、指定 2.0」,不寫「已證實是 2.0」
+- 附帶:`grok-voice-transcribe-1.0` 也回 200(與 release notes「1.0 EOL 後自動轉 2.0」一致,但沒證明什麼)
+
+### 11.3 Arm(前綴 `XDgrok` = 直連 xAI)
+
+| arm | 語料 | 送出的欄位(multipart) |
+|---|---|---|
+| `XDgrok_auto` / `XDgrok_zh` | exp5 T1–T3 × M0/M3 | `file`、`model`;`_zh` 加 `language=zh` |
+| `XDgrok_auto` / `XDgrok_ja` / `XDgrok_ja_kt` | exp1 6 段 × N0–N4 | `file`、`model`;`_ja` 加 `language=ja`;`_ja_kt` 再加 `keyterm` × 前 100 條 |
+| `ZXDgrok_zh` | exp5 純中文 20 秒視窗 × 8 | `file`、`model`、`language=zh` |
+
+- 詞表與 `ORgrok_ja_kt` **完全相同**:場景包依檔案順序取前 100 條(xAI 上限 100、每條 ≤ 50 字——實測兩條限制都會 400;三個場景包前 100 條都沒有超過 50 字的)
+- **不送**:diarization、format、timestamps、其他任何欄位。不重試,失敗 = 缺格
+- 1 秒靜音偵察顯示 `language=zh` / `ja` 都被接受
+
+### 11.4 判讀(與 §8.6 同一套,只把 Grok 換成直連)
+
+主比較:`XDgrok_zh`(exp5)、`XDgrok_ja`(exp1)vs `ORscribe_zh` / `ORscribe_ja`,配對對象 `Gbat` / `Abat`,跨條件 pooled。
+三條**同時**成立才算「可取代」:
+
+1. 吵雜條件(exp5 M3、exp1 N3)Grok − Scribe 的召回差,段群 bootstrap 95% CI **上界 ≥ 0**
+2. 兩個語料都 `分歧(Gemini, Grok直連) ≤ 分歧(Gemini, Scribe)`
+3. 兩個語料都 專用 ASR 勝率(Grok 直連)≥ 勝率(Scribe)
+
+注意 Scribe 那一邊**仍是經 OpenRouter**(沒詞表);兩邊都沒詞表才公平。`XDgrok_ja_kt` 只當附帶。
+
+**另報(描述用,不進判讀)**:
+- 直連 vs 經 OR 的 Grok(`XDgrok_zh` − `ORgrok_zh`、`XDgrok_ja` − `ORgrok_ja`):差的 CI;雜訊尺 = §10 的同 arm 重跑(exp5 0.006)
+- Gate B 表與純中文 CER 表各加一列 `XDgrok`
+
+**結論怎麼用(先寫好)**:通過 → 在報告寫「建議改 L1 配對」的證據,**不改定案文件**,由 Clarence 拍板;不通過 → §10 的「維持 Scribe」從參考級升為「直連、指定 2.0」級。
+
+### 11.5 花費與保險絲
+
+牌價 $0.10/hr(批次,任務書 §1 的 xAI 公告;OpenRouter 實測同價)。回應不含金額 → 帳本用 `duration × $0.10/hr` 記(`results/raw/_v16_ledger.json` 加 `xai_usd`)。
+估計:exp5 2 小時 + exp1 2.19 小時 + 視窗 0.04 小時 ≈ **$0.42**;**保險絲 $1.00**。先打一檔對價再放大。
+
+### 11.6 偏離紀錄
+
+1. **估價寫錯(高估)**:§11.5 把 exp5 寫成 2 小時,實際是 6 檔 × 300 秒 × 2 設定 = 1 小時;實際花費 **$0.32**(估 $0.42),保險絲不受影響
+2. **先打一檔對價**:`XDgrok_ja_kt/hig01_A1__N0`,111 秒、4.7 秒回應、$0.0031(= $0.10/hr)。回應欄位 `text` / `language` / `duration` / `words`,
+   沒有版本或金額欄位 → 帳本照 §11.5 用 duration 換算(**沒有對到帳單**,xAI 的計費頁沒查)
+3. 其餘照 §11.3 執行:110 次全成功、0 缺格、0 重試;既有 arm 重跑計分 0 變動(exp5 307 列、exp1 1,052 列、純中文視窗 summary)
+
+### 11.7 結果(2026-10-15,xAI 直連 $0.32)
+
+**Gate A(直連、指定 2.0):不通過 → 維持 Scribe**(與 §10 經 OpenRouter 的結論相同,三條在兩個語料都不成立):
+
+| | exp5(`_zh`,M3) | exp1(`_ja`,N3) |
+|---|---|---|
+| 規則 1:Grok 直連 − Scribe | −0.234 [−0.269, −0.148] | −0.254 [−0.414, −0.121] |
+| 規則 2:分歧數 Gemini+Grok 直連 / Gemini+Scribe | 66 / 37 | 128 / 74 |
+| 規則 3:專用 ASR 勝率 | 0.242 / 0.622 | 0.094 / 0.311 |
+
+直連與經 OR 的 Grok 差 −0.012~+0.025(方向不一),遠小於對 Scribe 的差距。照 §11.4 先寫好的那一條:
+**「維持 Scribe」從參考級升為「直連、指定 2.0」級**;定案文件不動。附帶:`language=zh` 時同一檔內簡繁混雜。
+細節:`results/openrouter-arms.md` §3b;數字出處 `results/openrouter_gates.json` 的 `gate_a_direct_xai`、`grok_direct_vs_openrouter`。
