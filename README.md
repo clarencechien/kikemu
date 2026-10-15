@@ -70,6 +70,13 @@
 (Δ −0.042,CI [−0.153, +0.056]),0 PRC 用語、0 簡體;延遲 p50 1.28 秒(3.5 是 1.05,不同日量)。
 評審避開 3.6(會自己評自己);評審雜訊不大(同一份評兩次,91.7~100% 完全一致)。
 
+**10-15:新一代批次 STT 一次補測(handoff-v16,經 OpenRouter $1.86 + Gemini 直連 $1.19)**——
+Grok STT(經 OpenRouter、上游版本未定)**不能取代 Scribe**:吵雜條件確定輸(exp5 M3 −0.25、exp1 N3 −0.18),
+配 Gemini 的分歧數約 2 倍 → 「Gemini 批次 + Scribe」配對不換。晶晶體上跟 Scribe 量不出差別的只有 MAI-Transcribe-2 與 Muse Voice;
+可本機化的 Qwen3-ASR 1.7B −0.11、Whisper turbo −0.21、Qwen3-ASR 0.6B −0.28、Nemotron 崩潰。
+**經 OpenRouter 的 Scribe 開不了詞表**;Gemini 3.5 Transcribe 有空輸出與重複迴圈(一格 $0.26),要設輸出上限。
+[`results/openrouter-arms.md`](results/openrouter-arms.md)、`results/stt-matrix.md` §6d。
+
 **10-05:場景包改成「外部 LLM 產 md、管理頁匯入」**——關鍵字產包漏了酒款「万穂」與行業術語「日本酒度」,
 原因在產包 prompt(照寺社觀光寫、不收一般語)。現在 `/admin` 可以複製一份 prompt(`app/public/vocab-prompt.md`)
 貼給開了搜尋與深度思考的模型,回來的 md 直接匯入、跑同一條驗證。

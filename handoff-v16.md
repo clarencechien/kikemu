@@ -241,8 +241,42 @@ OpenRouter 累計 `usage.cost` > **US$5** 即停(帳本 `results/raw/_v16_ledger
 
 ## 9. 偏離紀錄
 
-(執行時填)
+1. **ZDR 不送**(任務書 §5 要開):使用者 2026-10-15「先不算 ZDR」。偵察時 grok / gemini-transcribe / gpt-transcribe / muse
+   沒有 ZDR 端點(404),照任務書「不要自動關掉」的話這四格會整格做不了。每檔 request 紀錄都看得到沒送
+2. **金鑰名稱**:`or_key`(不是 `OPENROUTER_API_KEY`);沒有 xAI key → Grok 只有經 OpenRouter、版本未定這一格(§8.6 已寫明只當參考)
+3. **gemini-3.5-transcribe 改直連**:經 OpenRouter 一律 400(偵察 §6),標「直連」
+4. **帳本競態**:併發寫 `_v16_ledger.json` 時讀到半個檔(`JSONDecodeError`)而中斷。改成鎖內讀 + 暫存檔原子替換後續跑;
+   已完成的檔案數 = 呼叫數(166 = 166),沒有遺失或重複計費
+5. **Gemini Transcribe 空輸出 3 格**(exp1 `ikeda02__N3` auto / ja、`ikeda03__N0` auto):HTTP 200、`finishReason: STOP`、
+   candidate 沒有 `content`。依 §8.1 不重試;寫成**空字串**計分(模型實際的輸出),檔內標 `empty_output: true`。
+   這和「缺格」不同:呼叫成功、模型回了空。敏感度(拿掉那 3 格)另報在 `results/openrouter-arms.md` §2
+6. **Gemini Transcribe 重複迴圈 1 格**(exp5 `GDtrans_auto/T1__M3`,20,676 output token、$0.263):照原樣計分,敏感度另報
+7. **跨條件怎麼合**:§8.6 沒寫 → 在看到任何分數前定為 **pooled**(該語料所有跑過的條件一起算);規則 1 只用吵雜條件
+8. **exp1 一致性比較的對照**:`Sbat_ja_nokt` 不存在 → 用 `Sbat_ja`(帶 50 條詞表),差裡混了詞表,不判讀(§8.8 已預寫這個退路)
+9. **加跑同 arm 重跑**:`ORscribe_zh_r2`(exp5 12 檔,$0.055)。§8.8 寫「雜訊範圍沒有既有數字」→ 補一次重跑當雜訊尺。
+   在看到一致性差(+0.009)之後才決定加跑——它是解讀用的尺,不改任何規則
+10. **開源模型訓練資料的查詢晚了**:§8.9 寫「跑前查」,實際是 Phase 1 跑完才查。結論不變(Qwen3-ASR 未公開;Nemotron 含專有資料)
+11. **`Sbat_bi/_meta.json` 更正**:舊紀錄寫 `keyterms: true / keyterm_cap: 50`,實際送 0 條(偵察 §3),改成實況並註記
+12. **重跑 score 的副作用**:§8.5 預告既有 arm 可能因 OpenCC 版本變動——實際比對 exp5 157 列、exp1 812 列,**0 變動**
 
-## 10. 結果
+## 10. 結果(2026-10-15,OpenRouter $1.86 + 偵察 ≈ $0.2、Gemini 直連 $1.19;保險絲 $5 未觸發)
 
-(執行後填)
+完整矩陣與判讀:[`results/openrouter-arms.md`](results/openrouter-arms.md);數字出處 `results/openrouter_gates.json`。
+
+**Gate A(Grok 取代 Scribe):不通過 → 維持 Scribe**(參考級,Grok 版本未定)。三條在兩個語料上全部不成立:
+
+| | exp5(`_zh`,M3) | exp1(`_ja`,N3) |
+|---|---|---|
+| 規則 1:Grok − Scribe | −0.253 [−0.279, −0.185] | −0.179 [−0.333, −0.025] |
+| 規則 2:分歧數 Gemini+Grok / Gemini+Scribe | 72 / 37 | 122 / 74 |
+| 規則 3:專用 ASR 勝率 | 0.208 / 0.622 | 0.090 / 0.311 |
+
+Grok 帶 100 條詞表(exp1)也沒翻盤(N3 −0.164、勝率 0.139)。→ **不建議改離線會議記錄 L1 配對**,定案文件不動。
+
+**Gate B(exp5 `_zh`,對 Scribe 經 OR 0.930)**:Qwen3-ASR 1.7B −0.114 [−0.148, 0.000](TER 打平)、
+Whisper turbo −0.209 [−0.245, −0.130]、Qwen3-ASR 0.6B −0.282 [−0.370, −0.222]、Nemotron 0.6B −0.826。
+`_auto` 同方向(−0.09 / −0.17 / −0.26 / −0.67)。只報排序,不下輸入法結論。
+跟 Scribe 量不出差別的只有商用的 MAI-Transcribe-2(−0.013)與 Muse Voice(−0.006)。
+
+**一致性**:exp5 經 OR 的 Scribe 比 8 月直連高 0.009(同 arm 重跑雜訊 0.006,同一級);exp1 差 −0.057 混了詞表,不判讀。
+**經 OR 的 Scribe 開不了詞表**,用它就等於沒有詞表。

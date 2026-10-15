@@ -1,0 +1,11 @@
+{
+ "arm": "ORmuse_zh",
+ "handoff": "handoff-v16.md",
+ "corpus": "exp5",
+ "path": "經 OpenRouter /api/v1/audio/transcriptions",
+ "sent": {
+  "model": "meta/muse-voice-transcribe-1.0",
+  "language": "zh"
+ },
+ "note": "只列實際送出的欄位;沒列 = 沒送(zdr、temperature、diarize、prompt、response_format 皆未送)"
+}

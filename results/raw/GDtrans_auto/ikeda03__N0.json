@@ -1,0 +1,1 @@
+{"arm": "GDtrans_auto", "file": "ikeda03__N0", "audio_s": 97.15, "transcript": "", "path": "gemini-direct", "model": "gemini-3.5-transcribe", "request": {"contents": "[audio/wav inline]"}, "empty_output": true, "finishReason": "STOP", "note": "呼叫成功(HTTP 200、finishReason STOP)但模型沒有輸出任何內容——當作模型的實際輸出(空轉寫)計分,不是缺格(handoff-v16 §9)"}
