@@ -29,7 +29,8 @@ ARMS = [("Zg", "Gemini 3.5 批次"), ("Zsm", "Speechmatics 批次"),
         ("ZORgptT_zh", "GPT-Transcribe"), ("ZORgrok_zh", "Grok STT(版本未定)"),
         ("ZORasm35_zh", "AssemblyAI U-3.5 Pro"), ("ZORasm36_zh", "AssemblyAI U-3.6 Pro"),
         ("ZORqwen17_zh", "Qwen3-ASR 1.7B"), ("ZORqwen06_zh", "Qwen3-ASR 0.6B"),
-        ("ZORwhisperT_zh", "Whisper large-v3 turbo"), ("ZORnemo_zh", "Nemotron 3.5 ASR 0.6B")]
+        ("ZORwhisperT_zh", "Whisper large-v3 turbo"), ("ZORnemo_zh", "Nemotron 3.5 ASR 0.6B"),
+        ("ZXDgrok_zh", "Grok STT 2.0(直連 xAI)")]
 
 # handoff-v10 §4b(看到分數之前寫死):Scribe 會輸出 audio event 標記(如 [笑声])。
 # 那是註記不是轉寫,沒有其他 arm 會產生它,不移除等於平白讓它的 CER 變差。

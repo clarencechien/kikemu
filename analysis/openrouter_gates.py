@@ -36,7 +36,7 @@ CORPORA = {
              "weighted": False, "gemini": "Abat", "grok": "ORgrok_ja", "scribe": "ORscribe_ja", "direct_scribe": "Sbat_ja_nokt",
              "grok_kt": "ORgrok_ja_kt", "scores": "results/scores.json"},
 }
-EXP5_ARMS = ["ORgrok", "ORscribe", "GDtrans", "ORqwen17", "ORqwen06", "ORmai2", "ORwhisperT", "ORnemo", "ORgptT", "ORmuse", "ORasm35", "ORasm36"]
+EXP5_ARMS = ["XDgrok", "ORgrok", "ORscribe", "GDtrans", "ORqwen17", "ORqwen06", "ORmai2", "ORwhisperT", "ORnemo", "ORgptT", "ORmuse", "ORasm35", "ORasm36"]
 GATE_B = ["ORqwen06", "ORqwen17", "ORwhisperT", "ORnemo"]
 
 
@@ -125,9 +125,31 @@ def ter_diff_ci(tt, a, b, seed=2026):
 
 def main():
     res: dict = {"handoff": "handoff-v16.md §8.6–8.8", "pooled_across_conditions": True}
-    # ── Gate A ──
-    gate = {}
+    # ── Gate A(§8.6:Grok 經 OR;§11.4:Grok 直連 xAI、指定 2.0,同一套規則)──
+    res["gate_a"], res["gate_a_verdict"] = gate_a(CORPORA)
+    direct = {n: {**c, "grok": c["grok"].replace("ORgrok", "XDgrok"),
+                  **({"grok_kt": c["grok_kt"].replace("ORgrok", "XDgrok")} if c.get("grok_kt") else {})} for n, c in CORPORA.items()}
+    res["gate_a_direct_xai"], res["gate_a_direct_xai_verdict"] = gate_a(direct)
+    # 直連 vs 經 OR 的 Grok(描述用)
+    gx = {}
     for name, c in CORPORA.items():
+        for setting in (["zh", "auto"] if name == "exp5" else ["ja", "auto", "ja_kt"]):
+            a, b = f"XDgrok_{setting}", f"ORgrok_{setting}"
+            t = table_for(c, [a, b])
+            rs = rows(t, c["conds"], [a, b])
+            if rs:
+                gx[f"{name}_{setting}"] = {"recall": {a: round(recall(rs, a, c["weighted"]), 4), b: round(recall(rs, b, c["weighted"]), 4)},
+                                           "direct_minus_or": diff_ci(rs, a, b, c["weighted"])}
+    res["grok_direct_vs_openrouter"] = gx
+    _gate_b_and_rest(res)
+    OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+    print(json.dumps({k: res[k] for k in ("gate_a_verdict", "gate_a_direct_xai_verdict", "gate_a_direct_xai", "grok_direct_vs_openrouter")},
+                     ensure_ascii=False, indent=1))
+
+
+def gate_a(corpora: dict):
+    gate = {}
+    for name, c in corpora.items():
         arms = [c["gemini"], c["grok"], c["scribe"]] + ([c["grok_kt"]] if c.get("grok_kt") else [])
         t = table_for(c, arms)
         core = [c["gemini"], c["grok"], c["scribe"]]
@@ -151,10 +173,11 @@ def main():
                                   "noisy_grok_kt_minus_scribe": diff_ci(rows(t, [c["noisy"]], [c["grok_kt"], c["scribe"]]),
                                                                         c["grok_kt"], c["scribe"], c["weighted"])}
         gate[name] = g
-    res["gate_a"] = gate
-    res["gate_a_verdict"] = ("可取代(參考級:Grok 版本未定)"
-                             if all(g["rule1_pass"] and g["rule2_pass"] and g["rule3_pass"] for g in gate.values())
-                             else "維持 Scribe")
+    verdict = ("可取代" if all(g["rule1_pass"] and g["rule2_pass"] and g["rule3_pass"] for g in gate.values()) else "維持 Scribe")
+    return gate, verdict
+
+
+def _gate_b_and_rest(res: dict):
     # ── Gate B(exp5)──
     c = CORPORA["exp5"]
     gb = {}
@@ -199,7 +222,7 @@ def main():
     mats = {}
     for name, c, arms, err in (
         ("exp5", CORPORA["exp5"], [f"{a}_{s}" for a in EXP5_ARMS for s in ("auto", "zh")] + ["Gbat", "Sbat_bi"], "ter"),
-        ("exp1", CORPORA["exp1"], [f"{a}_{s}" for a in ("ORgrok", "ORscribe", "GDtrans") for s in ("auto", "ja", "ja_kt")]
+        ("exp1", CORPORA["exp1"], [f"{a}_{s}" for a in ("XDgrok", "ORgrok", "ORscribe", "GDtrans") for s in ("auto", "ja", "ja_kt")]
          + ["Abat", "Sbat_ja"], "cer"),
     ):
         t = table_for(c, arms)
@@ -238,8 +261,6 @@ def main():
                                  "ter_mean_without_T1_M3": round(statistics.mean(v for k, v in tt["GDtrans_auto"].items()
                                                                                 if k != ("T1", "M3")), 4)}
     res["gdtrans_sensitivity"] = sens
-    OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1))
-    print(json.dumps(res, ensure_ascii=False, indent=1))
 
 
 if __name__ == "__main__":

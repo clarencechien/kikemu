@@ -1231,6 +1231,62 @@
    "cer": 0.4157,
    "cer_nopunct": 0.3483,
    "len_ratio": 1.281
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_30s",
+   "cer": 0.2178,
+   "cer_nopunct": 0.1287,
+   "len_ratio": 1.158
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_135s",
+   "cer": 0.1,
+   "cer_nopunct": 0.0375,
+   "len_ratio": 1.1
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_155s",
+   "cer": 0.1569,
+   "cer_nopunct": 0.098,
+   "len_ratio": 1.127
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_175s",
+   "cer": 0.2062,
+   "cer_nopunct": 0.1443,
+   "len_ratio": 1.165
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_220s",
+   "cer": 0.5385,
+   "cer_nopunct": 0.5385,
+   "len_ratio": 1.423
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T2_275s",
+   "cer": 0.0978,
+   "cer_nopunct": 0.0109,
+   "len_ratio": 1.076
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T3_155s",
+   "cer": 0.2755,
+   "cer_nopunct": 0.2347,
+   "len_ratio": 1.031
+  },
+  {
+   "arm": "ZXDgrok_zh",
+   "window": "T3_200s",
+   "cer": 0.3483,
+   "cer_nopunct": 0.3483,
+   "len_ratio": 1.135
   }
  ],
  "summary": {
@@ -1409,6 +1465,14 @@
    "cer_max": 0.8077,
    "cer_nopunct_mean": 0.2506,
    "len_ratio_mean": 1.218
+  },
+  "ZXDgrok_zh": {
+   "label": "Grok STT 2.0(直連 xAI)",
+   "n": 8,
+   "cer_mean": 0.2426,
+   "cer_max": 0.5385,
+   "cer_nopunct_mean": 0.1926,
+   "len_ratio_mean": 1.152
   }
  }
 }
